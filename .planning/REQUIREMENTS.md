@@ -31,7 +31,7 @@
 
 ### AI Skills
 
-- [ ] **SKILL-01**: n1-busca-adentro — 4 self-knowledge dimensions (values, strengths, identity, purpose) with triage, quick/deep modes, profile YAML output
+- [x] **SKILL-01**: n1-busca-adentro — 4 self-knowledge dimensions (values, strengths, identity, purpose) with triage, quick/deep modes, profile YAML output
 - [ ] **SKILL-02**: n1-construye-afuera — career strategy tools (CV audit, interview prep, negotiate, STAR builder, profile builder, network map, job hunt, layoff kit, grow where you are) adapted per career path
 - [ ] **SKILL-03**: n1-system — full integrated experience (triage → busca adentro → integration → construye afuera → evolution)
 - [x] **SKILL-04**: n1-ghost-check — standalone ghost job detector with optional profile enhancement
@@ -130,7 +130,7 @@
 | WEB-08      | Phase 1 | Complete |
 | WEB-09      | Phase 1 | Complete |
 | WEB-10      | Phase 1 | Complete |
-| SKILL-01    | Phase 2 | Pending |
+| SKILL-01    | Phase 2 | Complete |
 | SKILL-02    | Phase 2 | Pending |
 | SKILL-03    | Phase 2 | Pending |
 | SKILL-04    | Phase 2 | Complete |

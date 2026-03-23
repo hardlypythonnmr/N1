@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 02-ai-skills-03-PLAN.md
-last_updated: "2026-03-23T22:19:12.075Z"
+stopped_at: Completed 02-01-PLAN.md (n1-busca-adentro skill)
+last_updated: "2026-03-23T22:25:43.103Z"
 progress:
   total_phases: 8
   completed_phases: 2
   total_plans: 20
-  completed_plans: 17
+  completed_plans: 18
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 02 (ai-skills) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ _Updated after each plan completion_
 | Phase 01-static-web-tools P05 | 353s | 1 tasks | 1 files |
 | Phase 02-ai-skills P04 | 2m | 1 tasks | 1 files |
 | Phase 02-ai-skills P03 | 2 | 1 tasks | 1 files |
+| Phase 02-ai-skills P01 | 8m | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,8 @@ Recent decisions affecting current work:
 - [Phase 02-ai-skills]: LATAM Control calibration inline: normalization of lower Control scores placed directly at subscale level and snapshot output — not left to inference
 - [Phase 02-ai-skills]: Ghost Check SKILL.md score scale: 0-100 where higher = more real (inverted from web tool ghost-signal accumulation)
 - [Phase 02-ai-skills]: SKILL.md loads only 3 shared files (not full prompting-stack) per D-03 4-6K token budget; Reflexion checklist embedded inline
+- [Phase 02-ai-skills]: SKILL.md as orchestration layer, reference files carry framework depth — token budget stays manageable
+- [Phase 02-ai-skills]: LATAM calibration embedded in reference files: CAAS Control lower = collectivist norm, high MLQ-Search = culturally normative (not pathological)
 
 ### Pending Todos
 
@@ -118,6 +121,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-23T22:19:12.070Z
-Stopped at: Completed 02-ai-skills-03-PLAN.md
+Last session: 2026-03-23T22:25:43.099Z
+Stopped at: Completed 02-01-PLAN.md (n1-busca-adentro skill)
 Resume file: None
