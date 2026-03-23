@@ -65,13 +65,13 @@ Plans:
 Plans:
 
 - [x] 01-01-PLAN.md — Shared CSS design system + assessment engine JS (Wave 1)
-- [ ] 01-02-PLAN.md — Landing page + triage quiz + email capture (Wave 2)
-- [ ] 01-03-PLAN.md — Ghost Check tool (Wave 2)
+- [x] 01-02-PLAN.md — Landing page + triage quiz + email capture (Wave 2)
+- [x] 01-03-PLAN.md — Ghost Check tool (Wave 2)
 - [ ] 01-04-PLAN.md — Compass / CAAS-12 assessment (Wave 2)
 - [ ] 01-05-PLAN.md — Bull's Eye values alignment tool (Wave 2)
 - [ ] 01-06-PLAN.md — MLQ-10 meaning in life questionnaire (Wave 2)
 - [ ] 01-07-PLAN.md — Flow Activity Logger (Wave 2)
-- [ ] 01-08-PLAN.md — Runway Calculator (Wave 2)
+- [x] 01-08-PLAN.md — Runway Calculator (Wave 2)
 
 ### Phase 2: AI Skills
 

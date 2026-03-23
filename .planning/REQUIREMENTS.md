@@ -20,12 +20,12 @@
 
 - [ ] **WEB-01**: Landing page with N1 brand, triage quiz, tool directory, email capture
 - [x] **WEB-02**: Shared CSS stylesheet (mobile-responsive, N1 brand colors)
-- [ ] **WEB-03**: Ghost Check — paste job posting, get ghost score + signal breakdown + shareable scorecard
+- [x] **WEB-03**: Ghost Check — paste job posting, get ghost score + signal breakdown + shareable scorecard
 - [ ] **WEB-04**: Compass / CAAS-12 — 12-item career adaptability assessment with radar chart + profile export
 - [ ] **WEB-05**: Bull's Eye — ACT values alignment exercise with interactive visual + profile export
 - [ ] **WEB-06**: MLQ-10 — meaning in life questionnaire with quadrant placement + profile export
 - [ ] **WEB-07**: Flow Activity Logger — challenge-skill tracking with flow zone visualization + localStorage persistence
-- [ ] **WEB-08**: Runway Calculator — financial runway with 3 scenarios, COP/USD toggle
+- [x] **WEB-08**: Runway Calculator — financial runway with 3 scenarios, COP/USD toggle
 - [x] **WEB-09**: All tools export profile data as YAML compatible with Profile Interchange Format
 - [x] **WEB-10**: All tools include safety disclaimer and cultural calibration notes where relevant
 
@@ -122,12 +122,12 @@
 | FOUN-08     | Phase 0 | Complete |
 | WEB-01      | Phase 1 | Pending |
 | WEB-02      | Phase 1 | Complete |
-| WEB-03      | Phase 1 | Pending |
+| WEB-03      | Phase 1 | Complete |
 | WEB-04      | Phase 1 | Pending |
 | WEB-05      | Phase 1 | Pending |
 | WEB-06      | Phase 1 | Pending |
 | WEB-07      | Phase 1 | Pending |
-| WEB-08      | Phase 1 | Pending |
+| WEB-08      | Phase 1 | Complete |
 | WEB-09      | Phase 1 | Complete |
 | WEB-10      | Phase 1 | Complete |
 | SKILL-01    | Phase 2 | Pending |
