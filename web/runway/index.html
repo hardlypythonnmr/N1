@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Runway Calculator — N1</title>
+  <meta name="description" content="Calcula cuantos meses de runway financiero tenes para hacer un cambio de carrera. Tres escenarios: conservador, probable, optimista." />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── PAGE-LEVEL OVERRIDES ──────────────── */
+    .currency-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-lg);
+    }
+
+    .currency-toggle-label {
+      font-size: 0.875rem;
+      color: var(--n1-muted);
+      font-family: var(--font-heading);
+    }
+
+    .currency-toggle-btns {
+      display: flex;
+      gap: 0;
+      border: 2px solid var(--n1-border);
+      border-radius: var(--n1-radius-sm);
+      overflow: hidden;
+    }
+
+    .currency-btn {
+      padding: 8px 20px;
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 700;
+      border: none;
+      background: var(--n1-white);
+      color: var(--n1-muted);
+      cursor: pointer;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .currency-btn.active {
+      background-color: var(--n1-orange);
+      color: var(--n1-white);
+    }
+
+    .currency-btn:first-child {
+      border-right: 1px solid var(--n1-border);
+    }
+
+    .exchange-note {
+      font-size: 0.75rem;
+      color: var(--n1-muted);
+      margin-left: var(--space-sm);
+    }
+
+    /* Input groups */
+    .input-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-xs);
+      color: var(--n1-black);
+    }
+
+    .input-with-currency {
+      display: flex;
+      align-items: center;
+      border: 2px solid var(--n1-border);
+      border-radius: var(--n1-radius-sm);
+      overflow: hidden;
+      transition: border-color var(--transition-fast);
+    }
+
+    .input-with-currency:focus-within {
+      border-color: var(--n1-orange);
+    }
+
+    .currency-symbol {
+      padding: 10px 12px;
+      background-color: var(--n1-surface);
+      border-right: 1px solid var(--n1-border);
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--n1-muted);
+      white-space: nowrap;
+    }
+
+    .input-with-currency input {
+      flex: 1;
+      padding: 10px 12px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: transparent;
+    }
+
+    /* Standalone input (without currency prefix) */
+    .input-standalone {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid var(--n1-border);
+      border-radius: var(--n1-radius-sm);
+      font-size: 1rem;
+      transition: border-color var(--transition-fast);
+      background: var(--n1-white);
+    }
+
+    .input-standalone:focus {
+      outline: none;
+      border-color: var(--n1-orange);
+    }
+
+    .input-hint {
+      font-size: 0.8125rem;
+      color: var(--n1-muted);
+      margin-top: var(--space-xs);
+      margin-bottom: 0;
+      line-height: 1.4;
+    }
+
+    /* Income sources */
+    #income-sources-section {
+      background-color: var(--n1-surface);
+      border-radius: var(--n1-radius-sm);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    #income-sources-section h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    #income-sources-section > p {
+      font-size: 0.875rem;
+      color: var(--n1-muted);
+      margin-bottom: var(--space-md);
+    }
+
+    #income-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .income-row {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .income-row input[type="text"] {
+      flex: 1.5;
+      padding: 8px 10px;
+      border: 2px solid var(--n1-border);
+      border-radius: var(--n1-radius-sm);
+      font-size: 0.875rem;
+      background: var(--n1-white);
+      transition: border-color var(--transition-fast);
+    }
+
+    .income-row input[type="number"] {
+      flex: 1;
+      padding: 8px 10px;
+      border: 2px solid var(--n1-border);
+      border-radius: var(--n1-radius-sm);
+      font-size: 0.875rem;
+      background: var(--n1-white);
+      transition: border-color var(--transition-fast);
+    }
+
+    .income-row input:focus {
+      outline: none;
+      border-color: var(--n1-orange);
+    }
+
+    .income-row-remove {
+      background: none;
+      border: none;
+      color: var(--n1-muted);
+      cursor: pointer;
+      font-size: 1.125rem;
+      padding: 4px 6px;
+      line-height: 1;
+      border-radius: var(--n1-radius-sm);
+      transition: color var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .income-row-remove:hover {
+      color: #dc2626;
+      background-color: #fef2f2;
+    }
+
+    /* Results section */
+    #results-screen {
+      margin-top: var(--space-xl);
+    }
+
+    .results-title {
+      font-size: 1.375rem;
+      margin-bottom: var(--space-sm);
+      text-align: center;
+    }
+
+    .results-subtitle {
+      text-align: center;
+      color: var(--n1-muted);
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-xl);
+    }
+
+    /* Scenario cards */
+    .scenarios-grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .scenario-card {
+      border: 2px solid var(--n1-border);
+      border-radius: var(--n1-radius-sm);
+      padding: var(--space-md) var(--space-lg);
+    }
+
+    .scenario-card.likely {
+      border-color: var(--n1-orange);
+      background-color: #fff8f5;
+    }
+
+    .scenario-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-xs);
+    }
+
+    .scenario-label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--n1-muted);
+    }
+
+    .scenario-card.likely .scenario-label {
+      color: var(--n1-orange);
+    }
+
+    .scenario-months {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--n1-black);
+    }
+
+    .scenario-card.likely .scenario-months {
+      color: var(--n1-orange);
+    }
+
+    .scenario-context {
+      font-size: 0.875rem;
+      color: var(--n1-muted);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    /* Chart */
+    .chart-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .chart-section h3 {
+      font-size: 0.875rem;
+      font-family: var(--font-heading);
+      color: var(--n1-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-md);
+    }
+
+    /* Cultural note */
+    .cultural-note {
+      background-color: var(--n1-surface);
+      border-radius: var(--n1-radius-sm);
+      padding: var(--space-md) var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+
+    .cultural-note-label {
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--n1-muted);
+      margin-bottom: var(--space-xs);
+    }
+
+    .cultural-note p {
+      font-size: 0.875rem;
+      color: var(--n1-muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+
+    /* Actions */
+    .results-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .results-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Recalculate link */
+    .recalculate-link {
+      text-align: center;
+      margin-top: var(--space-md);
+    }
+
+    .recalculate-link button {
+      background: none;
+      border: none;
+      color: var(--n1-muted);
+      font-size: 0.875rem;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-family: var(--font-body);
+    }
+
+    .recalculate-link button:hover {
+      color: var(--n1-black);
+    }
+
+    /* Page header */
+    .page-header {
+      margin-bottom: var(--space-xl);
+      padding-top: var(--space-md);
+    }
+
+    .page-header h1 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .page-header p {
+      color: var(--n1-muted);
+      font-size: 0.9375rem;
+      margin-bottom: 0;
+    }
+
+    /* Calculate button area */
+    .calculate-area {
+      padding-top: var(--space-md);
+    }
+
+    #calculate-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 14px var(--space-lg);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .income-row {
+        flex-wrap: wrap;
+      }
+
+      .income-row input[type="text"],
+      .income-row input[type="number"] {
+        flex: 1 0 calc(50% - var(--space-sm));
+      }
+
+      .scenario-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">N<span>1</span></a>
+    <a href="../index.html" class="nav-back">Herramientas</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+
+    <!-- FINANCIAL DISCLAIMER -->
+    <div class="disclaimer" role="note" aria-label="Aviso importante">
+      <p>
+        <strong>Aviso:</strong> Esta calculadora es una herramienta de orientacion financiera basica, no asesoria financiera certificada.
+        Los calculos son estimados y no reemplazan el analisis de un asesor financiero.
+        Para decisiones de alto impacto, consulta con un profesional certificado.
+      </p>
+    </div>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <h1>Runway Calculator</h1>
+      <p>Calcula cuantos meses de runway financiero tenes para hacer un cambio de carrera.</p>
+    </div>
+
+    <!-- CALCULATOR SECTION -->
+    <section id="calculator" aria-label="Calculadora de runway">
+
+      <!-- CURRENCY TOGGLE -->
+      <div class="currency-toggle">
+        <span class="currency-toggle-label">Moneda:</span>
+        <div class="currency-toggle-btns" role="group" aria-label="Seleccionar moneda">
+          <button
+            id="btn-cop"
+            class="currency-btn active"
+            aria-pressed="true"
+            onclick="setCurrency('COP')"
+          >COP</button>
+          <button
+            id="btn-usd"
+            class="currency-btn"
+            aria-pressed="false"
+            onclick="setCurrency('USD')"
+          >USD</button>
+        </div>
+        <span class="exchange-note" id="exchange-note">Tasa: ~$4,200 COP/USD — estimado</span>
+      </div>
+
+      <!-- SAVINGS INPUT -->
+      <div class="input-group">
+        <label for="savings">Ahorros disponibles</label>
+        <div class="input-with-currency" id="savings-wrapper">
+          <span class="currency-symbol" id="savings-currency-symbol" aria-hidden="true">$</span>
+          <input
+            type="number"
+            id="savings"
+            name="savings"
+            min="0"
+            step="1000"
+            placeholder="0"
+            aria-describedby="savings-hint"
+          />
+        </div>
+        <p class="input-hint" id="savings-hint">Total que tenes disponible para vivir durante la transicion</p>
+      </div>
+
+      <!-- MONTHLY EXPENSES INPUT -->
+      <div class="input-group">
+        <label for="monthly-expenses">Gastos mensuales actuales</label>
+        <div class="input-with-currency" id="expenses-wrapper">
+          <span class="currency-symbol" id="expenses-currency-symbol" aria-hidden="true">$</span>
+          <input
+            type="number"
+            id="monthly-expenses"
+            name="monthly-expenses"
+            min="0"
+            step="1000"
+            placeholder="0"
+            aria-describedby="expenses-hint"
+          />
+        </div>
+        <p class="input-hint" id="expenses-hint">Alquiler, comida, transporte, servicios, deudas — todo lo que gasta al mes</p>
+      </div>
+
+      <!-- INCOME SOURCES -->
+      <div id="income-sources-section" aria-labelledby="income-section-title">
+        <h3 id="income-section-title">Ingresos durante la transicion (opcional)</h3>
+        <p>Freelance, parte-tiempo, renta, apoyo familiar — cualquier ingreso que esperas mantener.</p>
+        <div id="income-list" aria-label="Lista de fuentes de ingreso"></div>
+        <button
+          id="add-income"
+          class="btn btn-secondary"
+          type="button"
+          onclick="addIncomeSource()"
+          aria-label="Agregar fuente de ingreso"
+        >+ Agregar fuente de ingreso</button>
+      </div>
+
+      <!-- CALCULATE BUTTON -->
+      <div class="calculate-area">
+        <button
+          id="calculate-btn"
+          class="btn btn-primary"
+          type="button"
+          onclick="runCalculation()"
+        >Calcular runway</button>
+      </div>
+
+    </section>
+
+    <!-- RESULTS SECTION (hidden initially) -->
+    <section
+      id="results-screen"
+      class="hidden"
+      aria-live="polite"
+      aria-label="Resultados del calculo"
+    >
+
+      <hr class="divider" />
+
+      <h2 class="results-title">Tu runway financiero</h2>
+      <p class="results-subtitle" id="results-subtitle"></p>
+
+      <!-- SCENARIO CARDS -->
+      <div class="scenarios-grid" id="scenarios-grid" aria-label="Escenarios de runway"></div>
+
+      <!-- BAR CHART -->
+      <div class="chart-section">
+        <h3>Comparacion de escenarios</h3>
+        <div class="chart-container">
+          <canvas
+            id="runway-chart"
+            aria-label="Grafico de barras mostrando meses de runway por escenario"
+            role="img"
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- CULTURAL NOTE -->
+      <div class="cultural-note" role="note">
+        <p class="cultural-note-label">Contexto Colombia / LATAM</p>
+        <p>
+          En Colombia, un runway de 6-12 meses suele ser suficiente para una transicion profesional
+          si hay claridad sobre el siguiente paso. El mercado laboral en Bogota y Medellin permite
+          movimientos relativamente rapidos en sectores tech y servicios. Un runway de 3 meses
+          es ajustado — solo recomendable si ya tenes una oferta o cliente confirmado.
+        </p>
+      </div>
+
+      <!-- DOWNLOAD SCORECARD -->
+      <div class="results-actions">
+        <button
+          id="download-scorecard-btn"
+          class="btn btn-secondary"
+          type="button"
+          onclick="downloadRunwayScorecard()"
+          aria-label="Descargar resumen como imagen"
+        >Descargar resumen</button>
+      </div>
+
+      <!-- RECALCULATE -->
+      <div class="recalculate-link">
+        <button type="button" onclick="resetCalculator()" aria-label="Recalcular con otros valores">
+          Recalcular con otros valores
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="../assessment-engine.js"></script>
+  <script>
+    /* ════════════════════════════════════════
+       Runway Calculator — inline script
+       Pure vanilla JS. No mutations on state objects.
+       ════════════════════════════════════════ */
+
+    'use strict';
+
+    /* ── CONSTANTS ──────────────────────────── */
+    var COP_PER_USD = 4200;
+
+    var SCENARIO_CONFIG = [
+      {
+        key: 'conservative',
+        label: 'Conservador',
+        multiplier: 1.2,
+        color: '#9ca3af',
+        description: 'Con 20% mas de gastos por imprevistos'
+      },
+      {
+        key: 'likely',
+        label: 'Probable',
+        multiplier: 1.0,
+        color: '#E85D26',
+        description: 'Con tus gastos actuales'
+      },
+      {
+        key: 'optimistic',
+        label: 'Optimista',
+        multiplier: 0.8,
+        color: '#22c55e',
+        description: 'Reduciendo gastos un 20%'
+      }
+    ];
+
+    /* ── STATE ──────────────────────────────── */
+    var currentCurrency = 'COP';
+    var chartInstance = null;
+    var lastResults = null;
+
+    /* ── PURE CALCULATION FUNCTIONS ──────────── */
+
+    /**
+     * Calculate runway for all 3 scenarios.
+     * Returns array of result objects. Does not mutate inputs.
+     *
+     * @param {number} savings
+     * @param {number} monthlyExpenses
+     * @param {Array<{label: string, amount: number}>} incomeSources
+     * @returns {Array<{key, label, color, description, burn, months, isIndefinite}>}
+     */
+    function calculateRunway(savings, monthlyExpenses, incomeSources) {
+      var totalIncome = incomeSources.reduce(function (sum, src) {
+        return sum + (parseFloat(src.amount) || 0);
+      }, 0);
+
+      return SCENARIO_CONFIG.map(function (scenario) {
+        var adjustedExpenses = monthlyExpenses * scenario.multiplier;
+        var burn = Math.max(0, adjustedExpenses - totalIncome);
+        var isIndefinite = burn <= 0;
+        var rawMonths = isIndefinite ? null : savings / burn;
+        var months = isIndefinite ? null : Math.min(rawMonths, 36);
+        var overCap = !isIndefinite && rawMonths > 36;
+
+        return {
+          key: scenario.key,
+          label: scenario.label,
+          color: scenario.color,
+          description: scenario.description,
+          burn: burn,
+          months: months,
+          rawMonths: rawMonths,
+          isIndefinite: isIndefinite,
+          overCap: overCap
+        };
+      });
+    }
+
+    /**
+     * Format months for display.
+     * @param {Object} result - scenario result object
+     * @returns {string}
+     */
+    function formatMonths(result) {
+      if (result.isIndefinite) return 'Indefinido';
+      if (result.overCap) return '36+ meses';
+      if (result.months === null) return '0 meses';
+      return result.months.toFixed(1) + ' meses';
+    }
+
+    /**
+     * Generate context string for a runway duration.
+     * @param {Object} result - scenario result object
+     * @returns {string}
+     */
+    function getRunwayContext(result) {
+      if (result.isIndefinite) {
+        return 'Tus ingresos cubren los gastos — la transicion es financieramente sostenible indefinidamente.';
+      }
+      if (result.months === null) {
+        return 'Sin ahorros suficientes para sostener la transicion. Asegura un ingreso antes de hacer el cambio.';
+      }
+      var months = result.rawMonths;
+      if (result.overCap) months = 36;
+
+      if (months < 3) {
+        return 'Tiempo muy ajustado — considera reducir gastos o asegurar un ingreso antes de saltar.';
+      } else if (months < 6) {
+        return 'Tiempo justo para una transicion enfocada. Recomendable solo si ya tenes claridad sobre el paso siguiente.';
+      } else if (months < 12) {
+        return 'Runway solido para una transicion planificada. Suficiente para explorar, aprender, y conectar.';
+      } else {
+        return 'Runway excepcional. Tenes tiempo real para hacer la transicion bien.';
+      }
+    }
+
+    /* ── CURRENCY HELPERS ────────────────────── */
+
+    /**
+     * Convert a COP amount to USD.
+     * @param {number} copAmount
+     * @returns {number}
+     */
+    function copToUsd(copAmount) {
+      return copAmount / COP_PER_USD;
+    }
+
+    /**
+     * Convert a USD amount to COP.
+     * @param {number} usdAmount
+     * @returns {number}
+     */
+    function usdToCop(usdAmount) {
+      return usdAmount * COP_PER_USD;
+    }
+
+    /**
+     * Set active currency and convert all current input values.
+     * @param {string} currency - 'COP' or 'USD'
+     */
+    function setCurrency(currency) {
+      if (currency === currentCurrency) return;
+
+      var savingsInput = document.getElementById('savings');
+      var expensesInput = document.getElementById('monthly-expenses');
+      var incomeInputs = document.querySelectorAll('.income-row input[type="number"]');
+
+      var previousCurrency = currentCurrency;
+      currentCurrency = currency;
+
+      // Convert savings
+      if (savingsInput.value) {
+        var savingsVal = parseFloat(savingsInput.value) || 0;
+        savingsInput.value = previousCurrency === 'COP'
+          ? Math.round(copToUsd(savingsVal) * 100) / 100
+          : Math.round(usdToCop(savingsVal));
+      }
+
+      // Convert expenses
+      if (expensesInput.value) {
+        var expensesVal = parseFloat(expensesInput.value) || 0;
+        expensesInput.value = previousCurrency === 'COP'
+          ? Math.round(copToUsd(expensesVal) * 100) / 100
+          : Math.round(usdToCop(expensesVal));
+      }
+
+      // Convert income sources
+      incomeInputs.forEach(function (input) {
+        if (input.value) {
+          var val = parseFloat(input.value) || 0;
+          input.value = previousCurrency === 'COP'
+            ? Math.round(copToUsd(val) * 100) / 100
+            : Math.round(usdToCop(val));
+        }
+      });
+
+      // Update UI
+      updateCurrencyUI();
+    }
+
+    /**
+     * Update all currency-related UI elements for current currency.
+     */
+    function updateCurrencyUI() {
+      var isCOP = currentCurrency === 'COP';
+      var symbol = '$';
+
+      // Toggle buttons
+      var btnCop = document.getElementById('btn-cop');
+      var btnUsd = document.getElementById('btn-usd');
+      btnCop.classList.toggle('active', isCOP);
+      btnUsd.classList.toggle('active', !isCOP);
+      btnCop.setAttribute('aria-pressed', isCOP ? 'true' : 'false');
+      btnUsd.setAttribute('aria-pressed', isCOP ? 'false' : 'true');
+
+      // Currency symbols
+      var savingsSymbol = document.getElementById('savings-currency-symbol');
+      var expensesSymbol = document.getElementById('expenses-currency-symbol');
+      var symbolText = isCOP ? '$' : 'USD';
+      savingsSymbol.textContent = symbolText;
+      expensesSymbol.textContent = symbolText;
+
+      // Income source currency symbols
+      var incomeCurrencySymbols = document.querySelectorAll('.income-currency-symbol');
+      incomeCurrencySymbols.forEach(function (el) {
+        el.textContent = symbolText;
+      });
+
+      // Exchange note
+      var exchangeNote = document.getElementById('exchange-note');
+      if (isCOP) {
+        exchangeNote.textContent = 'Tasa: ~$4,200 COP/USD — estimado';
+        exchangeNote.style.display = '';
+      } else {
+        exchangeNote.textContent = 'Mostrando en USD (1 USD = ~$4,200 COP)';
+        exchangeNote.style.display = '';
+      }
+
+      // Steps on input placeholders
+      var savingsInput = document.getElementById('savings');
+      var expensesInput = document.getElementById('monthly-expenses');
+      if (isCOP) {
+        savingsInput.setAttribute('step', '100000');
+        expensesInput.setAttribute('step', '100000');
+      } else {
+        savingsInput.setAttribute('step', '100');
+        expensesInput.setAttribute('step', '100');
+      }
+    }
+
+    /* ── INCOME SOURCES DOM ──────────────────── */
+
+    var incomeRowCount = 0;
+
+    /**
+     * Add a new income source row to #income-list.
+     * Uses createElement/textContent — never innerHTML with input data.
+     */
+    function addIncomeSource() {
+      var list = document.getElementById('income-list');
+      incomeRowCount++;
+
+      var row = document.createElement('div');
+      row.className = 'income-row';
+      row.setAttribute('data-row-id', String(incomeRowCount));
+
+      // Label input
+      var labelInput = document.createElement('input');
+      labelInput.type = 'text';
+      labelInput.placeholder = 'Nombre (ej: freelance)';
+      labelInput.setAttribute('aria-label', 'Nombre de la fuente de ingreso');
+      labelInput.className = 'income-label-input';
+
+      // Amount wrapper
+      var amountWrapper = document.createElement('div');
+      amountWrapper.style.display = 'flex';
+      amountWrapper.style.alignItems = 'center';
+      amountWrapper.style.gap = '4px';
+      amountWrapper.style.flex = '1';
+
+      var currencySymbol = document.createElement('span');
+      currencySymbol.className = 'income-currency-symbol';
+      currencySymbol.textContent = currentCurrency === 'COP' ? '$' : 'USD';
+      currencySymbol.style.fontSize = '0.8125rem';
+      currencySymbol.style.color = 'var(--n1-muted)';
+      currencySymbol.style.flexShrink = '0';
+
+      var amountInput = document.createElement('input');
+      amountInput.type = 'number';
+      amountInput.min = '0';
+      amountInput.step = currentCurrency === 'COP' ? '100000' : '100';
+      amountInput.placeholder = '0';
+      amountInput.setAttribute('aria-label', 'Monto mensual de la fuente de ingreso');
+      amountInput.style.width = '100%';
+
+      amountWrapper.appendChild(currencySymbol);
+      amountWrapper.appendChild(amountInput);
+
+      // Remove button
+      var removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'income-row-remove';
+      removeBtn.setAttribute('aria-label', 'Eliminar esta fuente de ingreso');
+      removeBtn.textContent = '\u00D7';
+      removeBtn.addEventListener('click', function () {
+        list.removeChild(row);
+      });
+
+      row.appendChild(labelInput);
+      row.appendChild(amountWrapper);
+      row.appendChild(removeBtn);
+
+      list.appendChild(row);
+    }
+
+    /**
+     * Read all income sources from the DOM.
+     * @returns {Array<{label: string, amount: number}>}
+     */
+    function readIncomeSources() {
+      var rows = document.querySelectorAll('#income-list .income-row');
+      var sources = [];
+      rows.forEach(function (row) {
+        var labelInput = row.querySelector('input[type="text"]');
+        var amountInput = row.querySelector('input[type="number"]');
+        if (!amountInput) return;
+        var amount = parseFloat(amountInput.value) || 0;
+        if (amount <= 0) return; // skip empty rows
+        sources.push({
+          label: labelInput ? labelInput.value.trim() : '',
+          amount: amount
+        });
+      });
+      return sources;
+    }
+
+    /* ── CALCULATION RUNNER ──────────────────── */
+
+    /**
+     * Read inputs, validate, run calculation, render results.
+     */
+    function runCalculation() {
+      var savingsRaw = parseFloat(document.getElementById('savings').value) || 0;
+      var expensesRaw = parseFloat(document.getElementById('monthly-expenses').value) || 0;
+      var incomeSources = readIncomeSources();
+
+      // Validate
+      if (savingsRaw < 0 || expensesRaw < 0) {
+        N1.showToast('Los valores no pueden ser negativos.');
+        return;
+      }
+
+      if (expensesRaw === 0) {
+        N1.showToast('Ingresa tus gastos mensuales para calcular el runway.');
+        return;
+      }
+
+      // Convert to COP for internal calculation (canonical currency)
+      var savings = currentCurrency === 'USD' ? usdToCop(savingsRaw) : savingsRaw;
+      var monthlyExpenses = currentCurrency === 'USD' ? usdToCop(expensesRaw) : expensesRaw;
+      var normalizedSources = incomeSources.map(function (src) {
+        return {
+          label: src.label,
+          amount: currentCurrency === 'USD' ? usdToCop(src.amount) : src.amount
+        };
+      });
+
+      var results = calculateRunway(savings, monthlyExpenses, normalizedSources);
+      lastResults = results;
+
+      renderResults(results, savings, monthlyExpenses, currentCurrency);
+      showResults();
+    }
+
+    /* ── RESULTS RENDERING ───────────────────── */
+
+    /**
+     * Render results section: scenario cards + chart.
+     */
+    function renderResults(results, savings, monthlyExpenses, currency) {
+      renderSubtitle(savings, monthlyExpenses, currency);
+      renderScenarioCards(results);
+      renderChart(results);
+    }
+
+    /**
+     * Render the results subtitle with input summary.
+     */
+    function renderSubtitle(savings, monthlyExpenses, currency) {
+      var el = document.getElementById('results-subtitle');
+      var displaySavings = currency === 'USD' ? copToUsd(savings) : savings;
+      var displayExpenses = currency === 'USD' ? copToUsd(monthlyExpenses) : monthlyExpenses;
+      var symbol = currency === 'USD' ? 'USD' : 'COP';
+      var savingsFormatted = formatCurrency(displaySavings, symbol);
+      var expensesFormatted = formatCurrency(displayExpenses, symbol);
+      el.textContent = 'Ahorros: ' + savingsFormatted + ' | Gastos mensuales: ' + expensesFormatted;
+    }
+
+    /**
+     * Format a currency value for display.
+     */
+    function formatCurrency(amount, symbol) {
+      var rounded = Math.round(amount);
+      return '$' + rounded.toLocaleString('es-CO') + ' ' + symbol;
+    }
+
+    /**
+     * Render the three scenario cards.
+     */
+    function renderScenarioCards(results) {
+      var grid = document.getElementById('scenarios-grid');
+
+      // Clear existing children safely
+      while (grid.firstChild) {
+        grid.removeChild(grid.firstChild);
+      }
+
+      results.forEach(function (result) {
+        var card = document.createElement('div');
+        card.className = 'scenario-card' + (result.key === 'likely' ? ' likely' : '');
+
+        var header = document.createElement('div');
+        header.className = 'scenario-header';
+
+        var labelEl = document.createElement('span');
+        labelEl.className = 'scenario-label';
+        labelEl.textContent = result.label;
+
+        var monthsEl = document.createElement('span');
+        monthsEl.className = 'scenario-months';
+        monthsEl.textContent = formatMonths(result);
+
+        header.appendChild(labelEl);
+        header.appendChild(monthsEl);
+
+        var descEl = document.createElement('p');
+        descEl.className = 'scenario-context';
+        descEl.style.color = 'var(--n1-muted)';
+        descEl.style.fontSize = '0.8125rem';
+        descEl.style.marginBottom = 'var(--space-xs)';
+        descEl.textContent = result.description;
+
+        var contextEl = document.createElement('p');
+        contextEl.className = 'scenario-context';
+        contextEl.textContent = getRunwayContext(result);
+
+        card.appendChild(header);
+        card.appendChild(descEl);
+        card.appendChild(contextEl);
+        grid.appendChild(card);
+      });
+    }
+
+    /**
+     * Render Chart.js bar chart.
+     */
+    function renderChart(results) {
+      if (chartInstance) {
+        chartInstance.destroy();
+        chartInstance = null;
+      }
+
+      var canvas = document.getElementById('runway-chart');
+      var ctx = canvas.getContext('2d');
+
+      var labels = results.map(function (r) { return r.label; });
+      var data = results.map(function (r) {
+        if (r.isIndefinite) return 36; // display max for indefinite
+        if (r.months === null) return 0;
+        return parseFloat(r.months.toFixed(1));
+      });
+      var colors = results.map(function (r) { return r.color; });
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Meses de runway',
+            data: data,
+            backgroundColor: colors,
+            borderColor: colors,
+            borderWidth: 0,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  var result = results[context.dataIndex];
+                  if (result.isIndefinite) return 'Indefinido';
+                  if (result.overCap) return '36+ meses';
+                  return context.parsed.y.toFixed(1) + ' meses';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 36,
+              title: {
+                display: true,
+                text: 'Meses de runway',
+                font: { family: "'DM Sans', sans-serif", size: 12 },
+                color: '#6b6b6b'
+              },
+              ticks: {
+                font: { family: "'DM Sans', sans-serif" },
+                color: '#6b6b6b',
+                callback: function (value) {
+                  return value === 36 ? '36+' : value;
+                }
+              },
+              grid: { color: '#e0e0e0' }
+            },
+            x: {
+              ticks: {
+                font: { family: "'DM Sans', sans-serif", weight: '600' },
+                color: '#1a1a1a'
+              },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    /* ── SHOW / HIDE ──────────────────────────── */
+
+    function showResults() {
+      var resultsEl = document.getElementById('results-screen');
+      resultsEl.classList.remove('hidden');
+      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetCalculator() {
+      var resultsEl = document.getElementById('results-screen');
+      resultsEl.classList.add('hidden');
+      document.getElementById('savings').focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ── SCORECARD ───────────────────────────── */
+
+    /**
+     * Generate and download runway scorecard via N1.generateScorecard.
+     */
+    function downloadRunwayScorecard() {
+      if (!lastResults) {
+        N1.showToast('Calcula primero para generar el resumen.');
+        return;
+      }
+
+      var likelyResult = lastResults.find(function (r) { return r.key === 'likely'; });
+      var displayMonths = likelyResult
+        ? (likelyResult.isIndefinite ? 'Indefinido' : formatMonths(likelyResult))
+        : '—';
+
+      var chartData = {
+        labels: lastResults.map(function (r) { return r.label; }),
+        values: lastResults.map(function (r) {
+          if (r.isIndefinite) return 36;
+          if (r.months === null) return 0;
+          return parseFloat(r.months.toFixed(1));
+        }),
+        colors: lastResults.map(function (r) { return r.color; })
+      };
+
+      var scorecard = N1.generateScorecard({
+        title: 'Runway Calculator',
+        subtitle: 'N1 — El Sistema Eres Tu',
+        score: displayMonths,
+        scoreLabel: 'Escenario probable',
+        interpretation: getRunwayContext(likelyResult),
+        chartType: 'bar',
+        chartData: chartData,
+        footer: 'n1.tools | @n1_sistema'
+      });
+
+      N1.downloadScorecard(scorecard, 'n1-runway-calculator.png');
+      N1.showToast('Resumen descargado.');
+    }
+
+    /* ── INIT ───────────────────────────────── */
+
+    (function init() {
+      updateCurrencyUI();
+
+      // Append safety disclaimer from N1 engine
+      var disclaimerEl = document.querySelector('.disclaimer');
+      if (disclaimerEl && N1 && N1.getSafetyDisclaimer) {
+        var safetyNode = N1.getSafetyDisclaimer();
+        // Append safety disclaimer after the financial disclaimer paragraph
+        disclaimerEl.appendChild(safetyNode);
+      }
+
+      // Allow Enter key on inputs to trigger calculation
+      var inputIds = ['savings', 'monthly-expenses'];
+      inputIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+              runCalculation();
+            }
+          });
+        }
+      });
+    }());
+  </script>
+
+</body>
+</html>

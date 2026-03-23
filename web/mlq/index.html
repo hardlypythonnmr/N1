@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MLQ-10 — Cuestionario de Proposito en la Vida. Instrumento validado de Steger (2006) para medir presencia y busqueda de sentido. Herramienta gratuita de N1." />
+  <title>MLQ-10 — Proposito en la Vida | N1</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── MLQ-SPECIFIC STYLES ────────────── */
+
+    .mlq-intro {
+      text-align: center;
+      padding: var(--space-xl) 0 var(--space-md);
+    }
+
+    .mlq-intro h1 {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .mlq-intro .mlq-tag {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      font-weight: 400;
+      color: var(--n1-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+    }
+
+    .mlq-intro p {
+      color: var(--n1-muted);
+      font-size: 0.9375rem;
+      max-width: 480px;
+      margin: 0 auto var(--space-md);
+    }
+
+    /* Results layout */
+    .results-screen {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    .results-header {
+      text-align: center;
+    }
+
+    .quadrant-badge {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 0.6875rem;
+      font-weight: 400;
+      color: var(--n1-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+    }
+
+    .quadrant-name {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--n1-black);
+      margin-bottom: var(--space-sm);
+    }
+
+    .scores-summary {
+      font-size: 0.9375rem;
+      color: var(--n1-muted);
+      margin-bottom: 0;
+    }
+
+    /* 2x2 Quadrant canvas */
+    .quadrant-canvas-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .quadrant-canvas-wrap canvas {
+      border: 1px solid var(--n1-border);
+      border-radius: var(--n1-radius-sm);
+      max-width: 100%;
+      height: auto;
+    }
+
+    .quadrant-legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xs) var(--space-md);
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .quadrant-legend-item {
+      font-size: 0.75rem;
+      color: var(--n1-muted);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .quadrant-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Score bars */
+    .mlq-scores {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    /* Interpretation */
+    .interpretation {
+      background-color: var(--n1-surface);
+      border-radius: var(--n1-radius-sm);
+      padding: var(--space-lg);
+    }
+
+    .interpretation .interpretation-label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--n1-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-sm);
+    }
+
+    .interpretation p {
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      margin-bottom: var(--space-sm);
+    }
+
+    .interpretation p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Cultural note */
+    .cultural-note {
+      border-left: 3px solid var(--n1-border);
+      padding: var(--space-md);
+      border-radius: 0 var(--n1-radius-sm) var(--n1-radius-sm) 0;
+      background-color: var(--n1-surface);
+      font-size: 0.8125rem;
+      line-height: 1.55;
+      color: var(--n1-muted);
+    }
+
+    .cultural-note strong {
+      color: var(--n1-black);
+    }
+
+    /* Citation */
+    .mlq-citation {
+      font-size: 0.75rem;
+      color: var(--n1-muted);
+      font-style: italic;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Navegacion principal">
+    <a href="../index.html" class="nav-logo">N<span>1</span></a>
+    <a href="../index.html" class="nav-back" aria-label="Volver al inicio">Inicio</a>
+  </nav>
+
+  <main class="container">
+
+    <!-- Disclaimer (Safety Protocol — per WEB-10) -->
+    <div class="disclaimer" role="note" aria-label="Aviso importante" id="disclaimer-block">
+      <!-- Populated by N1.getSafetyDisclaimer() via appendChild -->
+    </div>
+
+    <!-- MLQ intro (shown before assessment starts) -->
+    <div id="mlq-intro" class="mlq-intro">
+      <span class="mlq-tag">MLQ-10 &mdash; Steger, 2006</span>
+      <h1>Proposito en la Vida</h1>
+      <p>10 preguntas sobre el sentido de tu vida. Tarda menos de 3 minutos. Resultados inmediatos con tu posicion en el mapa de proposito.</p>
+      <button id="start-btn" class="btn btn-primary" type="button">Empezar</button>
+    </div>
+
+    <!-- Assessment container — N1.createAssessment renders here -->
+    <div id="assessment-container" style="display:none;"></div>
+
+    <!-- Results screen — hidden until assessment completes -->
+    <section id="results-screen" class="results-screen" style="display:none;" aria-live="polite">
+
+      <!-- Header -->
+      <div class="results-header">
+        <span class="quadrant-badge">Tu cuadrante de proposito</span>
+        <h2 class="quadrant-name" id="quadrant-name"></h2>
+        <p class="scores-summary" id="scores-summary"></p>
+      </div>
+
+      <!-- Quadrant 2x2 diagram -->
+      <div class="quadrant-canvas-wrap">
+        <canvas
+          id="quadrant-canvas"
+          width="300"
+          height="300"
+          aria-label="Diagrama de cuadrante: posicion de presencia y busqueda de sentido"
+          role="img"
+        ></canvas>
+        <div class="quadrant-legend">
+          <div class="quadrant-legend-item">
+            <div class="quadrant-legend-dot" style="background:#e85d26;"></div>
+            <span>Pleno/a</span>
+          </div>
+          <div class="quadrant-legend-item">
+            <div class="quadrant-legend-dot" style="background:#2e7d32;"></div>
+            <span>Creciendo</span>
+          </div>
+          <div class="quadrant-legend-item">
+            <div class="quadrant-legend-dot" style="background:#1565c0;"></div>
+            <span>Buscando</span>
+          </div>
+          <div class="quadrant-legend-item">
+            <div class="quadrant-legend-dot" style="background:#6b6b6b;"></div>
+            <span>Desconectado/a</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score bars -->
+      <div class="mlq-scores">
+        <div class="score-row">
+          <span class="score-label">Presencia</span>
+          <div class="score-bar-wrap">
+            <div class="score-bar-fill" id="presence-bar" style="width:0%;"></div>
+          </div>
+          <span class="score-value" id="presence-value">-</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Busqueda</span>
+          <div class="score-bar-wrap">
+            <div class="score-bar-fill" id="search-bar" style="width:0%;"></div>
+          </div>
+          <span class="score-value" id="search-value">-</span>
+        </div>
+      </div>
+
+      <!-- Interpretation -->
+      <div class="interpretation">
+        <p class="interpretation-label">Interpretacion</p>
+        <p id="interpretation-text"></p>
+      </div>
+
+      <!-- Cultural calibration note (per WEB-10 / LATAM) -->
+      <div class="cultural-note">
+        <strong>Nota de calibracion:</strong>
+        puntajes altos en Busqueda son normativos en contextos de alta incertidumbre economica como LATAM. No indican un problema &mdash; indican que sos una persona que piensa activamente sobre su vida.
+      </div>
+
+      <!-- Action buttons -->
+      <div class="results-actions">
+        <button id="btn-scorecard" class="btn btn-primary" type="button">Descargar scorecard</button>
+        <button id="btn-linkedin" class="btn btn-secondary" type="button">Copiar texto LinkedIn</button>
+        <button id="btn-yaml" class="btn btn-secondary" type="button">Exportar perfil YAML</button>
+        <a href="../index.html" class="btn btn-ghost">Volver al inicio</a>
+      </div>
+
+      <!-- Citation -->
+      <p class="mlq-citation">Steger, M.F., Frazier, P., Oishi, S., &amp; Kaler, M. (2006). The Meaning in Life Questionnaire. <em>Journal of Counseling Psychology, 53</em>(1), 80–93.</p>
+
+    </section>
+
+    <!-- Toast notification -->
+    <div id="n1-toast" class="toast" role="status" aria-live="polite"></div>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="../assessment-engine.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      /* ── SAFETY DISCLAIMER ────────────── */
+      var disclaimerBlock = document.getElementById('disclaimer-block');
+      if (disclaimerBlock && typeof N1 !== 'undefined' && N1.getSafetyDisclaimer) {
+        disclaimerBlock.appendChild(N1.getSafetyDisclaimer());
+      }
+
+      /* ── INIT localStorage GUARD ──────── */
+      if (typeof N1 !== 'undefined' && N1.initLocalStorageSafe) {
+        N1.initLocalStorageSafe();
+      }
+
+      /* ── MLQ-10 QUESTIONS ─────────────── */
+      var LABELS = {
+        min: 'Absolutamente falso',
+        mid: 'Ni verdadero ni falso',
+        max: 'Absolutamente verdadero'
+      };
+
+      var questions = [
+        // Presence subscale (P1-P5)
+        {
+          id: 'p1',
+          text: 'Entiendo el sentido de mi vida',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        {
+          id: 'p2',
+          text: 'Mi vida tiene un proposito claro',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        {
+          id: 'p3',
+          text: 'Tengo una buena comprension de lo que hace que mi vida sea significativa',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        {
+          id: 'p4',
+          text: 'He descubierto un proposito de vida satisfactorio',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        {
+          id: 'p5',
+          text: 'Mi vida tiene un significado claro',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        // Search subscale (S1-S5)
+        {
+          id: 's1',
+          text: 'Estoy buscando algo que haga que mi vida se sienta significativa',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        {
+          id: 's2',
+          text: 'Siempre estoy buscando el proposito de mi vida',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        {
+          id: 's3',
+          text: 'Estoy buscando actividades que le den proposito a mi vida',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        {
+          id: 's4',
+          text: 'Estoy buscando mi mision de vida',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        },
+        {
+          id: 's5',
+          text: 'Mi vida no tiene un proposito claro, y estoy buscando uno',
+          type: 'likert7',
+          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
+        }
+      ];
+
+      /* ── START BUTTON ─────────────────── */
+      document.getElementById('start-btn').addEventListener('click', function () {
+        document.getElementById('mlq-intro').style.display = 'none';
+        document.getElementById('assessment-container').style.display = 'block';
+
+        N1.createAssessment({
+          containerId: 'assessment-container',
+          questions: questions,
+          onComplete: function (answers) {
+            renderResults(answers);
+          }
+        });
+      });
+
+      /* ── SCORING ──────────────────────── */
+
+      function calcMean(answers, ids) {
+        var vals = ids.map(function (id) { return parseFloat(answers[id]) || 0; });
+        var sum = vals.reduce(function (a, b) { return a + b; }, 0);
+        return Math.round((sum / vals.length) * 10) / 10;
+      }
+
+      function getQuadrant(presence, search) {
+        var highP = presence >= 4;
+        var highS = search >= 4;
+        if (highP && !highS) return 'fulfilled';
+        if (highP && highS) return 'growing';
+        if (!highP && highS) return 'seeking';
+        return 'disengaged';
+      }
+
+      /* ── QUADRANT METADATA ────────────── */
+
+      var QUADRANT_META = {
+        fulfilled: {
+          label: 'Pleno/a',
+          color: '#e85d26',
+          interpretation: 'Tenes un sentido claro de proposito y no sentes urgencia de buscarlo — simplemente lo vivís. Eso es un punto de fortaleza solido. Usalo como ancla en momentos de decision.'
+        },
+        growing: {
+          label: 'Creciendo',
+          color: '#2e7d32',
+          interpretation: 'Tenes proposito Y seguís construyendo — eso es la combinacion optima para el crecimiento. La busqueda activa no es ansiedad, es expansion.'
+        },
+        seeking: {
+          label: 'Buscando',
+          color: '#1565c0',
+          interpretation: 'Estas en modo busqueda activa, lo cual es energizante aunque puede sentirse incomodo. En LATAM, este cuadrante es comun y adaptativo — refleja curiosidad sana, no carencia.'
+        },
+        disengaged: {
+          label: 'Desconectado/a',
+          color: '#6b6b6b',
+          interpretation: 'Hay una brecha entre vos y un sentido de proposito claro. Eso suele generar un cansancio diferente — no de trabajo sino de direccion. Este es un buen momento para explorar.'
+        }
+      };
+
+      /* ── QUADRANT CANVAS DIAGRAM ──────── */
+
+      function drawQuadrant(canvas, presenceScore, searchScore) {
+        var ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        var W = 300;
+        var H = 300;
+        var PAD = 40;
+        var INNER_W = W - PAD * 2;
+        var INNER_H = H - PAD * 2;
+        var MID_X = PAD + INNER_W / 2;
+        var MID_Y = PAD + INNER_H / 2;
+
+        // Clear
+        ctx.clearRect(0, 0, W, H);
+
+        // Quadrant background shading (subtle)
+        var quadrantColors = [
+          // top-left: disengaged (low presence, high search) — searching quadrant color
+          { x: PAD, y: PAD, w: INNER_W / 2, h: INNER_H / 2, label: 'Buscando', color: '#e8f0fe' },
+          // top-right: growing (high presence, high search)
+          { x: MID_X, y: PAD, w: INNER_W / 2, h: INNER_H / 2, label: 'Creciendo', color: '#e8f5e9' },
+          // bottom-left: disengaged (low presence, low search)
+          { x: PAD, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2, label: 'Desconectado', color: '#f5f5f5' },
+          // bottom-right: fulfilled (high presence, low search)
+          { x: MID_X, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2, label: 'Pleno', color: '#fff3ef' }
+        ];
+
+        quadrantColors.forEach(function (q) {
+          ctx.fillStyle = q.color;
+          ctx.fillRect(q.x, q.y, q.w, q.h);
+        });
+
+        // Determine active quadrant and highlight it more
+        var quadrant = getQuadrant(presenceScore, searchScore);
+        var highlightRect = null;
+        if (quadrant === 'seeking') {
+          highlightRect = { x: PAD, y: PAD, w: INNER_W / 2, h: INNER_H / 2 };
+        } else if (quadrant === 'growing') {
+          highlightRect = { x: MID_X, y: PAD, w: INNER_W / 2, h: INNER_H / 2 };
+        } else if (quadrant === 'disengaged') {
+          highlightRect = { x: PAD, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2 };
+        } else if (quadrant === 'fulfilled') {
+          highlightRect = { x: MID_X, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2 };
+        }
+        if (highlightRect) {
+          ctx.fillStyle = 'rgba(232, 93, 38, 0.08)';
+          ctx.fillRect(highlightRect.x, highlightRect.y, highlightRect.w, highlightRect.h);
+        }
+
+        // Grid lines
+        ctx.strokeStyle = '#c0c0c0';
+        ctx.lineWidth = 1;
+        // Vertical divider (x = midpoint)
+        ctx.beginPath();
+        ctx.moveTo(MID_X, PAD);
+        ctx.lineTo(MID_X, PAD + INNER_H);
+        ctx.stroke();
+        // Horizontal divider (y = midpoint)
+        ctx.beginPath();
+        ctx.moveTo(PAD, MID_Y);
+        ctx.lineTo(PAD + INNER_W, MID_Y);
+        ctx.stroke();
+
+        // Border around inner area
+        ctx.strokeStyle = '#d0d0d0';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(PAD, PAD, INNER_W, INNER_H);
+
+        // Quadrant labels
+        ctx.font = '10px "DM Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // Top-left: Buscando
+        ctx.fillStyle = '#1565c0';
+        ctx.fillText('Buscando', PAD + INNER_W / 4, PAD + INNER_H / 4);
+        // Top-right: Creciendo
+        ctx.fillStyle = '#2e7d32';
+        ctx.fillText('Creciendo', MID_X + INNER_W / 4, PAD + INNER_H / 4);
+        // Bottom-left: Desconectado
+        ctx.fillStyle = '#9e9e9e';
+        ctx.fillText('Desconectado', PAD + INNER_W / 4, MID_Y + INNER_H / 4);
+        // Bottom-right: Pleno
+        ctx.fillStyle = '#e85d26';
+        ctx.fillText('Pleno', MID_X + INNER_W / 4, MID_Y + INNER_H / 4);
+
+        // Axis labels
+        ctx.fillStyle = '#6b6b6b';
+        ctx.font = '10px "DM Sans", sans-serif';
+        // X-axis label: Presencia (bottom center)
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText('Presencia →', PAD + INNER_W / 2, H - 4);
+        // Y-axis label: Busqueda (left, rotated)
+        ctx.save();
+        ctx.translate(10, PAD + INNER_H / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText('Busqueda →', 0, 0);
+        ctx.restore();
+
+        // Midpoint tick labels
+        ctx.fillStyle = '#9e9e9e';
+        ctx.font = '9px "DM Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText('4.0', MID_X, PAD + INNER_H + 2);
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('4.0', PAD - 2, MID_Y);
+
+        // Plot user dot — map scores 1-7 to canvas coordinates
+        // Presence on X: 1 maps to PAD, 7 maps to PAD + INNER_W
+        // Search on Y: 1 maps to PAD + INNER_H (bottom), 7 maps to PAD (top)
+        var dotX = PAD + ((presenceScore - 1) / 6) * INNER_W;
+        var dotY = PAD + INNER_H - ((searchScore - 1) / 6) * INNER_H;
+
+        // Shadow
+        ctx.shadowColor = 'rgba(232,93,38,0.35)';
+        ctx.shadowBlur = 8;
+
+        // Outer ring
+        ctx.beginPath();
+        ctx.arc(dotX, dotY, 10, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(232, 93, 38, 0.2)';
+        ctx.fill();
+
+        // Inner dot
+        ctx.shadowBlur = 0;
+        ctx.beginPath();
+        ctx.arc(dotX, dotY, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#e85d26';
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      /* ── RENDER RESULTS ───────────────── */
+
+      function renderResults(answers) {
+        // Hide assessment container
+        document.getElementById('assessment-container').style.display = 'none';
+
+        // Calculate scores
+        var presence = calcMean(answers, ['p1', 'p2', 'p3', 'p4', 'p5']);
+        var search = calcMean(answers, ['s1', 's2', 's3', 's4', 's5']);
+        var quadrant = getQuadrant(presence, search);
+        var meta = QUADRANT_META[quadrant];
+
+        // Show results screen
+        var resultsScreen = document.getElementById('results-screen');
+        resultsScreen.style.display = 'flex';
+
+        // Set quadrant name and scores
+        document.getElementById('quadrant-name').textContent = meta.label;
+        document.getElementById('scores-summary').textContent =
+          'Presencia: ' + presence + ' / 7\u2003\u2014\u2003Busqueda: ' + search + ' / 7';
+
+        // Draw quadrant canvas
+        var canvas = document.getElementById('quadrant-canvas');
+        drawQuadrant(canvas, presence, search);
+
+        // Score bars (1-7 scale → percentage of 7)
+        var presencePct = Math.round((presence / 7) * 100);
+        var searchPct = Math.round((search / 7) * 100);
+
+        var presenceBar = document.getElementById('presence-bar');
+        var searchBar = document.getElementById('search-bar');
+        presenceBar.style.width = '0%';
+        searchBar.style.width = '0%';
+        // Animate after brief delay
+        setTimeout(function () {
+          presenceBar.style.width = presencePct + '%';
+          searchBar.style.width = searchPct + '%';
+        }, 100);
+
+        document.getElementById('presence-value').textContent = presence + '/7';
+        document.getElementById('search-value').textContent = search + '/7';
+
+        // Interpretation text (safe textContent)
+        document.getElementById('interpretation-text').textContent = meta.interpretation;
+
+        // Save to profile
+        N1.saveToProfile('purpose', {
+          completed: true,
+          mode: 'quick',
+          mlq: {
+            presence: presence,
+            search: search,
+            quadrant: quadrant
+          }
+        });
+
+        // Scroll to results
+        resultsScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        /* ── BUTTON HANDLERS ──── */
+
+        // Scorecard download
+        document.getElementById('btn-scorecard').addEventListener('click', function () {
+          var dataUrl = N1.generateScorecard({
+            title: 'MLQ-10 \u2014 Proposito',
+            scores: [
+              { label: 'Presencia', value: presence, max: 7 },
+              { label: 'Busqueda', value: search, max: 7 }
+            ],
+            interpretation: 'Cuadrante: ' + meta.label,
+            chartType: 'bar'
+          });
+          if (dataUrl) {
+            N1.downloadScorecard(dataUrl, 'n1-mlq10-scorecard.png');
+          }
+        });
+
+        // LinkedIn text copy
+        document.getElementById('btn-linkedin').addEventListener('click', function () {
+          var linkedinText =
+            'Hice el MLQ-10 de proposito en N1. ' +
+            'Cuadrante: ' + meta.label + '. ' +
+            'Presencia: ' + presence + '/7 \u2014 Busqueda: ' + search + '/7. ' +
+            'Herramienta gratuita: https://n1.career/mlq/ #Proposito #N1';
+          N1.copyLinkedInText(linkedinText).then(function () {
+            N1.showToast('\u00a1Texto copiado al portapapeles!');
+          }).catch(function () {
+            N1.showToast('No se pudo copiar. Intent\u00e1 de nuevo.');
+          });
+        });
+
+        // YAML export
+        document.getElementById('btn-yaml').addEventListener('click', function () {
+          N1.exportYAML('purpose', {
+            completed: true,
+            mode: 'quick',
+            mlq: {
+              presence: presence,
+              search: search,
+              quadrant: quadrant
+            }
+          });
+          N1.showToast('Perfil YAML descargado');
+        });
+      }
+
+    }());
+  </script>
+
+</body>
+</html>
