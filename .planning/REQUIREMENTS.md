@@ -10,7 +10,7 @@
 - [x] **FOUN-01**: CLAUDE.md project instructions file with identity, structure, conventions, safety
 - [x] **FOUN-02**: Profile Interchange Format v1 — canonical YAML schema with version protocol
 - [x] **FOUN-03**: Profile template (blank YAML users can copy)
-- [ ] **FOUN-04**: Shared prompting stack (ACT + Socratic + MI + CBT + CoE + SELF-DISCOVER + Reflexion)
+- [x] **FOUN-04**: Shared prompting stack (ACT + Socratic + MI + CBT + CoE + SELF-DISCOVER + Reflexion)
 - [x] **FOUN-05**: Shared voice guide (N1 voice, bilingual rules, Colombian voseo, anti-corporate tone)
 - [x] **FOUN-06**: Shared safety protocol (MIND-SAFE crisis detection, scope disclaimer, crisis resources)
 - [x] **FOUN-07**: Shared research base (25+ frameworks condensed, fits ~4K tokens)
@@ -115,7 +115,7 @@
 | FOUN-01     | Phase 0 | Complete |
 | FOUN-02     | Phase 0 | Complete |
 | FOUN-03     | Phase 0 | Complete |
-| FOUN-04     | Phase 0 | Pending |
+| FOUN-04     | Phase 0 | Complete |
 | FOUN-05     | Phase 0 | Complete |
 | FOUN-06     | Phase 0 | Complete |
 | FOUN-07     | Phase 0 | Complete |
