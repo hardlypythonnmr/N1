@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 00-05-PLAN.md — Shared Safety Protocol (MIND-SAFE)
-last_updated: "2026-03-23T20:33:19.004Z"
+stopped_at: Completed 00-03-PLAN.md — Shared Prompting Stack
+last_updated: "2026-03-23T20:34:12.083Z"
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 7
-  completed_plans: 4
+  completed_plans: 6
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 00 (foundation) — EXECUTING
-Plan: 5 of 7
+Plan: 7 of 7
 
 ## Performance Metrics
 
@@ -50,6 +50,8 @@ _Updated after each plan completion_
 | Phase 00-foundation P02 | 3m | 2 tasks | 2 files |
 | Phase 00-foundation P04 | 5m | 1 tasks | 1 files |
 | Phase 00-foundation P05 | 3m | 1 tasks | 1 files |
+| Phase 00-foundation P06 | 5 | 1 tasks | 1 files |
+| Phase 00-foundation P03 | 209s | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -72,6 +74,9 @@ Recent decisions affecting current work:
 - [Phase 00-foundation]: Quick mode vs deep mode voice differences explicit — behavior and citation density differ, not just session length
 - [Phase 00-foundation]: MIND-SAFE three-tier crisis classification: Tier 1 immediate escalation, Tier 2 warm referral, Tier 3 acknowledge-and-continue
 - [Phase 00-foundation]: Therapeutic techniques used internally but never labeled externally — ACT/MI/cognitive restructuring are prompting techniques, not public claims
+- [Phase 00-foundation]: Research base as single authority: 30 frameworks in 8 layers, max 2 lines each, pre-formatted Spanish statistics for verbatim embedding in skills
+- [Phase 00-foundation]: ACT techniques documented as internal-only in prompting-stack.md — never use modality labels with users
+- [Phase 00-foundation]: SELF-DISCOVER routing table maps 9 career situation types to primary/secondary technique
 
 ### Pending Todos
 
@@ -83,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-23T20:33:18.997Z
-Stopped at: Completed 00-05-PLAN.md — Shared Safety Protocol (MIND-SAFE)
+Last session: 2026-03-23T20:34:12.076Z
+Stopped at: Completed 00-03-PLAN.md — Shared Prompting Stack
 Resume file: None

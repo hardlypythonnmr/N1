@@ -13,7 +13,7 @@
 - [ ] **FOUN-04**: Shared prompting stack (ACT + Socratic + MI + CBT + CoE + SELF-DISCOVER + Reflexion)
 - [x] **FOUN-05**: Shared voice guide (N1 voice, bilingual rules, Colombian voseo, anti-corporate tone)
 - [x] **FOUN-06**: Shared safety protocol (MIND-SAFE crisis detection, scope disclaimer, crisis resources)
-- [ ] **FOUN-07**: Shared research base (25+ frameworks condensed, fits ~4K tokens)
+- [x] **FOUN-07**: Shared research base (25+ frameworks condensed, fits ~4K tokens)
 - [ ] **FOUN-08**: README.md with brand identity, architecture, taxonomy, tool directory
 
 ### Static Web Tools
@@ -118,7 +118,7 @@
 | FOUN-04     | Phase 0 | Pending |
 | FOUN-05     | Phase 0 | Complete |
 | FOUN-06     | Phase 0 | Complete |
-| FOUN-07     | Phase 0 | Pending |
+| FOUN-07     | Phase 0 | Complete |
 | FOUN-08     | Phase 0 | Pending |
 | WEB-01      | Phase 1 | Pending |
 | WEB-02      | Phase 1 | Pending |
