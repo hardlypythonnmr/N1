@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 0: Foundation** - Shared files, Profile schema, CLAUDE.md, README — everything all tools depend on (completed 2026-03-23)
 - [x] **Phase 1: Static Web Tools** - 7 assessment tools + landing page on GitHub Pages stack (completed 2026-03-23)
-- [ ] **Phase 2: AI Skills** - 5 SKILL.md files (busca-adentro, construye-afuera, n1-system, ghost-check, compass)
+- [x] **Phase 2: AI Skills** - 5 SKILL.md files (busca-adentro, construye-afuera, n1-system, ghost-check, compass) (completed 2026-03-23)
 - [ ] **Phase 3: Integration + Scorecards** - Scorecard library, profile synthesizer, email capture wired in
 - [ ] **Phase 4: ChatGPT GPTs** - 4 GPT configurations with compressed instructions + knowledge files
 - [ ] **Phase 5: Claude Skills Publishing** - 5 skills published and installable from marketplace
@@ -92,7 +92,7 @@ Plans:
 - [x] 02-02-PLAN.md — n1-construye-afuera (SKILL.md + 3 career reference files) (Wave 1)
 - [x] 02-03-PLAN.md — n1-ghost-check (SKILL.md, standalone) (Wave 1)
 - [x] 02-04-PLAN.md — n1-compass (SKILL.md, standalone) (Wave 1)
-- [ ] 02-05-PLAN.md — n1-system (SKILL.md, full integrated orchestrator) (Wave 2)
+- [x] 02-05-PLAN.md — n1-system (SKILL.md, full integrated orchestrator) (Wave 2)
 
 ### Phase 3: Integration + Scorecards
 
@@ -165,7 +165,7 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 | --------------------------- | -------------- | ----------- | ---------- |
 | 0. Foundation               | 7/7            | Complete    | 2026-03-23 |
 | 1. Static Web Tools         | 8/8            | Complete    | 2026-03-23 |
-| 2. AI Skills                | 4/5 | In Progress|  |
+| 2. AI Skills                | 5/5 | Complete   | 2026-03-23 |
 | 3. Integration + Scorecards | 0/TBD          | Not started | -          |
 | 4. ChatGPT GPTs             | 0/TBD          | Not started | -          |
 | 5. Claude Skills Publishing | 0/TBD          | Not started | -          |

@@ -33,7 +33,7 @@
 
 - [x] **SKILL-01**: n1-busca-adentro — 4 self-knowledge dimensions (values, strengths, identity, purpose) with triage, quick/deep modes, profile YAML output
 - [x] **SKILL-02**: n1-construye-afuera — career strategy tools (CV audit, interview prep, negotiate, STAR builder, profile builder, network map, job hunt, layoff kit, grow where you are) adapted per career path
-- [ ] **SKILL-03**: n1-system — full integrated experience (triage → busca adentro → integration → construye afuera → evolution)
+- [x] **SKILL-03**: n1-system — full integrated experience (triage → busca adentro → integration → construye afuera → evolution)
 - [x] **SKILL-04**: n1-ghost-check — standalone ghost job detector with optional profile enhancement
 - [x] **SKILL-05**: n1-compass — standalone career readiness check (CAAS-12 + values quick-check + self-efficacy pulse)
 - [x] **SKILL-06**: All skills load from shared/ foundation (DRY architecture)
@@ -132,7 +132,7 @@
 | WEB-10      | Phase 1 | Complete |
 | SKILL-01    | Phase 2 | Complete |
 | SKILL-02    | Phase 2 | Complete |
-| SKILL-03    | Phase 2 | Pending |
+| SKILL-03    | Phase 2 | Complete |
 | SKILL-04    | Phase 2 | Complete |
 | SKILL-05    | Phase 2 | Complete |
 | SKILL-06    | Phase 2 | Complete |
