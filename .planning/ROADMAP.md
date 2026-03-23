@@ -13,7 +13,7 @@ N1 delivers a research-backed career strategy methodology through AI skills, sta
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [x] **Phase 0: Foundation** - Shared files, Profile schema, CLAUDE.md, README — everything all tools depend on (completed 2026-03-23)
+- [x] **Phase 0: Foundation** - Shared files, Profile schema, CLAUDE.md, README — everything all tools depend on (completed 2026-03-23)
 - [ ] **Phase 1: Static Web Tools** - 7 assessment tools + landing page on GitHub Pages stack
 - [ ] **Phase 2: AI Skills** - 5 SKILL.md files (busca-adentro, construye-afuera, n1-system, ghost-check, compass)
 - [ ] **Phase 3: Integration + Scorecards** - Scorecard library, profile synthesizer, email capture wired in
@@ -35,9 +35,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 2. Profile Interchange Format YAML schema is defined with version protocol and a blank template users can copy
 3. Shared foundation files (prompting stack, voice guide, safety protocol, research base) exist in shared/ and fit within token budget
 4. README.md describes the brand, architecture, tool directory, and career path taxonomy accurately
-**Plans**: 7 plans
+   **Plans**: 7 plans
 
 Plans:
+
 - [x] 00-01-PLAN.md — CLAUDE.md project instructions
 - [x] 00-02-PLAN.md — Profile Interchange Format v1 (schema + template)
 - [x] 00-03-PLAN.md — Shared prompting stack
@@ -58,8 +59,19 @@ Plans:
 3. Every tool that produces assessment data exports a YAML file compatible with the Profile Interchange Format
 4. Every tool displays a safety disclaimer and cultural calibration notes where relevant
 5. All tools are mobile-responsive using the shared CSS stylesheet
-   **Plans**: TBD
+   **Plans**: 8 plans
    **UI hint**: yes
+
+Plans:
+
+- [ ] 01-01-PLAN.md — Shared CSS design system + assessment engine JS (Wave 1)
+- [ ] 01-02-PLAN.md — Landing page + triage quiz + email capture (Wave 2)
+- [ ] 01-03-PLAN.md — Ghost Check tool (Wave 2)
+- [ ] 01-04-PLAN.md — Compass / CAAS-12 assessment (Wave 2)
+- [ ] 01-05-PLAN.md — Bull's Eye values alignment tool (Wave 2)
+- [ ] 01-06-PLAN.md — MLQ-10 meaning in life questionnaire (Wave 2)
+- [ ] 01-07-PLAN.md — Flow Activity Logger (Wave 2)
+- [ ] 01-08-PLAN.md — Runway Calculator (Wave 2)
 
 ### Phase 2: AI Skills
 
@@ -141,13 +153,13 @@ Plans:
 **Execution Order:**
 Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel after Phase 0.
 
-| Phase                       | Plans Complete | Status      | Completed |
-| --------------------------- | -------------- | ----------- | --------- |
-| 0. Foundation               | 7/7 | Complete   | 2026-03-23 |
-| 1. Static Web Tools         | 0/TBD          | Not started | -         |
-| 2. AI Skills                | 0/TBD          | Not started | -         |
-| 3. Integration + Scorecards | 0/TBD          | Not started | -         |
-| 4. ChatGPT GPTs             | 0/TBD          | Not started | -         |
-| 5. Claude Skills Publishing | 0/TBD          | Not started | -         |
-| 6. GitHub Pages Deployment  | 0/TBD          | Not started | -         |
-| 7. First Ship               | 0/TBD          | Not started | -         |
+| Phase                       | Plans Complete | Status      | Completed  |
+| --------------------------- | -------------- | ----------- | ---------- |
+| 0. Foundation               | 7/7            | Complete    | 2026-03-23 |
+| 1. Static Web Tools         | 0/8            | Not started | -          |
+| 2. AI Skills                | 0/TBD          | Not started | -          |
+| 3. Integration + Scorecards | 0/TBD          | Not started | -          |
+| 4. ChatGPT GPTs             | 0/TBD          | Not started | -          |
+| 5. Claude Skills Publishing | 0/TBD          | Not started | -          |
+| 6. GitHub Pages Deployment  | 0/TBD          | Not started | -          |
+| 7. First Ship               | 0/TBD          | Not started | -          |
