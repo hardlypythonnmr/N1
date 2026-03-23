@@ -41,8 +41,8 @@ Plans:
 - [x] 00-01-PLAN.md — CLAUDE.md project instructions
 - [x] 00-02-PLAN.md — Profile Interchange Format v1 (schema + template)
 - [ ] 00-03-PLAN.md — Shared prompting stack
-- [ ] 00-04-PLAN.md — Shared voice guide
-- [ ] 00-05-PLAN.md — Shared safety protocol
+- [x] 00-04-PLAN.md — Shared voice guide
+- [x] 00-05-PLAN.md — Shared safety protocol
 - [ ] 00-06-PLAN.md — Shared research base
 - [ ] 00-07-PLAN.md — README.md
 
@@ -143,7 +143,7 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 
 | Phase                       | Plans Complete | Status      | Completed |
 | --------------------------- | -------------- | ----------- | --------- |
-| 0. Foundation               | 2/7 | In Progress|  |
+| 0. Foundation               | 4/7 | In Progress|  |
 | 1. Static Web Tools         | 0/TBD          | Not started | -         |
 | 2. AI Skills                | 0/TBD          | Not started | -         |
 | 3. Integration + Scorecards | 0/TBD          | Not started | -         |

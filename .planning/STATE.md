@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 00-02-PLAN.md — Profile Interchange Format v1
-last_updated: "2026-03-23T20:28:09.266Z"
+stopped_at: Completed 00-05-PLAN.md — Shared Safety Protocol (MIND-SAFE)
+last_updated: "2026-03-23T20:33:19.004Z"
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 7
-  completed_plans: 2
+  completed_plans: 4
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 00 (foundation) — EXECUTING
-Plan: 3 of 7
+Plan: 5 of 7
 
 ## Performance Metrics
 
@@ -48,6 +48,8 @@ Plan: 3 of 7
 _Updated after each plan completion_
 | Phase 00-foundation P01 | 1 | 1 tasks | 1 files |
 | Phase 00-foundation P02 | 3m | 2 tasks | 2 files |
+| Phase 00-foundation P04 | 5m | 1 tasks | 1 files |
+| Phase 00-foundation P05 | 3m | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -66,6 +68,10 @@ Recent decisions affecting current work:
 - [Phase 00-foundation]: Profile uses clipboard portability — no sync, no accounts, no API. YAML copied between tools.
 - [Phase 00-foundation]: completed: true/false per dimension enables skip-covered-ground logic in all consuming tools.
 - [Phase 00-foundation]: Profile Interchange Format v1.0 — backward compat rules established, breaking changes require major bump.
+- [Phase 00-foundation]: Colombian voseo non-negotiable for N1 voice — conjugation tables + prohibitions documented in shared/voice-guide.md
+- [Phase 00-foundation]: Quick mode vs deep mode voice differences explicit — behavior and citation density differ, not just session length
+- [Phase 00-foundation]: MIND-SAFE three-tier crisis classification: Tier 1 immediate escalation, Tier 2 warm referral, Tier 3 acknowledge-and-continue
+- [Phase 00-foundation]: Therapeutic techniques used internally but never labeled externally — ACT/MI/cognitive restructuring are prompting techniques, not public claims
 
 ### Pending Todos
 
@@ -77,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-23T20:28:09.260Z
-Stopped at: Completed 00-02-PLAN.md — Profile Interchange Format v1
+Last session: 2026-03-23T20:33:18.997Z
+Stopped at: Completed 00-05-PLAN.md — Shared Safety Protocol (MIND-SAFE)
 Resume file: None
