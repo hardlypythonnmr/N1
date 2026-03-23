@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow Logger — N1</title>
+  <meta name="description" content="Registra actividades con ratings de desafio y habilidad. Ve cuales te ponen en zona de flow." />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── Flow Logger local styles ─────────────── */
+    .section-card {
+      background: var(--n1-white);
+      border: 1px solid var(--n1-border);
+      border-radius: var(--n1-radius);
+      padding: var(--space-xl);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-card h2 {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-md);
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-sm);
+      color: var(--n1-black);
+    }
+
+    .form-group input[type="text"] {
+      width: 100%;
+      padding: 10px var(--space-md);
+      border: 2px solid var(--n1-border);
+      border-radius: var(--n1-radius-sm);
+      font-size: 0.9375rem;
+      color: var(--n1-black);
+      background: var(--n1-white);
+      transition: border-color var(--transition-fast);
+    }
+
+    .form-group input[type="text"]:focus {
+      border-color: var(--n1-orange);
+      outline: none;
+    }
+
+    /* Rating group with slider */
+    .rating-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .rating-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-sm);
+      color: var(--n1-black);
+    }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .rating-row input[type="range"] {
+      flex: 1;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--n1-border);
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .rating-row input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--n1-orange);
+      cursor: pointer;
+      border: 2px solid var(--n1-white);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .rating-row input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--n1-orange);
+      cursor: pointer;
+      border: 2px solid var(--n1-white);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .rating-value {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--n1-orange);
+      min-width: 24px;
+      text-align: center;
+    }
+
+    /* State preview badge */
+    .state-preview {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--n1-radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      background: var(--n1-surface);
+      border: 1px solid var(--n1-border);
+      color: var(--n1-muted);
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .state-preview.state-flow {
+      background: #fff0eb;
+      border-color: var(--n1-orange);
+      color: var(--n1-orange);
+    }
+
+    .state-preview.state-anxiety {
+      background: #fff0f0;
+      border-color: #e05252;
+      color: #c0392b;
+    }
+
+    .state-preview.state-boredom {
+      background: #f0f4ff;
+      border-color: #6b8cda;
+      color: #3a5bbf;
+    }
+
+    .state-preview.state-apathy {
+      background: var(--n1-surface);
+      border-color: var(--n1-border);
+      color: var(--n1-muted);
+    }
+
+    /* Activity list */
+    .activity-empty {
+      color: var(--n1-muted);
+      font-size: 0.9375rem;
+      text-align: center;
+      padding: var(--space-xl) 0;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--n1-border);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .activity-name {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: var(--n1-black);
+      margin-bottom: var(--space-xs);
+      word-break: break-word;
+    }
+
+    .activity-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .badge-challenge {
+      background: #f5f5f5;
+      color: var(--n1-muted);
+      border: 1px solid var(--n1-border);
+    }
+
+    .badge-skill {
+      background: #f5f5f5;
+      color: var(--n1-muted);
+      border: 1px solid var(--n1-border);
+    }
+
+    .badge-flow {
+      background: #fff0eb;
+      color: var(--n1-orange);
+      border: 1px solid #f9c4af;
+    }
+
+    .badge-anxiety {
+      background: #fff0f0;
+      color: #c0392b;
+      border: 1px solid #f5a5a5;
+    }
+
+    .badge-boredom {
+      background: #f0f4ff;
+      color: #3a5bbf;
+      border: 1px solid #afc0f5;
+    }
+
+    .badge-apathy {
+      background: var(--n1-surface);
+      color: var(--n1-muted);
+      border: 1px solid var(--n1-border);
+    }
+
+    .btn-delete {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      color: var(--n1-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--n1-radius-sm);
+      transition: color var(--transition-fast), background var(--transition-fast);
+      line-height: 1;
+    }
+
+    .btn-delete:hover {
+      color: #c0392b;
+      background: #fff0f0;
+    }
+
+    /* Chart */
+    .chart-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    #flow-canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .chart-empty {
+      color: var(--n1-muted);
+      font-size: 0.875rem;
+      text-align: center;
+      padding: var(--space-xl) 0;
+    }
+
+    /* Insight box */
+    .insight-box {
+      background: var(--n1-surface);
+      border-radius: var(--n1-radius-sm);
+      border-left: 3px solid var(--n1-orange);
+      padding: var(--space-md) var(--space-lg);
+      margin-top: var(--space-md);
+    }
+
+    .insight-box p {
+      font-size: 0.9375rem;
+      color: var(--n1-black);
+      margin-bottom: var(--space-sm);
+    }
+
+    .insight-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .insight-stats {
+      font-size: 0.875rem;
+      color: var(--n1-muted);
+    }
+
+    /* Export */
+    #export-confirm {
+      font-size: 0.875rem;
+      color: #2d7a45;
+      margin-top: var(--space-sm);
+    }
+
+    /* Legend */
+    .zone-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      font-size: 0.75rem;
+    }
+
+    .zone-legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-dot-flow   { background: #E85D26; }
+    .legend-dot-anxiety  { background: #e05252; }
+    .legend-dot-boredom  { background: #6b8cda; }
+    .legend-dot-apathy   { background: #aaaaaa; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Navegacion principal">
+    <a href="../index.html" class="nav-logo">N<span>1</span></a>
+    <a href="../index.html" class="nav-back">Inicio</a>
+  </nav>
+
+  <!-- Main content -->
+  <main class="container">
+    <h1>Flow Logger</h1>
+    <p class="text-muted">
+      Registra actividades que haces y rate-alas por desafio y habilidad.
+      Con el tiempo vas a ver donde esta tu zona de flow.
+    </p>
+
+    <!-- SECTION: Add activity -->
+    <section id="add-activity" class="section-card" aria-label="Agregar actividad">
+      <h2>Agregar actividad</h2>
+
+      <div class="form-group">
+        <label for="activity-name">Nombre de la actividad</label>
+        <input
+          type="text"
+          id="activity-name"
+          placeholder="Ej: dar una presentacion, escribir codigo, revisar PRs"
+          autocomplete="off"
+          aria-required="true"
+          aria-describedby="activity-hint"
+        />
+        <p id="activity-hint" class="text-muted text-sm" style="margin-top: 4px; margin-bottom: 0;">
+          Algo especifico que haces en el trabajo o en lo que te desarrollas profesionalmente.
+        </p>
+      </div>
+
+      <div class="rating-group" role="group" aria-labelledby="challenge-label">
+        <label id="challenge-label" for="challenge-rating">
+          Desafio (1 = muy facil, 5 = al limite)
+        </label>
+        <div class="rating-row">
+          <input
+            type="range"
+            id="challenge-rating"
+            min="1"
+            max="5"
+            value="3"
+            step="1"
+            aria-valuemin="1"
+            aria-valuemax="5"
+            aria-valuenow="3"
+            aria-labelledby="challenge-label"
+          />
+          <span class="rating-value" id="challenge-display" aria-live="polite">3</span>
+        </div>
+      </div>
+
+      <div class="rating-group" role="group" aria-labelledby="skill-label">
+        <label id="skill-label" for="skill-rating">
+          Habilidad (1 = principiante, 5 = experto)
+        </label>
+        <div class="rating-row">
+          <input
+            type="range"
+            id="skill-rating"
+            min="1"
+            max="5"
+            value="3"
+            step="1"
+            aria-valuemin="1"
+            aria-valuemax="5"
+            aria-valuenow="3"
+            aria-labelledby="skill-label"
+          />
+          <span class="rating-value" id="skill-display" aria-live="polite">3</span>
+        </div>
+      </div>
+
+      <div id="state-preview" class="state-preview state-flow" role="status" aria-live="polite">
+        Zona: Flow
+      </div>
+
+      <button
+        id="add-btn"
+        class="btn btn-primary"
+        type="button"
+        disabled
+        aria-disabled="true"
+      >
+        Agregar actividad
+      </button>
+    </section>
+
+    <!-- SECTION: Activity list -->
+    <section id="activity-list" class="section-card" aria-label="Actividades registradas">
+      <h2>Actividades</h2>
+      <div id="activities-container">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- SECTION: Flow chart -->
+    <section id="flow-chart" class="section-card" aria-label="Grafico de flow">
+      <h2>Mapa de flow</h2>
+      <p class="text-muted text-sm">
+        Cada punto es una actividad. El eje X muestra tu habilidad, el eje Y muestra el desafio.
+      </p>
+
+      <div id="chart-area">
+        <p id="chart-empty" class="chart-empty">Agrega actividades arriba para ver el grafico.</p>
+        <div id="chart-wrapper" class="chart-wrapper hidden" aria-hidden="true">
+          <canvas id="flow-canvas" width="400" height="400" aria-label="Grafico de dispersion de actividades por zona de flow"></canvas>
+        </div>
+      </div>
+
+      <div class="zone-legend" aria-label="Leyenda de zonas">
+        <div class="zone-legend-item">
+          <div class="legend-dot legend-dot-flow" aria-hidden="true"></div>
+          <span>Flow</span>
+        </div>
+        <div class="zone-legend-item">
+          <div class="legend-dot legend-dot-anxiety" aria-hidden="true"></div>
+          <span>Ansiedad</span>
+        </div>
+        <div class="zone-legend-item">
+          <div class="legend-dot legend-dot-boredom" aria-hidden="true"></div>
+          <span>Aburrimiento</span>
+        </div>
+        <div class="zone-legend-item">
+          <div class="legend-dot legend-dot-apathy" aria-hidden="true"></div>
+          <span>Apatia</span>
+        </div>
+      </div>
+
+      <!-- Insight shown when >= 3 activities -->
+      <div id="insight-area"></div>
+    </section>
+
+    <!-- SECTION: Export -->
+    <section id="export-section" class="section-card" aria-label="Exportar perfil">
+      <h2>Exportar a perfil</h2>
+      <p>
+        Exporta tus actividades de flow a tu perfil N1. El YAML descargado incluye el campo
+        <code>strengths.flow_activities</code> con todas tus actividades.
+      </p>
+      <button
+        id="export-profile"
+        class="btn btn-secondary"
+        type="button"
+      >
+        Exportar perfil YAML
+      </button>
+      <p id="export-confirm" class="hidden" role="status" aria-live="polite">
+        Guardado en tu perfil. Descarga iniciada.
+      </p>
+    </section>
+
+    <!-- Disclaimer -->
+    <div id="disclaimer-container"></div>
+
+  </main>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- N1 Assessment Engine -->
+  <script src="../assessment-engine.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ── CONSTANTS ──────────────────────── */
+      var STORAGE_KEY = "n1-flow-activities";
+
+      var ZONE_LABELS = {
+        flow:    "Flow",
+        anxiety: "Ansiedad",
+        boredom: "Aburrimiento",
+        apathy:  "Apatia"
+      };
+
+      var ZONE_COLORS = {
+        flow:    "#E85D26",
+        anxiety: "#e05252",
+        boredom: "#6b8cda",
+        apathy:  "#aaaaaa"
+      };
+
+      var ZONE_INSIGHTS = {
+        flow:    "Tu trabajo actual te genera mucho flow. Eso es un indicador clave de fit.",
+        anxiety: "Muchas de tus actividades estan por encima de tu nivel actual. Eso puede ser oportunidad de crecimiento — o una senal de burnout.",
+        boredom: "Estas underutilized en muchas actividades. Tu nivel de habilidad supera el desafio — busca proyectos mas exigentes.",
+        apathy:  "La mayoria de tus actividades no te generan compromiso. Vale la pena explorar si hay algo que naturalmente te absorba mas."
+      };
+
+      /* ── ZONE DERIVATION (pure function) ── */
+      /**
+       * Derives the flow zone from challenge and skill ratings.
+       * @param {number} challenge - 1-5
+       * @param {number} skill - 1-5
+       * @returns {"flow"|"anxiety"|"boredom"|"apathy"}
+       */
+      function getFlowZone(challenge, skill) {
+        var diff = Math.abs(challenge - skill);
+        if (challenge >= 3 && skill >= 3 && diff <= 1) return "flow";
+        if (challenge > skill + 1) return "anxiety";
+        if (skill > challenge + 1) return "boredom";
+        return "apathy";
+      }
+
+      /* ── STORAGE ─────────────────────────── */
+      function loadActivities() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return [];
+          var parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveActivities(activities) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(activities));
+        } catch (e) {
+          N1.showToast("No se pudo guardar. El almacenamiento local puede estar lleno.", 4000);
+        }
+      }
+
+      /* ── STATE ───────────────────────────── */
+      var activities = loadActivities();
+
+      /* ── DOM REFS ────────────────────────── */
+      var activityNameInput = document.getElementById("activity-name");
+      var challengeInput    = document.getElementById("challenge-rating");
+      var skillInput        = document.getElementById("skill-rating");
+      var challengeDisplay  = document.getElementById("challenge-display");
+      var skillDisplay      = document.getElementById("skill-display");
+      var statePreview      = document.getElementById("state-preview");
+      var addBtn            = document.getElementById("add-btn");
+      var activitiesContainer = document.getElementById("activities-container");
+      var chartEmpty        = document.getElementById("chart-empty");
+      var chartWrapper      = document.getElementById("chart-wrapper");
+      var insightArea       = document.getElementById("insight-area");
+      var exportBtn         = document.getElementById("export-profile");
+      var exportConfirm     = document.getElementById("export-confirm");
+      var toastEl           = document.getElementById("toast");
+
+      var flowChart = null; // Chart.js instance
+
+      /* ── UI: State preview ───────────────── */
+      function updateStatePreview() {
+        var challenge = parseInt(challengeInput.value, 10);
+        var skill     = parseInt(skillInput.value, 10);
+        var zone      = getFlowZone(challenge, skill);
+
+        // Clear classes and set new one
+        statePreview.className = "state-preview state-" + zone;
+
+        // Use textContent — no innerHTML
+        statePreview.textContent = "Zona: " + ZONE_LABELS[zone];
+        statePreview.setAttribute("aria-label", "Zona derivada: " + ZONE_LABELS[zone]);
+      }
+
+      /* ── UI: Activity list ───────────────── */
+      function renderActivityList() {
+        // Clear container safely
+        while (activitiesContainer.firstChild) {
+          activitiesContainer.removeChild(activitiesContainer.firstChild);
+        }
+
+        if (activities.length === 0) {
+          var emptyMsg = document.createElement("p");
+          emptyMsg.className = "activity-empty";
+          emptyMsg.textContent = "Todavia no hay actividades. Agrega la primera arriba.";
+          activitiesContainer.appendChild(emptyMsg);
+          return;
+        }
+
+        activities.forEach(function (act, index) {
+          var item = document.createElement("div");
+          item.className = "activity-item";
+          item.setAttribute("data-index", String(index));
+
+          // Info column
+          var info = document.createElement("div");
+          info.className = "activity-info";
+
+          var nameEl = document.createElement("div");
+          nameEl.className = "activity-name";
+          nameEl.textContent = act.activity; // textContent — safe for user input
+
+          var badges = document.createElement("div");
+          badges.className = "activity-badges";
+
+          // Challenge badge
+          var cBadge = document.createElement("span");
+          cBadge.className = "badge badge-challenge";
+          cBadge.textContent = "Desafio: " + act.challenge;
+
+          // Skill badge
+          var sBadge = document.createElement("span");
+          sBadge.className = "badge badge-skill";
+          sBadge.textContent = "Habilidad: " + act.skill;
+
+          // Zone badge
+          var zBadge = document.createElement("span");
+          zBadge.className = "badge badge-" + act.state;
+          zBadge.textContent = ZONE_LABELS[act.state];
+
+          badges.appendChild(cBadge);
+          badges.appendChild(sBadge);
+          badges.appendChild(zBadge);
+
+          info.appendChild(nameEl);
+          info.appendChild(badges);
+
+          // Delete button
+          var delBtn = document.createElement("button");
+          delBtn.className = "btn-delete";
+          delBtn.setAttribute("type", "button");
+          delBtn.setAttribute("aria-label", "Eliminar actividad: " + act.activity);
+          delBtn.setAttribute("data-index", String(index));
+          delBtn.textContent = "×";
+
+          delBtn.addEventListener("click", function () {
+            var idx = parseInt(this.getAttribute("data-index"), 10);
+            deleteActivity(idx);
+          });
+
+          item.appendChild(info);
+          item.appendChild(delBtn);
+          activitiesContainer.appendChild(item);
+        });
+      }
+
+      /* ── UI: Flow chart ──────────────────── */
+      function renderChart() {
+        if (activities.length === 0) {
+          chartEmpty.classList.remove("hidden");
+          chartWrapper.classList.add("hidden");
+          chartWrapper.setAttribute("aria-hidden", "true");
+          if (flowChart) {
+            flowChart.destroy();
+            flowChart = null;
+          }
+          return;
+        }
+
+        chartEmpty.classList.add("hidden");
+        chartWrapper.classList.remove("hidden");
+        chartWrapper.removeAttribute("aria-hidden");
+
+        // Build datasets — one dataset per zone so each can have a label
+        var datasets = {
+          flow:    { label: "Flow",          data: [], backgroundColor: ZONE_COLORS.flow,    pointRadius: 8, pointHoverRadius: 10 },
+          anxiety: { label: "Ansiedad",      data: [], backgroundColor: ZONE_COLORS.anxiety, pointRadius: 8, pointHoverRadius: 10 },
+          boredom: { label: "Aburrimiento",  data: [], backgroundColor: ZONE_COLORS.boredom, pointRadius: 8, pointHoverRadius: 10 },
+          apathy:  { label: "Apatia",        data: [], backgroundColor: ZONE_COLORS.apathy,  pointRadius: 8, pointHoverRadius: 10 }
+        };
+
+        activities.forEach(function (act) {
+          datasets[act.state].data.push({ x: act.skill, y: act.challenge, label: act.activity });
+        });
+
+        var chartDatasets = Object.keys(datasets).map(function (zone) {
+          return datasets[zone];
+        });
+
+        var canvas = document.getElementById("flow-canvas");
+
+        if (flowChart) {
+          flowChart.destroy();
+          flowChart = null;
+        }
+
+        // Custom background plugin: draws zone regions behind the scatter points
+        var backgroundPlugin = {
+          id: "zoneBackground",
+          beforeDraw: function (chart) {
+            var ctx = chart.ctx;
+            var xAxis = chart.scales["x"];
+            var yAxis = chart.scales["y"];
+
+            if (!xAxis || !yAxis) return;
+
+            // Helper: convert data coords to pixel coords
+            function px(val, axis) {
+              return axis.getPixelForValue(val);
+            }
+
+            // Axis boundaries in pixels
+            var x1 = px(1, xAxis);
+            var x5 = px(5, xAxis);
+            var y1 = px(1, yAxis);
+            var y5 = px(5, yAxis);
+
+            ctx.save();
+
+            // Clip to chart area
+            ctx.beginPath();
+            ctx.rect(xAxis.left, yAxis.top, xAxis.right - xAxis.left, yAxis.bottom - yAxis.top);
+            ctx.clip();
+
+            // Flow zone: challenge >= 3 AND skill >= 3 AND |c-s| <= 1
+            // Approximate as diagonal band — draw for each grid cell
+            ctx.globalAlpha = 0.07;
+
+            // Draw all background gray first
+            ctx.fillStyle = "#aaaaaa";
+            ctx.fillRect(xAxis.left, yAxis.top, xAxis.right - xAxis.left, yAxis.bottom - yAxis.top);
+
+            // Paint cells
+            for (var c = 1; c <= 5; c++) {
+              for (var s = 1; s <= 5; s++) {
+                var zone = getFlowZone(c, s);
+                var color;
+                if (zone === "flow")    color = "#E85D26";
+                else if (zone === "anxiety") color = "#e05252";
+                else if (zone === "boredom") color = "#6b8cda";
+                else                        color = "#aaaaaa";
+
+                // Cell bounds in data coords
+                var cellX1 = px(s - 0.5, xAxis);
+                var cellX2 = px(s + 0.5, xAxis);
+                var cellY1 = px(c + 0.5, yAxis); // higher y value = lower pixel
+                var cellY2 = px(c - 0.5, yAxis);
+
+                ctx.fillStyle = color;
+                ctx.fillRect(
+                  Math.min(cellX1, cellX2),
+                  Math.min(cellY1, cellY2),
+                  Math.abs(cellX2 - cellX1),
+                  Math.abs(cellY2 - cellY1)
+                );
+              }
+            }
+
+            ctx.globalAlpha = 1;
+            ctx.restore();
+          }
+        };
+
+        // Activity name labels drawn after scatter points
+        var labelPlugin = {
+          id: "activityLabels",
+          afterDraw: function (chart) {
+            var ctx = chart.ctx;
+            ctx.save();
+            ctx.font = "11px DM Sans, sans-serif";
+            ctx.fillStyle = "#1a1a1a";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "bottom";
+
+            chart.data.datasets.forEach(function (dataset) {
+              dataset.data.forEach(function (point) {
+                var meta = chart.getDatasetMeta(chart.data.datasets.indexOf(dataset));
+                if (!meta || !meta.data) return;
+
+                var idx = dataset.data.indexOf(point);
+                var el = meta.data[idx];
+                if (!el) return;
+
+                var x = el.x;
+                var y = el.y - 10; // offset above the point
+
+                // Truncate long names
+                var name = point.label || "";
+                if (name.length > 20) name = name.substring(0, 18) + "…";
+
+                ctx.fillText(name, x, y);
+              });
+            });
+
+            ctx.restore();
+          }
+        };
+
+        flowChart = new Chart(canvas, {
+          type: "scatter",
+          plugins: [backgroundPlugin, labelPlugin],
+          data: {
+            datasets: chartDatasets
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                  font: { family: "DM Sans, sans-serif", size: 12 },
+                  padding: 12,
+                  usePointStyle: true,
+                  pointStyleWidth: 10
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    var point = context.raw;
+                    return point.label + " — D:" + point.y + " H:" + point.x;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Habilidad",
+                  font: { family: "Space Mono, monospace", size: 11 }
+                },
+                min: 0.5,
+                max: 5.5,
+                ticks: {
+                  stepSize: 1,
+                  callback: function (value) {
+                    if (value >= 1 && value <= 5 && Number.isInteger(value)) return String(value);
+                    return "";
+                  }
+                },
+                grid: { color: "rgba(0,0,0,0.05)" }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Desafio",
+                  font: { family: "Space Mono, monospace", size: 11 }
+                },
+                min: 0.5,
+                max: 5.5,
+                ticks: {
+                  stepSize: 1,
+                  callback: function (value) {
+                    if (value >= 1 && value <= 5 && Number.isInteger(value)) return String(value);
+                    return "";
+                  }
+                },
+                grid: { color: "rgba(0,0,0,0.05)" }
+              }
+            }
+          }
+        });
+      }
+
+      /* ── UI: Insight ─────────────────────── */
+      function renderInsight() {
+        // Clear insight area
+        while (insightArea.firstChild) {
+          insightArea.removeChild(insightArea.firstChild);
+        }
+
+        if (activities.length < 3) return;
+
+        // Count by zone
+        var counts = { flow: 0, anxiety: 0, boredom: 0, apathy: 0 };
+        activities.forEach(function (act) {
+          counts[act.state] = (counts[act.state] || 0) + 1;
+        });
+
+        // Find dominant zone
+        var dominant = "apathy";
+        var maxCount = -1;
+        Object.keys(counts).forEach(function (zone) {
+          if (counts[zone] > maxCount) {
+            maxCount = counts[zone];
+            dominant = zone;
+          }
+        });
+
+        var box = document.createElement("div");
+        box.className = "insight-box";
+
+        // Stats line
+        var statsEl = document.createElement("p");
+        statsEl.className = "insight-stats";
+        var parts = [];
+        if (counts.flow > 0)    parts.push(counts.flow + " en flow");
+        if (counts.anxiety > 0) parts.push(counts.anxiety + " en ansiedad");
+        if (counts.boredom > 0) parts.push(counts.boredom + " en aburrimiento");
+        if (counts.apathy > 0)  parts.push(counts.apathy + " en apatia");
+        statsEl.textContent = "Tus actividades: " + parts.join(", ") + ".";
+
+        // Interpretation line
+        var interpEl = document.createElement("p");
+        interpEl.textContent = "La mayoria de tus actividades estan en zona " + ZONE_LABELS[dominant].toLowerCase() + ". " + ZONE_INSIGHTS[dominant];
+
+        box.appendChild(statsEl);
+        box.appendChild(interpEl);
+        insightArea.appendChild(box);
+      }
+
+      /* ── ACTIONS ─────────────────────────── */
+      function addActivity() {
+        var name = activityNameInput.value.trim();
+        if (!name) return;
+
+        var challenge = parseInt(challengeInput.value, 10);
+        var skill     = parseInt(skillInput.value, 10);
+        var state     = getFlowZone(challenge, skill);
+
+        // Build activity object (immutable — new object each time)
+        var newActivity = {
+          activity:  name,
+          challenge: challenge,
+          skill:     skill,
+          state:     state
+        };
+
+        // Create new array (immutable pattern)
+        activities = activities.concat([newActivity]);
+        saveActivities(activities);
+
+        // Reset form
+        activityNameInput.value = "";
+        challengeInput.value = "3";
+        skillInput.value = "3";
+        challengeDisplay.textContent = "3";
+        skillDisplay.textContent = "3";
+        challengeInput.setAttribute("aria-valuenow", "3");
+        skillInput.setAttribute("aria-valuenow", "3");
+        updateStatePreview();
+        updateAddButton();
+
+        renderActivityList();
+        renderChart();
+        renderInsight();
+
+        N1.showToast("Actividad agregada.", 2000);
+        activityNameInput.focus();
+      }
+
+      function deleteActivity(index) {
+        var act = activities[index];
+        if (!act) return;
+
+        // Create new array without the deleted item (immutable)
+        activities = activities.filter(function (_, i) { return i !== index; });
+        saveActivities(activities);
+
+        renderActivityList();
+        renderChart();
+        renderInsight();
+
+        N1.showToast("Actividad eliminada.", 2000);
+      }
+
+      function updateAddButton() {
+        var hasName = activityNameInput.value.trim().length > 0;
+        addBtn.disabled = !hasName;
+        addBtn.setAttribute("aria-disabled", String(!hasName));
+      }
+
+      /* ── EVENT LISTENERS ─────────────────── */
+      challengeInput.addEventListener("input", function () {
+        var val = this.value;
+        challengeDisplay.textContent = val;
+        this.setAttribute("aria-valuenow", val);
+        updateStatePreview();
+      });
+
+      skillInput.addEventListener("input", function () {
+        var val = this.value;
+        skillDisplay.textContent = val;
+        this.setAttribute("aria-valuenow", val);
+        updateStatePreview();
+      });
+
+      activityNameInput.addEventListener("input", updateAddButton);
+
+      activityNameInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && !addBtn.disabled) {
+          addActivity();
+        }
+      });
+
+      addBtn.addEventListener("click", function () {
+        if (!this.disabled) addActivity();
+      });
+
+      exportBtn.addEventListener("click", function () {
+        // Build flow activities array in profile format
+        var flowActivities = activities.map(function (a) {
+          return {
+            activity:  a.activity,
+            challenge: a.challenge,
+            skill:     a.skill,
+            state:     a.state
+          };
+        });
+
+        // Load existing profile, save flow_activities, export YAML
+        N1.saveToProfile("strengths", { flow_activities: flowActivities });
+        N1.exportYAML();
+
+        exportConfirm.classList.remove("hidden");
+
+        // Hide confirmation after 4 seconds
+        setTimeout(function () {
+          exportConfirm.classList.add("hidden");
+        }, 4000);
+      });
+
+      /* ── INIT ────────────────────────────── */
+      (function init() {
+        // Check localStorage availability
+        N1.initLocalStorageSafe();
+
+        // Append safety disclaimer
+        var disclaimerContainer = document.getElementById("disclaimer-container");
+        if (disclaimerContainer) {
+          disclaimerContainer.appendChild(N1.getSafetyDisclaimer());
+        }
+
+        // Set initial state preview
+        updateStatePreview();
+
+        // Render list and chart from stored activities
+        renderActivityList();
+        renderChart();
+        renderInsight();
+      })();
+
+    })();
+  </script>
+
+</body>
+</html>
