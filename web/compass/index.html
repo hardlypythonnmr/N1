@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compass CAAS-12 — Adaptabilidad de Carrera | N1</title>
+  <meta name="description" content="Evaluacion validada de adaptabilidad de carrera. 12 preguntas, resultados en 5 minutos. Basado en el modelo CAAS de Savickas (2012)." />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" aria-label="Navegacion principal">
+    <a href="../index.html" class="nav-logo">N<span>1</span></a>
+    <a href="../index.html" class="nav-back">Volver al inicio</a>
+  </nav>
+
+  <main class="container">
+
+    <!-- DISCLAIMER (from safety-protocol.md, Section 1) -->
+    <div class="disclaimer" id="disclaimer" role="note" aria-label="Aviso importante">
+      <p><strong>N1 es una herramienta de orientacion profesional basada en investigacion.</strong></p>
+      <p>No es terapia, no es asesoria psicologica, y no reemplaza la orientacion de un profesional de salud mental o coach certificado.</p>
+      <p>Si estas atravesando una crisis emocional severa, te pido que busques apoyo profesional: <strong>Colombia: Linea 106</strong> (salud mental, 24 horas) — <strong>Internacional: findahelpline.com</strong></p>
+    </div>
+
+    <!-- INTRO SCREEN -->
+    <div id="intro-screen" class="card mt-lg">
+      <h1>Compass CAAS-12</h1>
+      <p class="text-muted mt-sm">Medicion validada de adaptabilidad de carrera. 12 preguntas sobre como enfrentas tu desarrollo profesional. Basado en el modelo de Savickas (2012).</p>
+      <p class="mt-md">El instrumento mide cuatro dimensiones: <strong>Concern</strong> (orientacion al futuro), <strong>Control</strong> (agencia), <strong>Curiosity</strong> (exploracion) y <strong>Confidence</strong> (confianza en ejecutar).</p>
+      <p class="text-sm text-muted mt-md">Savickas et al. (2012) — Career Adapt-Abilities Scale. Validado en 13 paises. Tiempo estimado: 4-5 minutos.</p>
+      <div class="btn-group mt-xl">
+        <button id="start-btn" class="btn btn-primary">Empezar la evaluacion</button>
+      </div>
+    </div>
+
+    <!-- ASSESSMENT CONTAINER (N1.createAssessment renders here) -->
+    <div id="assessment-container" class="hidden"></div>
+
+    <!-- RESULTS SCREEN (hidden initially) -->
+    <section id="results-screen" class="hidden" role="region" aria-label="Resultados Compass CAAS-12">
+
+      <div class="results-screen">
+
+        <!-- Header -->
+        <div class="results-header">
+          <h1>Tu perfil de adaptabilidad</h1>
+          <p class="text-muted">CAAS-12 — Savickas (2012)</p>
+        </div>
+
+        <!-- Radar Chart -->
+        <div class="chart-container" id="chart-container">
+          <canvas id="radar-canvas" width="500" height="400" aria-label="Grafico de radar con tus cuatro dimensiones de adaptabilidad de carrera"></canvas>
+        </div>
+
+        <!-- Overall score -->
+        <div class="card">
+          <p class="text-sm text-muted font-heading" style="text-transform:uppercase; letter-spacing:0.05em;">Puntuacion global</p>
+          <p id="overall-score-text" class="mt-sm" style="font-size:1.1rem;"></p>
+        </div>
+
+        <!-- Per-dimension interpretations (populated via DOM API) -->
+        <div id="interpretations"></div>
+
+        <!-- Cultural calibration note (per WEB-10) -->
+        <div class="disclaimer">
+          <p id="cultural-note" class="text-sm"></p>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="results-actions">
+          <button id="btn-scorecard" class="btn btn-primary">Descargar scorecard</button>
+          <button id="btn-linkedin" class="btn btn-secondary">Copiar texto LinkedIn</button>
+          <button id="btn-export" class="btn btn-secondary">Exportar perfil YAML</button>
+          <a href="../index.html" class="btn btn-ghost">Volver al inicio</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast notification container -->
+  <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- SCRIPTS: chart.js CDN, then assessment engine, then inline logic -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="../assessment-engine.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      /* ── CAAS-12 QUESTIONS ─────────────────────────────────────── */
+
+      var QUESTIONS = [
+        {
+          id: "c1",
+          text: "Pensar en como sera mi futuro profesional",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c2",
+          text: "Darme cuenta de que las decisiones de hoy afectan mi futuro",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c3",
+          text: "Prepararme para el futuro",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c4",
+          text: "Mantener mis decisiones de carrera en mis propias manos",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c5",
+          text: "Tomar responsabilidad por mis acciones",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c6",
+          text: "Defender mis creencias y valores",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c7",
+          text: "Explorar el ambiente que me rodea",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c8",
+          text: "Buscar oportunidades para crecer como persona",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c9",
+          text: "Imaginarme como seria en un nuevo trabajo",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c10",
+          text: "Trabajar eficientemente",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c11",
+          text: "Aprender las habilidades requeridas para un nuevo trabajo",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        },
+        {
+          id: "c12",
+          text: "Superar obstaculos",
+          type: "likert5",
+          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
+        }
+      ];
+
+      /* ── SCORING ─────────────────────────────────────────────── */
+
+      function calcSubscale(answers, ids) {
+        var vals = ids.map(function (id) { return parseFloat(answers[id]) || 0; });
+        return Math.round((vals.reduce(function (a, b) { return a + b; }, 0) / vals.length) * 10) / 10;
+      }
+
+      /* ── INTERPRETATION TEXTS ────────────────────────────────── */
+
+      var INTERPRETATIONS = {
+        concern: {
+          high: "Tenes una orientacion solida hacia tu futuro profesional. Planeás con anticipacion y ves las decisiones de hoy como inversiones para manana.",
+          low:  "Tu orientacion hacia el futuro profesional tiene espacio para crecer. Hacer planes concretos a 3-6 meses puede ayudarte a reducir incertidumbre."
+        },
+        control: {
+          high: "Asumis la responsabilidad de tus decisiones de carrera con confianza. Eso es una fortaleza enorme en contextos de cambio.",
+          low:  "Hay oportunidad de fortalecer tu sentido de agencia sobre tu carrera. Empezá identificando una decision pequena que esta totalmente en tus manos."
+        },
+        curiosity: {
+          high: "Tu disposicion a explorar posibilidades es un activo clave para la transicion. Las personas con alta curiosidad se adaptan mas rapido a mercados cambiantes.",
+          low:  "Desarrollar la curiosidad sobre tu entorno profesional puede abrirte puertas que no ves aun. Probá hablar con una persona de un campo diferente esta semana."
+        },
+        confidence: {
+          high: "Tenes una confianza solida en tu capacidad para ejecutar. Eso facilita asumir nuevos desafios sin paralizarte.",
+          low:  "Tu confianza en ejecutar tiene espacio para crecer. Identificar tus 3 logros mas concretos del ultimo ano puede recalibrar esa percepcion."
+        }
+      };
+
+      var DIMENSION_LABELS = {
+        concern:    "Concern",
+        control:    "Control",
+        curiosity:  "Curiosity",
+        confidence: "Confidence"
+      };
+
+      /* ── DOM HELPERS (no innerHTML on variable data) ─────────── */
+
+      function clearChildren(el) {
+        while (el.firstChild) {
+          el.removeChild(el.firstChild);
+        }
+      }
+
+      /* ── RENDER RESULTS ──────────────────────────────────────── */
+
+      function renderResults(answers) {
+        var concern    = calcSubscale(answers, ["c1", "c2", "c3"]);
+        var control    = calcSubscale(answers, ["c4", "c5", "c6"]);
+        var curiosity  = calcSubscale(answers, ["c7", "c8", "c9"]);
+        var confidence = calcSubscale(answers, ["c10", "c11", "c12"]);
+
+        var overall = Math.round(((concern + control + curiosity + confidence) / 4) * 10) / 10;
+
+        /* Hide assessment, show results */
+        var assessmentEl = document.getElementById("assessment-container");
+        var resultsEl    = document.getElementById("results-screen");
+        var introEl      = document.getElementById("intro-screen");
+
+        if (assessmentEl) { assessmentEl.className = "hidden"; }
+        if (introEl) { introEl.className = "hidden"; }
+        if (resultsEl) { resultsEl.className = ""; }
+
+        /* Overall score text (textContent only) */
+        var overallEl = document.getElementById("overall-score-text");
+        if (overallEl) {
+          overallEl.textContent = "Puntuacion global: " + overall + " / 5 — medida de tu capacidad global para adaptarte a cambios en la carrera.";
+        }
+
+        /* Radar chart (Chart.js — no user data in DOM, only in canvas context) */
+        var canvas = document.getElementById("radar-canvas");
+        if (canvas) {
+          new Chart(canvas, {
+            type: "radar",
+            data: {
+              labels: ["Concern", "Control", "Curiosity", "Confidence"],
+              datasets: [{
+                label: "Tu perfil",
+                data: [concern, control, curiosity, confidence],
+                backgroundColor: "rgba(232, 93, 38, 0.2)",
+                borderColor: "#E85D26",
+                pointBackgroundColor: "#E85D26",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "#E85D26"
+              }]
+            },
+            options: {
+              scales: {
+                r: {
+                  min: 1,
+                  max: 5,
+                  ticks: {
+                    stepSize: 1,
+                    font: { family: "'DM Sans', sans-serif", size: 11 }
+                  },
+                  pointLabels: {
+                    font: { family: "'Space Mono', monospace", size: 12, weight: "700" }
+                  }
+                }
+              },
+              plugins: {
+                legend: { display: false }
+              }
+            }
+          });
+        }
+
+        /* Per-dimension interpretations — DOM API only, no innerHTML */
+        var intContainer = document.getElementById("interpretations");
+        if (intContainer) {
+          clearChildren(intContainer);
+
+          var dims = [
+            { key: "concern",    score: concern },
+            { key: "control",    score: control },
+            { key: "curiosity",  score: curiosity },
+            { key: "confidence", score: confidence }
+          ];
+
+          dims.forEach(function (dim) {
+            var block = document.createElement("div");
+            block.className = "interpretation mt-md";
+
+            /* Header row: label + score badge */
+            var header = document.createElement("div");
+            header.style.display = "flex";
+            header.style.alignItems = "center";
+            header.style.justifyContent = "space-between";
+            header.style.marginBottom = "8px";
+
+            var label = document.createElement("h3");
+            label.textContent = DIMENSION_LABELS[dim.key];
+
+            var badge = document.createElement("span");
+            badge.className = "tag tag-orange";
+            badge.textContent = dim.score.toFixed(1) + " / 5";
+
+            header.appendChild(label);
+            header.appendChild(badge);
+
+            /* Interpretation text */
+            var text = document.createElement("p");
+            var isHigh = dim.score >= 4;
+            text.textContent = INTERPRETATIONS[dim.key][isHigh ? "high" : "low"];
+
+            block.appendChild(header);
+            block.appendChild(text);
+            intContainer.appendChild(block);
+          });
+        }
+
+        /* Cultural calibration note (per WEB-10) — textContent only */
+        var culturalEl = document.getElementById("cultural-note");
+        if (culturalEl) {
+          culturalEl.textContent = "Nota: en contextos con alta incertidumbre economica como LATAM, scores mas bajos en Concern y Control son comunes y no indican un deficit. Este perfil es un punto de partida, no un juicio. (Savickas & Porfeli, 2012 — validacion en 13 paises.)";
+        }
+
+        /* Save to profile — identity.adaptability */
+        N1.saveToProfile("identity", {
+          completed: true,
+          mode: "quick",
+          adaptability: {
+            concern:    concern,
+            control:    control,
+            curiosity:  curiosity,
+            confidence: confidence
+          }
+        });
+
+        /* Wire action buttons */
+        wireButtons(concern, control, curiosity, confidence);
+      }
+
+      /* ── ACTION BUTTONS ──────────────────────────────────────── */
+
+      function getTop2(concern, control, curiosity, confidence) {
+        var dims = [
+          { name: "Concern",    score: concern },
+          { name: "Control",    score: control },
+          { name: "Curiosity",  score: curiosity },
+          { name: "Confidence", score: confidence }
+        ];
+        dims.sort(function (a, b) { return b.score - a.score; });
+        return dims[0].name + " y " + dims[1].name;
+      }
+
+      function wireButtons(concern, control, curiosity, confidence) {
+        /* Scorecard download */
+        var btnScorecard = document.getElementById("btn-scorecard");
+        if (btnScorecard) {
+          btnScorecard.addEventListener("click", function () {
+            N1.generateScorecard({
+              title: "Compass — CAAS-12",
+              scores: [
+                { label: "Concern",    value: concern,    max: 5 },
+                { label: "Control",    value: control,    max: 5 },
+                { label: "Curiosity",  value: curiosity,  max: 5 },
+                { label: "Confidence", value: confidence, max: 5 }
+              ],
+              interpretation: "Perfil de adaptabilidad de carrera",
+              chartType: "radar"
+            });
+          });
+        }
+
+        /* Copy LinkedIn text */
+        var btnLinkedin = document.getElementById("btn-linkedin");
+        if (btnLinkedin) {
+          btnLinkedin.addEventListener("click", function () {
+            var top2 = getTop2(concern, control, curiosity, confidence);
+            var linkedInText = "Hice el CAAS-12 de adaptabilidad de carrera en N1. Mis dimensiones mas fuertes: " + top2 + ". Herramienta gratuita: https://n1career.github.io/N1/compass/ #CareerAdaptability #N1";
+            N1.copyLinkedInText(linkedInText).then(function () {
+              N1.showToast("Texto copiado al portapapeles");
+            }).catch(function () {
+              N1.showToast("No se pudo copiar — intentá manualmente");
+            });
+          });
+        }
+
+        /* Export YAML */
+        var btnExport = document.getElementById("btn-export");
+        if (btnExport) {
+          btnExport.addEventListener("click", function () {
+            N1.exportYAML("identity", {
+              completed: true,
+              mode: "quick",
+              adaptability: {
+                concern:    concern,
+                control:    control,
+                curiosity:  curiosity,
+                confidence: confidence
+              }
+            });
+            N1.showToast("Perfil YAML descargado");
+          });
+        }
+      }
+
+      /* ── BOOT ────────────────────────────────────────────────── */
+
+      document.addEventListener("DOMContentLoaded", function () {
+        /* localStorage safety check */
+        N1.initLocalStorageSafe();
+
+        var startBtn = document.getElementById("start-btn");
+        if (startBtn) {
+          startBtn.addEventListener("click", function () {
+            var introEl     = document.getElementById("intro-screen");
+            var containerEl = document.getElementById("assessment-container");
+            if (introEl) { introEl.className = "hidden"; }
+            if (containerEl) { containerEl.className = ""; }
+
+            N1.createAssessment({
+              containerId: "assessment-container",
+              questions: QUESTIONS,
+              onComplete: function (answers) {
+                renderResults(answers);
+              }
+            });
+          });
+        }
+      });
+
+    }());
+  </script>
+
+</body>
+</html>
