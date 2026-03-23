@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 01-03-PLAN.md (web/ghost-check/index.html)
-last_updated: "2026-03-23T21:33:40.298Z"
+stopped_at: Completed 01-06-PLAN.md (web/mlq/index.html)
+last_updated: "2026-03-23T21:34:15.020Z"
 progress:
   total_phases: 8
   completed_phases: 1
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 01 (static-web-tools) — EXECUTING
-Plan: 6 of 8
+Plan: 8 of 8
 
 ## Performance Metrics
 
@@ -56,6 +56,9 @@ _Updated after each plan completion_
 | Phase 01-static-web-tools P01 | 397s | 2 tasks | 2 files |
 | Phase 01-static-web-tools P03 | 184s | 1 tasks | 1 files |
 | Phase 01-static-web-tools P02 | 3m | 1 tasks | 1 files |
+| Phase 01-static-web-tools P04 | 8m | 1 tasks | 1 files |
+| Phase 01-static-web-tools P06 | 200s | 1 tasks | 1 files |
+| Phase 01-static-web-tools P07 | 191s | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -89,6 +92,13 @@ Recent decisions affecting current work:
 - [Phase 01-static-web-tools]: Runway Calculator has no saveToProfile — financial data not in Profile Interchange Format schema by design
 - [Phase 01-static-web-tools]: clearChildren() via while loop replaces innerHTML=empty — avoids security hook, equally safe, more explicit
 - [Phase 01-static-web-tools]: Ghost Check LinkedIn text built from score+verdict only — user-pasted job posting text never included in shared content
+- [Phase 01-static-web-tools]: Triage quiz uses inline JS state machine (not N1.createAssessment) — landing page has choice-only questions, no Likert scale
+- [Phase 01-static-web-tools]: Email form: fetch no-cors + form.submit() fallback — Buttondown API lacks CORS headers, fallback covers all browsers
+- [Phase 01-static-web-tools]: Chart.js radar type loaded via CDN after assessment-engine.js — dependency order matters for N1 global availability on Compass tool
+- [Phase 01-static-web-tools]: clearChildren() helper for DOM container clearing — avoids direct clear and maintains XSS prevention pattern
+- [Phase 01-static-web-tools]: MLQ-10 quadrant canvas uses 300x300px in-tool view; scorecard PNG uses N1.generateScorecard 1200x628
+- [Phase 01-static-web-tools]: Flow Logger uses separate n1-flow-activities localStorage key — persistent tool, not one-time assessment
+- [Phase 01-static-web-tools]: Chart.js zone background drawn as 5x5 cell grid via custom beforeDraw plugin — avoids diagonal band math complexity
 
 ### Pending Todos
 
@@ -100,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-23T21:33:23.558Z
-Stopped at: Completed 01-03-PLAN.md (web/ghost-check/index.html)
+Last session: 2026-03-23T21:34:12.858Z
+Stopped at: Completed 01-06-PLAN.md (web/mlq/index.html)
 Resume file: None

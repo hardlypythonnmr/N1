@@ -67,10 +67,10 @@ Plans:
 - [x] 01-01-PLAN.md — Shared CSS design system + assessment engine JS (Wave 1)
 - [x] 01-02-PLAN.md — Landing page + triage quiz + email capture (Wave 2)
 - [x] 01-03-PLAN.md — Ghost Check tool (Wave 2)
-- [ ] 01-04-PLAN.md — Compass / CAAS-12 assessment (Wave 2)
+- [x] 01-04-PLAN.md — Compass / CAAS-12 assessment (Wave 2)
 - [ ] 01-05-PLAN.md — Bull's Eye values alignment tool (Wave 2)
-- [ ] 01-06-PLAN.md — MLQ-10 meaning in life questionnaire (Wave 2)
-- [ ] 01-07-PLAN.md — Flow Activity Logger (Wave 2)
+- [x] 01-06-PLAN.md — MLQ-10 meaning in life questionnaire (Wave 2)
+- [x] 01-07-PLAN.md — Flow Activity Logger (Wave 2)
 - [x] 01-08-PLAN.md — Runway Calculator (Wave 2)
 
 ### Phase 2: AI Skills
@@ -156,7 +156,7 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 | Phase                       | Plans Complete | Status      | Completed  |
 | --------------------------- | -------------- | ----------- | ---------- |
 | 0. Foundation               | 7/7            | Complete    | 2026-03-23 |
-| 1. Static Web Tools         | 0/8            | Not started | -          |
+| 1. Static Web Tools         | 7/8 | In Progress|  |
 | 2. AI Skills                | 0/TBD          | Not started | -          |
 | 3. Integration + Scorecards | 0/TBD          | Not started | -          |
 | 4. ChatGPT GPTs             | 0/TBD          | Not started | -          |

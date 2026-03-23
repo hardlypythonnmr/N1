@@ -18,7 +18,7 @@
 
 ### Static Web Tools
 
-- [ ] **WEB-01**: Landing page with N1 brand, triage quiz, tool directory, email capture
+- [x] **WEB-01**: Landing page with N1 brand, triage quiz, tool directory, email capture
 - [x] **WEB-02**: Shared CSS stylesheet (mobile-responsive, N1 brand colors)
 - [x] **WEB-03**: Ghost Check — paste job posting, get ghost score + signal breakdown + shareable scorecard
 - [ ] **WEB-04**: Compass / CAAS-12 — 12-item career adaptability assessment with radar chart + profile export
@@ -120,7 +120,7 @@
 | FOUN-06     | Phase 0 | Complete |
 | FOUN-07     | Phase 0 | Complete |
 | FOUN-08     | Phase 0 | Complete |
-| WEB-01      | Phase 1 | Pending |
+| WEB-01      | Phase 1 | Complete |
 | WEB-02      | Phase 1 | Complete |
 | WEB-03      | Phase 1 | Complete |
 | WEB-04      | Phase 1 | Pending |
