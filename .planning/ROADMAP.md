@@ -35,7 +35,16 @@ Decimal phases appear between their surrounding integers in numeric order.
 2. Profile Interchange Format YAML schema is defined with version protocol and a blank template users can copy
 3. Shared foundation files (prompting stack, voice guide, safety protocol, research base) exist in shared/ and fit within token budget
 4. README.md describes the brand, architecture, tool directory, and career path taxonomy accurately
-   **Plans**: TBD
+**Plans**: 7 plans
+
+Plans:
+- [ ] 00-01-PLAN.md — CLAUDE.md project instructions
+- [ ] 00-02-PLAN.md — Profile Interchange Format v1 (schema + template)
+- [ ] 00-03-PLAN.md — Shared prompting stack
+- [ ] 00-04-PLAN.md — Shared voice guide
+- [ ] 00-05-PLAN.md — Shared safety protocol
+- [ ] 00-06-PLAN.md — Shared research base
+- [ ] 00-07-PLAN.md — README.md
 
 ### Phase 1: Static Web Tools
 
@@ -134,7 +143,7 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 
 | Phase                       | Plans Complete | Status      | Completed |
 | --------------------------- | -------------- | ----------- | --------- |
-| 0. Foundation               | 0/TBD          | Not started | -         |
+| 0. Foundation               | 0/7            | Planning    | -         |
 | 1. Static Web Tools         | 0/TBD          | Not started | -         |
 | 2. AI Skills                | 0/TBD          | Not started | -         |
 | 3. Integration + Scorecards | 0/TBD          | Not started | -         |
