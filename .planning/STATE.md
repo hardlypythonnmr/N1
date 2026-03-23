@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-23T21:56:10.579Z"
+status: Ready to execute
+stopped_at: Completed 02-ai-skills-03-PLAN.md
+last_updated: "2026-03-23T22:19:12.075Z"
 progress:
   total_phases: 8
   completed_phases: 2
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 20
+  completed_plans: 17
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** Every person can build a career strategy grounded in validated self-knowledge — free, forever.
-**Current focus:** Phase 01 — static-web-tools
+**Current focus:** Phase 02 — ai-skills
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (ai-skills) — EXECUTING
+Plan: 3 of 5
 
 ## Performance Metrics
 
@@ -60,6 +60,8 @@ _Updated after each plan completion_
 | Phase 01-static-web-tools P06 | 200s | 1 tasks | 1 files |
 | Phase 01-static-web-tools P07 | 191s | 1 tasks | 1 files |
 | Phase 01-static-web-tools P05 | 353s | 1 tasks | 1 files |
+| Phase 02-ai-skills P04 | 2m | 1 tasks | 1 files |
+| Phase 02-ai-skills P03 | 2 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -101,6 +103,10 @@ Recent decisions affecting current work:
 - [Phase 01-static-web-tools]: Flow Logger uses separate n1-flow-activities localStorage key — persistent tool, not one-time assessment
 - [Phase 01-static-web-tools]: Chart.js zone background drawn as 5x5 cell grid via custom beforeDraw plugin — avoids diagonal band math complexity
 - [Phase 01-static-web-tools]: Custom Canvas 2D for bull's eye diagram — Chart.js polar area does not match ACT format; arc/fill per quadrant gives exact control over ring shading
+- [Phase 02-ai-skills]: Conversational CAAS-12 with explicit caveat: skill uses 12 questions conversationally with mandatory disclosure that this is not equivalent to standardized administration
+- [Phase 02-ai-skills]: LATAM Control calibration inline: normalization of lower Control scores placed directly at subscale level and snapshot output — not left to inference
+- [Phase 02-ai-skills]: Ghost Check SKILL.md score scale: 0-100 where higher = more real (inverted from web tool ghost-signal accumulation)
+- [Phase 02-ai-skills]: SKILL.md loads only 3 shared files (not full prompting-stack) per D-03 4-6K token budget; Reflexion checklist embedded inline
 
 ### Pending Todos
 
@@ -112,6 +118,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-23T21:56:10.574Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-ai-skills/02-CONTEXT.md
+Last session: 2026-03-23T22:19:12.070Z
+Stopped at: Completed 02-ai-skills-03-PLAN.md
+Resume file: None

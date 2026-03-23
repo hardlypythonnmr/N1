@@ -35,10 +35,10 @@
 - [ ] **SKILL-02**: n1-construye-afuera — career strategy tools (CV audit, interview prep, negotiate, STAR builder, profile builder, network map, job hunt, layoff kit, grow where you are) adapted per career path
 - [ ] **SKILL-03**: n1-system — full integrated experience (triage → busca adentro → integration → construye afuera → evolution)
 - [ ] **SKILL-04**: n1-ghost-check — standalone ghost job detector with optional profile enhancement
-- [ ] **SKILL-05**: n1-compass — standalone career readiness check (CAAS-12 + values quick-check + self-efficacy pulse)
-- [ ] **SKILL-06**: All skills load from shared/ foundation (DRY architecture)
-- [ ] **SKILL-07**: All skills work standalone (no profile required) and enhanced (with profile)
-- [ ] **SKILL-08**: All skills include scope disclaimer, safety protocol, and cultural calibration
+- [x] **SKILL-05**: n1-compass — standalone career readiness check (CAAS-12 + values quick-check + self-efficacy pulse)
+- [x] **SKILL-06**: All skills load from shared/ foundation (DRY architecture)
+- [x] **SKILL-07**: All skills work standalone (no profile required) and enhanced (with profile)
+- [x] **SKILL-08**: All skills include scope disclaimer, safety protocol, and cultural calibration
 
 ### Integration
 
@@ -134,10 +134,10 @@
 | SKILL-02    | Phase 2 | Pending |
 | SKILL-03    | Phase 2 | Pending |
 | SKILL-04    | Phase 2 | Pending |
-| SKILL-05    | Phase 2 | Pending |
-| SKILL-06    | Phase 2 | Pending |
-| SKILL-07    | Phase 2 | Pending |
-| SKILL-08    | Phase 2 | Pending |
+| SKILL-05    | Phase 2 | Complete |
+| SKILL-06    | Phase 2 | Complete |
+| SKILL-07    | Phase 2 | Complete |
+| SKILL-08    | Phase 2 | Complete |
 | INTG-01     | Phase 3 | Pending |
 | INTG-02     | Phase 3 | Pending |
 | INTG-03     | Phase 3 | Pending |

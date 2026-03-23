@@ -90,8 +90,8 @@ Plans:
 
 - [ ] 02-01-PLAN.md — n1-busca-adentro (SKILL.md + 4 dimension reference files) (Wave 1)
 - [ ] 02-02-PLAN.md — n1-construye-afuera (SKILL.md + 3 career reference files) (Wave 1)
-- [ ] 02-03-PLAN.md — n1-ghost-check (SKILL.md, standalone) (Wave 1)
-- [ ] 02-04-PLAN.md — n1-compass (SKILL.md, standalone) (Wave 1)
+- [x] 02-03-PLAN.md — n1-ghost-check (SKILL.md, standalone) (Wave 1)
+- [x] 02-04-PLAN.md — n1-compass (SKILL.md, standalone) (Wave 1)
 - [ ] 02-05-PLAN.md — n1-system (SKILL.md, full integrated orchestrator) (Wave 2)
 
 ### Phase 3: Integration + Scorecards
