@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N1 — El Sistema Eres Tu</title>
+  <meta name="description" content="Herramientas gratuitas de estrategia de carrera basadas en investigación. Busca adentro. Construye afuera.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── LANDING-SPECIFIC STYLES ── */
+
+    /* Hero */
+    .hero {
+      padding: var(--space-2xl) var(--space-md);
+      text-align: center;
+      background-color: var(--n1-white);
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-2xl);
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .stat-block {
+      background-color: var(--n1-surface);
+      border-radius: var(--n1-radius-sm);
+      padding: var(--space-md) var(--space-lg);
+      text-align: left;
+      border-left: 3px solid var(--n1-orange);
+    }
+
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--n1-orange);
+      line-height: 1.1;
+      margin-bottom: var(--space-xs);
+    }
+
+    .stat-text {
+      font-size: 0.9375rem;
+      color: var(--n1-black);
+      margin-bottom: var(--space-xs);
+    }
+
+    .stat-source {
+      font-size: 0.75rem;
+      color: var(--n1-muted);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--n1-orange);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-sub {
+      font-size: 1.0625rem;
+      color: var(--n1-muted);
+      max-width: 480px;
+      margin: 0 auto var(--space-xl);
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Triage section */
+    .triage {
+      background-color: var(--n1-surface);
+      padding: var(--space-2xl) var(--space-md);
+    }
+
+    .section-container {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--n1-orange);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--n1-black);
+      margin-bottom: var(--space-sm);
+    }
+
+    .section-desc {
+      color: var(--n1-muted);
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-xl);
+    }
+
+    .triage-card {
+      background: var(--n1-white);
+      border: 1px solid var(--n1-border);
+      border-radius: var(--n1-radius);
+      padding: var(--space-xl);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* Triage progress */
+    .triage-progress {
+      display: flex;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-xl);
+    }
+
+    .triage-step {
+      flex: 1;
+      height: 4px;
+      background-color: var(--n1-border);
+      border-radius: 999px;
+      transition: background-color 0.3s ease;
+    }
+
+    .triage-step.active {
+      background-color: var(--n1-orange);
+    }
+
+    .triage-step.done {
+      background-color: var(--n1-orange);
+      opacity: 0.5;
+    }
+
+    /* Triage question */
+    .triage-question {
+      display: none;
+    }
+
+    .triage-question.visible {
+      display: block;
+    }
+
+    .triage-q-label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      color: var(--n1-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-sm);
+    }
+
+    .triage-q-text {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--n1-black);
+      margin-bottom: var(--space-lg);
+      line-height: 1.35;
+    }
+
+    /* Triage results */
+    .triage-results {
+      display: none;
+    }
+
+    .triage-results.visible {
+      display: block;
+    }
+
+    .triage-results-label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      color: var(--n1-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-sm);
+    }
+
+    .triage-results-title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--n1-black);
+      margin-bottom: var(--space-lg);
+    }
+
+    .recommended-tools {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .recommended-tool-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background-color: #fff8f5;
+      border: 2px solid var(--n1-orange);
+      border-radius: var(--n1-radius-sm);
+      text-decoration: none;
+      color: var(--n1-black);
+      font-weight: 600;
+      transition: background-color var(--transition-fast);
+    }
+
+    .recommended-tool-item:hover {
+      background-color: #ffe9df;
+      text-decoration: none;
+      color: var(--n1-black);
+    }
+
+    .recommended-tool-rank {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--n1-white);
+      background-color: var(--n1-orange);
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .triage-restart {
+      font-size: 0.875rem;
+      color: var(--n1-muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    .triage-restart:hover {
+      color: var(--n1-black);
+    }
+
+    /* Tools directory */
+    .tools {
+      padding: var(--space-2xl) var(--space-md);
+      background-color: var(--n1-white);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .tool-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--n1-white);
+      border: 1px solid var(--n1-border);
+      border-radius: var(--n1-radius);
+      padding: var(--space-lg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-decoration: none;
+      color: var(--n1-black);
+      transition: box-shadow var(--transition-base), border-color var(--transition-base);
+    }
+
+    .tool-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      border-color: var(--n1-orange);
+      text-decoration: none;
+      color: var(--n1-black);
+    }
+
+    .tool-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .tool-card-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--n1-black);
+      line-height: 1.2;
+    }
+
+    .tool-card-desc {
+      font-size: 0.875rem;
+      color: var(--n1-muted);
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: var(--space-md);
+    }
+
+    .tool-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .tool-card-link {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--n1-orange);
+      text-decoration: none;
+    }
+
+    .tool-card-link:hover {
+      opacity: 0.8;
+      text-decoration: none;
+    }
+
+    /* Email capture */
+    .email-capture {
+      background-color: var(--n1-black);
+      padding: var(--space-2xl) var(--space-md);
+      text-align: center;
+    }
+
+    .email-capture .section-label {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .email-capture .section-title {
+      color: var(--n1-white);
+    }
+
+    .email-capture .section-desc {
+      color: rgba(255,255,255,0.65);
+    }
+
+    .email-form {
+      display: flex;
+      gap: var(--space-sm);
+      max-width: 440px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .email-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px var(--space-md);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: var(--n1-radius-sm);
+      background-color: rgba(255,255,255,0.08);
+      color: var(--n1-white);
+      font-size: 0.9375rem;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .email-input::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+
+    .email-input:focus {
+      border-color: var(--n1-orange);
+    }
+
+    .email-success-msg {
+      display: none;
+      color: var(--n1-white);
+      font-size: 1rem;
+      font-family: var(--font-heading);
+      margin-top: var(--space-md);
+    }
+
+    .email-success-msg.visible {
+      display: block;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--n1-surface);
+      border-top: 1px solid var(--n1-border);
+      padding: var(--space-xl) var(--space-md);
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--n1-black);
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-logo span {
+      color: var(--n1-orange);
+    }
+
+    .footer-text {
+      font-size: 0.8125rem;
+      color: var(--n1-muted);
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.8125rem;
+      color: var(--n1-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hero-tagline {
+        font-size: 1.75rem;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .email-form {
+        flex-direction: column;
+      }
+
+      .email-input {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Navegación principal">
+    <a href="index.html" class="nav-logo" aria-label="N1 — El Sistema Eres Tu">
+      <span>N</span>1
+    </a>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio" aria-label="Inicio">
+
+      <div class="hero-stats" role="list" aria-label="Estadísticas de carrera">
+
+        <div class="stat-block" role="listitem">
+          <div class="stat-number" aria-label="91 por ciento">91%</div>
+          <p class="stat-text">experimenta ansiedad sobre el propósito de su carrera.</p>
+          <p class="stat-source">McKinsey 2023 / academic-meta-review</p>
+        </div>
+
+        <div class="stat-block" role="listitem">
+          <div class="stat-number" aria-label="3 a 5 por ciento">3–5%</div>
+          <p class="stat-text">de las personas en transición acceden a orientación profesional calificada.</p>
+          <p class="stat-source">ILO 2022 / academic-meta-review</p>
+        </div>
+
+      </div>
+
+      <h1 class="hero-tagline">El sistema eres vos.</h1>
+
+      <p class="hero-sub">
+        Herramientas gratuitas de auto-conocimiento profesional —
+        basadas en 25+ frameworks de investigación.
+        Sin registro. Sin costo.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#triage" class="btn btn-primary" aria-label="Empezá el triage de herramientas">
+          Empezá acá &rarr;
+        </a>
+        <a href="#herramientas" class="btn btn-secondary" aria-label="Ver todas las herramientas">
+          Ver todas las herramientas &darr;
+        </a>
+      </div>
+
+    </section>
+
+    <!-- TRIAGE QUIZ -->
+    <section class="triage" id="triage" aria-label="Triage — encontrá tu herramienta">
+      <div class="section-container">
+
+        <p class="section-label">Triage</p>
+        <h2 class="section-title">¿Por dónde empezás?</h2>
+        <p class="section-desc">
+          3 preguntas para que te recomendemos la secuencia de herramientas más útil para vos ahora mismo.
+        </p>
+
+        <div class="triage-card">
+
+          <!-- Progress bar -->
+          <div class="triage-progress" role="progressbar" aria-label="Progreso del triage" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3">
+            <div class="triage-step active" id="triage-step-1"></div>
+            <div class="triage-step" id="triage-step-2"></div>
+            <div class="triage-step" id="triage-step-3"></div>
+          </div>
+
+          <!-- Q1 -->
+          <div class="triage-question visible" id="triage-q1" role="group" aria-labelledby="triage-q1-text">
+            <p class="triage-q-label">Pregunta 1 de 3</p>
+            <p class="triage-q-text" id="triage-q1-text">&#191;Cu&#225;l es tu situaci&#243;n ahora mismo?</p>
+            <div class="choice-options" role="radiogroup" aria-labelledby="triage-q1-text">
+              <label class="choice-option" data-question="1" data-value="crisis">
+                <input type="radio" name="triage-q1" value="crisis" class="visually-hidden">
+                <span>Estoy en una crisis o punto de quiebre</span>
+              </label>
+              <label class="choice-option" data-question="1" data-value="exploration">
+                <input type="radio" name="triage-q1" value="exploration" class="visually-hidden">
+                <span>Estoy explorando opciones</span>
+              </label>
+              <label class="choice-option" data-question="1" data-value="growth">
+                <input type="radio" name="triage-q1" value="growth" class="visually-hidden">
+                <span>Quiero crecer donde estoy</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="triage-question" id="triage-q2" role="group" aria-labelledby="triage-q2-text">
+            <p class="triage-q-label">Pregunta 2 de 3</p>
+            <p class="triage-q-text" id="triage-q2-text">&#191;Qu&#233; est&#225;s considerando hacer?</p>
+            <div class="choice-options" role="radiogroup" aria-labelledby="triage-q2-text">
+              <label class="choice-option" data-question="2" data-value="stay_grow">
+                <input type="radio" name="triage-q2" value="stay_grow" class="visually-hidden">
+                <span>Quedarme y crecer en mi empresa</span>
+              </label>
+              <label class="choice-option" data-question="2" data-value="move">
+                <input type="radio" name="triage-q2" value="move" class="visually-hidden">
+                <span>Moverme a otra empresa o sector</span>
+              </label>
+              <label class="choice-option" data-question="2" data-value="go_independent">
+                <input type="radio" name="triage-q2" value="go_independent" class="visually-hidden">
+                <span>Ir a la independencia o emprender</span>
+              </label>
+              <label class="choice-option" data-question="2" data-value="pause_reset">
+                <input type="radio" name="triage-q2" value="pause_reset" class="visually-hidden">
+                <span>Pausar y replantearme</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="triage-question" id="triage-q3" role="group" aria-labelledby="triage-q3-text">
+            <p class="triage-q-label">Pregunta 3 de 3</p>
+            <p class="triage-q-text" id="triage-q3-text">&#191;Qu&#233; necesit&#225;s m&#225;s ahora mismo?</p>
+            <div class="choice-options" role="radiogroup" aria-labelledby="triage-q3-text">
+              <label class="choice-option" data-question="3" data-value="clarity">
+                <input type="radio" name="triage-q3" value="clarity" class="visually-hidden">
+                <span>Claridad sobre mis valores y fortalezas</span>
+              </label>
+              <label class="choice-option" data-question="3" data-value="meaning">
+                <input type="radio" name="triage-q3" value="meaning" class="visually-hidden">
+                <span>Entender si mi trabajo tiene sentido</span>
+              </label>
+              <label class="choice-option" data-question="3" data-value="job">
+                <input type="radio" name="triage-q3" value="job" class="visually-hidden">
+                <span>Evaluar una oferta de trabajo</span>
+              </label>
+              <label class="choice-option" data-question="3" data-value="finances">
+                <input type="radio" name="triage-q3" value="finances" class="visually-hidden">
+                <span>Entender cu&#225;nto tiempo tengo financieramente</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Results -->
+          <div class="triage-results" id="triage-results" aria-live="polite">
+            <p class="triage-results-label">Tu secuencia recomendada</p>
+            <p class="triage-results-title" id="triage-results-heading">Empez&#225; por ac&#225;:</p>
+            <div class="recommended-tools" id="recommended-tools-list" role="list" aria-label="Herramientas recomendadas"></div>
+            <button class="triage-restart" id="triage-restart" aria-label="Volver a hacer el triage">
+              Volver a empezar
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOL DIRECTORY -->
+    <section class="tools" id="herramientas" aria-label="Directorio de herramientas">
+      <div class="section-container">
+
+        <p class="section-label">Herramientas</p>
+        <h2 class="section-title">Las 6 herramientas</h2>
+        <p class="section-desc">
+          Cada herramienta es independiente. Podés usarlas en cualquier orden.
+          Todas guardan tu perfil en este navegador.
+        </p>
+
+        <div class="tools-grid" role="list" aria-label="Lista de herramientas">
+
+          <article class="tool-card" role="listitem">
+            <div class="tool-card-header">
+              <h3 class="tool-card-name">Ghost Check</h3>
+              <span class="tag tag-orange">Exploraci&#243;n</span>
+            </div>
+            <p class="tool-card-desc">
+              Peg&#225; una oferta de trabajo y descubr&#237; si es real o un ghost job.
+            </p>
+            <div class="tool-card-footer">
+              <a href="ghost-check/index.html" class="btn btn-primary" aria-label="Abrir Ghost Check">
+                Abrir herramienta
+              </a>
+            </div>
+          </article>
+
+          <article class="tool-card" role="listitem">
+            <div class="tool-card-header">
+              <h3 class="tool-card-name">Compass</h3>
+              <span class="tag">Autoconocimiento</span>
+            </div>
+            <p class="tool-card-desc">
+              Medí tu adaptabilidad de carrera en 4 dimensiones. Validado acad&#233;micamente (CAAS-12).
+            </p>
+            <div class="tool-card-footer">
+              <a href="compass/index.html" class="btn btn-secondary" aria-label="Abrir Compass CAAS-12">
+                Abrir herramienta
+              </a>
+            </div>
+          </article>
+
+          <article class="tool-card" role="listitem">
+            <div class="tool-card-header">
+              <h3 class="tool-card-name">Bull's Eye</h3>
+              <span class="tag">Valores</span>
+            </div>
+            <p class="tool-card-desc">
+              Visualiz&#225; qu&#233; tan alineada est&#225; tu vida con tus valores.
+            </p>
+            <div class="tool-card-footer">
+              <a href="bulls-eye/index.html" class="btn btn-secondary" aria-label="Abrir Bulls Eye de valores">
+                Abrir herramienta
+              </a>
+            </div>
+          </article>
+
+          <article class="tool-card" role="listitem">
+            <div class="tool-card-header">
+              <h3 class="tool-card-name">MLQ-10</h3>
+              <span class="tag">Prop&#243;sito</span>
+            </div>
+            <p class="tool-card-desc">
+              &#191;Encontr&#225;s sentido en lo que hac&#233;s? Cuestionario de prop&#243;sito validado (MLQ-10).
+            </p>
+            <div class="tool-card-footer">
+              <a href="mlq/index.html" class="btn btn-secondary" aria-label="Abrir MLQ-10 cuestionario de propósito">
+                Abrir herramienta
+              </a>
+            </div>
+          </article>
+
+          <article class="tool-card" role="listitem">
+            <div class="tool-card-header">
+              <h3 class="tool-card-name">Flow Logger</h3>
+              <span class="tag">Fortalezas</span>
+            </div>
+            <p class="tool-card-desc">
+              Registr&#225; tus actividades de flow y encontr&#225; tu zona de rendimiento &#243;ptimo.
+            </p>
+            <div class="tool-card-footer">
+              <a href="flow-logger/index.html" class="btn btn-secondary" aria-label="Abrir Flow Logger">
+                Abrir herramienta
+              </a>
+            </div>
+          </article>
+
+          <article class="tool-card" role="listitem">
+            <div class="tool-card-header">
+              <h3 class="tool-card-name">Runway Calculator</h3>
+              <span class="tag">Finanzas</span>
+            </div>
+            <p class="tool-card-desc">
+              Calcul&#225; cu&#225;nto tiempo ten&#233;s de runway financiero para un cambio.
+            </p>
+            <div class="tool-card-footer">
+              <a href="runway/index.html" class="btn btn-secondary" aria-label="Abrir Runway Calculator">
+                Abrir herramienta
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EMAIL CAPTURE -->
+    <section class="email-capture" id="suscribirse" aria-label="Suscripción a newsletter">
+      <div class="section-container">
+
+        <p class="section-label">Insights semanales</p>
+        <h2 class="section-title">Recibí un correo por semana.</h2>
+        <p class="section-desc">
+          Sin spam. Investigaci&#243;n aplicada a tu carrera — en espa&#241;ol.
+          Date de baja cuando quieras.
+        </p>
+
+        <form
+          id="email-form"
+          class="email-form"
+          action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
+          method="POST"
+          target="popupwindow"
+          novalidate
+          aria-label="Formulario de suscripción"
+        >
+          <label for="bd-email" class="visually-hidden">Tu dirección de correo</label>
+          <input
+            type="email"
+            name="email"
+            id="bd-email"
+            class="email-input"
+            placeholder="tu@email.com"
+            required
+            autocomplete="email"
+            aria-required="true"
+          >
+          <input type="hidden" name="tag" value="landing">
+          <button type="submit" class="btn btn-primary" aria-label="Suscribirme al newsletter">
+            Suscribirme
+          </button>
+        </form>
+
+        <p class="email-success-msg" id="email-success" role="status" aria-live="polite">
+          Listo. Te llegar&#225; el primer correo pronto.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <p class="footer-logo"><span>N</span>1 &mdash; El Sistema Eres Tu</p>
+        <p class="footer-text">Herramientas gratuitas de estrategia de carrera &bull; Basadas en 25+ frameworks de investigaci&#243;n</p>
+        <div class="footer-links">
+          <a href="https://github.com/nicodalessandro11/n1" target="_blank" rel="noopener noreferrer" aria-label="Ver código en GitHub">GitHub</a>
+          <a href="#triage" aria-label="Volver al triage">Empez&#225; el triage</a>
+          <a href="#herramientas" aria-label="Ver herramientas">Herramientas</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="assessment-engine.js"></script>
+  <script>
+    /* ── TRIAGE QUIZ STATE MACHINE ── */
+    (function () {
+      "use strict";
+
+      var TOOL_DATA = {
+        ghost_check: {
+          name: "Ghost Check",
+          href: "ghost-check/index.html",
+          tag: "Exploración"
+        },
+        compass: {
+          name: "Compass (CAAS-12)",
+          href: "compass/index.html",
+          tag: "Autoconocimiento"
+        },
+        bulls_eye: {
+          name: "Bull's Eye",
+          href: "bulls-eye/index.html",
+          tag: "Valores"
+        },
+        mlq: {
+          name: "MLQ-10",
+          href: "mlq/index.html",
+          tag: "Propósito"
+        },
+        flow_logger: {
+          name: "Flow Logger",
+          href: "flow-logger/index.html",
+          tag: "Fortalezas"
+        },
+        runway: {
+          name: "Runway Calculator",
+          href: "runway/index.html",
+          tag: "Finanzas"
+        }
+      };
+
+      /* Recommendation logic (per D-12) */
+      function getRecommendedSequence(answers) {
+        var need = answers.q3;
+        var sequence = [];
+
+        if (need === "clarity") {
+          sequence = ["compass", "bulls_eye", "flow_logger", "mlq", "ghost_check", "runway"];
+        } else if (need === "meaning") {
+          sequence = ["mlq", "bulls_eye", "compass", "flow_logger", "ghost_check", "runway"];
+        } else if (need === "job") {
+          sequence = ["ghost_check", "compass", "bulls_eye", "mlq", "flow_logger", "runway"];
+        } else if (need === "finances") {
+          sequence = ["runway", "ghost_check", "compass", "bulls_eye", "mlq", "flow_logger"];
+        } else {
+          sequence = ["compass", "bulls_eye", "mlq", "flow_logger", "ghost_check", "runway"];
+        }
+
+        return sequence;
+      }
+
+      /* DOM refs */
+      var q1El = document.getElementById("triage-q1");
+      var q2El = document.getElementById("triage-q2");
+      var q3El = document.getElementById("triage-q3");
+      var resultsEl = document.getElementById("triage-results");
+      var toolsList = document.getElementById("recommended-tools-list");
+      var restartBtn = document.getElementById("triage-restart");
+      var step1 = document.getElementById("triage-step-1");
+      var step2 = document.getElementById("triage-step-2");
+      var step3 = document.getElementById("triage-step-3");
+      var progressBar = document.querySelector(".triage-progress");
+
+      /* State */
+      var answers = { q1: null, q2: null, q3: null };
+
+      function setStep(stepNum) {
+        /* Update progress dots */
+        var steps = [step1, step2, step3];
+        steps.forEach(function (s, i) {
+          s.classList.remove("active", "done");
+          if (i + 1 < stepNum) {
+            s.classList.add("done");
+          } else if (i + 1 === stepNum) {
+            s.classList.add("active");
+          }
+        });
+        if (progressBar) {
+          progressBar.setAttribute("aria-valuenow", String(stepNum));
+        }
+      }
+
+      function showQuestion(qEl) {
+        [q1El, q2El, q3El, resultsEl].forEach(function (el) {
+          if (el) el.classList.remove("visible");
+        });
+        if (qEl) {
+          qEl.classList.add("visible");
+          /* Move focus for screen readers */
+          var label = qEl.querySelector(".triage-q-text");
+          if (label) label.setAttribute("tabindex", "-1"), label.focus();
+        }
+      }
+
+      function showResults(answers) {
+        [q1El, q2El, q3El].forEach(function (el) {
+          if (el) el.classList.remove("visible");
+        });
+
+        /* Build recommended tool list in DOM */
+        while (toolsList.firstChild) {
+          toolsList.removeChild(toolsList.firstChild);
+        }
+
+        var sequence = getRecommendedSequence(answers);
+        sequence.forEach(function (toolKey, idx) {
+          var tool = TOOL_DATA[toolKey];
+          if (!tool) return;
+
+          var a = document.createElement("a");
+          a.href = tool.href;
+          a.className = "recommended-tool-item";
+          a.setAttribute("role", "listitem");
+          a.setAttribute("aria-label", "Herramienta " + (idx + 1) + ": " + tool.name);
+
+          var rank = document.createElement("span");
+          rank.className = "recommended-tool-rank";
+          rank.setAttribute("aria-hidden", "true");
+          rank.textContent = String(idx + 1);
+
+          var name = document.createElement("span");
+          name.textContent = tool.name;
+
+          var tag = document.createElement("span");
+          tag.className = "tag";
+          tag.setAttribute("aria-hidden", "true");
+          tag.textContent = tool.tag;
+
+          a.appendChild(rank);
+          a.appendChild(name);
+          a.appendChild(tag);
+          toolsList.appendChild(a);
+        });
+
+        resultsEl.classList.add("visible");
+        /* Update progress — all done */
+        [step1, step2, step3].forEach(function (s) {
+          s.classList.remove("active");
+          s.classList.add("done");
+        });
+
+        /* Save triage to n1-profile via assessment engine */
+        if (window.N1 && window.N1.saveToProfile) {
+          window.N1.saveToProfile("triage", {
+            situation: answers.q1,
+            career_path: answers.q2,
+            urgency: "exploratory",
+            specific_move: answers.q3
+          });
+        } else {
+          /* Fallback: write directly to localStorage as n1-profile */
+          try {
+            var stored = localStorage.getItem("n1-profile");
+            var profile = stored ? JSON.parse(stored) : { version: "1.0" };
+            profile.triage = {
+              situation: answers.q1,
+              career_path: answers.q2,
+              urgency: "exploratory",
+              specific_move: answers.q3,
+              updated: new Date().toISOString()
+            };
+            localStorage.setItem("n1-profile", JSON.stringify(profile));
+          } catch (e) {
+            /* localStorage blocked — silent fail, non-critical */
+          }
+        }
+      }
+
+      function handleOptionClick(e) {
+        var label = e.currentTarget;
+        var question = label.getAttribute("data-question");
+        var value = label.getAttribute("data-value");
+
+        /* Mark selected */
+        var siblings = label.closest(".choice-options").querySelectorAll(".choice-option");
+        siblings.forEach(function (s) { s.classList.remove("selected"); });
+        label.classList.add("selected");
+
+        /* Check the radio */
+        var radio = label.querySelector("input[type='radio']");
+        if (radio) radio.checked = true;
+
+        /* Advance after short delay (Typeform pattern) */
+        setTimeout(function () {
+          if (question === "1") {
+            answers.q1 = value;
+            setStep(2);
+            showQuestion(q2El);
+          } else if (question === "2") {
+            answers.q2 = value;
+            setStep(3);
+            showQuestion(q3El);
+          } else if (question === "3") {
+            answers.q3 = value;
+            showResults(answers);
+          }
+        }, 280);
+      }
+
+      function resetTriage() {
+        answers = { q1: null, q2: null, q3: null };
+        /* Deselect all options */
+        document.querySelectorAll(".choice-option").forEach(function (opt) {
+          opt.classList.remove("selected");
+          var radio = opt.querySelector("input[type='radio']");
+          if (radio) radio.checked = false;
+        });
+        setStep(1);
+        showQuestion(q1El);
+      }
+
+      /* Attach option click handlers */
+      document.querySelectorAll(".choice-option").forEach(function (opt) {
+        opt.addEventListener("click", handleOptionClick);
+        /* Keyboard: Space/Enter to select */
+        opt.addEventListener("keydown", function (e) {
+          if (e.key === " " || e.key === "Enter") {
+            e.preventDefault();
+            handleOptionClick({ currentTarget: opt });
+          }
+        });
+        opt.setAttribute("tabindex", "0");
+        opt.setAttribute("role", "radio");
+      });
+
+      /* Restart handler */
+      if (restartBtn) {
+        restartBtn.addEventListener("click", resetTriage);
+      }
+
+      /* Init */
+      setStep(1);
+
+    })();
+
+    /* ── EMAIL CAPTURE ── */
+    (function () {
+      "use strict";
+
+      var form = document.getElementById("email-form");
+      var successMsg = document.getElementById("email-success");
+
+      if (!form) return;
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var emailInput = document.getElementById("bd-email");
+        if (!emailInput || !emailInput.value.trim()) return;
+
+        var email = emailInput.value.trim();
+
+        /* Basic email format check */
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          emailInput.focus();
+          return;
+        }
+
+        var formData = new FormData();
+        formData.append("email", email);
+        formData.append("tag", "landing");
+
+        var submitBtn = form.querySelector("button[type='submit']");
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Enviando...";
+        }
+
+        fetch("https://buttondown.email/api/emails/embed-subscribe/n1-sistema", {
+          method: "POST",
+          body: formData,
+          mode: "no-cors"
+        })
+        .then(function () {
+          form.style.display = "none";
+          if (successMsg) successMsg.classList.add("visible");
+        })
+        .catch(function () {
+          /* Fallback: submit the form normally */
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Suscribirme";
+          }
+          form.submit();
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
