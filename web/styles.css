@@ -802,6 +802,93 @@ textarea:focus-visible,
 }
 
 /* 19. PRINT MEDIA QUERY ─────────────────── */
+/* ── TOOL EMAIL CAPTURE SECTION ── */
+/* Inline email capture below tool results (Phase 3 — INTG-03) */
+
+.n1-email-section {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg) var(--space-lg);
+  background-color: var(--n1-surface);
+  border-radius: var(--n1-radius-sm);
+  border-left: 3px solid var(--n1-orange);
+}
+
+.n1-email-section-label {
+  font-size: 0.75rem;
+  font-family: var(--font-heading);
+  color: var(--n1-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-xs);
+}
+
+.n1-email-section-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--n1-black);
+  margin-bottom: var(--space-xs);
+}
+
+.n1-email-section-desc {
+  font-size: 0.875rem;
+  color: var(--n1-muted);
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.n1-email-section-form {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.n1-email-section-input {
+  flex: 1;
+  min-width: 200px;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--n1-border);
+  border-radius: var(--n1-radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  background-color: var(--n1-white);
+  color: var(--n1-black);
+  transition: border-color var(--transition-fast);
+}
+
+.n1-email-section-input:focus {
+  outline: none;
+  border-color: var(--n1-orange);
+}
+
+.n1-email-section-success {
+  font-size: 0.875rem;
+  color: var(--n1-muted);
+  display: none;
+  margin-top: var(--space-sm);
+}
+
+/* Scorecard preview thumbnail */
+.n1-scorecard-preview {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: var(--n1-radius-sm);
+  border: 1px solid var(--n1-border);
+  margin: var(--space-md) auto var(--space-sm);
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .n1-email-section-form {
+    flex-direction: column;
+  }
+  .n1-email-section-input {
+    min-width: 100%;
+  }
+}
+
 @media print {
   .nav,
   .btn,
