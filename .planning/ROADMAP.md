@@ -110,7 +110,7 @@ Plans:
 Plans:
 
 - [x] 03-01-PLAN.md — Enhanced scorecard library in assessment-engine.js (Wave 1)
-- [ ] 03-02-PLAN.md — Profile synthesizer page web/profile/index.html (Wave 2)
+- [x] 03-02-PLAN.md — Profile synthesizer page web/profile/index.html (Wave 2)
 - [x] 03-03-PLAN.md — Email capture + scorecard integration into all 6 tools (Wave 2)
 
 ### Phase 4: ChatGPT GPTs

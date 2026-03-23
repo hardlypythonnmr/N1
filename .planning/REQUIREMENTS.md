@@ -43,7 +43,7 @@
 ### Integration
 
 - [x] **INTG-01**: Scorecard generator library (HTML Canvas → PNG) for all assessments with N1 branding
-- [ ] **INTG-02**: Profile synthesizer page — import from localStorage or YAML, cross-dimension insights, career path recommendation
+- [x] **INTG-02**: Profile synthesizer page — import from localStorage or YAML, cross-dimension insights, career path recommendation
 - [x] **INTG-03**: Email capture integration on landing page and tool completion screens
 - [x] **INTG-04**: Scorecards integrated into each static web tool's results screen
 
@@ -139,7 +139,7 @@
 | SKILL-07    | Phase 2 | Complete |
 | SKILL-08    | Phase 2 | Complete |
 | INTG-01     | Phase 3 | Complete |
-| INTG-02     | Phase 3 | Pending |
+| INTG-02     | Phase 3 | Complete |
 | INTG-03     | Phase 3 | Complete |
 | INTG-04     | Phase 3 | Complete |
 | GPT-01      | Phase 4 | Pending |
