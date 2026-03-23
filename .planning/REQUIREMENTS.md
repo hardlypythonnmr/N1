@@ -14,7 +14,7 @@
 - [x] **FOUN-05**: Shared voice guide (N1 voice, bilingual rules, Colombian voseo, anti-corporate tone)
 - [x] **FOUN-06**: Shared safety protocol (MIND-SAFE crisis detection, scope disclaimer, crisis resources)
 - [x] **FOUN-07**: Shared research base (25+ frameworks condensed, fits ~4K tokens)
-- [ ] **FOUN-08**: README.md with brand identity, architecture, taxonomy, tool directory
+- [x] **FOUN-08**: README.md with brand identity, architecture, taxonomy, tool directory
 
 ### Static Web Tools
 
@@ -119,7 +119,7 @@
 | FOUN-05     | Phase 0 | Complete |
 | FOUN-06     | Phase 0 | Complete |
 | FOUN-07     | Phase 0 | Complete |
-| FOUN-08     | Phase 0 | Pending |
+| FOUN-08     | Phase 0 | Complete |
 | WEB-01      | Phase 1 | Pending |
 | WEB-02      | Phase 1 | Pending |
 | WEB-03      | Phase 1 | Pending |

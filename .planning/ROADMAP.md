@@ -13,7 +13,7 @@ N1 delivers a research-backed career strategy methodology through AI skills, sta
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 0: Foundation** - Shared files, Profile schema, CLAUDE.md, README — everything all tools depend on
+- [x] **Phase 0: Foundation** - Shared files, Profile schema, CLAUDE.md, README — everything all tools depend on (completed 2026-03-23)
 - [ ] **Phase 1: Static Web Tools** - 7 assessment tools + landing page on GitHub Pages stack
 - [ ] **Phase 2: AI Skills** - 5 SKILL.md files (busca-adentro, construye-afuera, n1-system, ghost-check, compass)
 - [ ] **Phase 3: Integration + Scorecards** - Scorecard library, profile synthesizer, email capture wired in
@@ -44,7 +44,7 @@ Plans:
 - [x] 00-04-PLAN.md — Shared voice guide
 - [x] 00-05-PLAN.md — Shared safety protocol
 - [x] 00-06-PLAN.md — Shared research base
-- [ ] 00-07-PLAN.md — README.md
+- [x] 00-07-PLAN.md — README.md
 
 ### Phase 1: Static Web Tools
 
@@ -143,7 +143,7 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 
 | Phase                       | Plans Complete | Status      | Completed |
 | --------------------------- | -------------- | ----------- | --------- |
-| 0. Foundation               | 6/7 | In Progress|  |
+| 0. Foundation               | 7/7 | Complete   | 2026-03-23 |
 | 1. Static Web Tools         | 0/TBD          | Not started | -         |
 | 2. AI Skills                | 0/TBD          | Not started | -         |
 | 3. Integration + Scorecards | 0/TBD          | Not started | -         |
