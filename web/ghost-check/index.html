@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghost Check - N1</title>
+    <meta
+      name="description"
+      content="Pega el texto de una oferta de trabajo y descubri si es real o un ghost job. Herramienta gratuita de N1."
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+
+    <!-- NAVIGATION -->
+    <nav class="nav" aria-label="Navegacion principal">
+      <a href="../index.html" class="nav-back" aria-label="Volver a N1">N1</a>
+      <span class="nav-logo">Ghost <span>Check</span></span>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <div class="container">
+
+        <!-- SAFETY DISCLAIMER: static text hardcoded in HTML, no JS injection -->
+        <div class="disclaimer" id="disclaimer" role="note" aria-label="Aviso importante">
+          <p>
+            N1 es una herramienta de orientacion profesional basada en investigacion.
+            No es terapia, no es asesoria psicologica, y no reemplaza la orientacion
+            de un profesional de salud mental o coach certificado.
+          </p>
+          <p>
+            Ghost Check es una guia basada en patrones observados, no una garantia.
+            Siempre verifica la empresa en LinkedIn antes de invertir tiempo en aplicar.
+          </p>
+        </div>
+
+        <!-- INPUT SCREEN -->
+        <section id="input-screen" aria-labelledby="tool-title">
+          <div class="card" style="margin-top: var(--space-lg);">
+            <h1 id="tool-title" style="margin-bottom: var(--space-sm);">Ghost Check</h1>
+            <p class="text-muted" style="margin-bottom: var(--space-lg);">
+              Pega el texto completo de la oferta de trabajo y descubri si es real.
+            </p>
+
+            <div style="margin-bottom: var(--space-sm);">
+              <label for="job-input" class="visually-hidden">Texto de la oferta de trabajo</label>
+              <textarea
+                id="job-input"
+                rows="12"
+                placeholder="Pega aca el texto de la oferta de trabajo..."
+                aria-label="Texto de la oferta de trabajo"
+                aria-describedby="cultural-note"
+                style="width: 100%; padding: var(--space-md); border: 2px solid var(--n1-border); border-radius: var(--n1-radius-sm); font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.5; resize: vertical; transition: border-color var(--transition-fast); background-color: var(--n1-white); color: var(--n1-black);"
+              ></textarea>
+            </div>
+
+            <small
+              id="cultural-note"
+              class="cultural-note text-muted text-sm"
+              style="display: block; margin-bottom: var(--space-lg);"
+            >
+              Nota: en LATAM es comun no incluir salario. El score es una guia, no una sentencia.
+            </small>
+
+            <button
+              id="analyze-btn"
+              class="btn btn-primary"
+              disabled
+              aria-disabled="true"
+              style="width: 100%;"
+            >
+              Analizar oferta
+            </button>
+          </div>
+        </section>
+
+        <!-- RESULTS SCREEN (hidden initially) -->
+        <section
+          id="results-screen"
+          aria-labelledby="results-verdict"
+          style="display: none; margin-top: var(--space-lg);"
+        >
+          <div class="card">
+
+            <!-- Score circle + verdict -->
+            <div style="text-align: center; margin-bottom: var(--space-lg);">
+              <div
+                id="score-circle"
+                role="img"
+                style="display: inline-flex; align-items: center; justify-content: center; width: 120px; height: 120px; border-radius: 50%; font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; color: #fff; margin: 0 auto var(--space-md);"
+              ></div>
+              <p
+                id="verdict-label"
+                class="verdict-label"
+                style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700; margin-bottom: 0;"
+              ></p>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- Per-signal breakdown -->
+            <div style="margin-bottom: var(--space-lg);">
+              <h3
+                style="font-size: 0.75rem; font-family: var(--font-heading); color: var(--n1-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-md);"
+              >
+                Senales detectadas
+              </h3>
+              <ul
+                id="signals-list"
+                class="signals-list"
+                style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-sm);"
+                aria-label="Lista de senales analizadas"
+              ></ul>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- Interpretation -->
+            <div class="interpretation" style="margin-bottom: var(--space-lg);">
+              <h3>Interpretacion</h3>
+              <p id="interpretation-text" class="interpretation"></p>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="results-actions">
+              <button id="download-scorecard" class="btn btn-secondary">Descargar scorecard</button>
+              <button id="copy-linkedin" class="btn btn-secondary">Copiar texto LinkedIn</button>
+              <button id="export-yaml" class="btn btn-secondary">Exportar perfil YAML</button>
+              <button id="reset-btn" class="btn btn-primary">Analizar otra oferta</button>
+            </div>
+
+            <!-- Export confirm -->
+            <p
+              id="export-confirm"
+              style="display: none; text-align: center; color: var(--n1-muted); font-size: 0.875rem; margin-top: var(--space-sm);"
+              role="status"
+              aria-live="polite"
+            >
+              Guardado en tu perfil.
+            </p>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- SHARED ASSESSMENT ENGINE -->
+    <script src="../assessment-engine.js"></script>
+
+    <!-- GHOST CHECK LOGIC (inline, no external dependencies beyond assessment-engine.js) -->
+    <script>
+      "use strict";
+
+      /* ── GHOST CHECK SIGNALS ────────────────────────────────────────────
+         10 binary signals. Each adds weight to ghost score. Total max: 100.
+         detect(t) receives raw posting text string. Returns boolean.
+         ──────────────────────────────────────────────────────────────────── */
+
+      var GHOST_SIGNALS = [
+        {
+          id: "no_salary_range",
+          label: "No indica rango salarial",
+          weight: 15,
+          detect: function (t) {
+            return !/(salario|sueldo|compensacion|\$|COP|USD|salary)/i.test(t);
+          },
+        },
+        {
+          id: "no_company_name",
+          label: "No menciona la empresa",
+          weight: 20,
+          detect: function (t) {
+            return /(empresa confidencial|confidential|cliente de)/i.test(t);
+          },
+        },
+        {
+          id: "vague_role",
+          label: "Descripcion del rol vaga",
+          weight: 15,
+          detect: function (t) {
+            return t.length < 400;
+          },
+        },
+        {
+          id: "unrealistic_requirements",
+          label: "Requisitos irreales para el nivel",
+          weight: 10,
+          detect: function (t) {
+            var matches = t.match(/(\d+)\+?\s*a[no]s/gi) || [];
+            var total = matches.reduce(function (sum, x) {
+              return sum + parseInt(x, 10);
+            }, 0);
+            return total > 8;
+          },
+        },
+        {
+          id: "urgent_language",
+          label: "Lenguaje de urgencia vacia",
+          weight: 5,
+          detect: function (t) {
+            return /(inmediatamente|urgente|ya mismo|asap)/i.test(t);
+          },
+        },
+        {
+          id: "generic_benefits",
+          label: "Beneficios genericos",
+          weight: 5,
+          detect: function (t) {
+            return (
+              /(excelente ambiente|beneficios competitivos)/i.test(t) &&
+              !/(seguro|prima|bono)/i.test(t)
+            );
+          },
+        },
+        {
+          id: "no_team_context",
+          label: "No describe equipo ni manager",
+          weight: 10,
+          detect: function (t) {
+            return !/(equipo|manager|reporta|team)/i.test(t);
+          },
+        },
+        {
+          id: "email_only",
+          label: "Solo acepta CV por email",
+          weight: 5,
+          detect: function (t) {
+            return (
+              /(enviar cv|manda tu hoja de vida)/i.test(t) &&
+              !/(aplica|apply|portal)/i.test(t)
+            );
+          },
+        },
+        {
+          id: "reposted",
+          label: "Indicios de reposteo multiple",
+          weight: 10,
+          detect: function (t) {
+            return /(actualiz|updated|repost|volvemos a publicar)/i.test(t);
+          },
+        },
+        {
+          id: "level_mismatch",
+          label: "Nivel no coincide con requisitos",
+          weight: 5,
+          detect: function (t) {
+            return (
+              /(junior|entry.level)/i.test(t) &&
+              /(\d+\+?\s*a[no]s|maestria|certificacion)/i.test(t)
+            );
+          },
+        },
+      ];
+
+      /* ── PURE SCORING FUNCTIONS ─────────────────────────────────────── */
+
+      function analyzePosting(text) {
+        var signals = GHOST_SIGNALS.map(function (s) {
+          return Object.assign({}, s, { fired: s.detect(text) });
+        });
+        var score = signals
+          .filter(function (s) { return s.fired; })
+          .reduce(function (sum, s) { return sum + s.weight; }, 0);
+        return { score: score, signals: signals };
+      }
+
+      function getVerdict(score) {
+        if (score <= 25) return { label: "Probablemente real", color: "#22c55e" };
+        if (score <= 50) return { label: "Oferta sospechosa", color: "#f59e0b" };
+        if (score <= 75) return { label: "Alta probabilidad de ghost job", color: "#E85D26" };
+        return { label: "Ghost job confirmado", color: "#dc2626" };
+      }
+
+      function getInterpretation(score) {
+        if (score <= 25) {
+          return "Esta oferta muestra senales de ser legitima. Igual verifica la empresa en LinkedIn antes de aplicar.";
+        }
+        if (score <= 50) {
+          return "Esta oferta tiene algunas senales de alerta. Busca la empresa en LinkedIn y verifica que el rol existe antes de invertir tiempo.";
+        }
+        if (score <= 75) {
+          return "Esta oferta tiene muchas senales de ser un ghost job. Aplicar puede ser una perdida de tiempo y energia. Prioriza ofertas con menos senales de alerta.";
+        }
+        return "Esta oferta tiene todas las senales de un ghost job. Muy probablemente no hay una posicion real detras. Usa ese tiempo en ofertas verificables.";
+      }
+
+      /* ── DOM HELPERS (XSS-safe: textContent only, no innerHTML) ──────── */
+
+      function clearChildren(node) {
+        while (node.firstChild) {
+          node.removeChild(node.firstChild);
+        }
+      }
+
+      function setTextById(id, text) {
+        var node = document.getElementById(id);
+        if (node) node.textContent = text;
+      }
+
+      /* ── STATE ──────────────────────────────────────────────────────── */
+
+      var lastResult = null;
+
+      /* ── RENDER RESULTS ─────────────────────────────────────────────── */
+
+      function renderResults(result) {
+        var verdict = getVerdict(result.score);
+
+        // Score circle — textContent for score number
+        var circle = document.getElementById("score-circle");
+        circle.textContent = String(result.score);
+        circle.style.backgroundColor = verdict.color;
+        circle.setAttribute("aria-label", "Ghost score: " + String(result.score) + " de 100");
+
+        // Verdict — textContent
+        var verdictEl = document.getElementById("verdict-label");
+        verdictEl.textContent = verdict.label;
+        verdictEl.style.color = verdict.color;
+
+        // Signals list — build with createElement + textContent, clear with removeChild
+        var signalsList = document.getElementById("signals-list");
+        clearChildren(signalsList);
+
+        result.signals.forEach(function (signal) {
+          var li = document.createElement("li");
+          li.style.cssText = [
+            "display: flex",
+            "align-items: center",
+            "gap: var(--space-sm)",
+            "padding: var(--space-sm) var(--space-md)",
+            "border-radius: var(--n1-radius-sm)",
+            "font-size: 0.9375rem",
+          ].join(";");
+
+          var icon = document.createElement("span");
+          icon.setAttribute("aria-hidden", "true");
+          icon.style.cssText = [
+            "display: inline-flex",
+            "align-items: center",
+            "justify-content: center",
+            "width: 20px",
+            "height: 20px",
+            "border-radius: 50%",
+            "font-size: 0.75rem",
+            "font-weight: 700",
+            "color: #fff",
+            "flex-shrink: 0",
+          ].join(";");
+
+          var labelSpan = document.createElement("span");
+          labelSpan.textContent = signal.label;
+
+          if (signal.fired) {
+            li.style.backgroundColor = "#fff0eb";
+            li.style.border = "1px solid #f9c4af";
+            icon.textContent = "!";
+            icon.style.backgroundColor = "#E85D26";
+
+            var weight = document.createElement("span");
+            weight.textContent = "+" + String(signal.weight) + " pts";
+            weight.style.cssText = [
+              "margin-left: auto",
+              "font-family: var(--font-heading)",
+              "font-size: 0.75rem",
+              "font-weight: 700",
+              "color: #E85D26",
+              "flex-shrink: 0",
+            ].join(";");
+
+            li.appendChild(icon);
+            li.appendChild(labelSpan);
+            li.appendChild(weight);
+          } else {
+            li.style.backgroundColor = "var(--n1-surface)";
+            li.style.border = "1px solid var(--n1-border)";
+            icon.textContent = "v";
+            icon.style.backgroundColor = "#22c55e";
+            labelSpan.style.color = "var(--n1-muted)";
+
+            li.appendChild(icon);
+            li.appendChild(labelSpan);
+          }
+
+          signalsList.appendChild(li);
+        });
+
+        // Interpretation — textContent
+        setTextById("interpretation-text", getInterpretation(result.score));
+      }
+
+      /* ── EVENT WIRING ───────────────────────────────────────────────── */
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var textarea = document.getElementById("job-input");
+        var analyzeBtn = document.getElementById("analyze-btn");
+        var inputScreen = document.getElementById("input-screen");
+        var resultsScreen = document.getElementById("results-screen");
+        var exportConfirm = document.getElementById("export-confirm");
+
+        // Enable analyze button when textarea has content
+        textarea.addEventListener("input", function () {
+          var hasContent = textarea.value.trim().length > 0;
+          analyzeBtn.disabled = !hasContent;
+          analyzeBtn.setAttribute("aria-disabled", hasContent ? "false" : "true");
+        });
+
+        // Textarea focus styles
+        textarea.addEventListener("focus", function () {
+          textarea.style.borderColor = "var(--n1-orange)";
+          textarea.style.outline = "none";
+        });
+        textarea.addEventListener("blur", function () {
+          textarea.style.borderColor = "var(--n1-border)";
+        });
+
+        // Analyze button click — run scoring, render results
+        analyzeBtn.addEventListener("click", function () {
+          var text = textarea.value;
+          if (!text.trim()) return;
+          lastResult = analyzePosting(text);
+          renderResults(lastResult);
+          exportConfirm.style.display = "none";
+          inputScreen.style.display = "none";
+          resultsScreen.style.display = "block";
+          resultsScreen.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        // Download scorecard — N1.generateScorecard + N1.downloadScorecard
+        document.getElementById("download-scorecard").addEventListener("click", function () {
+          if (!lastResult) return;
+          var verdict = getVerdict(lastResult.score);
+          var dataUrl = N1.generateScorecard({
+            title: "Ghost Check",
+            scores: [{ label: "Ghost Score", value: lastResult.score, max: 100 }],
+            interpretation: verdict.label,
+            chartType: "bar",
+          });
+          if (dataUrl) {
+            N1.downloadScorecard(dataUrl, "n1-ghost-check.png");
+          }
+        });
+
+        // Copy LinkedIn text — string concat only, user-pasted job text never included
+        document.getElementById("copy-linkedin").addEventListener("click", function () {
+          if (!lastResult) return;
+          var verdict = getVerdict(lastResult.score);
+          var linkedinText =
+            "Analice esta oferta con N1 Ghost Check: " +
+            String(lastResult.score) +
+            "/100 — " +
+            verdict.label +
+            "\n\nHerramienta gratuita: https://[tu-usuario].github.io/N1/ghost-check/" +
+            "\n\n#GhostJob #Empleabilidad #N1";
+          N1.copyLinkedInText(linkedinText).then(function () {
+            N1.showToast("Texto copiado al portapapeles");
+          });
+        });
+
+        // Export profile YAML — immutable concat pattern (no mutation)
+        document.getElementById("export-yaml").addEventListener("click", function () {
+          if (!lastResult) return;
+          var existing = N1.loadProfile();
+          var prevAssessments =
+            existing && existing.evolution && existing.evolution.assessments
+              ? existing.evolution.assessments
+              : [];
+          var newEntry = {
+            date: new Date().toISOString(),
+            instrument: "ghost-check",
+            scores: {
+              ghost_score: lastResult.score,
+              signals_fired: lastResult.signals
+                .filter(function (s) { return s.fired; })
+                .map(function (s) { return s.id; }),
+            },
+          };
+          var updatedAssessments = prevAssessments.concat([newEntry]);
+          N1.saveToProfile("evolution", { assessments: updatedAssessments });
+          N1.exportYAML("evolution", { assessments: updatedAssessments });
+          exportConfirm.style.display = "block";
+        });
+
+        // Reset — clear textarea, hide results, show input
+        document.getElementById("reset-btn").addEventListener("click", function () {
+          textarea.value = "";
+          analyzeBtn.disabled = true;
+          analyzeBtn.setAttribute("aria-disabled", "true");
+          lastResult = null;
+          resultsScreen.style.display = "none";
+          inputScreen.style.display = "block";
+          textarea.focus();
+        });
+      });
+    </script>
+
+  </body>
+</html>
