@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Perfil N1 — El Sistema Eres Tu</title>
+  <meta name="description" content="Explora todas tus dimensiones de autoconocimiento en un solo lugar. Valores, Fortalezas, Identidad y Proposito." />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .tag { display:inline-block; padding:var(--space-xs) var(--space-sm); border-radius:var(--n1-radius-sm); font-size:0.8125rem; font-family:var(--font-heading); background-color:var(--n1-surface); border:1px solid var(--n1-border); color:var(--n1-muted); }
+    .tag-orange { background-color:var(--n1-orange); border-color:var(--n1-orange); color:var(--n1-white); }
+    .dim-card { border:1px solid var(--n1-border); border-radius:var(--n1-radius); overflow:hidden; }
+    .dim-card-header { display:flex; justify-content:space-between; align-items:center; padding:var(--space-md) var(--space-lg); background-color:var(--n1-surface); cursor:pointer; gap:var(--space-md); }
+    .dim-card-header:hover { background-color:#f0f0f0; }
+    .dim-card-title { font-family:var(--font-heading); font-weight:700; font-size:1rem; color:var(--n1-black); }
+    .dim-card-body { padding:var(--space-lg); border-top:1px solid var(--n1-border); }
+    .dim-card-body.hidden { display:none; }
+    .dim-data-list { list-style:none; padding:0; margin:var(--space-sm) 0; }
+    .dim-data-list li { padding:var(--space-xs) 0; font-size:0.9375rem; border-bottom:1px solid var(--n1-border); }
+    .dim-data-list li:last-child { border-bottom:none; }
+    .score-row { display:flex; justify-content:space-between; align-items:center; padding:var(--space-xs) 0; font-size:0.9375rem; }
+    .score-val { font-family:var(--font-heading); font-weight:700; color:var(--n1-orange); }
+    .insight-block { padding:var(--space-md); border-radius:var(--n1-radius-sm); margin-bottom:var(--space-sm); font-size:0.9375rem; }
+    .insight-reinforcement { background-color:rgba(232,93,38,0.08); border-left:3px solid var(--n1-orange); }
+    .insight-conflict { background-color:rgba(255,193,7,0.1); border-left:3px solid #ffc107; }
+    .insight-neutral { background-color:var(--n1-surface); border-left:3px solid var(--n1-border); }
+    .toggle-btn { background:none; border:1px solid var(--n1-border); border-radius:var(--n1-radius-sm); padding:var(--space-xs) var(--space-sm); font-size:0.8125rem; font-family:var(--font-body); cursor:pointer; color:var(--n1-muted); white-space:nowrap; }
+    .toggle-btn:hover { background-color:var(--n1-surface); color:var(--n1-black); }
+    .results-actions { display:flex; gap:var(--space-sm); flex-wrap:wrap; }
+    .mt-sm { margin-top:var(--space-sm); } .mt-md { margin-top:var(--space-md); } .mt-lg { margin-top:var(--space-lg); }
+    .text-muted { color:var(--n1-muted); } .text-sm { font-size:0.875rem; } .hidden { display:none; }
+    #yaml-input { width:100%; padding:var(--space-md); border:1px solid var(--n1-border); border-radius:var(--n1-radius-sm); font-family:var(--font-heading); font-size:0.8125rem; line-height:1.5; resize:vertical; background-color:var(--n1-surface); color:var(--n1-black); margin-top:var(--space-md); }
+    #yaml-input:focus { outline:2px solid var(--n1-orange); outline-offset:1px; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" aria-label="Navegacion principal">
+    <a href="../index.html" class="nav-logo">N<span>1</span></a>
+    <span style="font-family:var(--font-heading);font-size:0.875rem;color:var(--n1-muted);">Mi Perfil</span>
+  </nav>
+
+  <main class="container">
+
+    <!-- Screen 0: import (shown when no profile) -->
+    <section id="import-screen">
+      <div class="card mt-lg">
+        <h1>Tu Perfil N1</h1>
+        <p class="text-muted mt-sm">No encontramos un perfil guardado en este navegador.</p>
+        <p class="text-sm mt-md">Si ya completaste alguna herramienta de N1 en otro dispositivo, pega tu perfil YAML aca para cargarlo.</p>
+        <textarea id="yaml-input" rows="12" placeholder="Pega tu perfil YAML aca..."></textarea>
+        <div style="margin-top:var(--space-md);display:flex;gap:var(--space-sm);flex-wrap:wrap;align-items:center;">
+          <button id="load-yaml-btn" class="btn btn-primary" disabled>Cargar perfil</button>
+          <a href="../index.html" class="btn btn-ghost">Explorar herramientas</a>
+        </div>
+        <p id="yaml-error" style="color:var(--n1-orange);display:none;margin-top:var(--space-sm);font-size:0.875rem;"></p>
+      </div>
+    </section>
+
+    <!-- Screen 1: synthesizer (shown when profile loaded) -->
+    <section id="synthesizer-screen" style="display:none;">
+
+      <div class="card mt-lg" id="profile-header">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:var(--space-md)">
+          <div>
+            <h1>Tu Perfil N1</h1>
+            <p id="profile-updated" class="text-muted text-sm mt-sm"></p>
+          </div>
+          <div id="completion-badges" style="display:flex;gap:var(--space-sm);flex-wrap:wrap;"></div>
+        </div>
+      </div>
+
+      <div class="card mt-md" id="radar-hub">
+        <h2>Vista general</h2>
+        <p class="text-muted text-sm mt-sm">Tus cuatro dimensiones de autoconocimiento.</p>
+        <div style="max-width:400px;margin:var(--space-lg) auto;">
+          <canvas id="n1-synthesizer-radar" aria-label="Radar de dimensiones N1"></canvas>
+        </div>
+      </div>
+
+      <div id="dimension-cards" style="display:flex;flex-direction:column;gap:var(--space-md);margin-top:var(--space-md);"></div>
+
+      <div class="card" id="insights-card" style="margin-top:var(--space-md);">
+        <h2>Insights transversales</h2>
+        <div id="reinforcements-section" class="mt-md"></div>
+        <div id="conflicts-section"></div>
+      </div>
+
+      <div class="card" id="recommendation-card" style="margin-top:var(--space-md);">
+        <h2>Recomendacion de camino</h2>
+        <div id="career-recommendation" class="mt-md"></div>
+      </div>
+
+      <div class="card" id="export-card" style="margin-top:var(--space-md);">
+        <h2>Exportar tu perfil</h2>
+        <div class="results-actions mt-md">
+          <button id="btn-download-yaml" class="btn btn-primary">Descargar YAML</button>
+          <button id="btn-download-template" class="btn btn-secondary">Descargar System Template</button>
+          <button id="btn-download-scorecard" class="btn btn-secondary">Descargar scorecard completo</button>
+        </div>
+        <p id="export-status" role="status" aria-live="polite" style="display:none;color:var(--n1-muted);font-size:0.875rem;margin-top:var(--space-sm);text-align:center;"></p>
+      </div>
+
+      <div style="text-align:center;margin:var(--space-xl) 0;">
+        <button id="btn-reset" class="btn btn-ghost text-sm">Cargar otro perfil</button>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="../assessment-engine.js"></script>
+  <script>
+    "use strict";
+
+    /* == YAML MINI-PARSER == */
+    function buildProfileFromYaml(text) {
+      var blank = {
+        version:"1.0", created:null, updated:null, language:"es",
+        triage:{situation:null, career_path:null, specific_move:null, urgency:null},
+        values:{completed:false, mode:null, core_values:[],
+          schwartz_profile:{self_direction:null,stimulation:null,hedonism:null,achievement:null,power:null,security:null,conformity:null,tradition:null,benevolence:null,universalism:null},
+          value_conflicts:[], bulls_eye:{work:null,relationships:null,personal_growth:null,leisure:null}, career_implications:[]},
+        strengths:{completed:false, mode:null, signature_strengths:[],
+          big_five:{openness:null,conscientiousness:null,extraversion:null,agreeableness:null,neuroticism:null},
+          self_efficacy:{mastery_experiences:[],vicarious_models:[],social_persuasion:[],physiological:null},
+          flow_activities:[], career_implications:[]},
+        identity:{completed:false, mode:null, identity_status:null,
+          adaptability:{concern:null,control:null,curiosity:null,confidence:null},
+          possible_selves:[], active_experiments:[], narrative_theme:null, limiting_beliefs:[]},
+        purpose:{completed:false, mode:null, mlq:{presence:null,search:null,quadrant:null},
+          meaning_sources:{creative:null,experiential:null,attitudinal:null},
+          life_theme:null, purpose_practice:[], career_implications:[]},
+        synthesis:{reinforcements:[],conflicts:[],career_recommendations:[],next_actions:[]},
+        evolution:{assessments:[],milestones:[],next_reassessment:null}
+      };
+
+      function extractScalar(key) {
+        var pattern = new RegExp("^"+key+":\\s*([^\\n]+)","m");
+        var m = pattern.test(text) ? pattern.exec(text) : null;
+        if (!m) return null;
+        var val = m[1].trim().replace(/^["']|["']$/g,"");
+        return (val==="null"||val==="") ? null : val;
+      }
+      function extractCompleted(section) {
+        var re = new RegExp(section+":[\\s\\S]*?completed:\\s*(true|false)","m");
+        var m = re.exec(text);
+        return m ? m[1]==="true" : false;
+      }
+      function extractList(key) {
+        var re = new RegExp(key+":[^\\n]*\\n((?:\\s+-[^\\n]*\\n?)*)","m");
+        var m = re.exec(text);
+        if (!m) return [];
+        var items=[], lineRe=/^\s+-\s+(.+)$/gm, lm;
+        while ((lm=lineRe.exec(m[1]))!==null) {
+          var item=lm[1].trim().replace(/^["']|["']$/g,"");
+          if (item) items.push(item);
+        }
+        return items;
+      }
+      function extractSectionScalar(sectionName, key) {
+        var secRe=new RegExp("^"+sectionName+":","m");
+        var secMatch=secRe.exec(text);
+        if (!secMatch) return null;
+        var after=text.slice(secMatch.index);
+        var nextTop=after.slice(1).search(/^[a-z_]+:/m);
+        var block=nextTop>0 ? after.slice(0,nextTop+1) : after;
+        var re=new RegExp("^\\s+"+key+":\\s*([^\\n]+)","m");
+        var m=re.exec(block);
+        if (!m) return null;
+        var val=m[1].trim().replace(/^["']|["']$/g,"");
+        return (val==="null"||val==="") ? null : val;
+      }
+      function extractSectionFloat(sectionName, key) {
+        var val=extractSectionScalar(sectionName,key);
+        if (val===null) return null;
+        var n=parseFloat(val);
+        return isNaN(n) ? null : n;
+      }
+
+      blank.version=extractScalar("version")||"1.0";
+      blank.created=extractScalar("created");
+      blank.updated=extractScalar("updated");
+      blank.language=extractScalar("language")||"es";
+      blank.triage.situation=extractSectionScalar("triage","situation");
+      blank.triage.career_path=extractSectionScalar("triage","career_path");
+      blank.triage.specific_move=extractSectionScalar("triage","specific_move");
+      blank.triage.urgency=extractSectionScalar("triage","urgency");
+      blank.values.completed=extractCompleted("values");
+      blank.values.core_values=extractList("core_values");
+      ["self_direction","stimulation","hedonism","achievement","power","security","conformity","tradition","benevolence","universalism"].forEach(function(k){
+        blank.values.schwartz_profile[k]=extractSectionFloat("schwartz_profile",k);
+      });
+      blank.values.bulls_eye.work=extractSectionFloat("bulls_eye","work");
+      blank.values.bulls_eye.relationships=extractSectionFloat("bulls_eye","relationships");
+      blank.values.bulls_eye.personal_growth=extractSectionFloat("bulls_eye","personal_growth");
+      blank.values.bulls_eye.leisure=extractSectionFloat("bulls_eye","leisure");
+      blank.strengths.completed=extractCompleted("strengths");
+      blank.strengths.signature_strengths=extractList("signature_strengths");
+      blank.strengths.flow_activities=extractList("flow_activities");
+      blank.identity.completed=extractCompleted("identity");
+      blank.identity.identity_status=extractSectionScalar("identity","identity_status");
+      blank.identity.adaptability.concern=extractSectionFloat("adaptability","concern");
+      blank.identity.adaptability.control=extractSectionFloat("adaptability","control");
+      blank.identity.adaptability.curiosity=extractSectionFloat("adaptability","curiosity");
+      blank.identity.adaptability.confidence=extractSectionFloat("adaptability","confidence");
+      blank.purpose.completed=extractCompleted("purpose");
+      blank.purpose.mlq.presence=extractSectionFloat("mlq","presence");
+      blank.purpose.mlq.search=extractSectionFloat("mlq","search");
+      blank.purpose.mlq.quadrant=extractSectionScalar("mlq","quadrant");
+      blank.synthesis.reinforcements=extractList("reinforcements");
+      blank.synthesis.conflicts=extractList("conflicts");
+      blank.synthesis.career_recommendations=extractList("career_recommendations");
+      return blank;
+    }
+
+    /* == DIMENSION SCORE CALCULATORS == */
+    function calcDimensionScores(profile) {
+      var valuesScore=0;
+      if (profile.values && profile.values.schwartz_profile) {
+        var sp=profile.values.schwartz_profile;
+        var vals=Object.keys(sp).map(function(k){return sp[k];}).filter(function(v){return v!==null&&!isNaN(v);});
+        if (vals.length>0) valuesScore=Math.round((vals.reduce(function(a,b){return a+b;},0)/vals.length/9)*100)/10;
+      }
+      var strengthsScore=0;
+      if (profile.strengths) {
+        var sig=(profile.strengths.signature_strengths||[]).length;
+        var fl=(profile.strengths.flow_activities||[]).length;
+        strengthsScore=Math.min(sig>0?sig:fl,10);
+      }
+      var identityScore=0;
+      if (profile.identity && profile.identity.adaptability) {
+        var ad=profile.identity.adaptability;
+        var adv=[ad.concern,ad.control,ad.curiosity,ad.confidence].filter(function(v){return v!==null&&!isNaN(v);});
+        if (adv.length>0) identityScore=Math.round((adv.reduce(function(a,b){return a+b;},0)/adv.length/5)*100)/10;
+      }
+      var purposeScore=0;
+      if (profile.purpose && profile.purpose.mlq) {
+        var mlq=profile.purpose.mlq;
+        var mlqv=[mlq.presence,mlq.search].filter(function(v){return v!==null&&!isNaN(v);});
+        if (mlqv.length>0) purposeScore=Math.round((mlqv.reduce(function(a,b){return a+b;},0)/mlqv.length/7)*100)/10;
+      }
+      return {values:valuesScore, strengths:strengthsScore, identity:identityScore, purpose:purposeScore};
+    }
+
+    /* == RENDER FUNCTIONS == */
+    var _radarChartInstance=null;
+
+    function renderCompletionBadges(profile) {
+      var container=document.getElementById("completion-badges");
+      container.innerHTML="";
+      [{key:"values",label:"Valores"},{key:"strengths",label:"Fortalezas"},{key:"identity",label:"Identidad"},{key:"purpose",label:"Proposito"}].forEach(function(d){
+        var span=document.createElement("span");
+        span.className="tag";
+        if (profile[d.key]&&profile[d.key].completed===true) {
+          span.classList.add("tag-orange"); span.textContent=d.label;
+        } else {
+          span.style.opacity="0.4"; span.textContent=d.label+" \u2014";
+        }
+        container.appendChild(span);
+      });
+    }
+
+    function renderRadarChart(profile) {
+      var scores=calcDimensionScores(profile);
+      var canvas=document.getElementById("n1-synthesizer-radar");
+      if (_radarChartInstance) { _radarChartInstance.destroy(); _radarChartInstance=null; }
+      _radarChartInstance=new Chart(canvas,{
+        type:"radar",
+        data:{
+          labels:["Valores","Fortalezas","Identidad","Proposito"],
+          datasets:[{
+            label:"Tu perfil",
+            data:[scores.values,scores.strengths,scores.identity,scores.purpose],
+            backgroundColor:"rgba(232,93,38,0.15)",borderColor:"#E85D26",borderWidth:2,
+            pointBackgroundColor:"#E85D26",pointRadius:4
+          }]
+        },
+        options:{
+          scales:{r:{min:0,max:10,ticks:{stepSize:2,display:false},grid:{color:"rgba(0,0,0,0.08)"},
+            pointLabels:{font:{family:"'Space Mono', monospace",size:12},color:"#1A1A1A"}}},
+          plugins:{legend:{display:false}},responsive:true,maintainAspectRatio:true
+        }
+      });
+    }
+
+    function renderDimensionCards(profile) {
+      var container=document.getElementById("dimension-cards");
+      container.innerHTML="";
+      var dims=[
+        {
+          key:"values",label:"Valores",tool:"bulls-eye",toolLabel:"Bull's Eye",
+          getDetails:function(p){
+            var rows=[];
+            (p.values.core_values||[]).slice(0,3).forEach(function(v){rows.push({label:"Valor central",value:v});});
+            if (p.values.schwartz_profile) {
+              var sp=p.values.schwartz_profile,topK=null,topV=0;
+              Object.keys(sp).forEach(function(k){if(sp[k]!==null&&sp[k]>topV){topK=k;topV=sp[k];}});
+              if(topK)rows.push({label:"Schwartz top",value:topK+" ("+topV+")"});
+            }
+            return rows;
+          },
+          getSummary:function(p){var cv=p.values.core_values||[];return cv.length>0?("Top valor: "+cv[0]):"Completado";}
+        },
+        {
+          key:"strengths",label:"Fortalezas",tool:"flow-logger",toolLabel:"Flow Logger",
+          getDetails:function(p){
+            var rows=[];
+            (p.strengths.signature_strengths||[]).slice(0,3).forEach(function(s){rows.push({label:"Fortaleza VIA",value:s});});
+            var fa=p.strengths.flow_activities||[];
+            if(fa.length>0)rows.push({label:"Actividades de flow",value:fa.length+" registradas"});
+            return rows;
+          },
+          getSummary:function(p){var ss=p.strengths.signature_strengths||[];return ss.length>0?("Top fortaleza: "+ss[0]):"Completado";}
+        },
+        {
+          key:"identity",label:"Identidad",tool:"compass",toolLabel:"Compass CAAS-12",
+          getDetails:function(p){
+            var rows=[],ad=p.identity.adaptability;
+            if(ad.concern!==null)rows.push({label:"Concern",value:ad.concern+" / 5"});
+            if(ad.control!==null)rows.push({label:"Control",value:ad.control+" / 5"});
+            if(ad.curiosity!==null)rows.push({label:"Curiosity",value:ad.curiosity+" / 5"});
+            if(ad.confidence!==null)rows.push({label:"Confidence",value:ad.confidence+" / 5"});
+            if(p.identity.identity_status)rows.push({label:"Estado identidad",value:p.identity.identity_status});
+            return rows;
+          },
+          getSummary:function(p){
+            var ad=p.identity.adaptability;
+            if(ad&&ad.concern!==null&&ad.control!==null&&ad.curiosity!==null&&ad.confidence!==null)
+              return "CAAS promedio: "+((ad.concern+ad.control+ad.curiosity+ad.confidence)/4).toFixed(1)+" / 5";
+            return "Completado";
+          }
+        },
+        {
+          key:"purpose",label:"Proposito",tool:"mlq",toolLabel:"MLQ-10",
+          getDetails:function(p){
+            var rows=[],mlq=p.purpose.mlq;
+            if(mlq.presence!==null)rows.push({label:"Presencia de sentido",value:mlq.presence+" / 7"});
+            if(mlq.search!==null)rows.push({label:"Busqueda de sentido",value:mlq.search+" / 7"});
+            if(mlq.quadrant)rows.push({label:"Cuadrante",value:mlq.quadrant});
+            return rows;
+          },
+          getSummary:function(p){var mlq=p.purpose.mlq;return mlq&&mlq.quadrant?("Cuadrante: "+mlq.quadrant):"Completado";}
+        }
+      ];
+
+      dims.forEach(function(d){
+        var completed=profile[d.key]&&profile[d.key].completed===true;
+        var details=completed?d.getDetails(profile):[];
+        var summary=completed?d.getSummary(profile):null;
+
+        var card=document.createElement("div"); card.className="dim-card";
+        var header=document.createElement("div"); header.className="dim-card-header";
+        var titleWrap=document.createElement("div"); titleWrap.style.cssText="display:flex;align-items:center;gap:var(--space-sm)";
+        var titleEl=document.createElement("span"); titleEl.className="dim-card-title"; titleEl.textContent=d.label;
+        titleWrap.appendChild(titleEl);
+        var badge=document.createElement("span"); badge.className="tag";
+        if(completed){badge.classList.add("tag-orange");badge.textContent="Completado";}
+        else{badge.style.opacity="0.5";badge.textContent="Pendiente";}
+        titleWrap.appendChild(badge); header.appendChild(titleWrap);
+        var toggleBtn=document.createElement("button"); toggleBtn.className="toggle-btn"; toggleBtn.textContent="Ver detalles";
+        header.appendChild(toggleBtn); card.appendChild(header);
+
+        var body=document.createElement("div"); body.className="dim-card-body hidden";
+        if(!completed){
+          var np=document.createElement("p"); np.className="text-muted text-sm";
+          np.textContent="No completado aun. Usa "+d.toolLabel+" para explorar esta dimension.";
+          body.appendChild(np);
+        } else if(details.length>0){
+          var ul=document.createElement("ul"); ul.className="dim-data-list";
+          details.forEach(function(row){
+            var li=document.createElement("li"); li.className="score-row";
+            var lel=document.createElement("span"); lel.textContent=row.label;
+            var vel=document.createElement("span"); vel.className="score-val"; vel.textContent=row.value;
+            li.appendChild(lel); li.appendChild(vel); ul.appendChild(li);
+          });
+          body.appendChild(ul);
+        } else {
+          var nd=document.createElement("p"); nd.className="text-muted text-sm";
+          nd.textContent="Dimension completada. Abre la herramienta para ver detalles.";
+          body.appendChild(nd);
+        }
+
+        if(summary){
+          var sel=document.createElement("p"); sel.className="text-sm text-muted";
+          sel.style.marginTop="var(--space-sm)"; sel.textContent=summary;
+          body.appendChild(sel);
+        }
+        var toolLink=document.createElement("a"); toolLink.href="../"+d.tool+"/index.html";
+        toolLink.className="btn btn-ghost text-sm";
+        toolLink.style.cssText="margin-top:var(--space-md);display:inline-block";
+        toolLink.textContent="Abrir "+d.toolLabel;
+        body.appendChild(toolLink); card.appendChild(body);
+
+        function toggleBody(){
+          var h=body.classList.contains("hidden");
+          body.classList.toggle("hidden",!h);
+          toggleBtn.textContent=h?"Cerrar":"Ver detalles";
+        }
+        toggleBtn.addEventListener("click",function(e){e.stopPropagation();toggleBody();});
+        header.addEventListener("click",toggleBody);
+        container.appendChild(card);
+      });
+    }
+
+    function renderInsights(profile) {
+      var rEl=document.getElementById("reinforcements-section");
+      var cEl=document.getElementById("conflicts-section");
+      rEl.innerHTML=""; cEl.innerHTML="";
+      var completedCount=["values","strengths","identity","purpose"].filter(function(k){
+        return profile[k]&&profile[k].completed;
+      }).length;
+      if(completedCount<2){
+        var neu=document.createElement("div"); neu.className="insight-block insight-neutral";
+        var np=document.createElement("p");
+        np.textContent="Completa al menos dos herramientas para ver insights transversales.";
+        neu.appendChild(np); rEl.appendChild(neu); return;
+      }
+
+      if(profile.values&&profile.values.completed&&profile.strengths&&profile.strengths.completed){
+        var cv=(profile.values.core_values||[]).map(function(v){return v.toLowerCase();});
+        var ss=(profile.strengths.signature_strengths||[]).map(function(s){return s.toLowerCase();});
+        var aligned=false;
+        cv.forEach(function(v){
+          var vw=v.split(/\s+/);
+          ss.forEach(function(s){
+            s.split(/\s+/).forEach(function(sw){
+              vw.forEach(function(vww){if(vww.length>3&&(sw.includes(vww)||vww.includes(sw)))aligned=true;});
+            });
+          });
+        });
+        var b=document.createElement("div"); b.className="insight-block insight-reinforcement";
+        var bp=document.createElement("p");
+        bp.textContent=aligned
+          ?"Refuerzo: tus valores y fortalezas apuntan en la misma direccion."
+          :"Valores y Fortalezas completados. Explora los patrones entre ambas dimensiones.";
+        b.appendChild(bp); rEl.appendChild(b);
+      }
+
+      (profile.synthesis&&profile.synthesis.reinforcements?profile.synthesis.reinforcements:[]).forEach(function(r){
+        var b=document.createElement("div"); b.className="insight-block insight-reinforcement";
+        var p=document.createElement("p"); p.textContent=r; b.appendChild(p); rEl.appendChild(b);
+      });
+
+      var cp=profile.triage&&profile.triage.career_path;
+      var ctrl=profile.identity&&profile.identity.adaptability&&profile.identity.adaptability.control;
+      if(cp==="stay_grow"&&ctrl!==null&&ctrl<3.5){
+        var c1=document.createElement("div"); c1.className="insight-block insight-conflict";
+        var c1p=document.createElement("p");
+        c1p.textContent="Atencion: tu nivel de agencia (Control CAAS) es bajo \u2014 puede dificultar el crecimiento donde estas.";
+        c1.appendChild(c1p); cEl.appendChild(c1);
+      }
+
+      var sec=profile.values&&profile.values.schwartz_profile&&profile.values.schwartz_profile.security;
+      if(cp==="go_independent"&&sec!==null&&sec>7){
+        var c2=document.createElement("div"); c2.className="insight-block insight-conflict";
+        var c2p=document.createElement("p");
+        c2p.textContent="Tension: valor\u00e1s mucho la seguridad pero consider\u00e1s la independencia \u2014 esto merece exploracion.";
+        c2.appendChild(c2p); cEl.appendChild(c2);
+      }
+
+      (profile.synthesis&&profile.synthesis.conflicts?profile.synthesis.conflicts:[]).forEach(function(c){
+        var b=document.createElement("div"); b.className="insight-block insight-conflict";
+        var p=document.createElement("p"); p.textContent=c; b.appendChild(p); cEl.appendChild(b);
+      });
+    }
+
+    function renderRecommendation(profile) {
+      var container=document.getElementById("career-recommendation"); container.innerHTML="";
+      var CAREER_RECS={
+        stay_grow:{
+          headline:"Crece donde estas",
+          steps:[
+            "Usa Bull's Eye para clarificar que valores te da tu rol actual.",
+            "Usa Compass para identificar que dimension de adaptabilidad reforzar.",
+            "Explora la skill n1-construye-afuera para mapear un plan de crecimiento interno."
+          ]
+        },
+        move:{
+          headline:"Movete estrategicamente",
+          steps:[
+            "Usa Ghost Check para evaluar ofertas antes de aplicar.",
+            "Completa tu perfil N1 para tener claridad de que buscas en el siguiente rol.",
+            "Explora n1-construye-afuera \u2014 CV Audit + Interview Prep."
+          ]
+        },
+        go_independent:{
+          headline:"Construi tu independencia",
+          steps:[
+            "Usa Flow Logger para identificar tus actividades de mayor energia.",
+            "Usa Runway Calculator para saber cuanto tiempo tenes.",
+            "Explora n1-construye-afuera \u2014 Network Map + Profile Builder."
+          ]
+        },
+        pause_reset:{
+          headline:"Pausa y replanteo",
+          steps:[
+            "Empieza por Bull's Eye \u2014 claridad de valores primero.",
+            "MLQ-10 para entender tu relacion actual con el sentido del trabajo.",
+            "Explora n1-busca-adentro para la dimension de identidad."
+          ]
+        }
+      };
+      var cp=profile.triage&&profile.triage.career_path;
+      var rec=cp?CAREER_RECS[cp]:null;
+      if(!rec){
+        var nr=document.createElement("p"); nr.className="text-muted";
+        nr.textContent="Completa el triage en la pagina principal para ver tu recomendacion.";
+        container.appendChild(nr); return;
+      }
+      var h3=document.createElement("h3"); h3.textContent=rec.headline; container.appendChild(h3);
+      var ol=document.createElement("ol"); ol.style.cssText="margin-top:var(--space-md);padding-left:var(--space-lg)";
+      rec.steps.forEach(function(s){
+        var li=document.createElement("li"); li.textContent=s;
+        li.style.marginBottom="var(--space-sm)"; ol.appendChild(li);
+      });
+      container.appendChild(ol);
+    }
+
+    function wireExportButtons(profile) {
+      var es=document.getElementById("export-status");
+      function showStatus(msg){es.textContent=msg;es.style.display="block";setTimeout(function(){es.style.display="none";},2000);}
+      function triggerDownload(content,filename,mimeType){
+        var blob=new Blob([content],{type:mimeType});
+        var url=URL.createObjectURL(blob);
+        var a=document.createElement("a"); a.href=url; a.download=filename;
+        document.body.appendChild(a); a.click();
+        document.body.removeChild(a); URL.revokeObjectURL(url);
+      }
+
+      document.getElementById("btn-download-yaml").addEventListener("click",function(){
+        try{triggerDownload(N1.generateYAML(profile),"n1-profile.yaml","text/yaml");showStatus("YAML descargado.");}
+        catch(e){showStatus("Error al generar YAML.");}
+      });
+
+      document.getElementById("btn-download-template").addEventListener("click",function(){
+        var cv=(profile.values&&profile.values.core_values)||[];
+        var ss=(profile.strengths&&profile.strengths.signature_strengths)||[];
+        var ad=(profile.identity&&profile.identity.adaptability)||{};
+        var mlq=(profile.purpose&&profile.purpose.mlq)||{};
+        var triage=profile.triage||{};
+        function safe(v){return(v!==null&&v!==undefined)?v:"\u2014";}
+        var cvLines=cv.length>0?cv.slice(0,3).map(function(v,i){return(i+1)+". "+v;}).join("\n"):"— Completar con Bull's Eye";
+        var ssLines=ss.length>0?ss.slice(0,3).map(function(s,i){return(i+1)+". "+s;}).join("\n"):"— Completar con Flow Logger";
+        var t=[
+          "# Mi Sistema N1 \u2014 El Sistema Eres Tu","",
+          "## Perfil de Autoconocimiento","",
+          "**Version:** "+(profile.version||"1.0"),
+          "**Actualizado:** "+(profile.updated||"\u2014"),"",
+          "## Valores Centrales",cvLines,"",
+          "## Fortalezas Clave",ssLines,"",
+          "## Adaptabilidad (CAAS-12)",
+          "Concern: "+safe(ad.concern)+" | Control: "+safe(ad.control)+" | Curiosity: "+safe(ad.curiosity)+" | Confidence: "+safe(ad.confidence),"",
+          "## Proposito (MLQ-10)",
+          "Presencia: "+safe(mlq.presence)+" | Busqueda: "+safe(mlq.search)+" | Cuadrante: "+safe(mlq.quadrant),"",
+          "## Camino Actual",triage.career_path||"— Completar el triage","",
+          "---",
+          "Instrucciones para tu Claude Project:",
+          "Soy usuario de N1. Cuando me des orientacion de carrera, usa este perfil como contexto.",
+          "Aplica el marco SCCT y la teoria de carrera proteica. Responde en espanol colombiano."
+        ].join("\n");
+        triggerDownload(t,"n1-system-template.md","text/markdown");
+        showStatus("System Template descargado.");
+      });
+
+      document.getElementById("btn-download-scorecard").addEventListener("click",function(){
+        var scores=calcDimensionScores(profile);
+        var cp=profile.triage&&profile.triage.career_path;
+        var hmap={stay_grow:"Crece donde estas",move:"Movete estrategicamente",go_independent:"Construi tu independencia",pause_reset:"Pausa y replanteo"};
+        var headline=cp?(hmap[cp]||"Autoconocimiento profesional completo"):"Autoconocimiento profesional completo";
+        try{
+          var dataUrl=N1.generateScorecard({
+            title:"Mi Perfil N1",subtitle:"Autoconocimiento profesional completo",chartType:"bar",
+            scores:[{label:"Valores",value:scores.values,max:10},{label:"Fortalezas",value:scores.strengths,max:10},{label:"Identidad",value:scores.identity,max:10},{label:"Proposito",value:scores.purpose,max:10}],
+            interpretation:headline
+          });
+          N1.downloadScorecard(dataUrl,"n1-perfil-completo.png");
+          showStatus("Scorecard descargado.");
+        }catch(e){showStatus("Error al generar scorecard.");}
+      });
+    }
+
+    /* == MAIN == */
+    function showSynthesizer(profile) {
+      document.getElementById("import-screen").style.display="none";
+      document.getElementById("synthesizer-screen").style.display="block";
+      document.getElementById("profile-updated").textContent="Actualizado: "+(profile.updated||"\u2014");
+      renderCompletionBadges(profile);
+      renderRadarChart(profile);
+      renderDimensionCards(profile);
+      renderInsights(profile);
+      renderRecommendation(profile);
+      wireExportButtons(profile);
+    }
+
+    document.addEventListener("DOMContentLoaded",function(){
+      var existing=N1.loadProfile();
+      if(existing&&(
+        (existing.triage&&existing.triage.career_path)||
+        (existing.values&&existing.values.completed)||
+        (existing.strengths&&existing.strengths.completed)||
+        (existing.identity&&existing.identity.completed)||
+        (existing.purpose&&existing.purpose.completed)
+      )){showSynthesizer(existing);return;}
+
+      var yamlInput=document.getElementById("yaml-input");
+      var loadBtn=document.getElementById("load-yaml-btn");
+      var errorEl=document.getElementById("yaml-error");
+      yamlInput.addEventListener("input",function(){
+        loadBtn.disabled=yamlInput.value.trim().length===0;
+        errorEl.style.display="none";
+      });
+      loadBtn.addEventListener("click",function(){
+        var text=yamlInput.value.trim();
+        if(!/version\s*:/m.test(text)||!/values\s*:|strengths\s*:|identity\s*:|purpose\s*:/m.test(text)){
+          errorEl.textContent="Formato invalido \u2014 asegurate de pegar el YAML completo de N1";
+          errorEl.style.display="block"; return;
+        }
+        showSynthesizer(buildProfileFromYaml(text));
+      });
+      var resetBtn=document.getElementById("btn-reset");
+      if(resetBtn){
+        resetBtn.addEventListener("click",function(){
+          document.getElementById("synthesizer-screen").style.display="none";
+          document.getElementById("import-screen").style.display="block";
+          document.getElementById("yaml-input").value="";
+          document.getElementById("load-yaml-btn").disabled=true;
+        });
+      }
+    });
+  </script>
+</body>
+</html>
