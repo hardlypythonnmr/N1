@@ -760,21 +760,19 @@
    *   title: string,
    *   scores: [{ label, value, max }],
    *   interpretation: string,
-   *   chartType: 'bar' | 'radar' | 'quadrant'
+   *   chartType: 'bar' | 'radar' | 'quadrant',
+   *   accentColor: string (optional, default: "#E85D26") — header + bar fill color,
+   *   subtitle: string (optional) — rendered below title in header,
+   *   badge: string (optional) — large number rendered right-aligned in header
    * }
    * Returns data URL (PNG). Canvas text content is data, not HTML — safe.
    */
-  N1.generateScorecard = function (config) {
-    var canvas = document.createElement("canvas");
-    canvas.width = 1200;
-    canvas.height = 628;
-    var ctx = canvas.getContext("2d");
 
-    if (!ctx) {
-      console.error("[N1] generateScorecard: Canvas 2D context not available");
-      return null;
-    }
-
+  /**
+   * Private drawing function — contains all scorecard drawing logic.
+   * Called by both generateScorecard (1200x628) and generateScorecardPreview (via scale).
+   */
+  function drawScorecardToContext(ctx, config, canvasWidth, canvasHeight) {
     var COLOR_ORANGE = "#E85D26";
     var COLOR_BLACK = "#1A1A1A";
     var COLOR_WHITE = "#FFFFFF";
@@ -782,13 +780,20 @@
     var COLOR_MUTED = "#6B6B6B";
     var COLOR_BORDER = "#E0E0E0";
 
+    /* ── per-tool customization ── */
+    var accentColor = config.accentColor || COLOR_ORANGE;
+
+    var headerHeight = Math.round(canvasHeight * 0.127); // ~80px at 628h
+    var footerY = Math.round(canvasHeight * 0.892); // ~560px at 628h
+    var footerHeight = canvasHeight - footerY;
+
     // Background
     ctx.fillStyle = COLOR_WHITE;
-    ctx.fillRect(0, 0, 1200, 628);
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-    // Orange header band (top 80px)
-    ctx.fillStyle = COLOR_ORANGE;
-    ctx.fillRect(0, 0, 1200, 80);
+    // Header band
+    ctx.fillStyle = accentColor;
+    ctx.fillRect(0, 0, canvasWidth, headerHeight);
 
     // N1 logo in header
     ctx.fillStyle = COLOR_WHITE;
@@ -801,14 +806,31 @@
     ctx.font = 'bold 24px "Space Mono", monospace';
     ctx.fillText(title, 120, 52);
 
+    /* ── per-tool customization ── */
+    // Subtitle: rendered below title in header when provided
+    if (config.subtitle) {
+      ctx.fillStyle = "rgba(255,255,255,0.85)";
+      ctx.font = '14px "DM Sans", sans-serif';
+      ctx.fillText(safeText(config.subtitle), 120, 70);
+    }
+
+    // Badge: large number right-aligned in header when provided
+    if (config.badge) {
+      ctx.fillStyle = COLOR_WHITE;
+      ctx.font = 'bold 32px "Space Mono", monospace';
+      ctx.textAlign = "right";
+      ctx.fillText(safeText(config.badge), canvasWidth - 48, 52);
+      ctx.textAlign = "left";
+    }
+
     // Footer band
     ctx.fillStyle = COLOR_SURFACE;
-    ctx.fillRect(0, 560, 1200, 68);
+    ctx.fillRect(0, footerY, canvasWidth, footerHeight);
     ctx.fillStyle = COLOR_MUTED;
     ctx.font = '16px "Space Mono", monospace';
-    ctx.fillText("N1 — el sistema eres tu", 48, 598);
+    ctx.fillText("N1 — el sistema eres tu", 48, footerY + 38);
     ctx.fillStyle = COLOR_BORDER;
-    ctx.fillRect(0, 560, 1200, 1);
+    ctx.fillRect(0, footerY, canvasWidth, 1);
 
     var scores = config.scores || [];
     var chartType = config.chartType || "bar";
@@ -848,7 +870,7 @@
         ctx.fill();
 
         if (fillWidth > 0) {
-          ctx.fillStyle = COLOR_ORANGE;
+          ctx.fillStyle = accentColor;
           ctx.beginPath();
           if (ctx.roundRect) {
             ctx.roundRect(barAreaLeft, y, fillWidth, barHeight, 4);
@@ -967,7 +989,42 @@
       }
       if (interpLine) ctx.fillText(interpLine, interpLeft + 20, interpY);
     }
+  }
 
+  N1.generateScorecard = function (config) {
+    var canvas = document.createElement("canvas");
+    canvas.width = 1200;
+    canvas.height = 628;
+    var ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      console.error("[N1] generateScorecard: Canvas 2D context not available");
+      return null;
+    }
+
+    drawScorecardToContext(ctx, config, 1200, 628);
+    return canvas.toDataURL("image/png");
+  };
+
+  /* ── 6b. N1.generateScorecardPreview(config) ── */
+  /**
+   * Renders a 600x314px preview thumbnail of a scorecard.
+   * Same config as generateScorecard(). Returns PNG data URL.
+   * Used for in-tool display before full-size download.
+   */
+  N1.generateScorecardPreview = function (config) {
+    var canvas = document.createElement("canvas");
+    canvas.width = 600;
+    canvas.height = 314;
+    var ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      console.error("[N1] generateScorecardPreview: Canvas 2D not available");
+      return null;
+    }
+
+    ctx.scale(0.5, 0.5);
+    drawScorecardToContext(ctx, config, 1200, 628);
     return canvas.toDataURL("image/png");
   };
 
