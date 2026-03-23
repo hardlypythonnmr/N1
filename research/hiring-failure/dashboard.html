@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N1 Research Dashboard — Hiring Failure</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--orange:#E85D26;--orange-dim:#C44D1C;--orange-glow:rgba(232,93,38,0.12);
+--black:#0D0D0D;--charcoal:#1A1A1A;--surface:#141414;
+--white:#F5F2ED;--gray:#8A8A8A;
+--font-head:'Space Mono',monospace;--font-body:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--font-body);line-height:1.6;overflow-x:hidden}
+::selection{background:var(--orange);color:var(--black)}
+a{color:var(--orange);text-decoration:none}
+a:hover{color:var(--orange-dim)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(13,13,13,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(232,93,38,0.15);padding:0}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;padding:0 24px;height:52px;gap:20px;overflow-x:auto}
+.nav-logo{font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--orange);flex-shrink:0}
+.nav-links{display:flex;gap:4px;flex-shrink:0}
+.nav-links a{font-size:11px;color:var(--gray);padding:6px 10px;border-radius:4px;transition:all .2s;white-space:nowrap;font-weight:500}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(232,93,38,0.1)}
+
+/* LAYOUT */
+.section{padding:80px 24px;max-width:1200px;margin:0 auto}
+.section-alt{background:var(--charcoal)}
+.section-title{font-family:var(--font-head);font-size:clamp(22px,3vw,32px);color:var(--orange);margin-bottom:8px;font-weight:700}
+.section-subtitle{color:var(--gray);font-size:15px;margin-bottom:40px;max-width:700px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 50% 40%,rgba(232,93,38,0.08) 0%,transparent 60%);pointer-events:none}
+.hero-eyebrow{font-family:var(--font-head);font-size:13px;color:var(--gray);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px}
+.hero-stat{font-family:var(--font-head);font-size:clamp(64px,12vw,140px);font-weight:700;color:var(--orange);line-height:1}
+.hero-stat-label{font-size:clamp(16px,2.5vw,22px);color:var(--white);margin-top:16px;font-weight:400}
+.hero-desc{max-width:700px;color:var(--gray);font-size:15px;margin-top:32px;line-height:1.8}
+.hero-desc strong{color:var(--white)}
+
+.stat-bar{display:flex;gap:0;margin-top:48px;background:var(--charcoal);border-radius:8px;overflow:hidden;border:1px solid rgba(138,138,138,0.15)}
+.stat-bar-item{padding:20px 28px;text-align:center;border-right:1px solid rgba(138,138,138,0.1);flex:1}
+.stat-bar-item:last-child{border-right:none}
+.stat-bar-num{font-family:var(--font-head);font-size:24px;color:var(--orange);font-weight:700}
+.stat-bar-label{font-size:12px;color:var(--gray);margin-top:4px}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid rgba(138,138,138,0.1);border-radius:8px;padding:28px;transition:border-color .3s,transform .2s}
+.card:hover{border-color:var(--orange);transform:translateY(-2px)}
+.card-title{font-family:var(--font-head);font-size:14px;color:var(--orange);margin-bottom:12px;font-weight:700}
+.card-num{font-family:var(--font-head);font-size:36px;color:var(--white);font-weight:700;margin-bottom:4px}
+.card-label{font-size:13px;color:var(--gray);margin-bottom:16px}
+.card-body{font-size:14px;color:var(--gray);line-height:1.7}
+.card-body strong{color:var(--white)}
+.card-cite{font-size:11px;color:rgba(138,138,138,0.6);margin-top:12px;font-style:italic}
+
+/* FUNNEL */
+.funnel-wrap{max-width:900px;margin:0 auto}
+.funnel-stage{display:flex;align-items:center;gap:20px;margin-bottom:4px;cursor:pointer;position:relative}
+.funnel-bar-wrap{flex:1;position:relative}
+.funnel-bar{height:52px;background:var(--orange);border-radius:4px;transition:all .4s;display:flex;align-items:center;padding:0 16px;position:relative}
+.funnel-bar-label{font-family:var(--font-head);font-size:12px;color:var(--black);font-weight:700;white-space:nowrap;z-index:1}
+.funnel-num{font-family:var(--font-head);font-size:13px;color:var(--white);width:80px;text-align:right;flex-shrink:0}
+.funnel-stage:hover .funnel-bar{filter:brightness(1.2)}
+.funnel-detail{display:none;background:var(--charcoal);border:1px solid rgba(232,93,38,0.2);border-radius:8px;padding:20px;margin:8px 0 16px 100px;font-size:13px;color:var(--gray);line-height:1.8}
+.funnel-detail.open{display:block}
+.funnel-detail strong{color:var(--white)}
+.funnel-detail .cite{color:rgba(138,138,138,0.5);font-style:italic}
+.funnel-success{text-align:center;margin-top:32px;padding:24px;background:var(--surface);border:1px solid var(--orange);border-radius:8px}
+.funnel-success-num{font-family:var(--font-head);font-size:48px;color:var(--orange);font-weight:700}
+.funnel-success-label{font-size:14px;color:var(--gray);margin-top:4px}
+
+/* TABLES */
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{font-family:var(--font-head);font-size:11px;color:var(--orange);text-align:left;padding:12px 16px;border-bottom:2px solid var(--orange);text-transform:uppercase;letter-spacing:1px}
+.data-table td{padding:12px 16px;border-bottom:1px solid rgba(138,138,138,0.1);color:var(--gray);vertical-align:top}
+.data-table tr:hover td{color:var(--white);background:rgba(232,93,38,0.03)}
+.data-table td:first-child{color:var(--white);font-weight:500}
+.data-table .num{font-family:var(--font-head);color:var(--orange);font-weight:700}
+
+/* CHART CONTAINER */
+.chart-container{background:var(--surface);border:1px solid rgba(138,138,138,0.1);border-radius:8px;padding:24px;margin:24px 0}
+.chart-container canvas{width:100%!important}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:24px;flex-wrap:wrap}
+.tab{font-family:var(--font-head);font-size:12px;padding:8px 16px;border:1px solid rgba(138,138,138,0.2);border-radius:4px;color:var(--gray);cursor:pointer;transition:all .2s;background:transparent}
+.tab:hover{border-color:var(--orange);color:var(--white)}
+.tab.active{background:var(--orange);color:var(--black);border-color:var(--orange)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* BIAS MAP */
+.bias-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.bias-card{background:var(--surface);border-left:3px solid var(--orange);padding:20px;border-radius:0 8px 8px 0}
+.bias-type{font-family:var(--font-head);font-size:13px;color:var(--orange);margin-bottom:8px;font-weight:700}
+.bias-effect{font-family:var(--font-head);font-size:22px;color:var(--white);margin-bottom:8px;font-weight:700}
+.bias-desc{font-size:13px;color:var(--gray);line-height:1.6}
+.bias-cite{font-size:11px;color:rgba(138,138,138,0.5);margin-top:8px}
+
+/* PSYCH */
+.psych-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.psych-card{background:var(--surface);border:1px solid rgba(138,138,138,0.1);border-radius:8px;padding:24px;position:relative;overflow:hidden}
+.psych-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--orange)}
+.psych-num{font-family:var(--font-head);font-size:11px;color:var(--orange);margin-bottom:8px}
+.psych-title{font-family:var(--font-head);font-size:14px;color:var(--white);margin-bottom:8px;font-weight:700}
+.psych-body{font-size:13px;color:var(--gray);line-height:1.6}
+.psych-cite{font-size:11px;color:rgba(138,138,138,0.5);margin-top:8px;font-style:italic}
+
+/* MARKET STATS */
+.market-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.market-stat{background:var(--surface);border:1px solid rgba(138,138,138,0.1);border-radius:8px;padding:24px;text-align:center}
+.market-stat-num{font-family:var(--font-head);font-size:32px;color:var(--orange);font-weight:700}
+.market-stat-label{font-size:13px;color:var(--gray);margin-top:8px}
+
+/* SENIORITY */
+.seniority-timeline{position:relative}
+.seniority-item{display:flex;gap:24px;margin-bottom:32px;position:relative}
+.seniority-marker{width:60px;flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+.seniority-dot{width:14px;height:14px;background:var(--orange);border-radius:50%;position:relative;z-index:1}
+.seniority-line{width:2px;flex:1;background:rgba(232,93,38,0.2);margin-top:4px}
+.seniority-content{background:var(--surface);border:1px solid rgba(138,138,138,0.1);border-radius:8px;padding:24px;flex:1}
+.seniority-level{font-family:var(--font-head);font-size:15px;color:var(--orange);margin-bottom:8px;font-weight:700}
+.seniority-body{font-size:13px;color:var(--gray);line-height:1.7}
+.seniority-body strong{color:var(--white)}
+
+/* RANKED LIST */
+.ranked-list{counter-reset:rank}
+.ranked-item{display:flex;gap:16px;padding:16px;border-bottom:1px solid rgba(138,138,138,0.08);transition:background .2s}
+.ranked-item:hover{background:rgba(232,93,38,0.03)}
+.ranked-num{font-family:var(--font-head);font-size:20px;color:var(--orange);width:36px;flex-shrink:0;font-weight:700;text-align:center}
+.ranked-body{flex:1}
+.ranked-title{font-size:14px;color:var(--white);font-weight:500;margin-bottom:4px}
+.ranked-desc{font-size:13px;color:var(--gray)}
+.ranked-cite{font-size:11px;color:rgba(138,138,138,0.5);font-style:italic}
+
+/* INTERVENTION BAR */
+.int-bar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.int-rank{font-family:var(--font-head);font-size:14px;color:var(--orange);width:28px;text-align:center;font-weight:700}
+.int-label{font-size:13px;color:var(--white);width:240px;flex-shrink:0}
+.int-bar-track{flex:1;height:28px;background:var(--surface);border-radius:4px;overflow:hidden;position:relative}
+.int-bar-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-dim));border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;transition:width 1s ease-out}
+.int-bar-val{font-family:var(--font-head);font-size:11px;color:var(--black);font-weight:700}
+.int-cite{font-size:11px;color:var(--gray);margin-left:8px;white-space:nowrap}
+
+/* OPTION CARDS */
+.option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-top:24px}
+.option-card{background:var(--surface);border:1px solid rgba(138,138,138,0.15);border-radius:8px;padding:28px;position:relative}
+.option-card.recommended{border-color:var(--orange);box-shadow:0 0 30px rgba(232,93,38,0.1)}
+.option-card.recommended::after{content:'RECOMMENDED';position:absolute;top:-10px;right:16px;background:var(--orange);color:var(--black);font-family:var(--font-head);font-size:10px;padding:3px 10px;border-radius:3px;font-weight:700}
+.option-letter{font-family:var(--font-head);font-size:28px;color:var(--orange);font-weight:700;margin-bottom:8px}
+.option-name{font-family:var(--font-head);font-size:16px;color:var(--white);margin-bottom:16px;font-weight:700}
+.option-body{font-size:13px;color:var(--gray);line-height:1.7}
+.option-body strong{color:var(--white)}
+.option-meta{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+.option-tag{font-size:11px;padding:4px 10px;border-radius:3px;background:rgba(138,138,138,0.1);color:var(--gray);font-family:var(--font-head)}
+
+/* COLLAPSIBLE */
+.collapsible{border:1px solid rgba(138,138,138,0.1);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.collapsible-header{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--surface);transition:background .2s}
+.collapsible-header:hover{background:rgba(232,93,38,0.05)}
+.collapsible-title{font-family:var(--font-head);font-size:13px;color:var(--white);font-weight:700}
+.collapsible-arrow{color:var(--orange);font-size:14px;transition:transform .3s}
+.collapsible.open .collapsible-arrow{transform:rotate(180deg)}
+.collapsible-body{padding:0 20px;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+.collapsible.open .collapsible-body{max-height:5000px;padding:16px 20px}
+.collapsible-body p,.collapsible-body li{font-size:12px;color:var(--gray);line-height:1.7;margin-bottom:6px}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+@media(max-width:768px){
+.two-col{grid-template-columns:1fr}
+.stat-bar{flex-direction:column}
+.stat-bar-item{border-right:none;border-bottom:1px solid rgba(138,138,138,0.1)}
+.nav-links{display:none}
+.int-label{width:140px;font-size:12px}
+.option-grid{grid-template-columns:1fr}
+}
+
+/* KEY CONCLUSIONS */
+.conclusion-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:24px}
+.conclusion-item{background:var(--surface);border-left:3px solid var(--orange);padding:20px;border-radius:0 8px 8px 0}
+.conclusion-item h4{font-family:var(--font-head);font-size:13px;color:var(--orange);margin-bottom:8px}
+.conclusion-item p{font-size:13px;color:var(--gray);line-height:1.6}
+
+/* SCROLL BTN */
+.scroll-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;background:var(--orange);border:none;border-radius:50%;color:var(--black);font-size:20px;cursor:pointer;opacity:0;transition:opacity .3s;z-index:999;display:flex;align-items:center;justify-content:center}
+.scroll-top.visible{opacity:1}
+.scroll-top:hover{background:var(--orange-dim)}
+
+/* FOOTER */
+.footer{text-align:center;padding:40px 24px;border-top:1px solid rgba(138,138,138,0.1);font-size:13px;color:var(--gray)}
+.footer span{color:var(--orange)}
+
+/* LANDSCAPE */
+.landscape-row{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.landscape-tag{padding:6px 14px;border:1px solid rgba(138,138,138,0.2);border-radius:20px;font-size:12px;color:var(--gray);transition:all .2s}
+.landscape-tag:hover{border-color:var(--orange);color:var(--white)}
+.landscape-tag.gap{border-color:var(--orange);background:rgba(232,93,38,0.08);color:var(--orange)}
+
+/* ANIMATIONS */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeInUp .6s ease both}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+<div class="nav-inner">
+<div class="nav-logo">N1 RESEARCH</div>
+<div class="nav-links">
+<a href="#hero">Overview</a>
+<a href="#funnel">Funnel</a>
+<a href="#stages">Stages</a>
+<a href="#science">Science</a>
+<a href="#bias">Bias</a>
+<a href="#psychology">Psychology</a>
+<a href="#market">Market</a>
+<a href="#industries">Industries</a>
+<a href="#seniority">Seniority</a>
+<a href="#failures">Top 20</a>
+<a href="#interventions">Interventions</a>
+<a href="#landscape">Landscape</a>
+<a href="#product">Product</a>
+<a href="#citations">Citations</a>
+</div>
+</div>
+</nav>
+
+<!-- 0. HERO -->
+<section id="hero" class="hero">
+<div class="hero-eyebrow">N1 Hiring Failure Research</div>
+<div class="hero-stat">1 : 1,700</div>
+<div class="hero-stat-label">Probabilidad real de conseguir trabajo por aplicacion</div>
+<p class="hero-desc">
+<strong>19 archivos. 13,614 lineas. 250+ estudios citados.</strong><br>
+Lo que la ciencia dice sobre por que la gente falla en procesos de seleccion — y que funciona de verdad.
+</p>
+<div class="stat-bar">
+<div class="stat-bar-item"><div class="stat-bar-num">250+</div><div class="stat-bar-label">Estudios citados</div></div>
+<div class="stat-bar-item"><div class="stat-bar-num">13,614</div><div class="stat-bar-label">Lineas de investigacion</div></div>
+<div class="stat-bar-item"><div class="stat-bar-num">5</div><div class="stat-bar-label">Etapas del funnel</div></div>
+<div class="stat-bar-item"><div class="stat-bar-num">7</div><div class="stat-bar-label">Industrias cubiertas</div></div>
+<div class="stat-bar-item"><div class="stat-bar-num">30+</div><div class="stat-bar-label">Meta-analisis</div></div>
+</div>
+</section>
+
+<!-- 1. HIRING FUNNEL -->
+<section id="funnel" class="section-alt">
+<div class="section" style="padding-top:80px">
+<h2 class="section-title">1. El Funnel de Contratacion</h2>
+<p class="section-subtitle">De 1,000 personas que aplican, 0.6 consiguen el trabajo. Cada etapa elimina a la mayoria. Click en cada barra para ver por que.</p>
+
+<div class="funnel-wrap">
+<div class="funnel-stage" onclick="toggleFunnel(this)">
+<div class="funnel-num">1,000</div>
+<div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%"><span class="funnel-bar-label">APLICAN</span></div></div>
+</div>
+<div class="funnel-detail">
+<strong>250 aplicantes promedio por vacante corporativa.</strong> En roles tech de alta demanda: 400-2,000+. El 97% de CVs son rechazados en esta etapa. El recruiter escanea tu CV en <strong>7.4 segundos</strong> (TheLadders 2018). Solo el 26% de CVs incluye logros cuantificados. <span class="cite">Gem 2025; CareerSidekick; Cultivated Culture n=125K</span>
+</div>
+
+<div class="funnel-stage" onclick="toggleFunnel(this)">
+<div class="funnel-num">30</div>
+<div class="funnel-bar-wrap"><div class="funnel-bar" style="width:30%;background:rgba(232,93,38,0.85)"><span class="funnel-bar-label">PHONE SCREEN</span></div></div>
+</div>
+<div class="funnel-detail">
+<strong>Solo el 3% llega al phone screen.</strong> 33% de hiring managers deciden en los primeros 90 segundos. La primera impresion correlaciona r=.42 con la evaluacion final. Las screens no estructuradas tienen validez predictiva de r=.20-.30. <strong>47% de candidatos fallan por no conocer la empresa.</strong> <span class="cite">Barrick et al. 2012; NovoResume; Gem 2025</span>
+</div>
+
+<div class="funnel-stage" onclick="toggleFunnel(this)">
+<div class="funnel-num">10</div>
+<div class="funnel-bar-wrap"><div class="funnel-bar" style="width:10%;background:rgba(232,93,38,0.7)"><span class="funnel-bar-label">TECNICA</span></div></div>
+</div>
+<div class="funnel-detail">
+<strong>~80% de candidatos fallan entrevistas tecnicas.</strong> Solo ~20% muestra rendimiento consistente entre multiples entrevistas. Ser observado reduce rendimiento >50% (Behroozi et al. 2020, RCT). <strong>Todas las mujeres fallaron la entrevista publica; todas pasaron la privada.</strong> LeetCode ratings no correlacionan con rendimiento en entrevistas. <span class="cite">interviewing.io; Behroozi et al. 2020 n=48</span>
+</div>
+
+<div class="funnel-stage" onclick="toggleFunnel(this)">
+<div class="funnel-num">2</div>
+<div class="funnel-bar-wrap"><div class="funnel-bar" style="width:4%;background:rgba(232,93,38,0.55);min-width:120px"><span class="funnel-bar-label">BEHAVIORAL</span></div></div>
+</div>
+<div class="funnel-detail">
+<strong>58% de candidatos son rechazados en esta etapa.</strong> >50% de evaluadores rankean "culture fit" como criterio #1 — que funciona como filtro de clase social (Rivera 2012, ASR). Las entrevistas no estructuradas miden extroversion (r=.15 con rendimiento), no competencia. <strong>90%+ de candidatos usan faking (Levashina & Campion 2007).</strong> <span class="cite">CareerPlug 2024; Rivera 2012; Barrick, Mount & Judge 2001</span>
+</div>
+
+<div class="funnel-stage" onclick="toggleFunnel(this)">
+<div class="funnel-num">0.7</div>
+<div class="funnel-bar-wrap"><div class="funnel-bar" style="width:2%;background:rgba(232,93,38,0.4);min-width:100px"><span class="funnel-bar-label">OFERTA</span></div></div>
+</div>
+<div class="funnel-detail">
+<strong>55% de candidatos no negocian.</strong> El 89% de empleadores estan abiertos a negociar. Los que negocian reciben en promedio <strong>18.83% mas</strong>. Numeros precisos ($87,250 no $85K) generan contra-ofertas mas conciliadoras (Mason et al. 2013). Las mujeres enfrentan penalizacion social 2x mayor por negociar (Bowles et al. 2007). <span class="cite">Pew 2023; XpertHR 2021; Interview Guys 2024</span>
+</div>
+
+<div class="funnel-success">
+<div class="funnel-success-num">0.6</div>
+<div class="funnel-success-label">de 1,000 — aceptan y empiezan. Tasa de exito: 0.06%</div>
+</div>
+
+<div style="text-align:center;margin-top:20px;padding:16px;background:rgba(232,93,38,0.06);border-radius:8px;border:1px solid rgba(232,93,38,0.15)">
+<div style="font-family:var(--font-head);font-size:13px;color:var(--orange);margin-bottom:4px">AJUSTE POR GHOST JOBS</div>
+<div style="font-size:14px;color:var(--gray)">22% de las vacantes son ghost jobs (Greenhouse 2024). Ajustando: <strong style="color:var(--white)">~1 de cada 2,000 aplicaciones resulta en empleo.</strong></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 2. STAGE BY STAGE -->
+<section id="stages">
+<div class="section">
+<h2 class="section-title">2. Etapa por Etapa</h2>
+<p class="section-subtitle">Las razones principales de fracaso, sesgos documentados, e intervenciones con evidencia en cada etapa del proceso.</p>
+
+<div class="card-grid">
+<!-- CV -->
+<div class="card">
+<div class="card-title">STAGE 1: CV / RESUME</div>
+<div class="card-num">97%</div>
+<div class="card-label">tasa de rechazo</div>
+<div class="card-body">
+<strong>Top 3 razones de fracaso:</strong><br>
+1. CV generico, no personalizado (36% excluidos)<br>
+2. Errores de ortografia/gramatica (80% rechazo)<br>
+3. Sin logros cuantificados (solo 26% los incluye)<br><br>
+<strong>Top 3 sesgos:</strong><br>
+1. Nombre racial: 36% menos callbacks para nombres negros — sin mejora desde 1989 (Quillian et al. 2017, n=55,842)<br>
+2. IA favorece nombres blancos 85% del tiempo (U. Washington 2024)<br>
+3. Edad: callbacks declinan desde los 40s (Neumark et al. n=40K+)<br><br>
+<strong>Intervenciones que funcionan:</strong><br>
+1. Personalizar CV: +40-50% callbacks (ResumeGo)<br>
+2. Cuantificar logros (5+): 2.3x mas entrevistas (Cultivated Culture n=125K)<br>
+3. Formato tenure vs fechas: +15% callbacks con gaps (Kristal et al. 2023, Nature Human Behaviour n=9,022)
+</div>
+<div class="card-cite">Hallazgo sorprendente: El mito del "75% auto-rechazo ATS" es falso. 92% de recruiters confirman que su ATS NO auto-rechaza (Enhancv 2025).</div>
+</div>
+
+<!-- Screening -->
+<div class="card">
+<div class="card-title">STAGE 2: SCREENING</div>
+<div class="card-num">67%</div>
+<div class="card-label">eliminados en phone screen</div>
+<div class="card-body">
+<strong>Top 3 razones de fracaso:</strong><br>
+1. Falta de preparacion / desconocimiento de la empresa (47%)<br>
+2. Baja energia / falta de entusiasmo<br>
+3. Respuestas vagas y genericas<br><br>
+<strong>Top 3 sesgos:</strong><br>
+1. Primera impresion: r=.42 con evaluacion final, r=.22 con ofertas reales (Barrick et al. 2010)<br>
+2. Sesgo de acento: d=0.47, peor en audio-only (Spence et al. 2024, n=4,576)<br>
+3. Sesgo de video: ratings mas bajos que presencial; mirar fuera de camara peor que solo audio (Miura 2024)<br><br>
+<strong>Intervenciones:</strong><br>
+1. Metodo STAR: +30-50% exito (CareerBuilder; SHRM)<br>
+2. Coaching con feedback: mejora significativa (Maurer & Solamon 2006 n=213)<br>
+3. Entrevistas estructuradas (employer-side): r=.42 vs r=.19 no estructurada
+</div>
+<div class="card-cite">Hallazgo sorprendente: 61% de candidatos son ghosteados despues de entrevista. 75% de aplicaciones reciben cero respuesta (Greenhouse 2024).</div>
+</div>
+
+<!-- Technical -->
+<div class="card">
+<div class="card-title">STAGE 3: EVALUACION TECNICA</div>
+<div class="card-num">80%</div>
+<div class="card-label">fallan entrevistas tecnicas</div>
+<div class="card-body">
+<strong>Top 3 razones de fracaso:</strong><br>
+1. Solo ~20% muestra rendimiento consistente entre multiples entrevistas<br>
+2. Ansiedad de observacion reduce rendimiento >50% (Behroozi 2020 RCT)<br>
+3. Desconexion entre lo evaluado (algoritmos) y el trabajo real (sistemas, debugging)<br><br>
+<strong>Top 3 sesgos:</strong><br>
+1. Genero: todas las mujeres fallaron en publico, todas pasaron en privado (Behroozi 2020)<br>
+2. Practice gap: mujeres 7x mas propensas a dejar de practicar despues de fracaso (interviewing.io)<br>
+3. Edad: ageism en tech empieza a los 29 (U. Gothenburg 2021)<br><br>
+<strong>Intervenciones:</strong><br>
+1. 5+ practice interviews: ~2x pass rate (interviewing.io)<br>
+2. Work sample tests sobre puzzles algoritmicos (r=.33 validez)<br>
+3. Evaluaciones privadas (sin observador) eliminan sesgo de ansiedad
+</div>
+<div class="card-cite">Hallazgo sorprendente: LeetCode ratings no correlacionan con rendimiento en entrevistas. El volumen de problemas resueltos si ayuda (r=.27) (interviewing.io 2025).</div>
+</div>
+
+<!-- Behavioral -->
+<div class="card">
+<div class="card-title">STAGE 4: ENTREVISTA CONDUCTUAL</div>
+<div class="card-num">58%</div>
+<div class="card-label">rechazados en entrevista final</div>
+<div class="card-body">
+<strong>Top 3 razones de fracaso:</strong><br>
+1. Respuestas vagas sin situacion especifica, accion concreta, o resultado medible<br>
+2. "Culture fit" como criterio #1 pero funciona como filtro de clase social (Rivera 2012)<br>
+3. Hablar mal de empleadores anteriores<br><br>
+<strong>Top 3 sesgos:</strong><br>
+1. Culture fit: >50% lo rankean #1 — correlaciona con hobbies de clase alta (Rivera 2012, ASR)<br>
+2. Extroversion bias: entrevistas miden extroversion (r=.15 con rendimiento), no competencia<br>
+3. 90%+ de candidatos usan impression management/faking (Levashina & Campion 2007)<br><br>
+<strong>Intervenciones:</strong><br>
+1. Entrevistas estructuradas: r=.42 vs r=.19 (Sackett et al. 2022)<br>
+2. Rubrics estandarizados: +34% precision en contratacion (J. Applied Psychology)<br>
+3. Paneles multiples: reliability .74 vs .44 individual (Huffcutt et al. 2013 n=32,428)
+</div>
+<div class="card-cite">Hallazgo sorprendente: Agregar entrevistas no estructuradas puede REDUCIR la precision predictiva (Dana, Dawes & Peterson 2013).</div>
+</div>
+
+<!-- Negotiation -->
+<div class="card">
+<div class="card-title">STAGE 5: NEGOCIACION / OFERTA</div>
+<div class="card-num">55%</div>
+<div class="card-label">nunca negocian</div>
+<div class="card-body">
+<strong>Top 3 razones de fracaso:</strong><br>
+1. No negociar (55% acepta primera oferta; 89% de empleadores estan abiertos)<br>
+2. Rechazo por falta de flexibilidad/remote (84% rechazarian sin trabajo flexible)<br>
+3. Counter-offers: 90% se va dentro de 12 meses<br><br>
+<strong>Top 3 sesgos:</strong><br>
+1. Genero: penalizacion social 2x mayor para mujeres (Bowles et al. 2007)<br>
+2. Raza: candidatos negros penalizados por negociar igual que blancos (Hernandez et al. 2019)<br>
+3. Edad: 18-29 reportan 46% discomfort vs 19% para 65+ (Pew 2023)<br><br>
+<strong>Intervenciones:</strong><br>
+1. Negociar siempre: +18.83% promedio (Interview Guys 2024)<br>
+2. Numeros precisos ($87,250 no $85K): mas conciliador (Mason et al. 2013)<br>
+3. Datos de mercado: 40% mas probable lograr objetivo (PayScale 2021)
+</div>
+<div class="card-cite">Hallazgo sorprendente: Cuando se explicita que el salario es negociable, la brecha de genero en propension a negociar desaparece (Leibbrandt & List 2015, n=2,500).</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 3. THE SCIENCE -->
+<section id="science" class="section-alt">
+<div class="section">
+<h2 class="section-title">3. La Ciencia de la Seleccion</h2>
+<p class="section-subtitle">Schmidt & Hunter (1998) definieron el campo por 25 anos. Sackett et al. (2022) corrigieron los numeros. Esto es lo que dice la evidencia actualizada.</p>
+
+<div class="chart-container">
+<h3 style="font-family:var(--font-head);font-size:14px;color:var(--white);margin-bottom:16px">Validez Predictiva de Metodos de Seleccion (Sackett et al. 2022)</h3>
+<canvas id="validityChart" height="480"></canvas>
+<p style="font-size:12px;color:var(--gray);margin-top:12px">Coeficiente de validez (r) = correlacion con rendimiento laboral. Mayor = mejor predictor. Sackett et al. 2022 corrigio sobreestimaciones de 0.10-0.20 puntos en estimaciones anteriores.</p>
+</div>
+
+<div class="two-col" style="margin-top:32px">
+<div>
+<h3 style="font-family:var(--font-head);font-size:15px;color:var(--orange);margin-bottom:16px">La "Gran Correccion" de Sackett 2022</h3>
+<div style="font-size:14px;color:var(--gray);line-height:1.8">
+<p>Durante 25 anos, el campo de I/O Psychology se baso en las estimaciones de Schmidt & Hunter (1998). En 2022, Sackett, Zhang, Berry & Lievens publicaron en <em>Journal of Applied Psychology</em> lo que se conoce como "The Great Correction":</p>
+<br>
+<p><strong style="color:var(--white)">Hallazgos clave:</strong></p>
+<ul style="margin-top:8px;padding-left:20px">
+<li>La mayoria de coeficientes de validez estaban sobreestimados 0.10-0.20 puntos</li>
+<li>~80% de los estudios usados eran concurrentes (no predictivos), inflando correcciones</li>
+<li><strong style="color:var(--orange)">Las entrevistas estructuradas pasaron a ser el metodo #1</strong> (r=.42)</li>
+<li>GMA bajo de r=.51 a r=.31</li>
+<li>Work samples bajaron de r=.54 a r=.33</li>
+<li>Entrevistas no estructuradas: de r=.38 a r=.19</li>
+</ul>
+</div>
+</div>
+<div>
+<h3 style="font-family:var(--font-head);font-size:15px;color:var(--orange);margin-bottom:16px">Lo que esto significa para candidatos</h3>
+<div style="font-size:14px;color:var(--gray);line-height:1.8">
+<p><strong style="color:var(--white)">Los anos de experiencia son un predictor terrible.</strong> r=.18 (Schmidt & Hunter) que posiblemente es aun menor post-correccion. Sin embargo, el 61% de empleadores han aumentado requisitos de experiencia (LinkedIn 2024).</p>
+<br>
+<p><strong style="color:var(--white)">La educacion formal es peor.</strong> r=.10 de validez predictiva. Pero los requisitos de titulo suben 2.2% por cada 1% de aumento en desempleo — y 40% de esos requisitos nunca bajan (Modestino et al. 2020).</p>
+<br>
+<p><strong style="color:var(--white)">Las entrevistas no estructuradas pueden ser peores que no entrevistar.</strong> Dana, Dawes & Peterson (2013) demostraron que agregar entrevistas no estructuradas a evaluaciones basadas en datos reducia la precision predictiva.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 4. BIAS MAP -->
+<section id="bias">
+<div class="section">
+<h2 class="section-title">4. Mapa de Sesgos</h2>
+<p class="section-subtitle">Sesgos documentados empiricamente en cada etapa del proceso de contratacion. Cada uno con estudio, tamano de muestra, y tamano del efecto.</p>
+
+<div class="bias-grid">
+<div class="bias-card">
+<div class="bias-type">RACIAL / ETNICO</div>
+<div class="bias-effect">36% menos callbacks</div>
+<div class="bias-desc">Nombres asociados a personas negras reciben 36% menos callbacks que nombres blancos, 24% menos para latinos. <strong>Sin mejora desde 1989.</strong></div>
+<div class="bias-cite">Quillian et al. 2017, PNAS. Meta-analisis de 28 field experiments, n=55,842</div>
+</div>
+
+<div class="bias-card">
+<div class="bias-type">IA / ALGORITMICO</div>
+<div class="bias-effect">85% favorecen nombres blancos</div>
+<div class="bias-desc">Los LLMs que filtran CVs favorecen nombres asociados a personas blancas el 85% del tiempo. Los nombres de hombres negros <strong>nunca son favorecidos</strong> sobre hombres blancos.</div>
+<div class="bias-cite">U. Washington 2024, AAAI/ACM. n=554 CVs, 571 job descriptions, 3 LLMs</div>
+</div>
+
+<div class="bias-card">
+<div class="bias-type">GENERO (TECNICO)</div>
+<div class="bias-effect">100% fail publica vs 100% pass privada</div>
+<div class="bias-desc">Todas las mujeres fallaron la entrevista tecnica publica (con observador). Todas las mujeres pasaron la privada (sin observador). El formato, no la habilidad.</div>
+<div class="bias-cite">Behroozi et al. 2020, ESEC/FSE. RCT, n=48</div>
+</div>
+
+<div class="bias-card">
+<div class="bias-type">ACENTO</div>
+<div class="bias-effect">d = 0.47</div>
+<div class="bias-desc">Efecto medio. Acento no estandar = menos contrataciones. El sesgo es mas fuerte para trabajos de alta comunicacion. <strong>Prejudicio, no comprensibilidad</strong>, explica el efecto. Doble penalizacion para mujeres.</div>
+<div class="bias-cite">Spence et al. 2024, PSPB. Meta-analisis de 27 estudios, n=4,576</div>
+</div>
+
+<div class="bias-card">
+<div class="bias-type">EDAD</div>
+<div class="bias-effect">Callbacks caen significativamente</div>
+<div class="bias-desc">Aplicantes de 64-66 reciben significativamente menos callbacks. Peor para mujeres. En tech, el ageism empieza a los <strong>29</strong> (vs. 41 en otras industrias).</div>
+<div class="bias-cite">Neumark, Burn & Button 2019. n=40,000+ aplicaciones, 13,000+ posiciones</div>
+</div>
+
+<div class="bias-card">
+<div class="bias-type">"CULTURE FIT"</div>
+<div class="bias-effect">>50% lo rankean #1</div>
+<div class="bias-desc">Funciona como proxy para homogeneidad social. Evaluadores miden si el candidato practica deportes de clase alta, frecuenta los mismos restaurantes. <strong>Reproduccion de clase, no compatibilidad.</strong></div>
+<div class="bias-cite">Rivera 2012, American Sociological Review. Etnografia de 120 entrevistas en firmas elite</div>
+</div>
+
+<div class="bias-card">
+<div class="bias-type">GENERO (NEGOCIACION)</div>
+<div class="bias-effect">Penalizacion 2x mayor</div>
+<div class="bias-desc">Comportamiento identico de negociacion produce penalizacion social 2x mayor para mujeres. Evaluadores masculinos penalizan mas a mujeres que a hombres.</div>
+<div class="bias-cite">Bowles, Babcock & Lai 2007, OBHDP. 4 experimentos, n=367</div>
+</div>
+
+<div class="bias-card">
+<div class="bias-type">PRACTICE GAP</div>
+<div class="bias-effect">Mujeres 7x mas propensas a parar</div>
+<div class="bias-desc">Despues de un mal rendimiento en entrevista tecnica, las mujeres son 7x mas propensas a dejar de practicar que los hombres. Filtro estructural de diversidad.</div>
+<div class="bias-cite">interviewing.io 2022. Platform data, miles de practice interviews</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 5. PSYCHOLOGY GAP -->
+<section id="psychology" class="section-alt">
+<div class="section">
+<h2 class="section-title">5. La Brecha Psicologica</h2>
+<p class="section-subtitle">12 dimensiones psicologicas que los productos de carrera ignoran — y que la ciencia dice que importan. Este es el gap #1 del mercado.</p>
+
+<div class="psych-grid">
+<div class="psych-card"><div class="psych-num">01</div><div class="psych-title">Transicion de Identidad</div><div class="psych-body">El cambio de carrera es una transicion de identidad, no un problema de busqueda. Lo que hacemos es tan central a nuestra narrativa que transformarlo sacude el self-knowledge.</div><div class="psych-cite">Ibarra (2003), Working Identity. Annual Reviews of Org Psych (2024)</div></div>
+
+<div class="psych-card"><div class="psych-num">02</div><div class="psych-body">Perdida de rol profesional = perdida de rutina diaria, red social, estatus, seguridad financiera. La literatura trata la perdida laboral como evento economico, no psicologico.</div><div class="psych-title">Duelo y Perdida</div><div class="psych-cite">Kubler-Ross framework aplicado. Zero estudios controlados en contexto de hiring</div></div>
+
+<div class="psych-card"><div class="psych-num">03</div><div class="psych-title">Erosion de Autoeficacia</div><div class="psych-body">La autoeficacia es el predictor #1 del exito en busqueda laboral: correlaciona con ofertas, estatus de empleo, y duracion del desempleo. Cada rechazo la erosiona.</div><div class="psych-cite">Kanfer, Wanberg & Kantrowitz 2001, meta-analisis. Eden & Aviram 1993</div></div>
+
+<div class="psych-card"><div class="psych-num">04</div><div class="psych-title">Indefension Aprendida</div><div class="psych-body">75% de aplicaciones reciben cero respuesta. 61% ghosteados post-entrevista. El patron de esfuerzo sin resultado reduce calidad y frecuencia de intento.</div><div class="psych-cite">Seligman framework. Patron conductual consistente en data de mercado 2024-2025</div></div>
+
+<div class="psych-card"><div class="psych-num">05</div><div class="psych-title">Sindrome del Impostor</div><div class="psych-body">52.7% de ingenieros de software lo experimentan. 60.6% de mujeres. 67.9% de asiaticos. 65.1% de negros. Efecto negativo significativo en productividad percibida.</div><div class="psych-cite">ICSE-SEIS 2024, arXiv:2312.03966. n=624, 26 paises</div></div>
+
+<div class="psych-card"><div class="psych-num">06</div><div class="psych-title">Paralisis de Decision</div><div class="psych-body">81% de hiring managers culpan a la "incertidumbre" por ghostear candidatos. El mismo patron opera en candidatos: no aplican, no negocian, no deciden.</div><div class="psych-cite">Schwartz (2004), Paradox of Choice. Interview Guys Ghosting Index 2025</div></div>
+
+<div class="psych-card"><div class="psych-num">07</div><div class="psych-body">LinkedIn amplifica la comparacion social. El "exito" visible de otros durante tu busqueda erosiona confianza y aumenta ansiedad. Mecanismo de espiral descendente.</div><div class="psych-title">Comparacion Social</div><div class="psych-cite">Festinger (1954). Efecto LinkedIn documentado pero no medido en contexto hiring</div></div>
+
+<div class="psych-card"><div class="psych-num">08</div><div class="psych-title">Deficit Cognitivo por Estres Financiero</div><div class="psych-body">La escasez financiera reduce capacidad cognitiva equivalente a <strong>-13 puntos de IQ</strong>. Los candidatos en crisis financiera literalmente piensan peor durante entrevistas.</div><div class="psych-cite">Mani et al. 2013, Science. Field experiments + lab studies</div></div>
+
+<div class="psych-card"><div class="psych-num">09</div><div class="psych-title">Stereotype Threat</div><div class="psych-body">Cuando un test se describe como "diagnostico de habilidad intelectual", afroamericanos sub-rinden. Cuando se describe como "tarea de laboratorio", rinden igual. d=0.26.</div><div class="psych-cite">Steele & Aronson 1995, JPSP. Spencer, Steele & Quinn 1999</div></div>
+
+<div class="psych-card"><div class="psych-num">10</div><div class="psych-title">Decaimiento de Motivacion</div><div class="psych-body">La auto-regulacion en busqueda laboral es mas importante que la intensidad (Van Hooft et al. 2021). Calidad > cantidad. Pero el sistema incentiva volumen.</div><div class="psych-cite">Van Hooft et al. 2021. Goal setting + planning + monitoring + adjusting</div></div>
+
+<div class="psych-card"><div class="psych-num">11</div><div class="psych-title">Efectos de Aislamiento</div><div class="psych-body">Perder un trabajo = perder red social diaria, estructura temporal, sentido de proposito. El aislamiento amplifica todos los otros efectos psicologicos.</div><div class="psych-cite">Jahoda (1982), Employment and Unemployment. Documented but under-researched in hiring</div></div>
+
+<div class="psych-card"><div class="psych-num">12</div><div class="psych-title">Presion Cultural (LATAM)</div><div class="psych-body">"Estabilidad laboral" es culturalmente central. 47% informalidad. Sin red de seguridad social. Familia como presion contra el cambio. El colectivismo amplifica el miedo al riesgo.</div><div class="psych-cite">ILO 2025; Deloitte Gen Z Survey 2025; GiniTalent 2025</div></div>
+</div>
+
+<div style="margin-top:32px;padding:24px;background:var(--surface);border:1px solid var(--orange);border-radius:8px">
+<h3 style="font-family:var(--font-head);font-size:15px;color:var(--orange);margin-bottom:12px">Por que es el Gap #1</h3>
+<p style="font-size:14px;color:var(--gray);line-height:1.8">La literatura de hiring esta dominada por preguntas del lado del empleador ("que metodo predice rendimiento?") y medicion de discriminacion ("hay sesgo?"). <strong style="color:var(--white)">Casi ninguna investigacion pregunta: cual es la experiencia psicologica del candidato, y como su estado interno afecta sus resultados?</strong> Las dimensiones que mas importan para una metodologia de cambio de carrera — identidad, duelo, autoeficacia, regulacion emocional, motivacion, miedo — son precisamente las que tienen menos investigacion en contexto de hiring. Ningun producto existente las aborda.</p>
+</div>
+</div>
+</section>
+
+<!-- 6. MARKET INTELLIGENCE -->
+<section id="market">
+<div class="section">
+<h2 class="section-title">6. Inteligencia de Mercado</h2>
+<p class="section-subtitle">Que esta pasando en el mercado laboral global y en LATAM especificamente.</p>
+
+<div class="market-stats">
+<div class="market-stat"><div class="market-stat-num">239%</div><div class="market-stat-label">Aumento en volumen de aplicaciones desde ChatGPT (Gem 2025)</div></div>
+<div class="market-stat"><div class="market-stat-num">27%</div><div class="market-stat-label">Ghost jobs — vacantes sin intencion de contratar (Greenhouse 2024)</div></div>
+<div class="market-stat"><div class="market-stat-num">54d</div><div class="market-stat-label">Duracion promedio del proceso de contratacion — era 20 en 2009</div></div>
+<div class="market-stat"><div class="market-stat-num">834</div><div class="market-stat-label">Aplicaciones Easy Apply promedio por posting (LinkedIn 2024)</div></div>
+<div class="market-stat"><div class="market-stat-num">80%</div><div class="market-stat-label">De profesionales se sienten no preparados para 2026 (LinkedIn n=19K)</div></div>
+<div class="market-stat"><div class="market-stat-num">3x</div><div class="market-stat-label">Menos probable ser contratado hoy vs. 2021 (Gem 2025)</div></div>
+</div>
+
+<h3 style="font-family:var(--font-head);font-size:18px;color:var(--orange);margin-top:48px;margin-bottom:24px">LATAM</h3>
+
+<div class="card-grid">
+<div class="card">
+<div class="card-title">COLOMBIA</div>
+<div class="card-body">
+<strong>Desempleo:</strong> 10.2% (2024), bajo a 7.0% nov 2025<br>
+<strong>IT market:</strong> $2.87B proyectado para 2030<br>
+<strong>Senior dev salary:</strong> $54K-$92K USD<br>
+<strong>Bogota:</strong> 110,000+ tech jobs, top 5 LATAM<br>
+<strong>Medellin:</strong> $150M inversion 2024, WEF hub<br>
+<strong>Startup funding:</strong> $353M (2024)<br>
+<strong>EF English:</strong> Score 480 (Low)
+</div>
+</div>
+<div class="card">
+<div class="card-title">MEXICO</div>
+<div class="card-body">
+<strong>FDI record:</strong> $45.3B en 2024 (+48% YoY)<br>
+<strong>CDMX:</strong> 320,000 tech specialists, 526 startups<br>
+<strong>Monterrey:</strong> 112% crecimiento workforce tech<br>
+<strong>Senior dev (US contract):</strong> $66K-$90K USD<br>
+<strong>Talent gap:</strong> 2M ingenieros faltantes<br>
+<strong>Startup funding:</strong> $792M (2024)<br>
+<strong>EF English:</strong> Score 440 (Very Low)
+</div>
+</div>
+<div class="card">
+<div class="card-title">ARGENTINA</div>
+<div class="card-body">
+<strong>Tech sector:</strong> 6% del GDP, 1,200+ empresas tech en BsAs<br>
+<strong>Developer pool:</strong> 115,000 devs, 20K STEM grads/yr<br>
+<strong>Senior salary:</strong> $41K-$66K USD<br>
+<strong>Remote hiring growth:</strong> +54% (Deel 2024)<br>
+<strong>Inflacion:</strong> Pagos en USD como incentivo de retencion<br>
+<strong>EF English:</strong> Score 575 (High)
+</div>
+</div>
+<div class="card">
+<div class="card-title">BRASIL</div>
+<div class="card-body">
+<strong>Largest ICT in LATAM:</strong> 37.2% de inversion regional<br>
+<strong>759K developers</strong> — #1 LATAM, #6 mundial<br>
+<strong>Software revenue:</strong> ~$113B USD (2024)<br>
+<strong>69M LinkedIn users</strong> — requiere estrategia PT<br>
+<strong>Sao Paulo:</strong> $113B ecosystem, 75% de unicornios Brasil<br>
+<strong>Deel export growth:</strong> +53% YoY
+</div>
+</div>
+</div>
+
+<div style="margin-top:32px;padding:24px;background:var(--surface);border-radius:8px;border:1px solid rgba(138,138,138,0.1)">
+<h4 style="font-family:var(--font-head);font-size:14px;color:var(--orange);margin-bottom:12px">8 Segmentos Desatendidos en LATAM</h4>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span class="landscape-tag gap">1. No-tech en transicion</span>
+<span class="landscape-tag gap">2. Mujeres reingresando</span>
+<span class="landscape-tag gap">3. Mid-career AI displacement</span>
+<span class="landscape-tag gap">4. Informales buscando formalizar</span>
+<span class="landscape-tag gap">5. Ciudades secundarias</span>
+<span class="landscape-tag gap">6. Sandwich generation (35-50)</span>
+<span class="landscape-tag gap">7. Profesionales + English upskilling</span>
+<span class="landscape-tag gap">8. Non-tech founders/solos</span>
+</div>
+<p style="margin-top:16px;font-size:13px;color:var(--gray)"><strong style="color:var(--white)">$30.51B</strong> e-learning market LATAM (2024). <strong style="color:var(--white)">47%</strong> tasa de informalidad. <strong style="color:var(--white)">128M</strong> trabajadores independientes. <strong style="color:var(--white)">188M</strong> usuarios LinkedIn. <strong style="color:var(--white)">3% a 30%</strong> remote work adoption. <strong style="color:var(--white)">Zero</strong> productos de career change en espanol.</p>
+</div>
+</div>
+</section>
+
+<!-- 7. INDUSTRY BREAKDOWN -->
+<section id="industries" class="section-alt">
+<div class="section">
+<h2 class="section-title">7. Industrias</h2>
+<p class="section-subtitle">Patrones de fracaso y oportunidad por industria.</p>
+
+<div class="tabs" id="industryTabs">
+<div class="tab active" onclick="switchTab('industryTabs','ind',0)">Tech</div>
+<div class="tab" onclick="switchTab('industryTabs','ind',1)">Finance</div>
+<div class="tab" onclick="switchTab('industryTabs','ind',2)">Consulting</div>
+<div class="tab" onclick="switchTab('industryTabs','ind',3)">Healthcare</div>
+<div class="tab" onclick="switchTab('industryTabs','ind',4)">Academia</div>
+<div class="tab" onclick="switchTab('industryTabs','ind',5)">Creative</div>
+<div class="tab" onclick="switchTab('industryTabs','ind',6)">Government</div>
+</div>
+
+<div id="ind-0" class="tab-content active">
+<div class="two-col">
+<div>
+<h4 style="font-family:var(--font-head);color:var(--orange);font-size:14px;margin-bottom:12px">Funnel Tech</h4>
+<p style="font-size:13px;color:var(--gray);line-height:1.8">
+<strong style="color:var(--white)">180 applicants per hire</strong> (3x peor que 2021). Applications per recruiter: 2,500+ (+178%). Interviews per hire: 20 (+42% vs 2021). Time to hire: 41 days (+24%). Sourced candidates son <strong style="color:var(--white)">5x mas probables</strong> de ser contratados que inbound. 127,000+ layoffs tech en 2025. 29% del codigo es generado por IA (HackerRank 2025). <strong style="color:var(--white)">AI/ML hiring crecio 65%</strong>. 4.8M posiciones de cybersecurity sin llenar globalmente.
+</p>
+</div>
+<div>
+<h4 style="font-family:var(--font-head);color:var(--orange);font-size:14px;margin-bottom:12px">Salarios y Compensacion</h4>
+<p style="font-size:13px;color:var(--gray);line-height:1.8">
+<strong style="color:var(--white)">FAANG L5/E5:</strong> $300-400K+ TC<br>
+<strong style="color:var(--white)">Senior SWE (US):</strong> $150-220K base<br>
+<strong style="color:var(--white)">Remote LATAM Senior:</strong> $60-126K<br>
+<strong style="color:var(--white)">AI/ML premium:</strong> 30-50% sobre SWE<br>
+<strong style="color:var(--white)">Equity negotiability:</strong> Seed VP 1-2%, Sr Eng ~1%<br>
+Signing bonuses son el item mas negociable.
+</p>
+</div>
+</div>
+</div>
+
+<div id="ind-1" class="tab-content">
+<div class="two-col">
+<div>
+<h4 style="font-family:var(--font-head);color:var(--orange);font-size:14px;margin-bottom:12px">Investment Banking</h4>
+<p style="font-size:13px;color:var(--gray);line-height:1.8">
+Dos pipelines: OCR (on-campus, predecible) vs Lateral (networking, impredecible). <strong style="color:var(--white)">Superday offer rate: 30-50%</strong>. 3-5 entrevistas back-to-back. Technical: DCF, LBO, accounting. <strong style="color:var(--white)">Analyst all-in comp: $150-225K</strong>. Associate: $200-400K. VP: $350-700K. MD: $500K-$2M+. PE exits pagan 30-50% mas.
+</p>
+</div>
+<div>
+<h4 style="font-family:var(--font-head);color:var(--orange);font-size:14px;margin-bottom:12px">FinTech</h4>
+<p style="font-size:13px;color:var(--gray);line-height:1.8">
+<strong style="color:var(--white)">39% de inversion VC en LATAM</strong> va a fintech. 3,000+ empresas fintech en la region. Hiring combina skills de tech + finance. Dual-domain candidates son contratados practicamente en el acto. <strong style="color:var(--white)">340% crecimiento</strong> ecosistema fintech LATAM 2017-2023.
+</p>
+</div>
+</div>
+</div>
+
+<div id="ind-2" class="tab-content">
+<div style="font-size:13px;color:var(--gray);line-height:1.8">
+<strong style="color:var(--orange)">MBB (McKinsey, BCG, Bain):</strong> McKinsey recibe ~200,000 aplicaciones para ~2,000 posiciones (1% overall). Case interview pass rates: ~25% first round, ~50% final. La cultura de prep de casos es tan intensa como LeetCode. <strong style="color:var(--white)">Big 4:</strong> Mas accesibles (20-30% acceptance rate). 1M+ empleados globales. Target school pipelines dominan. <strong style="color:var(--white)">Boutique:</strong> Networking > aplicacion formal. Domain expertise pesa mas que pedigree.
+</div>
+</div>
+
+<div id="ind-3" class="tab-content">
+<div style="font-size:13px;color:var(--gray);line-height:1.8">
+<strong style="color:var(--orange)">Escasez estructural permanente.</strong> US tiene 500,000+ enfermeros faltantes (2025). A diferencia de tech/finance, healthcare tiene deficit persistente. Los callback rates son los mas altos (hasta 20% en healthcare/education). Credentialing es la barrera principal. Dual-background candidates (healthcare + finance/tech) son contratados inmediatamente. <strong style="color:var(--white)">Burnout</strong> es el driver principal de attrition.
+</div>
+</div>
+
+<div id="ind-4" class="tab-content">
+<div style="font-size:13px;color:var(--gray);line-height:1.8">
+<strong style="color:var(--orange)">Tenure-track positions:</strong> El proceso mas largo de todas las industrias. 6-12 meses tipico. Pedigree institucional pesa enormemente. Para cada posicion tenure-track, 50-500+ aplicantes. Solo ~25% de PhDs consiguen posiciones tenure-track. <strong style="color:var(--white)">Adjuncts:</strong> 41-68% de todos los faculty appointments son non-tenure-track. El "alt-ac" movement crece.
+</div>
+</div>
+
+<div id="ind-5" class="tab-content">
+<div style="font-size:13px;color:var(--gray);line-height:1.8">
+<strong style="color:var(--orange)">Portfolio review (30-60 min)</strong> presentando proyectos a 3-5 evaluadores. Evaluacion inherentemente subjetiva. Criterios: proceso de diseno, evidencia de colaboracion, problem framing, storytelling, user-centeredness. "Very few people" comunican efectivamente su comprension del problema. <strong style="color:var(--white)">El proceso creativo importa mas que el output.</strong>
+</div>
+</div>
+
+<div id="ind-6" class="tab-content">
+<div style="font-size:13px;color:var(--gray);line-height:1.8">
+<strong style="color:var(--orange)">Procesos estandarizados y largos.</strong> Government hiring sigue frameworks rigidos (USAJobs en US). Los procesos pueden tomar 3-6 meses. Menor flexibilidad salarial pero mejores beneficios y estabilidad. En LATAM, los puestos publicos ofrecen "estabilidad laboral" valorada culturalmente. <strong style="color:var(--white)">Non-profit:</strong> Mission-alignment pesa mas que compensacion. Salarios 10-20% menores que sector privado pero passion premium.
+</div>
+</div>
+</div>
+</section>
+
+<!-- 8. SENIORITY -->
+<section id="seniority">
+<div class="section">
+<h2 class="section-title">8. Analisis por Seniority</h2>
+<p class="section-subtitle">Cada nivel enfrenta desafios fundamentalmente diferentes.</p>
+
+<div class="seniority-timeline">
+<div class="seniority-item">
+<div class="seniority-marker"><div class="seniority-dot"></div><div class="seniority-line"></div></div>
+<div class="seniority-content">
+<div class="seniority-level">ENTRY-LEVEL (0-2 anos)</div>
+<div class="seniority-body">
+<strong>La paradoja de la experiencia:</strong> Los trabajos "entry-level" rutinariamente piden 2-5 anos de experiencia. <strong>52% de graduados</strong> estan subempleados (Burning Glass Institute). Los postings entry-level cayeron <strong>29 puntos porcentuales</strong> desde enero 2024. Requisitos inflados: cada 1% de aumento en desempleo sube requisitos de educacion 2.2% — y 40% nunca bajan (Modestino et al. 2020, ~36M postings). <strong>La internship-to-hire pipeline</strong> es la ruta mas efectiva: 56% conversion rate (NACE 2025).
+</div>
+</div>
+</div>
+
+<div class="seniority-item">
+<div class="seniority-marker"><div class="seniority-dot"></div><div class="seniority-line"></div></div>
+<div class="seniority-content">
+<div class="seniority-level">MID-LEVEL (3-8 anos)</div>
+<div class="seniority-body">
+<strong>The squeeze:</strong> Demasiado senior para entry, muy junior para senior. El premium salarial STEM cae <strong>50%+ en la primera decada</strong> (Deming & Noray 2020, QJE). Skill obsolescence es real: 62.5% de STEM grads en STEM a los 23-24, solo ~41% a los 50. La decision manager vs IC track es critica. <strong>41% de empresas</strong> recortaron capas de management en 2025. 20% planean usar IA para aplanar estructuras.
+</div>
+</div>
+</div>
+
+<div class="seniority-item">
+<div class="seniority-marker"><div class="seniority-dot"></div><div class="seniority-line"></div></div>
+<div class="seniority-content">
+<div class="seniority-level">SENIOR (8-15 anos)</div>
+<div class="seniority-body">
+<strong>90+ dias</strong> de busqueda promedio. Red de contactos se vuelve la herramienta #1 — los job boards son inefectivos a este nivel. La sobrequalificacion genera rechazo: "flight risk". Senior engineers fallan entrevistas de nivel junior porque evaluan skills diferentes (algoritmos vs. architecture). <strong>Network-dependent hiring:</strong> el 80% de roles senior se llenan sin publicar la vacante.
+</div>
+</div>
+</div>
+
+<div class="seniority-item">
+<div class="seniority-marker"><div class="seniority-dot"></div><div class="seniority-line"></div></div>
+<div class="seniority-content">
+<div class="seniority-level">EXECUTIVE (15+ anos)</div>
+<div class="seniority-body">
+<strong>40-60% de ejecutivos contratados externamente fracasan dentro de 18 meses</strong> (Russell Reynolds; Gartner). El proceso de busqueda pasa casi exclusivamente por headhunters y redes personales. Executive search: $17K-$23K (Korn Ferry). La identidad esta profundamente atada al titulo y la empresa. Perder eso genera una crisis identitaria que pocos servicios abordan.
+</div>
+</div>
+</div>
+
+<div class="seniority-item">
+<div class="seniority-marker"><div class="seniority-dot"></div></div>
+<div class="seniority-content">
+<div class="seniority-level">CAREER CHANGERS (cualquier nivel)</div>
+<div class="seniority-body">
+<strong>Career change penalty: ~$5,000</strong> reduccion salarial promedio. Pero <strong>88% se declaran mas felices</strong> despues del cambio. 49% de trabajadores planean un cambio de carrera en 2025 (USA Today survey). El cambio promedio toma 3-6 meses. <strong>Las habilidades transferibles</strong> son la moneda de cambio — pero los sistemas de contratacion no estan disenados para evaluarlas.
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 9. TOP 20 FAILURE REASONS -->
+<section id="failures" class="section-alt">
+<div class="section">
+<h2 class="section-title">9. Top 20 Razones de Fracaso</h2>
+<p class="section-subtitle">Rankeadas por impacto estimado y calidad de evidencia. Divididas en lo que podes controlar y lo que no.</p>
+
+<div class="two-col">
+<div>
+<h3 style="font-family:var(--font-head);font-size:15px;color:var(--orange);margin-bottom:20px">LO QUE PODES CONTROLAR</h3>
+<div class="ranked-list">
+<div class="ranked-item"><div class="ranked-num">1</div><div class="ranked-body"><div class="ranked-title">CV no personalizado al trabajo especifico</div><div class="ranked-desc">36% excluidos por CVs genericos. Personalizar: +40-50% callbacks.</div><div class="ranked-cite">ResumeGo; recruiter surveys</div></div></div>
+<div class="ranked-item"><div class="ranked-num">2</div><div class="ranked-body"><div class="ranked-title">Falta de preparacion para la entrevista</div><div class="ranked-desc">47% fallan por desconocimiento de la empresa. 70% de hiring managers dicen que es el error #1.</div><div class="ranked-cite">NovoResume; JobScore; Apollo Technical</div></div></div>
+<div class="ranked-item"><div class="ranked-num">3</div><div class="ranked-body"><div class="ranked-title">Respuestas vagas y no especificas</div><div class="ranked-desc">El failure mode mas citado en entrevistas conductuales.</div><div class="ranked-cite">BugFree.ai 2024; Final Round AI 2024</div></div></div>
+<div class="ranked-item"><div class="ranked-num">4</div><div class="ranked-body"><div class="ranked-title">No negociar la oferta</div><div class="ranked-desc">55% nunca negocian. 89% de empleadores estan abiertos. Perdida promedio: 18.83%.</div><div class="ranked-cite">Pew 2023; XpertHR 2021</div></div></div>
+<div class="ranked-item"><div class="ranked-num">5</div><div class="ranked-body"><div class="ranked-title">Errores de ortografia/gramatica en el CV</div><div class="ranked-desc">80% de CVs rechazados por esta razon.</div><div class="ranked-cite">Hiring manager surveys</div></div></div>
+<div class="ranked-item"><div class="ranked-num">6</div><div class="ranked-body"><div class="ranked-title">Sin logros cuantificados en el CV</div><div class="ranked-desc">Solo 26% incluye 5+ metricas. Con metricas: 2.3x mas entrevistas.</div><div class="ranked-cite">Cultivated Culture n=125K</div></div></div>
+<div class="ranked-item"><div class="ranked-num">7</div><div class="ranked-body"><div class="ranked-title">Baja energia / falta de entusiasmo en screens</div><div class="ranked-desc">Citado consistentemente como razon #1 de fracaso en phone screens.</div><div class="ranked-cite">Formation.dev; HRNasty</div></div></div>
+<div class="ranked-item"><div class="ranked-num">8</div><div class="ranked-body"><div class="ranked-title">Practica insuficiente de entrevistas tecnicas</div><div class="ranked-desc">5+ practice interviews: ~2x pass rate. Mujeres 7x mas propensas a parar.</div><div class="ranked-cite">interviewing.io</div></div></div>
+<div class="ranked-item"><div class="ranked-num">9</div><div class="ranked-body"><div class="ranked-title">Hablar mal de empleadores anteriores</div><div class="ranked-desc">Red flag en toda la literatura de entrevistas conductuales.</div><div class="ranked-cite">Techneeds 2025; LinkedIn Talent Blog</div></div></div>
+<div class="ranked-item"><div class="ranked-num">10</div><div class="ranked-body"><div class="ranked-title">CV demasiado largo o corto para el nivel</div><div class="ranked-desc">2 paginas: 2.3x mas callbacks para 10+ anos. >600 palabras: -43% callbacks.</div><div class="ranked-cite">ResumeGo n=7,712</div></div></div>
+</div>
+</div>
+
+<div>
+<h3 style="font-family:var(--font-head);font-size:15px;color:var(--gray);margin-bottom:20px">LO QUE NO PODES CONTROLAR</h3>
+<div class="ranked-list">
+<div class="ranked-item"><div class="ranked-num">11</div><div class="ranked-body"><div class="ranked-title">Discriminacion racial/etnica por nombre</div><div class="ranked-desc">36% menos callbacks. Sin mejora desde 1989.</div><div class="ranked-cite">Quillian et al. 2017 n=55,842</div></div></div>
+<div class="ranked-item"><div class="ranked-num">12</div><div class="ranked-body"><div class="ranked-title">Ghost jobs (sin intencion de contratar)</div><div class="ranked-desc">18-27% de postings son falsos. 45% de HR los publica "regularmente".</div><div class="ranked-cite">Greenhouse 2024; Clarify Capital 2025</div></div></div>
+<div class="ranked-item"><div class="ranked-num">13</div><div class="ranked-body"><div class="ranked-title">Discriminacion por edad</div><div class="ranked-desc">Callbacks caen significativamente. En tech, empieza a los 29.</div><div class="ranked-cite">Neumark et al. n=40K+</div></div></div>
+<div class="ranked-item"><div class="ranked-num">14</div><div class="ranked-body"><div class="ranked-title">Ansiedad de observacion</div><div class="ranked-desc">Rendimiento cae >50% al ser observado. Todas las mujeres fallaron en publico.</div><div class="ranked-cite">Behroozi et al. 2020, RCT n=48</div></div></div>
+<div class="ranked-item"><div class="ranked-num">15</div><div class="ranked-body"><div class="ranked-title">Sesgo de acento</div><div class="ranked-desc">d=0.47. Prejuicio, no comprensibilidad. Peor para mujeres.</div><div class="ranked-cite">Spence et al. 2024 n=4,576</div></div></div>
+<div class="ranked-item"><div class="ranked-num">16</div><div class="ranked-body"><div class="ranked-title">Sesgo de IA en screening</div><div class="ranked-desc">LLMs favorecen nombres blancos 85% del tiempo.</div><div class="ranked-cite">U. Washington 2024</div></div></div>
+<div class="ranked-item"><div class="ranked-num">17</div><div class="ranked-body"><div class="ranked-title">"Culture fit" como proxy de homogeneidad</div><div class="ranked-desc">>50% lo rankean #1. Reproduce clase social.</div><div class="ranked-cite">Rivera 2012, ASR</div></div></div>
+<div class="ranked-item"><div class="ranked-num">18</div><div class="ranked-body"><div class="ranked-title">Ghosting del empleador</div><div class="ranked-desc">61% ghosteados post-entrevista. 75% reciben cero respuesta.</div><div class="ranked-cite">Greenhouse 2024 n=2,500</div></div></div>
+<div class="ranked-item"><div class="ranked-num">19</div><div class="ranked-body"><div class="ranked-title">Penalizacion del formato video</div><div class="ranked-desc">Ratings mas bajos que presencial. Off-camera gaze peor que audio-only.</div><div class="ranked-cite">Blacksmith et al. 2016; Miura 2024</div></div></div>
+<div class="ranked-item"><div class="ranked-num">20</div><div class="ranked-body"><div class="ranked-title">Penalizacion de genero en negociacion</div><div class="ranked-desc">Mujeres: penalizacion social 2x mayor por comportamiento identico.</div><div class="ranked-cite">Bowles, Babcock & Lai 2007</div></div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 10. TOP 10 INTERVENTIONS -->
+<section id="interventions">
+<div class="section">
+<h2 class="section-title">10. Top 10 Intervenciones con Evidencia</h2>
+<p class="section-subtitle">Rankeadas por tamano del efecto y calidad de la evidencia. Lo que la ciencia dice que funciona.</p>
+
+<div style="max-width:900px">
+<div class="int-bar"><div class="int-rank">1</div><div class="int-label">Entrevistas estructuradas</div><div class="int-bar-track"><div class="int-bar-fill" style="width:84%"><span class="int-bar-val">r=.42</span></div></div><div class="int-cite">Schmidt & Hunter; Sackett 2022</div></div>
+<div class="int-bar"><div class="int-rank">2</div><div class="int-label">Personalizar CV al trabajo</div><div class="int-bar-track"><div class="int-bar-fill" style="width:75%"><span class="int-bar-val">+50%</span></div></div><div class="int-cite">ResumeGo</div></div>
+<div class="int-bar"><div class="int-rank">3</div><div class="int-label">5+ practice interviews</div><div class="int-bar-track"><div class="int-bar-fill" style="width:70%"><span class="int-bar-val">~2x</span></div></div><div class="int-cite">interviewing.io</div></div>
+<div class="int-bar"><div class="int-rank">4</div><div class="int-label">Metodo STAR para behavioral</div><div class="int-bar-track"><div class="int-bar-fill" style="width:65%"><span class="int-bar-val">+50%</span></div></div><div class="int-cite">CareerBuilder; SHRM</div></div>
+<div class="int-bar"><div class="int-rank">5</div><div class="int-label">Negociar con numeros precisos</div><div class="int-bar-track"><div class="int-bar-fill" style="width:62%"><span class="int-bar-val">+19%</span></div></div><div class="int-cite">Mason et al. 2013; PayScale</div></div>
+<div class="int-bar"><div class="int-rank">6</div><div class="int-label">Logros cuantificados en CV</div><div class="int-bar-track"><div class="int-bar-fill" style="width:58%"><span class="int-bar-val">2.3x</span></div></div><div class="int-cite">Cultivated Culture n=125K</div></div>
+<div class="int-bar"><div class="int-rank">7</div><div class="int-label">Network/referrals sobre job boards</div><div class="int-bar-track"><div class="int-bar-fill" style="width:55%"><span class="int-bar-val">11x</span></div></div><div class="int-cite">Career services study n=500</div></div>
+<div class="int-bar"><div class="int-rank">8</div><div class="int-label">Formato tenure (anos) vs fechas</div><div class="int-bar-track"><div class="int-bar-fill" style="width:45%"><span class="int-bar-val">+15%</span></div></div><div class="int-cite">Kristal et al. 2023, Nature HB n=9K</div></div>
+<div class="int-bar"><div class="int-rank">9</div><div class="int-label">Explicitar negociabilidad salarial</div><div class="int-bar-track"><div class="int-bar-fill" style="width:42%"><span class="int-bar-val">-45% gap</span></div></div><div class="int-cite">Leibbrandt & List 2015 n=2,500</div></div>
+<div class="int-bar"><div class="int-rank">10</div><div class="int-label">Evaluacion privada (sin observador)</div><div class="int-bar-track"><div class="int-bar-fill" style="width:75%"><span class="int-bar-val">>50%</span></div></div><div class="int-cite">Behroozi et al. 2020, RCT</div></div>
+</div>
+</div>
+</section>
+
+<!-- 11. COMPETITIVE LANDSCAPE -->
+<section id="landscape" class="section-alt">
+<div class="section">
+<h2 class="section-title">11. Paisaje Competitivo</h2>
+<p class="section-subtitle">Que existe, que falta, y donde entra N1.</p>
+
+<h4 style="font-family:var(--font-head);font-size:14px;color:var(--white);margin-bottom:16px">Productos Existentes</h4>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px">
+<span class="landscape-tag">What Color Parachute (10M+ copias)</span>
+<span class="landscape-tag">Designing Your Life (1M+)</span>
+<span class="landscape-tag">Cracking the Coding Interview (1M+)</span>
+<span class="landscape-tag">LinkedIn Premium ($40/mo)</span>
+<span class="landscape-tag">Coursera / Udemy</span>
+<span class="landscape-tag">BetterUp ($279/mo)</span>
+<span class="landscape-tag">Korn Ferry ($17K-$23K)</span>
+<span class="landscape-tag">Teal (4M+ users)</span>
+<span class="landscape-tag">Jobscan</span>
+<span class="landscape-tag">interviewing.io ($225+/session)</span>
+<span class="landscape-tag">Reforge ($2K/yr)</span>
+<span class="landscape-tag">Never Search Alone (free)</span>
+<span class="landscape-tag">Platzi (2M+ LATAM)</span>
+<span class="landscape-tag">Coaching independiente ($100-500/hr)</span>
+</div>
+
+<h4 style="font-family:var(--font-head);font-size:14px;color:var(--orange);margin-bottom:16px">11 Gaps del Mercado</h4>
+<div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>1.</strong> Ningun sistema integrado de career change (todo resuelve una pieza)</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>2.</strong> La psicologia es ignorada (80% se sienten no preparados)</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>3.</strong> El "experience gap" no tiene solucion</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>4.</strong> Cambio forzado (layoffs, reorgs) no tiene producto</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>5.</strong> IA comoditizo tacticas; estrategia es el diferenciador</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>6.</strong> LATAM completamente desatendido en espanol</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>7.</strong> Profesionales senior necesitan soporte diferente</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>8.</strong> Mid-career crisis (35-50) no tiene producto</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>9.</strong> "Empleado pero infeliz" (pre-transicion) no tiene producto</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>10.</strong> No hay comunidad de carrera por suscripcion en espanol</div></div>
+<div class="card" style="border-left:3px solid var(--orange)"><div class="card-body"><strong>11.</strong> Coaching ($100-500/hr) vs cursos ($15) = gap en $29-49/mo</div></div>
+</div>
+</div>
+</section>
+
+<!-- 12. PRODUCT OPTIONS -->
+<section id="product">
+<div class="section">
+<h2 class="section-title">12. Opciones de Producto y Conclusiones</h2>
+<p class="section-subtitle">Que construir, en que orden, con que riesgo.</p>
+
+<div class="option-grid">
+<div class="option-card">
+<div class="option-letter">A</div>
+<div class="option-name">Book First</div>
+<div class="option-body">
+<strong>"El Sistema N1"</strong> — 12 capitulos, 300-340 paginas. 119 estudios citados.<br><br>
+<strong>Pros:</strong> Construye autoridad, top-of-funnel, escalable, diferenciacion por rigor cientifico<br>
+<strong>Contras:</strong> Tiempo de produccion largo (4-6 meses), revenue unico, sin accountability<br>
+<strong>Revenue:</strong> $20-30 digital, $30 fisico
+</div>
+<div class="option-meta">
+<span class="option-tag">4-6 meses</span>
+<span class="option-tag">Revenue unico</span>
+<span class="option-tag">Riesgo medio</span>
+</div>
+</div>
+
+<div class="option-card">
+<div class="option-letter">B</div>
+<div class="option-name">Subscription First</div>
+<div class="option-body">
+<strong>N1 Pro</strong> — $29/mo o $249/yr. Free tier ("N1 Open") + paid tier.<br><br>
+<strong>Pros:</strong> Revenue recurrente, comunidad, iterativo, retention via weekly calls (91% engagement en Skool)<br>
+<strong>Contras:</strong> Necesita masa critica, creacion de contenido continua, churn natural (exito = salir)<br>
+<strong>Revenue:</strong> 50 miembros = $1,450/mo. 200 = $5,800/mo
+</div>
+<div class="option-meta">
+<span class="option-tag">2-3 meses setup</span>
+<span class="option-tag">Revenue recurrente</span>
+<span class="option-tag">Riesgo medio-alto</span>
+</div>
+</div>
+
+<div class="option-card">
+<div class="option-letter">C</div>
+<div class="option-name">Course/Cohort First</div>
+<div class="option-body">
+<strong>"N1 Intensivo"</strong> — 6 semanas, 15-20 miembros por cohort.<br><br>
+<strong>Pros:</strong> Engagement alto (vs. 12.6% MOOC), feedback inmediato, pricing premium ($300-500), validacion rapida<br>
+<strong>Contras:</strong> Time-intensive, no escala linealmente, requiere audiencia previa<br>
+<strong>Revenue:</strong> 15 miembros x $400 = $6,000/cohort
+</div>
+<div class="option-meta">
+<span class="option-tag">1-2 meses prep</span>
+<span class="option-tag">Revenue por cohort</span>
+<span class="option-tag">Riesgo bajo</span>
+</div>
+</div>
+
+<div class="option-card">
+<div class="option-letter">D</div>
+<div class="option-name">Free Content + Tools First</div>
+<div class="option-body">
+<strong>Compass Lite + CV Audit + Newsletter + LinkedIn</strong><br><br>
+<strong>Pros:</strong> Build audience first, valida demanda, zero cost, content velocity como moat<br>
+<strong>Contras:</strong> Revenue retrasado, requiere disciplina de publicacion<br>
+<strong>Revenue:</strong> $0 directo (funnel building)
+</div>
+<div class="option-meta">
+<span class="option-tag">Inmediato</span>
+<span class="option-tag">$0 revenue inicial</span>
+<span class="option-tag">Riesgo bajo</span>
+</div>
+</div>
+
+<div class="option-card recommended">
+<div class="option-letter">E</div>
+<div class="option-name">All-in Ecosystem</div>
+<div class="option-body">
+<strong>Secuencia recomendada:</strong><br><br>
+<strong>Mes 1-2:</strong> Free content (LinkedIn, X, Newsletter) + Compass Lite diagnostic + CV Audit tool<br>
+<strong>Mes 3-4:</strong> Free community (Discord/Whop) + paid subscription launch (founding members $19/mo)<br>
+<strong>Mes 5-8:</strong> Book production ("El Sistema N1") + weekly lives + first cohort<br>
+<strong>Mes 9-12:</strong> Book launch + subscription scale + cohort iteration<br><br>
+<strong>Revenue Y1 target:</strong> 1,000 newsletter subs, 200 community, 50 Pro members ($1,450-2,450/mo)
+</div>
+<div class="option-meta">
+<span class="option-tag">12 meses</span>
+<span class="option-tag">Revenue compuesto</span>
+<span class="option-tag">Riesgo medio</span>
+<span class="option-tag">Maxima optionalidad</span>
+</div>
+</div>
+</div>
+
+<!-- KEY STRATEGIC CONCLUSIONS -->
+<h3 style="font-family:var(--font-head);font-size:18px;color:var(--orange);margin-top:48px;margin-bottom:24px">Conclusiones Estrategicas</h3>
+
+<div class="conclusion-grid">
+<div class="conclusion-item">
+<h4>Psicologia es el moat</h4>
+<p>Ningun competidor toca la dimension psicologica del cambio de carrera. 12 dimensiones documentadas, zero productos que las aborden. IA no puede replicar esto.</p>
+</div>
+<div class="conclusion-item">
+<h4>Spanish-first es territorio no contestado</h4>
+<p>No existe metodologia de cambio laboral en espanol. 188M usuarios LinkedIn en LATAM. $30.51B e-learning market. Zero career change products.</p>
+</div>
+<div class="conclusion-item">
+<h4>Science-backed diferencia</h4>
+<p>Citar el estudio, no "estudios dicen". Nombre del autor, ano, N, hallazgo. Ninguna cuenta de contenido laboral en espanol o ingles lo hace consistentemente.</p>
+</div>
+<div class="conclusion-item">
+<h4>Community > Courses</h4>
+<p>12.6% completion rate en MOOCs. 91% engagement en comunidades Skool con calls semanales. La accountability es el mecanismo que falta.</p>
+</div>
+<div class="conclusion-item">
+<h4>LATAM esta listo</h4>
+<p>$30.51B e-learning market. 47% informalidad. 128M independientes. Remote work de 3% a 30%. Entry-level postings -29%. La necesidad es urgente y creciente.</p>
+</div>
+<div class="conclusion-item">
+<h4>IA comoditiza tacticas</h4>
+<p>Cuando todos pueden generar un CV perfecto con ChatGPT, el diferenciador es saber QUE perseguir, COMO posicionarse, y COMO navegar la transicion psicologica. La estrategia es la capa defensible.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 13. CITATIONS -->
+<section id="citations" class="section-alt">
+<div class="section">
+<h2 class="section-title">13. Indice de Citaciones</h2>
+<p class="section-subtitle">Estudios principales organizados por tema. Click para expandir.</p>
+
+<div class="collapsible" onclick="toggleCollapsible(this)">
+<div class="collapsible-header"><span class="collapsible-title">Meta-Analisis de Seleccion (6 estudios)</span><span class="collapsible-arrow">&#9660;</span></div>
+<div class="collapsible-body">
+<ul>
+<li><strong>Schmidt & Hunter (1998)</strong> — "Validity and Utility of Selection Methods." Psychological Bulletin, 124(2). 85 anos de investigacion, 19 metodos. La base del campo.</li>
+<li><strong>Schmidt, Oh & Shaffer (2016)</strong> — Update de 100 anos. Working paper, U. Iowa. Nunca published peer-reviewed.</li>
+<li><strong>Sackett, Zhang, Berry & Lievens (2022)</strong> — "Revisiting Meta-Analytic Estimates." J. Applied Psychology, 107(11). La "Gran Correccion". Corrigio sobreestimaciones de 0.10-0.20.</li>
+<li><strong>Wingate et al. (2025)</strong> — Int. J. Selection and Assessment. r=.42 estructurada vs r=.19 no estructurada.</li>
+<li><strong>Roth, Bobko & McFarland (2005)</strong> — "Meta-analysis of work sample test validity." Personnel Psychology, 58(4). Bajo validez de .54 a .33.</li>
+<li><strong>McDaniel, Whetzel, Schmidt & Maurer (1994)</strong> — "Validity of Employment Interviews." J. Applied Psych, 79(4).</li>
+</ul>
+</div>
+</div>
+
+<div class="collapsible" onclick="toggleCollapsible(this)">
+<div class="collapsible-header"><span class="collapsible-title">Discriminacion y Sesgo (10 estudios)</span><span class="collapsible-arrow">&#9660;</span></div>
+<div class="collapsible-body">
+<ul>
+<li><strong>Quillian, Pager, Hexel & Midtboen (2017)</strong> — "No change in racial discrimination in hiring." PNAS, 114(41). Meta-analisis, n=55,842.</li>
+<li><strong>Bertrand & Mullainathan (2004)</strong> — "Are Emily and Greg More Employable?" AER, 94(4). n=5,000. White names: +50% callbacks.</li>
+<li><strong>Neumark, Burn & Button (2019)</strong> — Age discrimination study. n=40,000+, 13,000+ positions.</li>
+<li><strong>Spence et al. (2024)</strong> — "Is Your Accent Right for the Job?" PSPB, 50(4). d=0.47. 27 estudios, n=4,576.</li>
+<li><strong>Rivera (2012)</strong> — "Hiring as Cultural Matching." ASR. Culture fit como reproduccion social.</li>
+<li><strong>Bowles, Babcock & Lai (2007)</strong> — Gender differences in negotiation propensity. OBHDP, 103(1). 4 experiments.</li>
+<li><strong>Hernandez et al. (2019)</strong> — "Bargaining While Black." J. Applied Psychology.</li>
+<li><strong>Kang, DeCelles, Tilcsik & Jun (2016)</strong> — "Whitened Resumes." ASQ, 61(3). n=1,600.</li>
+<li><strong>U. Washington (2024)</strong> — AI resume screening bias. AAAI/ACM. LLMs favor white names 85%.</li>
+<li><strong>Terrell et al. (2017)</strong> — "Gender differences in open source." PeerJ CS. n=330,000 GitHub users.</li>
+</ul>
+</div>
+</div>
+
+<div class="collapsible" onclick="toggleCollapsible(this)">
+<div class="collapsible-header"><span class="collapsible-title">Entrevistas y Assessment (8 estudios)</span><span class="collapsible-arrow">&#9660;</span></div>
+<div class="collapsible-body">
+<ul>
+<li><strong>Behroozi et al. (2020)</strong> — "Does Stress Impact Technical Interview Performance?" ESEC/FSE. RCT, n=48. Performance >50% lower when observed.</li>
+<li><strong>Barrick, Swider & Stoverink (2012)</strong> — "Initial impressions during rapport building." J. Occ Org Psych. r=.42 initial impression to final rating.</li>
+<li><strong>Levashina & Campion (2007)</strong> — "Measuring Faking in the Employment Interview." J. Applied Psychology. >90% of candidates fake.</li>
+<li><strong>Levashina, Hartwell, Morgeson & Campion (2014)</strong> — "Structured Employment Interview." Personnel Psychology, 67.</li>
+<li><strong>Dana, Dawes & Peterson (2013)</strong> — Unstructured interviews can HURT prediction.</li>
+<li><strong>Frieder, Van Iddekinge & Raymark (2016)</strong> — "How quickly do interviewers reach decisions?" J. Occ Org Psych.</li>
+<li><strong>Maurer & Solamon (2006)</strong> — "Coaching program." Personnel Psychology, 59. n=213.</li>
+<li><strong>Huffcutt, Culbertson & Weyhrauch (2013)</strong> — Panel reliability .74 vs .44. n=32,428.</li>
+</ul>
+</div>
+</div>
+
+<div class="collapsible" onclick="toggleCollapsible(this)">
+<div class="collapsible-header"><span class="collapsible-title">Psicologia y Cognicion (8 estudios)</span><span class="collapsible-arrow">&#9660;</span></div>
+<div class="collapsible-body">
+<ul>
+<li><strong>Steele & Aronson (1995)</strong> — "Stereotype threat." JPSP, 69(5). Foundation of stereotype threat research.</li>
+<li><strong>Spencer, Steele & Quinn (1999)</strong> — "Stereotype threat and women's math performance." JESP, 35(1).</li>
+<li><strong>Beilock & Carr (2005)</strong> — "Choking under pressure." Psychological Science, 16(2). High-WMC individuals choke most.</li>
+<li><strong>Kanfer, Wanberg & Kantrowitz (2001)</strong> — Job search self-efficacy meta-analysis. Predictor #1 of outcomes.</li>
+<li><strong>Mani et al. (2013)</strong> — Financial stress = -13 IQ points. Science.</li>
+<li><strong>Ibarra (2003)</strong> — Working Identity. Harvard Business School Press. Career change = identity transition.</li>
+<li><strong>ICSE-SEIS 2024</strong> — Impostor Phenomenon in Software Engineers. n=624, 26 countries.</li>
+<li><strong>Exley & Kessler (2022)</strong> — Gender Gap in Self-Promotion. QJE, 137(3). Women self-rate 13 points lower.</li>
+</ul>
+</div>
+</div>
+
+<div class="collapsible" onclick="toggleCollapsible(this)">
+<div class="collapsible-header"><span class="collapsible-title">Negociacion (7 estudios)</span><span class="collapsible-arrow">&#9660;</span></div>
+<div class="collapsible-body">
+<ul>
+<li><strong>Babcock & Laschever (2003)</strong> — Women Don't Ask. Princeton UP. 7% women vs 57% men negotiate.</li>
+<li><strong>Mason, Lee, Wiley & Ames (2013)</strong> — "Precise Offers Are Potent Anchors." JESP. Columbia Business School.</li>
+<li><strong>Leibbrandt & List (2015)</strong> — Natural field experiment. Management Science, 61(9). n=2,500. Gender gap disappears when negotiability explicit.</li>
+<li><strong>Cullen (2023)</strong> — "Equilibrium Effects of Pay Transparency." Econometrica, 91(3). Transparency reduces wages ~2%.</li>
+<li><strong>Artz, Goodall & Oswald (2022)</strong> — "Now, Women Do Ask." Academy of Management Discoveries. Gap may have reversed.</li>
+<li><strong>Pew Research Center (2023)</strong> — 58% did not negotiate most recent salary. National US survey.</li>
+<li><strong>Thorsteinson (2021)</strong> — Precise offer effect persists even with awareness. J. Theoretical Social Psychology.</li>
+</ul>
+</div>
+</div>
+
+<div class="collapsible" onclick="toggleCollapsible(this)">
+<div class="collapsible-header"><span class="collapsible-title">CV y Resume (7 estudios)</span><span class="collapsible-arrow">&#9660;</span></div>
+<div class="collapsible-body">
+<ul>
+<li><strong>Kristal, Nicks, Gloor & Hauser (2023)</strong> — "Reducing discrimination against job seekers with gaps." Nature Human Behaviour. n=9,022. +15% callbacks.</li>
+<li><strong>ResumeGo</strong> — Resume length study. n=7,712. 2-page resumes: 2.3x more callbacks for 10+ years.</li>
+<li><strong>Cultivated Culture</strong> — Resume analysis. n=125,000+. Only 26% include 5+ quantified results.</li>
+<li><strong>Enhancv (2025)</strong> — ATS myth debunked. 92% of recruiters say ATS does NOT auto-reject.</li>
+<li><strong>TheLadders (2018)</strong> — Eye-tracking study. 7.4 seconds average initial scan.</li>
+<li><strong>Deming & Noray (2020)</strong> — "STEM Careers and Technological Change." QJE, 135(4). STEM premium falls 50%+ in first decade.</li>
+<li><strong>Modestino, Shoag & Ballance (2020)</strong> — Upskilling. ~36M postings. Each 1% unemployment = 2.2% education requirement increase.</li>
+</ul>
+</div>
+</div>
+
+<div class="collapsible" onclick="toggleCollapsible(this)">
+<div class="collapsible-header"><span class="collapsible-title">Mercado Laboral y Tendencias (8 reportes)</span><span class="collapsible-arrow">&#9660;</span></div>
+<div class="collapsible-body">
+<ul>
+<li><strong>Gem 2025 Recruiting Benchmarks</strong> — 140M+ applicants, 14M candidates, 1M hires. 3x harder to get hired vs 2021.</li>
+<li><strong>Greenhouse 2024 State of Job Hunting</strong> — n=2,500 workers. 61% ghosted. 18-22% ghost jobs.</li>
+<li><strong>Interview Guys 2025 Ghosting Index</strong> — 62% candidate ghosting rate (up from 37% in 2019).</li>
+<li><strong>CareerPlug 2024</strong> — Recruiting Metrics Benchmarks. 180 applicants per hire.</li>
+<li><strong>Deel Global Hiring Report 2024</strong> — LATAM remote hiring boom. Chile +67%, Colombia +55%.</li>
+<li><strong>Deloitte Gen Z & Millennial Survey 2025</strong> — 48% Gen Z financially insecure. Entry-level postings -29%.</li>
+<li><strong>ILO Panorama Laboral 2025</strong> — LATAM informality 47%. Youth unemployment 3x adults.</li>
+<li><strong>LinkedIn Research 2026</strong> — 80% of professionals feel unprepared. n=19,000.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<p><span>N1 Research</span> | 19 archivos. 13,614 lineas. 250+ estudios. | <span>psicologia</span> x <span>sistemas</span> x <span>aceleracion</span></p>
+<p style="margin-top:8px;font-size:11px">Research compiled March 2026. Dashboard built from primary research across synthesis, stages, market, industry, and product files.</p>
+</footer>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+// Funnel toggle
+function toggleFunnel(el){
+const detail=el.nextElementSibling;
+if(detail&&detail.classList.contains('funnel-detail')){
+detail.classList.toggle('open');
+}
+}
+
+// Tabs
+function switchTab(tabGroupId,contentPrefix,index){
+const group=document.getElementById(tabGroupId);
+const tabs=group.querySelectorAll('.tab');
+tabs.forEach((t,i)=>{t.classList.toggle('active',i===index)});
+document.querySelectorAll('[id^="'+contentPrefix+'-"]').forEach((c,i)=>{
+c.classList.toggle('active',i===index);
+});
+}
+
+// Collapsible
+function toggleCollapsible(el){
+el.classList.toggle('open');
+}
+
+// Scroll to top button
+window.addEventListener('scroll',()=>{
+document.getElementById('scrollTop').classList.toggle('visible',window.scrollY>600);
+});
+
+// Nav active state
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+let current='';
+sections.forEach(s=>{
+const top=s.offsetTop-100;
+if(window.scrollY>=top)current=s.id;
+});
+navLinks.forEach(a=>{
+a.classList.toggle('active',a.getAttribute('href')==='#'+current);
+});
+});
+
+// Validity Chart
+const ctx=document.getElementById('validityChart').getContext('2d');
+const methods=[
+{label:'Entrev. Estructurada',original:0.51,revised:0.42},
+{label:'Work Samples',original:0.54,revised:0.33},
+{label:'GMA (Cognit.)',original:0.51,revised:0.31},
+{label:'Entrev. No Estruct.',original:0.38,revised:0.19},
+{label:'Experiencia (anos)',original:0.18,revised:0.18},
+{label:'Educacion',original:0.10,revised:0.10}
+];
+
+function drawValidityChart(){
+const canvas=document.getElementById('validityChart');
+const dpr=window.devicePixelRatio||1;
+const rect=canvas.parentElement.getBoundingClientRect();
+const w=rect.width-48;
+const h=480;
+canvas.width=w*dpr;
+canvas.height=h*dpr;
+canvas.style.width=w+'px';
+canvas.style.height=h+'px';
+ctx.scale(dpr,dpr);
+ctx.clearRect(0,0,w,h);
+
+const barH=28;
+const gap=16;
+const labelW=160;
+const chartW=w-labelW-80;
+const startY=20;
+const maxVal=0.60;
+
+methods.forEach((m,i)=>{
+const y=startY+i*(barH*2+gap);
+// Label
+ctx.fillStyle='#F5F2ED';
+ctx.font='500 12px "DM Sans",sans-serif';
+ctx.textAlign='right';
+ctx.textBaseline='middle';
+ctx.fillText(m.label,labelW-12,y+barH);
+
+// Original bar
+const ow=Math.max((m.original/maxVal)*chartW,2);
+ctx.fillStyle='rgba(138,138,138,0.25)';
+ctx.beginPath();
+ctx.roundRect(labelW,y,ow,barH,[3]);
+ctx.fill();
+ctx.fillStyle='#8A8A8A';
+ctx.font='700 11px "Space Mono",monospace';
+ctx.textAlign='left';
+ctx.fillText('r='+m.original.toFixed(2),labelW+ow+8,y+barH/2);
+
+// Revised bar
+const rw=Math.max((m.revised/maxVal)*chartW,2);
+ctx.fillStyle='#E85D26';
+ctx.beginPath();
+ctx.roundRect(labelW,y+barH+2,rw,barH,[3]);
+ctx.fill();
+ctx.fillStyle='#E85D26';
+ctx.font='700 11px "Space Mono",monospace';
+ctx.fillText('r='+m.revised.toFixed(2),labelW+rw+8,y+barH+2+barH/2);
+});
+
+// Legend
+const legendY=h-16;
+ctx.fillStyle='rgba(138,138,138,0.25)';
+ctx.fillRect(labelW,legendY,14,10);
+ctx.fillStyle='#8A8A8A';
+ctx.font='400 11px "DM Sans",sans-serif';
+ctx.textAlign='left';
+ctx.fillText('Schmidt & Hunter 1998 (original)',labelW+20,legendY+8);
+
+ctx.fillStyle='#E85D26';
+ctx.fillRect(labelW+260,legendY,14,10);
+ctx.fillStyle='#E85D26';
+ctx.fillText('Sackett et al. 2022 (corregido)',labelW+280,legendY+8);
+}
+
+// CanvasRenderingContext2D roundRect polyfill
+if(!CanvasRenderingContext2D.prototype.roundRect){
+CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
+if(!r)r=[0];
+const tl=r[0]||0;
+this.moveTo(x+tl,y);
+this.lineTo(x+w-tl,y);
+this.quadraticCurveTo(x+w,y,x+w,y+tl);
+this.lineTo(x+w,y+h-tl);
+this.quadraticCurveTo(x+w,y+h,x+w-tl,y+h);
+this.lineTo(x+tl,y+h);
+this.quadraticCurveTo(x,y+h,x,y+h-tl);
+this.lineTo(x,y+tl);
+this.quadraticCurveTo(x,y,x+tl,y);
+this.closePath();
+};
+}
+
+drawValidityChart();
+window.addEventListener('resize',drawValidityChart);
+
+// Animate elements on scroll
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(e=>{
+if(e.isIntersecting){
+e.target.classList.add('animate-in');
+observer.unobserve(e.target);
+}
+});
+},{threshold:0.1});
+
+document.querySelectorAll('.card,.bias-card,.psych-card,.market-stat,.seniority-content,.ranked-item,.conclusion-item,.option-card').forEach(el=>{
+observer.observe(el);
+});
+</script>
+</body>
+</html>
