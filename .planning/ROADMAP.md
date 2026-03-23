@@ -38,7 +38,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 7 plans
 
 Plans:
-- [ ] 00-01-PLAN.md — CLAUDE.md project instructions
+- [x] 00-01-PLAN.md — CLAUDE.md project instructions
 - [ ] 00-02-PLAN.md — Profile Interchange Format v1 (schema + template)
 - [ ] 00-03-PLAN.md — Shared prompting stack
 - [ ] 00-04-PLAN.md — Shared voice guide
@@ -143,7 +143,7 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 
 | Phase                       | Plans Complete | Status      | Completed |
 | --------------------------- | -------------- | ----------- | --------- |
-| 0. Foundation               | 0/7            | Planning    | -         |
+| 0. Foundation               | 1/7 | In Progress|  |
 | 1. Static Web Tools         | 0/TBD          | Not started | -         |
 | 2. AI Skills                | 0/TBD          | Not started | -         |
 | 3. Integration + Scorecards | 0/TBD          | Not started | -         |

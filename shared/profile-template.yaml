@@ -1,0 +1,123 @@
+# ════════════════════════════════════════
+# N1 Self-Knowledge Profile v1
+# Blank template — copy this file and fill it in as you complete each dimension
+#
+# How to use:
+# 1. Copy this file
+# 2. Complete an N1 assessment (Claude Skill, GPT, or static web tool)
+# 3. Paste the YAML output from that tool into the matching section
+# 4. Set completed: true for that section
+# 5. Paste into any other N1 tool to get profile-enhanced results
+# ════════════════════════════════════════
+
+version: "1.0"
+created: null # ISO 8601 timestamp — set when you first create this profile
+updated: null # ISO 8601 timestamp — update every time you modify any section
+language: "es" # es | en
+
+# ── TRIAGE ──────────────────────────────
+triage:
+  situation: null # crisis | exploration | growth
+  career_path: null # stay_grow | move | go_independent | pause_reset
+  specific_move: null # see shared/profile-format.md for valid values per career_path
+  urgency: null # immediate | 3_months | 6_months | exploratory
+
+# ── VALUES (ACT + Schwartz) ────────────
+values:
+  completed: false
+  mode: null # quick | deep
+  core_values: [] # ranked list of top 5 personal values
+  schwartz_profile: # 10 basic values scored 1-9
+    self_direction: null
+    stimulation: null
+    hedonism: null
+    achievement: null
+    power: null
+    security: null
+    conformity: null
+    tradition: null
+    benevolence: null
+    universalism: null
+  value_conflicts: []
+  bulls_eye:
+    work: null # 1-10 alignment score
+    relationships: null # 1-10 alignment score
+    personal_growth: null # 1-10 alignment score
+    leisure: null # 1-10 alignment score
+  career_implications: []
+
+# ── STRENGTHS (VIA + Bandura + Flow + Big Five) ──
+strengths:
+  completed: false
+  mode: null # quick | deep
+  signature_strengths: [] # top 5 from VIA Character Survey
+  big_five:
+    openness: null # 1-10
+    conscientiousness: null # 1-10
+    extraversion: null # 1-10
+    agreeableness: null # 1-10
+    neuroticism: null # 1-10
+  self_efficacy:
+    mastery_experiences: []
+    vicarious_models: []
+    social_persuasion: []
+    physiological: null
+  flow_activities: [] # {activity, challenge, skill, state}
+  career_implications: []
+
+# ── IDENTITY (Ibarra + Marcia + Savickas) ──
+identity:
+  completed: false
+  mode: null # quick | deep
+  identity_status: null # achieved | moratorium | foreclosed | diffused
+  adaptability: # CAAS-12 scores 1-5
+    concern: null
+    control: null
+    curiosity: null
+    confidence: null
+  possible_selves: []
+  active_experiments: []
+  narrative_theme: null
+  limiting_beliefs: []
+
+# ── PURPOSE (Frankl + MLQ + Ryff) ──────
+purpose:
+  completed: false
+  mode: null # quick | deep
+  mlq:
+    presence: null # 1-7
+    search: null # 1-7
+    quadrant: null # fulfilled | growing | seeking | disengaged
+  meaning_sources:
+    creative: null
+    experiential: null
+    attitudinal: null
+  life_theme: null
+  purpose_practice: []
+  career_implications: []
+
+# ── ENRICHMENT LAYERS ──────────────────
+enrichment:
+  psychological_flexibility: null # AAQ-II score 7-49
+  career_decision_self_efficacy: null # CDMSE-SF score 0-100
+  psycap_hero:
+    hope: null # 1-6
+    efficacy: null # 1-6
+    resilience: null # 1-6
+    optimism: null # 1-6
+  emotional_patterns: null
+  relational_context: null
+  somatic_signals: null
+
+# ── CROSS-DIMENSION SYNTHESIS ──────────
+synthesis:
+  reinforcements: []
+  conflicts: []
+  career_recommendations: []
+  next_actions: []
+
+# ── EVOLUTION ──────────────────────────
+evolution:
+  assessments: [] # {date, instrument, scores}
+  milestones: [] # {date, event, impact}
+  next_reassessment: null # ISO 8601 — minimum 4-6 weeks from last full assessment
