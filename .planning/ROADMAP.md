@@ -64,7 +64,7 @@ Plans:
 
 Plans:
 
-- [ ] 01-01-PLAN.md — Shared CSS design system + assessment engine JS (Wave 1)
+- [x] 01-01-PLAN.md — Shared CSS design system + assessment engine JS (Wave 1)
 - [ ] 01-02-PLAN.md — Landing page + triage quiz + email capture (Wave 2)
 - [ ] 01-03-PLAN.md — Ghost Check tool (Wave 2)
 - [ ] 01-04-PLAN.md — Compass / CAAS-12 assessment (Wave 2)
