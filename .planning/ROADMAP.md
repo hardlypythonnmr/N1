@@ -84,7 +84,15 @@ Plans:
 2. Each skill loads shared/ foundation files (DRY — no duplicated prompting stack or voice guide)
 3. Each skill works standalone (no profile) and produces richer output when a profile YAML is provided
 4. Every skill applies the MIND-SAFE safety protocol, scope disclaimer, and Colombian Spanish voice consistently
-   **Plans**: TBD
+   **Plans**: 5 plans
+
+Plans:
+
+- [ ] 02-01-PLAN.md — n1-busca-adentro (SKILL.md + 4 dimension reference files) (Wave 1)
+- [ ] 02-02-PLAN.md — n1-construye-afuera (SKILL.md + 3 career reference files) (Wave 1)
+- [ ] 02-03-PLAN.md — n1-ghost-check (SKILL.md, standalone) (Wave 1)
+- [ ] 02-04-PLAN.md — n1-compass (SKILL.md, standalone) (Wave 1)
+- [ ] 02-05-PLAN.md — n1-system (SKILL.md, full integrated orchestrator) (Wave 2)
 
 ### Phase 3: Integration + Scorecards
 
@@ -156,8 +164,8 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 | Phase                       | Plans Complete | Status      | Completed  |
 | --------------------------- | -------------- | ----------- | ---------- |
 | 0. Foundation               | 7/7            | Complete    | 2026-03-23 |
-| 1. Static Web Tools         | 8/8 | Complete   | 2026-03-23 |
-| 2. AI Skills                | 0/TBD          | Not started | -          |
+| 1. Static Web Tools         | 8/8            | Complete    | 2026-03-23 |
+| 2. AI Skills                | 0/5            | Not started | -          |
 | 3. Integration + Scorecards | 0/TBD          | Not started | -          |
 | 4. ChatGPT GPTs             | 0/TBD          | Not started | -          |
 | 5. Claude Skills Publishing | 0/TBD          | Not started | -          |
