@@ -104,8 +104,14 @@ Plans:
 1. Every static web tool's results screen displays an N1-branded shareable scorecard (PNG via HTML Canvas)
 2. The profile synthesizer page accepts YAML import or localStorage data and produces cross-dimension career path recommendations
 3. Email capture is functional on the landing page and on tool completion screens (free-tier provider)
-   **Plans**: TBD
+   **Plans**: 3 plans
    **UI hint**: yes
+
+Plans:
+
+- [ ] 03-01-PLAN.md — Enhanced scorecard library in assessment-engine.js (Wave 1)
+- [ ] 03-02-PLAN.md — Profile synthesizer page web/profile/index.html (Wave 2)
+- [ ] 03-03-PLAN.md — Email capture + scorecard integration into all 6 tools (Wave 2)
 
 ### Phase 4: ChatGPT GPTs
 
@@ -165,8 +171,8 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 | --------------------------- | -------------- | ----------- | ---------- |
 | 0. Foundation               | 7/7            | Complete    | 2026-03-23 |
 | 1. Static Web Tools         | 8/8            | Complete    | 2026-03-23 |
-| 2. AI Skills                | 5/5 | Complete   | 2026-03-23 |
-| 3. Integration + Scorecards | 0/TBD          | Not started | -          |
+| 2. AI Skills                | 5/5            | Complete    | 2026-03-23 |
+| 3. Integration + Scorecards | 0/3            | Not started | -          |
 | 4. ChatGPT GPTs             | 0/TBD          | Not started | -          |
 | 5. Claude Skills Publishing | 0/TBD          | Not started | -          |
 | 6. GitHub Pages Deployment  | 0/TBD          | Not started | -          |
