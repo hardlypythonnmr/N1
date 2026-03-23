@@ -22,7 +22,7 @@
 - [x] **WEB-02**: Shared CSS stylesheet (mobile-responsive, N1 brand colors)
 - [x] **WEB-03**: Ghost Check — paste job posting, get ghost score + signal breakdown + shareable scorecard
 - [x] **WEB-04**: Compass / CAAS-12 — 12-item career adaptability assessment with radar chart + profile export
-- [ ] **WEB-05**: Bull's Eye — ACT values alignment exercise with interactive visual + profile export
+- [x] **WEB-05**: Bull's Eye — ACT values alignment exercise with interactive visual + profile export
 - [x] **WEB-06**: MLQ-10 — meaning in life questionnaire with quadrant placement + profile export
 - [x] **WEB-07**: Flow Activity Logger — challenge-skill tracking with flow zone visualization + localStorage persistence
 - [x] **WEB-08**: Runway Calculator — financial runway with 3 scenarios, COP/USD toggle
@@ -124,7 +124,7 @@
 | WEB-02      | Phase 1 | Complete |
 | WEB-03      | Phase 1 | Complete |
 | WEB-04      | Phase 1 | Complete |
-| WEB-05      | Phase 1 | Pending |
+| WEB-05      | Phase 1 | Complete |
 | WEB-06      | Phase 1 | Complete |
 | WEB-07      | Phase 1 | Complete |
 | WEB-08      | Phase 1 | Complete |
