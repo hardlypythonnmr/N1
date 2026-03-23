@@ -7,7 +7,7 @@
 
 ### Foundation
 
-- [ ] **FOUN-01**: CLAUDE.md project instructions file with identity, structure, conventions, safety
+- [x] **FOUN-01**: CLAUDE.md project instructions file with identity, structure, conventions, safety
 - [ ] **FOUN-02**: Profile Interchange Format v1 — canonical YAML schema with version protocol
 - [ ] **FOUN-03**: Profile template (blank YAML users can copy)
 - [ ] **FOUN-04**: Shared prompting stack (ACT + Socratic + MI + CBT + CoE + SELF-DISCOVER + Reflexion)
@@ -112,7 +112,7 @@
 
 | Requirement | Phase   | Status  |
 | ----------- | ------- | ------- |
-| FOUN-01     | Phase 0 | Pending |
+| FOUN-01     | Phase 0 | Complete |
 | FOUN-02     | Phase 0 | Pending |
 | FOUN-03     | Phase 0 | Pending |
 | FOUN-04     | Phase 0 | Pending |
