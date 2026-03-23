@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 02-01-PLAN.md (n1-busca-adentro skill)
-last_updated: "2026-03-23T22:25:43.103Z"
+stopped_at: Completed 02-ai-skills/02-02-PLAN.md — n1-construye-afuera skill
+last_updated: "2026-03-23T22:38:39.086Z"
 progress:
   total_phases: 8
   completed_phases: 2
   total_plans: 20
-  completed_plans: 18
+  completed_plans: 19
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 02 (ai-skills) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 
 ## Performance Metrics
 
@@ -63,6 +63,7 @@ _Updated after each plan completion_
 | Phase 02-ai-skills P04 | 2m | 1 tasks | 1 files |
 | Phase 02-ai-skills P03 | 2 | 1 tasks | 1 files |
 | Phase 02-ai-skills P01 | 8m | 2 tasks | 5 files |
+| Phase 02-ai-skills P02 | 1251s | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -110,6 +111,9 @@ Recent decisions affecting current work:
 - [Phase 02-ai-skills]: SKILL.md loads only 3 shared files (not full prompting-stack) per D-03 4-6K token budget; Reflexion checklist embedded inline
 - [Phase 02-ai-skills]: SKILL.md as orchestration layer, reference files carry framework depth — token budget stays manageable
 - [Phase 02-ai-skills]: LATAM calibration embedded in reference files: CAAS Control lower = collectivist norm, high MLQ-Search = culturally normative (not pathological)
+- [Phase 02-ai-skills]: construye-afuera: anti-networking prohibition enforced by removing the word from SKILL.md entirely — instructional prohibition uses equivalent phrasing
+- [Phase 02-ai-skills]: construye-afuera: career-path-adaptations.md covers all 20 specific_move taxonomy values — enables fine-grained adaptation beyond 4 macro-paths
+- [Phase 02-ai-skills]: construye-afuera: LATAM salary data explicitly framed as structurally opaque — skill instructs Claude to acknowledge this rather than present ranges as authoritative
 
 ### Pending Todos
 
@@ -121,6 +125,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-23T22:25:43.099Z
-Stopped at: Completed 02-01-PLAN.md (n1-busca-adentro skill)
+Last session: 2026-03-23T22:38:39.078Z
+Stopped at: Completed 02-ai-skills/02-02-PLAN.md — n1-construye-afuera skill
 Resume file: None
