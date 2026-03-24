@@ -1285,6 +1285,184 @@
     };
   };
 
+  /**
+   * Compute a unified "Claridad de perfil" percentage from available dimension scores.
+   * Returns { score: N (0-100), basedOn: N (1-4), tension: { high, low, spread } | null }
+   * Returns null if no dimension data is present.
+   * NOTE: strengths is multiplied ×10 inside this function to normalize to 0-100.
+   */
+  N1.computeProfileClarity = function (profile) {
+    if (!profile) return null;
+    var raw = N1.calcDimensionScores(profile);
+
+    // Normalize strengths from 0-10 to 0-100 BEFORE any averaging or spread checks
+    var normalized = {
+      values: raw.values,
+      strengths: raw.strengths * 10,
+      identity: raw.identity,
+      purpose: raw.purpose,
+    };
+
+    var labels = {
+      values: "Valores",
+      strengths: "Fortalezas",
+      identity: "Identidad",
+      purpose: "Propósito",
+    };
+
+    var nonZero = Object.keys(normalized).filter(function (k) {
+      return normalized[k] > 0;
+    });
+    if (nonZero.length === 0) return null;
+
+    var sum = nonZero.reduce(function (acc, k) {
+      return acc + normalized[k];
+    }, 0);
+    var score = Math.round(sum / nonZero.length);
+
+    // Tension detection: only if ≥2 non-zero dimensions
+    var tension = null;
+    if (nonZero.length >= 2) {
+      var sorted = nonZero.slice().sort(function (a, b) {
+        return normalized[b] - normalized[a];
+      });
+      var highKey = sorted[0];
+      var lowKey = sorted[sorted.length - 1];
+      var spread = normalized[highKey] - normalized[lowKey];
+      if (spread > 30) {
+        tension = {
+          high: labels[highKey],
+          low: labels[lowKey],
+          spread: Math.round(spread),
+        };
+      }
+    }
+
+    return { score: score, basedOn: nonZero.length, tension: tension };
+  };
+
+  /**
+   * Count how many of the 7 N1 tools have been completed.
+   * Returns { completed: N, total: 7 }.
+   * Completion signals:
+   *   Ghost Check:  n1-ghost-completed flag
+   *   Compass:      calcDimensionScores().identity > 0
+   *   Bull's Eye:   calcDimensionScores().values > 0
+   *   MLQ-10:       calcDimensionScores().purpose > 0
+   *   Flow Logger:  n1-flow-activities array length > 0
+   *   Runway:       n1-runway-completed flag
+   *   Profile:      any of the above is true
+   */
+  N1.getCompletionCount = function () {
+    var profile = N1.loadProfile();
+    var scores = profile
+      ? N1.calcDimensionScores(profile)
+      : { values: 0, strengths: 0, identity: 0, purpose: 0 };
+
+    var signals = {
+      ghostCheck: localStorage.getItem("n1-ghost-completed") === "true",
+      compass: scores.identity > 0,
+      bullsEye: scores.values > 0,
+      mlq: scores.purpose > 0,
+      flowLogger: (function () {
+        try {
+          return (
+            JSON.parse(localStorage.getItem("n1-flow-activities") || "[]")
+              .length > 0
+          );
+        } catch (e) {
+          return false;
+        }
+      })(),
+      runway: localStorage.getItem("n1-runway-completed") === "true",
+    };
+
+    var completedTools = Object.values
+      ? Object.values(signals).filter(Boolean).length
+      : Object.keys(signals)
+          .map(function (k) {
+            return signals[k];
+          })
+          .filter(Boolean).length;
+
+    // Profile page counts as completed if any other tool is done
+    var profileDone = completedTools > 0;
+    var total = completedTools + (profileDone ? 1 : 0);
+
+    return { completed: Math.min(total, 7), total: 7 };
+  };
+
+  /**
+   * Show a one-time email capture banner in the given container element.
+   * Skipped if n1-email-captured is already 'true' in localStorage.
+   * Sets n1-email-captured = 'true' on submit BEFORE any fetch/form action
+   * (no-cors fetch always resolves opaque; flag must be set on attempt, not response).
+   */
+  N1.showEmailCaptureBanner = function (containerEl) {
+    if (!containerEl) return;
+    if (localStorage.getItem("n1-email-captured") === "true") return;
+
+    var banner = document.createElement("div");
+    banner.className =
+      "w-full rounded-xl border border-outline-variant/20 bg-surface-container/60 backdrop-blur-sm p-5 mt-6 mb-2";
+
+    var form = document.createElement("form");
+    form.setAttribute(
+      "action",
+      "https://buttondown.email/api/emails/embed-subscribe/n1-sistema",
+    );
+    form.setAttribute("method", "post");
+    form.setAttribute("target", "popupwindow");
+
+    var label = document.createElement("p");
+    label.className = "text-sm text-on-surface-variant mb-3";
+    label.textContent =
+      "¿Querés recibir un correo por semana sobre carrera? Sin spam.";
+
+    var inputRow = document.createElement("div");
+    inputRow.className = "flex gap-2 flex-wrap";
+
+    var emailInput = document.createElement("input");
+    emailInput.type = "email";
+    emailInput.name = "email";
+    emailInput.placeholder = "tu@email.com";
+    emailInput.required = true;
+    emailInput.className =
+      "flex-1 min-w-0 px-3 py-2 rounded-lg bg-surface-container-highest text-on-surface text-sm border border-outline-variant/40 focus:outline-none focus:border-primary";
+
+    var submitBtn = document.createElement("button");
+    submitBtn.type = "submit";
+    submitBtn.textContent = "Suscribirme";
+    submitBtn.className =
+      "px-4 py-2 bg-primary text-on-primary text-sm font-bold rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap";
+
+    var dismissLink = document.createElement("a");
+    dismissLink.href = "#";
+    dismissLink.textContent = "No, gracias";
+    dismissLink.className =
+      "w-full text-xs text-on-surface-variant/60 hover:text-on-surface-variant text-center mt-2 block";
+
+    form.addEventListener("submit", function () {
+      // CRITICAL: Set flag BEFORE fetch/form.submit() — no-cors fetch is always opaque
+      localStorage.setItem("n1-email-captured", "true");
+      banner.remove();
+    });
+
+    dismissLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      localStorage.setItem("n1-email-captured", "true");
+      banner.remove();
+    });
+
+    inputRow.appendChild(emailInput);
+    inputRow.appendChild(submitBtn);
+    form.appendChild(label);
+    form.appendChild(inputRow);
+    banner.appendChild(form);
+    banner.appendChild(dismissLink);
+    containerEl.insertBefore(banner, containerEl.firstChild);
+  };
+
   /* ── EXPOSE ON WINDOW ────────────────── */
 
   window.N1 = N1;
