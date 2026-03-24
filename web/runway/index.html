@@ -351,7 +351,7 @@
       />
 
       <!-- DOWNLOAD -->
-      <div class="grid grid-cols-2 gap-3 mb-6">
+      <div class="grid grid-cols-3 gap-3 mb-6">
         <button
           id="download-scorecard-btn"
           class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold text-sm uppercase tracking-widest text-outline hover:text-tertiary hover:border-primary/40 transition-all duration-200 active:scale-95 flex items-center justify-center gap-2"
@@ -361,6 +361,15 @@
         >
           <span class="material-symbols-outlined" style="font-size:18px">download</span>
           Resumen
+        </button>
+        <button
+          id="share-linkedin-url"
+          class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold text-sm uppercase tracking-widest text-outline hover:text-tertiary hover:border-primary/40 transition-all duration-200 active:scale-95 flex items-center justify-center gap-2"
+          type="button"
+          aria-label="Compartir en LinkedIn"
+        >
+          <span class="material-symbols-outlined" style="font-size:18px">share</span>
+          Compartir
         </button>
         <button
           id="export-yaml-btn"
@@ -985,6 +994,9 @@
     /* ── SHOW / HIDE ──────────────────────────── */
 
     function showResults() {
+      // Mark Runway as completed for progress tracking
+      localStorage.setItem("n1-runway-completed", "true");
+
       var resultsEl = document.getElementById('results-screen');
       resultsEl.classList.remove('hidden');
       resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1133,6 +1145,7 @@
       if (!emailForm || !emailInput || !successMsg) return;
 
       emailForm.addEventListener('submit', function (e) {
+        localStorage.setItem("n1-email-captured", "true");
         e.preventDefault();
         var email = emailInput.value.trim();
         if (!email) return;
@@ -1149,6 +1162,33 @@
           .catch(function () {
             emailForm.submit();
           });
+      });
+    })();
+
+    /* ── LINKEDIN SHARE ─────────────────────── */
+
+    (function () {
+      var runwayShareBtn = document.getElementById('share-linkedin-url');
+      if (!runwayShareBtn) return;
+      runwayShareBtn.addEventListener('click', function () {
+        var n1Url = 'https://hardlypythonnmr.github.io/N1/';
+        // Read months from lastResults (the likely/probable scenario)
+        var months = null;
+        if (typeof lastResults !== 'undefined' && lastResults) {
+          var likelyResult = lastResults.find(function (r) { return r.key === 'likely'; });
+          if (likelyResult) {
+            months = likelyResult.isIndefinite ? 'indefinidos' : String(Math.round(likelyResult.months || 0));
+          }
+        }
+        var text = months
+          ? 'Tengo ' + months + ' meses de runway financiero para una transición de carrera. ' + n1Url
+          : n1Url;
+        var shareUrl =
+          'https://www.linkedin.com/sharing/share-offsite/?url=' +
+          encodeURIComponent(n1Url) +
+          '&summary=' +
+          encodeURIComponent(text);
+        window.open(shareUrl, '_blank', 'noopener,noreferrer');
       });
     })();
 
