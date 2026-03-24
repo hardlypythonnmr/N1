@@ -142,7 +142,19 @@ Plans:
 
 1. All 5 Claude Skills are listed on SkillsMP / SkillHub marketplaces
 2. Each skill can be installed and completes a full session end-to-end from the marketplace entry point
-   **Plans**: TBD
+   **Plans**: 9 plans
+
+Plans:
+
+- [ ] 05-01-PLAN.md — Test infrastructure (eval cases, personas, red team playbooks, grading rubrics) (Wave 1)
+- [ ] 05-02-PLAN.md — Ghost-check test suite (eval + red team + persona grades) (Wave 2)
+- [ ] 05-03-PLAN.md — Compass test suite (eval + red team + persona grades) (Wave 2)
+- [ ] 05-04-PLAN.md — Busca-adentro test suite (eval + red team + persona grades) (Wave 2)
+- [ ] 05-05-PLAN.md — Construye-afuera test suite (eval + red team + persona grades) (Wave 2)
+- [ ] 05-06-PLAN.md — N1-system test suite (eval + red team + persona grades) (Wave 2)
+- [ ] 05-07-PLAN.md — Cross-skill portability + regression + final verification matrix (Wave 3)
+- [ ] 05-08-PLAN.md — Fix cycle + manual review (Wave 4)
+- [ ] 05-09-PLAN.md — Marketplace README + publishing (Wave 5)
 
 ### Phase 6: GitHub Pages Deployment
 
@@ -180,7 +192,7 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 | 1. Static Web Tools         | 8/8            | Complete    | 2026-03-23 |
 | 2. AI Skills                | 5/5            | Complete    | 2026-03-23 |
 | 3. Integration + Scorecards | 2/3            | In Progress |            |
-| 4. ChatGPT GPTs             | 4/4 | Complete   | 2026-03-24 |
-| 5. Claude Skills Publishing | 0/TBD          | Not started | -          |
+| 4. ChatGPT GPTs             | 4/4            | Complete    | 2026-03-24 |
+| 5. Claude Skills Publishing | 0/9            | Planned     | -          |
 | 6. GitHub Pages Deployment  | 0/TBD          | Not started | -          |
 | 7. First Ship               | 0/TBD          | Not started | -          |
