@@ -49,8 +49,8 @@
 
 ### GPTs
 
-- [ ] **GPT-01**: N1 Busca Adentro GPT — compressed instructions (~1,800 tokens) + knowledge files
-- [ ] **GPT-02**: N1 Construye Afuera GPT — compressed instructions + career tools knowledge
+- [x] **GPT-01**: N1 Busca Adentro GPT — compressed instructions (~1,800 tokens) + knowledge files
+- [x] **GPT-02**: N1 Construye Afuera GPT — compressed instructions + career tools knowledge
 - [x] **GPT-03**: N1 Compass GPT — compressed instructions + assessment knowledge
 - [x] **GPT-04**: N1 Ghost Check GPT — compressed instructions + signal detection knowledge
 - [x] **GPT-05**: All GPTs produce profile YAML compatible with Claude Skills
@@ -142,8 +142,8 @@
 | INTG-02     | Phase 3 | Complete |
 | INTG-03     | Phase 3 | Complete |
 | INTG-04     | Phase 3 | Complete |
-| GPT-01      | Phase 4 | Pending |
-| GPT-02      | Phase 4 | Pending |
+| GPT-01      | Phase 4 | Complete |
+| GPT-02      | Phase 4 | Complete |
 | GPT-03      | Phase 4 | Complete |
 | GPT-04      | Phase 4 | Complete |
 | GPT-05      | Phase 4 | Complete |
