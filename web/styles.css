@@ -192,8 +192,15 @@ strong {
 }
 
 .btn:disabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: not-allowed;
+}
+
+.btn-primary:disabled {
+  background-color: #b0b0b0;
+  border-color: #b0b0b0;
+  color: #fff;
+  opacity: 1;
 }
 
 .btn-primary {
