@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,137 +10,441 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://n1career.github.io/N1/profile/" />
   <meta property="og:image" content="https://n1career.github.io/N1/web/og-image.png" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23e85d26' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ff9068' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../styles.css" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary-fixed": "#e2e0fc",
+            "on-tertiary-fixed": "#4f5051",
+            "tertiary-dim": "#ebebeb",
+            "on-primary-fixed": "#000000",
+            "surface-container-low": "#111127",
+            "tertiary-container": "#ebebeb",
+            "primary": "#ff9068",
+            "on-background": "#e5e3ff",
+            "surface-tint": "#ff9068",
+            "primary-dim": "#ff743f",
+            "surface": "#0c0c1f",
+            "surface-dim": "#0c0c1f",
+            "on-surface": "#e5e3ff",
+            "on-primary-container": "#451100",
+            "on-secondary-fixed-variant": "#5a5971",
+            "on-secondary": "#505066",
+            "tertiary": "#f9f9f9",
+            "on-primary": "#591800",
+            "inverse-surface": "#fcf8ff",
+            "surface-variant": "#23233f",
+            "surface-container-lowest": "#000000",
+            "secondary-dim": "#d4d2ed",
+            "on-secondary-fixed": "#3e3d53",
+            "primary-container": "#ff7947",
+            "on-tertiary-container": "#555757",
+            "primary-fixed": "#ff7947",
+            "secondary-container": "#45455b",
+            "surface-bright": "#292948",
+            "on-secondary-container": "#d0cee9",
+            "outline": "#74738b",
+            "tertiary-fixed-dim": "#f0f1f1",
+            "secondary-fixed-dim": "#d4d2ed",
+            "on-tertiary": "#5e5f5f",
+            "error-container": "#9f0519",
+            "secondary": "#e2e0fc",
+            "error": "#ff716c",
+            "surface-container-high": "#1d1d37",
+            "primary-fixed-dim": "#f5662f",
+            "tertiary-fixed": "#ffffff",
+            "on-tertiary-fixed-variant": "#6c6d6e",
+            "on-error": "#490006",
+            "surface-container": "#17172f",
+            "background": "#0c0c1f",
+            "surface-container-highest": "#23233f",
+            "inverse-primary": "#ab3700",
+            "on-surface-variant": "#aaa8c3",
+            "outline-variant": "#46465c",
+            "inverse-on-surface": "#53536a",
+            "on-primary-fixed-variant": "#551700",
+            "on-error-container": "#ffa8a3",
+            "error-dim": "#d7383b"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Space Grotesk"],
+            "mono": ["Space Mono"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
   <style>
-    .tag { display:inline-block; padding:var(--space-xs) var(--space-sm); border-radius:var(--n1-radius-sm); font-size:0.8125rem; font-family:var(--font-heading); background-color:var(--n1-surface); border:1px solid var(--n1-border); color:var(--n1-muted); }
-    .tag-orange { background-color:var(--n1-orange); border-color:var(--n1-orange); color:var(--n1-white); }
-    .dim-card { border:1px solid var(--n1-border); border-radius:var(--n1-radius); overflow:hidden; }
-    .dim-card-header { display:flex; justify-content:space-between; align-items:center; padding:var(--space-md) var(--space-lg); background-color:var(--n1-surface); cursor:pointer; gap:var(--space-md); }
-    .dim-card-header:hover { background-color:#f0f0f0; }
-    .dim-card-title { font-family:var(--font-heading); font-weight:700; font-size:1rem; color:var(--n1-black); }
-    .dim-card-body { padding:var(--space-lg); border-top:1px solid var(--n1-border); }
-    .dim-card-body.hidden { display:none; }
-    .dim-data-list { list-style:none; padding:0; margin:var(--space-sm) 0; }
-    .dim-data-list li { padding:var(--space-xs) 0; font-size:0.9375rem; border-bottom:1px solid var(--n1-border); }
-    .dim-data-list li:last-child { border-bottom:none; }
-    .score-row { display:flex; justify-content:space-between; align-items:center; padding:var(--space-xs) 0; font-size:0.9375rem; }
-    .score-val { font-family:var(--font-heading); font-weight:700; color:var(--n1-orange); }
-    .insight-block { padding:var(--space-md); border-radius:var(--n1-radius-sm); margin-bottom:var(--space-sm); font-size:0.9375rem; }
-    .insight-reinforcement { background-color:rgba(232,93,38,0.08); border-left:3px solid var(--n1-orange); }
-    .insight-conflict { background-color:rgba(255,193,7,0.1); border-left:3px solid #ffc107; }
-    .insight-neutral { background-color:var(--n1-surface); border-left:3px solid var(--n1-border); }
-    .toggle-btn { background:none; border:1px solid var(--n1-border); border-radius:var(--n1-radius-sm); padding:var(--space-xs) var(--space-sm); font-size:0.8125rem; font-family:var(--font-body); cursor:pointer; color:var(--n1-muted); white-space:nowrap; }
-    .toggle-btn:hover { background-color:var(--n1-surface); color:var(--n1-black); }
-    .results-actions { display:flex; gap:var(--space-sm); flex-wrap:wrap; }
-    .mt-sm { margin-top:var(--space-sm); } .mt-md { margin-top:var(--space-md); } .mt-lg { margin-top:var(--space-lg); }
-    .text-muted { color:var(--n1-muted); } .text-sm { font-size:0.875rem; } .hidden { display:none; }
-    #yaml-input { width:100%; padding:var(--space-md); border:1px solid var(--n1-border); border-radius:var(--n1-radius-sm); font-family:var(--font-heading); font-size:0.8125rem; line-height:1.5; resize:vertical; background-color:var(--n1-surface); color:var(--n1-black); margin-top:var(--space-md); }
-    #yaml-input:focus { outline:2px solid var(--n1-orange); outline-offset:1px; }
+    body {
+      background-color: #0c0c1f;
+      background-image:
+        radial-gradient(circle at 15% 25%, rgba(255, 144, 104, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 85% 70%, rgba(255, 144, 104, 0.09) 0%, transparent 40%);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-panel {
+      background: rgba(35, 35, 63, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(70, 70, 92, 0.2);
+    }
+    .glass-input-dark {
+      background: rgba(11, 11, 31, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(70, 70, 92, 0.35);
+      color: #f9f9f9;
+      transition: border-color 0.2s;
+      resize: vertical;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+    .glass-input-dark:focus {
+      outline: none;
+      border-color: #ff9068;
+      box-shadow: 0 0 0 2px rgba(255, 144, 104, 0.15);
+    }
+    .glass-input-dark::placeholder { color: rgba(170, 168, 195, 0.35); }
+    /* Circular score badge */
+    .score-circle {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 144, 104, 0.3);
+      background: rgba(35, 35, 63, 0.8);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      box-shadow: 0 0 20px rgba(255, 144, 104, 0.15);
+    }
+    /* Dimension card toggle */
+    .dim-card-body.hidden { display: none; }
+    /* Insight markers */
+    .insight-reinforcement {
+      background: rgba(255, 144, 104, 0.06);
+      border-left: 2px solid rgba(255, 144, 104, 0.5);
+    }
+    .insight-conflict {
+      background: rgba(255, 193, 7, 0.06);
+      border-left: 2px solid rgba(255, 193, 7, 0.5);
+    }
+    .insight-neutral {
+      background: rgba(35, 35, 63, 0.5);
+      border-left: 2px solid rgba(70, 70, 92, 0.4);
+    }
+    /* Tool starter cards */
+    .tool-starter-card {
+      background: rgba(35, 35, 63, 0.5);
+      border: 1px solid rgba(70, 70, 92, 0.25);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .tool-starter-card:hover {
+      border-color: rgba(255, 144, 104, 0.35);
+      background: rgba(255, 144, 104, 0.05);
+    }
+    /* Score tags */
+    .dim-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.6875rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+    }
+    .dim-tag-complete {
+      background: rgba(255, 144, 104, 0.2);
+      border: 1px solid rgba(255, 144, 104, 0.4);
+      color: #ff9068;
+    }
+    .dim-tag-pending {
+      background: rgba(70, 70, 92, 0.3);
+      border: 1px solid rgba(70, 70, 92, 0.4);
+      color: #74738b;
+    }
+    /* LinkedIn button */
+    .btn-linkedin {
+      background: #0077b5;
+      color: white;
+      border-radius: 0.375rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.8125rem;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 16px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-linkedin:hover { background: #006396; }
+    .btn-linkedin:active { transform: scale(0.97); }
+    /* Key insight card */
+    .insight-key-card {
+      background: rgba(23, 23, 47, 0.8);
+      border: 1px solid rgba(70, 70, 92, 0.2);
+      border-radius: 0.5rem;
+      padding: 1rem;
+    }
+    /* Export status */
+    #export-status { display: none; color: #aaa8c3; font-size: 0.875rem; margin-top: 0.5rem; text-align: center; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+    /* Radar glow */
+    .radar-glow { filter: drop-shadow(0 0 12px rgba(255, 144, 104, 0.5)); }
   </style>
 </head>
-<body>
+<body class="font-body text-on-surface min-h-screen flex flex-col">
 
-  <nav class="nav" aria-label="Navegación principal">
-    <a href="../index.html" class="nav-logo">N<span>1</span></a>
-    <span style="font-family:var(--font-heading);font-size:0.875rem;color:var(--n1-muted);">Mi Perfil</span>
+  <!-- FIXED HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-[#0c0c1f]/70 backdrop-blur-xl border-b border-[#46465c]/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)]">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-[640px] mx-auto">
+      <a href="../index.html" class="text-[#ff9068] scale-95 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <h1 class="font-headline uppercase tracking-widest text-sm text-[#ff9068] font-bold">N1 PERFIL</h1>
+      <div class="text-[#46465c]">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow flex flex-col items-center px-4 pt-24 pb-32 max-w-[640px] mx-auto w-full">
+
+    <!-- ════════════════════════════════════
+         SCREEN 0: IMPORT (no profile found)
+         ════════════════════════════════════ -->
+    <section id="import-screen" class="w-full">
+
+      <!-- Hero -->
+      <div class="w-full mb-8">
+        <div class="inline-block mb-3 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+          <span class="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">Dashboard</span>
+        </div>
+        <h2 class="font-headline text-3xl font-bold text-tertiary tracking-tight mb-2">Tu Perfil N1</h2>
+        <p class="text-on-surface-variant text-sm">No encontramos un perfil guardado en este navegador. Completá alguna herramienta para empezar a construir tu mapa de autoconocimiento.</p>
+      </div>
+
+      <!-- Tool starter grid -->
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <a href="../compass/index.html" class="tool-starter-card">
+          <p class="font-mono text-[10px] text-primary uppercase tracking-widest mb-2">Adaptabilidad</p>
+          <p class="font-headline font-bold text-sm text-tertiary mb-1">Compass CAAS-12</p>
+          <p class="text-xs text-on-surface-variant">12 preguntas sobre tu capacidad de adaptarte a cambios de carrera.</p>
+        </a>
+        <a href="../bulls-eye/index.html" class="tool-starter-card">
+          <p class="font-mono text-[10px] text-primary uppercase tracking-widest mb-2">Valores</p>
+          <p class="font-headline font-bold text-sm text-tertiary mb-1">Bull's Eye</p>
+          <p class="text-xs text-on-surface-variant">Mapeá la alineación entre tus valores y tu vida actual.</p>
+        </a>
+        <a href="../mlq/index.html" class="tool-starter-card">
+          <p class="font-mono text-[10px] text-primary uppercase tracking-widest mb-2">Propósito</p>
+          <p class="font-headline font-bold text-sm text-tertiary mb-1">MLQ-10</p>
+          <p class="text-xs text-on-surface-variant">10 preguntas sobre tu sentido de propósito y búsqueda de significado.</p>
+        </a>
+        <a href="../flow-logger/index.html" class="tool-starter-card">
+          <p class="font-mono text-[10px] text-primary uppercase tracking-widest mb-2">Fortalezas</p>
+          <p class="font-headline font-bold text-sm text-tertiary mb-1">Flow Logger</p>
+          <p class="text-xs text-on-surface-variant">Registrá actividades y encontrá tu zona de flow y fortalezas naturales.</p>
+        </a>
+      </div>
+
+      <!-- YAML import panel -->
+      <div class="glass-panel rounded-xl p-6 mt-2">
+        <div class="flex gap-3 items-start mb-4">
+          <div class="p-2 rounded-lg bg-primary/10 flex-shrink-0">
+            <span class="material-symbols-outlined text-primary" style="font-size:18px">upload_file</span>
+          </div>
+          <div>
+            <p class="font-headline font-bold text-sm text-tertiary mb-1">Importar perfil existente</p>
+            <p class="text-xs text-on-surface-variant">Pegá tu perfil YAML de otro dispositivo para cargarlo acá.</p>
+          </div>
+        </div>
+        <textarea
+          id="yaml-input"
+          rows="8"
+          placeholder="version: '1.0'&#10;values:&#10;  completed: true&#10;  ..."
+          class="glass-input-dark w-full rounded-lg p-3 text-xs"
+          aria-label="Campo para pegar perfil YAML"
+        ></textarea>
+        <div class="flex gap-3 items-center mt-4">
+          <button
+            id="load-yaml-btn"
+            disabled
+            class="px-5 py-2.5 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold text-xs uppercase tracking-widest text-on-primary-fixed active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          >Cargar perfil</button>
+          <p id="yaml-error" class="text-error text-xs" style="display:none;"></p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════════════════════════════════
+         SCREEN 1: DASHBOARD (profile loaded)
+         ════════════════════════════════════ -->
+    <section id="synthesizer-screen" class="w-full" style="display:none;">
+
+      <!-- DASHBOARD HEADER -->
+      <div class="mb-6">
+        <div class="inline-block mb-3 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+          <span class="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">Perfil Integrado</span>
+        </div>
+        <div class="flex justify-between items-start flex-wrap gap-3 mb-2">
+          <div>
+            <h2 class="font-headline text-2xl font-bold text-tertiary tracking-tight">N1 Integrated Profile<br/>Dashboard</h2>
+            <p id="profile-updated" class="font-mono text-[10px] text-outline mt-1"></p>
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <button
+              id="btn-download-yaml"
+              class="flex items-center gap-1.5 px-3 py-2 border border-outline-variant/40 rounded-lg font-headline font-bold text-xs uppercase tracking-widest text-outline hover:text-tertiary hover:border-primary/40 transition-all active:scale-95"
+            >
+              <span class="material-symbols-outlined" style="font-size:14px">download</span>
+              Export PDF
+            </button>
+            <button
+              id="btn-linkedin-share"
+              class="btn-linkedin"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              LinkedIn
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOP ROW: 3 CIRCULAR SCORE BADGES -->
+      <div class="flex justify-around gap-3 mb-8" id="score-badges-row">
+        <!-- populated by JS -->
+      </div>
+
+      <!-- CENTER: PENTAGON RADAR CHART -->
+      <div class="glass-panel rounded-xl p-6 mb-6 relative overflow-hidden" id="radar-hub">
+        <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full blur-[80px] pointer-events-none" style="background:rgba(255,144,104,0.08)"></div>
+        <h3 class="font-mono text-[10px] uppercase tracking-widest text-outline mb-4 text-center">Vista General — 4 Dimensiones</h3>
+        <div style="max-width:380px;margin:0 auto;">
+          <canvas id="n1-synthesizer-radar" class="radar-glow" aria-label="Radar de dimensiones N1"></canvas>
+        </div>
+      </div>
+
+      <!-- 3 DIMENSION DETAIL CARDS (Core Strengths, Financial Health, Professional Network) -->
+      <div class="grid grid-cols-1 gap-3 mb-6 sm:grid-cols-3" id="dimension-summary-row">
+        <!-- populated by JS -->
+      </div>
+
+      <!-- EXPANDABLE DIMENSION CARDS -->
+      <div id="dimension-cards" class="flex flex-col gap-3 mb-6"></div>
+
+      <!-- KEY INSIGHTS -->
+      <div class="glass-panel rounded-xl p-6 mb-6" id="insights-card">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="material-symbols-outlined text-primary" style="font-size:18px">lightbulb</span>
+          <h3 class="font-headline font-bold text-sm text-tertiary uppercase tracking-tight">Key Insights</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3" id="key-insights-grid">
+          <!-- populated by JS -->
+        </div>
+        <div class="mt-5 space-y-3">
+          <div id="reinforcements-section"></div>
+          <div id="conflicts-section"></div>
+        </div>
+      </div>
+
+      <!-- CAREER RECOMMENDATION -->
+      <div class="glass-panel rounded-xl p-6 mb-6" id="recommendation-card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-primary" style="font-size:18px">route</span>
+          <h3 class="font-headline font-bold text-sm text-tertiary uppercase tracking-tight">Recomendacion de camino</h3>
+        </div>
+        <div id="career-recommendation"></div>
+      </div>
+
+      <!-- EXPORT CARD -->
+      <div class="glass-panel rounded-xl p-6 mb-6" id="export-card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-primary" style="font-size:18px">share</span>
+          <h3 class="font-headline font-bold text-sm text-tertiary uppercase tracking-tight">Exportar tu perfil</h3>
+        </div>
+        <div class="flex gap-3 flex-wrap">
+          <button
+            id="btn-download-yaml-export"
+            class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold text-xs uppercase tracking-widest text-on-primary-fixed active:scale-95 transition-all"
+          >
+            <span class="material-symbols-outlined" style="font-size:14px">code</span>
+            Descargar YAML
+          </button>
+          <button
+            id="btn-download-template"
+            class="flex items-center gap-2 px-4 py-2.5 border border-outline-variant/40 rounded-lg font-headline font-bold text-xs uppercase tracking-widest text-outline hover:text-tertiary hover:border-primary/40 transition-all active:scale-95"
+          >
+            <span class="material-symbols-outlined" style="font-size:14px">description</span>
+            System Template
+          </button>
+          <button
+            id="btn-download-scorecard"
+            class="flex items-center gap-2 px-4 py-2.5 border border-outline-variant/40 rounded-lg font-headline font-bold text-xs uppercase tracking-widest text-outline hover:text-tertiary hover:border-primary/40 transition-all active:scale-95"
+          >
+            <span class="material-symbols-outlined" style="font-size:14px">bar_chart</span>
+            Scorecard
+          </button>
+        </div>
+        <p id="export-status" role="status" aria-live="polite"></p>
+      </div>
+
+      <!-- RESET -->
+      <div class="text-center mb-4">
+        <button
+          id="btn-reset"
+          class="font-mono text-[11px] uppercase tracking-widest text-outline hover:text-on-surface-variant transition-colors underline underline-offset-4"
+        >Cargar otro perfil</button>
+      </div>
+
+      <!-- FOOTER NAV -->
+      <div class="flex justify-center gap-8 pt-4 border-t border-outline-variant/10">
+        <a href="#" class="font-mono text-[10px] uppercase tracking-widest text-outline hover:text-on-surface-variant transition-colors">Research &amp; Metodología</a>
+        <a href="#" class="font-mono text-[10px] uppercase tracking-widest text-outline hover:text-on-surface-variant transition-colors">Recursos Premium</a>
+        <a href="#" class="font-mono text-[10px] uppercase tracking-widest text-outline hover:text-on-surface-variant transition-colors">Ayuda</a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 right-0 h-20 bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50">
+    <div class="flex justify-around items-center h-full px-4 max-w-[640px] mx-auto">
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../index.html">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Inicio</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../compass/index.html">
+        <span class="material-symbols-outlined">query_stats</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Compass</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../runway/index.html">
+        <span class="material-symbols-outlined">account_balance_wallet</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Runway</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 translate-y-[-2px] transition-all" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">person</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Perfil</span>
+      </a>
+    </div>
   </nav>
 
-  <main class="container">
-
-    <!-- Screen 0: import (shown when no profile) -->
-    <section id="import-screen">
-      <div class="card mt-lg">
-        <h1>Tu Perfil N1</h1>
-        <p class="text-muted mt-sm">No encontramos un perfil guardado en este navegador.</p>
-        <p class="text-sm mt-md">Completá alguna de estas herramientas para empezar a construir tu perfil. Cada una agrega una dimensión.</p>
-      </div>
-
-      <!-- Tool starter cards -->
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-md);margin-top:var(--space-md);">
-        <a href="../compass/index.html" class="card" style="text-decoration:none;color:var(--n1-black);display:block;">
-          <p style="font-family:var(--font-heading);font-size:0.75rem;color:var(--n1-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-xs);">Adaptabilidad</p>
-          <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:var(--space-xs);">Compass CAAS-12</p>
-          <p style="font-size:0.8125rem;color:var(--n1-muted);">12 preguntas sobre tu capacidad de adaptarte a cambios de carrera.</p>
-        </a>
-        <a href="../bulls-eye/index.html" class="card" style="text-decoration:none;color:var(--n1-black);display:block;">
-          <p style="font-family:var(--font-heading);font-size:0.75rem;color:var(--n1-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-xs);">Valores</p>
-          <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:var(--space-xs);">Bull's Eye</p>
-          <p style="font-size:0.8125rem;color:var(--n1-muted);">Mapeá la alineación entre tus valores y tu vida actual.</p>
-        </a>
-        <a href="../mlq/index.html" class="card" style="text-decoration:none;color:var(--n1-black);display:block;">
-          <p style="font-family:var(--font-heading);font-size:0.75rem;color:var(--n1-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-xs);">Propósito</p>
-          <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:var(--space-xs);">MLQ-10</p>
-          <p style="font-size:0.8125rem;color:var(--n1-muted);">10 preguntas sobre tu sentido de propósito y búsqueda de significado.</p>
-        </a>
-        <a href="../flow-logger/index.html" class="card" style="text-decoration:none;color:var(--n1-black);display:block;">
-          <p style="font-family:var(--font-heading);font-size:0.75rem;color:var(--n1-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-xs);">Fortalezas</p>
-          <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:var(--space-xs);">Flow Logger</p>
-          <p style="font-size:0.8125rem;color:var(--n1-muted);">Registrá actividades y encontrá tu zona de flow y fortalezas naturales.</p>
-        </a>
-      </div>
-
-      <div class="card mt-md">
-        <p class="text-sm" style="font-weight:600;margin-bottom:var(--space-sm);">¿Ya tenés un perfil de otro dispositivo?</p>
-        <p class="text-sm text-muted mt-sm">Pegá tu perfil YAML acá para cargarlo.</p>
-        <textarea id="yaml-input" rows="8" placeholder="Pegá tu perfil YAML acá..."></textarea>
-        <div style="margin-top:var(--space-md);display:flex;gap:var(--space-sm);flex-wrap:wrap;align-items:center;">
-          <button id="load-yaml-btn" class="btn btn-primary" disabled>Cargar perfil</button>
-        </div>
-        <p id="yaml-error" style="color:var(--n1-orange);display:none;margin-top:var(--space-sm);font-size:0.875rem;"></p>
-      </div>
-    </section>
-
-    <!-- Screen 1: synthesizer (shown when profile loaded) -->
-    <section id="synthesizer-screen" style="display:none;">
-
-      <div class="card mt-lg" id="profile-header">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:var(--space-md)">
-          <div>
-            <h1>Tu Perfil N1</h1>
-            <p id="profile-updated" class="text-muted text-sm mt-sm"></p>
-          </div>
-          <div id="completion-badges" style="display:flex;gap:var(--space-sm);flex-wrap:wrap;"></div>
-        </div>
-      </div>
-
-      <div class="card mt-md" id="radar-hub">
-        <h2>Vista general</h2>
-        <p class="text-muted text-sm mt-sm">Tus cuatro dimensiones de autoconocimiento.</p>
-        <div style="max-width:400px;margin:var(--space-lg) auto;">
-          <canvas id="n1-synthesizer-radar" aria-label="Radar de dimensiones N1"></canvas>
-        </div>
-      </div>
-
-      <div id="dimension-cards" style="display:flex;flex-direction:column;gap:var(--space-md);margin-top:var(--space-md);"></div>
-
-      <div class="card" id="insights-card" style="margin-top:var(--space-md);">
-        <h2>Insights transversales</h2>
-        <div id="reinforcements-section" class="mt-md"></div>
-        <div id="conflicts-section"></div>
-      </div>
-
-      <div class="card" id="recommendation-card" style="margin-top:var(--space-md);">
-        <h2>Recomendacion de camino</h2>
-        <div id="career-recommendation" class="mt-md"></div>
-      </div>
-
-      <div class="card" id="export-card" style="margin-top:var(--space-md);">
-        <h2>Exportar tu perfil</h2>
-        <div class="results-actions mt-md">
-          <button id="btn-download-yaml" class="btn btn-primary">Descargar YAML</button>
-          <button id="btn-download-template" class="btn btn-secondary">Descargar System Template</button>
-          <button id="btn-download-scorecard" class="btn btn-secondary">Descargar scorecard completo</button>
-        </div>
-        <p id="export-status" role="status" aria-live="polite" style="display:none;color:var(--n1-muted);font-size:0.875rem;margin-top:var(--space-sm);text-align:center;"></p>
-      </div>
-
-      <div style="text-align:center;margin:var(--space-xl) 0;">
-        <button id="btn-reset" class="btn btn-ghost text-sm">Cargar otro perfil</button>
-      </div>
-
-    </section>
-  </main>
+  <!-- BACKGROUND ATMOSPHERIC ELEMENTS -->
+  <div class="fixed inset-0 pointer-events-none -z-10" aria-hidden="true">
+    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-1/3 -right-20 w-96 h-96 blur-[150px] rounded-full" style="background:rgba(255,144,104,0.07)"></div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="../assessment-engine.js"></script>
@@ -277,23 +581,68 @@
       return {values:valuesScore, strengths:strengthsScore, identity:identityScore, purpose:purposeScore};
     }
 
-    /* == RENDER FUNCTIONS == */
-    var _radarChartInstance=null;
+    /* == RENDER: CIRCULAR SCORE BADGES == */
+    function renderScoreBadges(profile) {
+      var container = document.getElementById('score-badges-row');
+      container.textContent = '';
 
-    function renderCompletionBadges(profile) {
-      var container=document.getElementById("completion-badges");
-      container.innerHTML="";
-      [{key:"values",label:"Valores"},{key:"strengths",label:"Fortalezas"},{key:"identity",label:"Identidad"},{key:"purpose",label:"Propósito"}].forEach(function(d){
-        var span=document.createElement("span");
-        span.className="tag";
-        if (profile[d.key]&&profile[d.key].completed===true) {
-          span.classList.add("tag-orange"); span.textContent=d.label;
-        } else {
-          span.style.opacity="0.4"; span.textContent=d.label+" \u2014";
+      var scores = calcDimensionScores(profile);
+      var badgeData = [
+        {
+          label: 'Propósito & Sentido',
+          icon: 'self_improvement',
+          value: scores.purpose,
+          max: 10,
+          completed: profile.purpose && profile.purpose.completed
+        },
+        {
+          label: 'Adaptabilidad',
+          icon: 'sync_alt',
+          value: scores.identity,
+          max: 10,
+          completed: profile.identity && profile.identity.completed
+        },
+        {
+          label: 'Valores',
+          icon: 'favorite',
+          value: scores.values,
+          max: 10,
+          completed: profile.values && profile.values.completed
         }
-        container.appendChild(span);
+      ];
+
+      badgeData.forEach(function(b) {
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:8px;flex:1';
+
+        var circle = document.createElement('div');
+        circle.className = 'score-circle';
+
+        var pct = Math.round((b.value / b.max) * 100);
+        var scoreNum = document.createElement('span');
+        scoreNum.style.cssText = 'font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.25rem;line-height:1;color:' + (b.completed ? '#ff9068' : '#74738b');
+        scoreNum.textContent = b.completed ? pct + '%' : '—';
+
+        var iconEl = document.createElement('span');
+        iconEl.className = 'material-symbols-outlined';
+        iconEl.style.cssText = 'font-size:12px;color:' + (b.completed ? 'rgba(255,144,104,0.6)' : 'rgba(116,115,139,0.4)');
+        iconEl.textContent = b.icon;
+
+        circle.appendChild(scoreNum);
+        circle.appendChild(iconEl);
+
+        var labelEl = document.createElement('p');
+        labelEl.style.cssText = 'font-family:"Space Mono",monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:#aaa8c3;text-align:center;max-width:80px;line-height:1.3';
+        labelEl.textContent = b.label;
+
+        wrapper.appendChild(circle);
+        wrapper.appendChild(labelEl);
+        container.appendChild(wrapper);
       });
     }
+
+    /* == RENDER: RADAR CHART == */
+    var _radarChartInstance=null;
 
     function renderRadarChart(profile) {
       var scores=calcDimensionScores(profile);
@@ -306,24 +655,128 @@
           datasets:[{
             label:"Tu perfil",
             data:[scores.values,scores.strengths,scores.identity,scores.purpose],
-            backgroundColor:"rgba(232,93,38,0.15)",borderColor:"#E85D26",borderWidth:2,
-            pointBackgroundColor:"#E85D26",pointRadius:4
+            backgroundColor:"rgba(255,144,104,0.2)",
+            borderColor:"#ff9068",
+            borderWidth:2,
+            pointBackgroundColor:"#ff9068",
+            pointRadius:5,
+            pointHoverRadius:7,
+            pointBorderColor:"rgba(255,144,104,0.6)",
+            pointBorderWidth:2
           }]
         },
         options:{
-          scales:{r:{min:0,max:10,ticks:{stepSize:2,display:false},grid:{color:"rgba(0,0,0,0.08)"},
-            pointLabels:{font:{family:"'Space Mono', monospace",size:12},color:"#1A1A1A"}}},
-          plugins:{legend:{display:false}},responsive:true,maintainAspectRatio:true
+          scales:{
+            r:{
+              min:0,
+              max:10,
+              ticks:{stepSize:2,display:false},
+              grid:{color:"rgba(70,70,92,0.4)"},
+              angleLines:{color:"rgba(70,70,92,0.3)"},
+              pointLabels:{
+                font:{family:"'Space Mono', monospace",size:11},
+                color:"#aaa8c3"
+              }
+            }
+          },
+          plugins:{legend:{display:false}},
+          responsive:true,
+          maintainAspectRatio:true
         }
       });
     }
 
+    /* == RENDER: DIMENSION SUMMARY ROW == */
+    function renderDimensionSummaryRow(profile) {
+      var container = document.getElementById('dimension-summary-row');
+      container.textContent = '';
+
+      var scores = calcDimensionScores(profile);
+      var summaries = [
+        {
+          icon: 'psychology',
+          label: 'Fortalezas Clave',
+          score: scores.strengths,
+          max: 10,
+          detail: (function() {
+            var ss = (profile.strengths && profile.strengths.signature_strengths) || [];
+            return ss.length > 0 ? ss.slice(0, 2).join(', ') : 'Completá Flow Logger para ver tus fortalezas.';
+          })(),
+          completed: profile.strengths && profile.strengths.completed
+        },
+        {
+          icon: 'account_balance_wallet',
+          label: 'Salud Financiera',
+          score: null,
+          max: null,
+          detail: 'Usá Runway Calculator para evaluar tu capacidad de transición.',
+          completed: false,
+          link: '../runway/index.html'
+        },
+        {
+          icon: 'hub',
+          label: 'Red Profesional',
+          score: null,
+          max: null,
+          detail: 'Explorado en el camino Construye Afuera.',
+          completed: false
+        }
+      ];
+
+      summaries.forEach(function(s) {
+        var card = document.createElement('div');
+        card.style.cssText = 'background:rgba(23,23,47,0.7);border:1px solid rgba(70,70,92,0.2);border-radius:0.5rem;padding:1rem;display:flex;flex-direction:column;gap:8px';
+
+        var headerRow = document.createElement('div');
+        headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center';
+
+        var iconEl = document.createElement('span');
+        iconEl.className = 'material-symbols-outlined text-primary';
+        iconEl.style.fontSize = '18px';
+        iconEl.textContent = s.icon;
+
+        var scoreEl = document.createElement('span');
+        scoreEl.style.cssText = 'font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.1rem;color:' + (s.completed ? '#ff9068' : '#46465c');
+        if (s.score !== null && s.completed) {
+          scoreEl.textContent = s.score.toFixed(1);
+        } else {
+          scoreEl.textContent = '—';
+        }
+
+        headerRow.appendChild(iconEl);
+        headerRow.appendChild(scoreEl);
+        card.appendChild(headerRow);
+
+        var labelEl = document.createElement('p');
+        labelEl.style.cssText = 'font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:0.8125rem;color:#f9f9f9';
+        labelEl.textContent = s.label;
+        card.appendChild(labelEl);
+
+        var detailEl = document.createElement('p');
+        detailEl.style.cssText = 'font-size:0.75rem;color:#aaa8c3;line-height:1.4';
+        detailEl.textContent = s.detail;
+        card.appendChild(detailEl);
+
+        if (s.link) {
+          var link = document.createElement('a');
+          link.href = s.link;
+          link.style.cssText = 'font-family:"Space Mono",monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:#ff9068;margin-top:auto';
+          link.textContent = 'Abrir herramienta';
+          card.appendChild(link);
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    /* == RENDER: EXPANDABLE DIMENSION CARDS == */
     function renderDimensionCards(profile) {
       var container=document.getElementById("dimension-cards");
-      container.innerHTML="";
+      container.textContent='';
       var dims=[
         {
           key:"values",label:"Valores",tool:"bulls-eye",toolLabel:"Bull's Eye",
+          icon: "favorite",
           getDetails:function(p){
             var rows=[];
             (p.values.core_values||[]).slice(0,3).forEach(function(v){rows.push({label:"Valor central",value:v});});
@@ -338,6 +791,7 @@
         },
         {
           key:"strengths",label:"Fortalezas",tool:"flow-logger",toolLabel:"Flow Logger",
+          icon: "psychology",
           getDetails:function(p){
             var rows=[];
             (p.strengths.signature_strengths||[]).slice(0,3).forEach(function(s){rows.push({label:"Fortaleza VIA",value:s});});
@@ -349,6 +803,7 @@
         },
         {
           key:"identity",label:"Identidad",tool:"compass",toolLabel:"Compass CAAS-12",
+          icon: "sync_alt",
           getDetails:function(p){
             var rows=[],ad=p.identity.adaptability;
             if(ad.concern!==null)rows.push({label:"Concern",value:ad.concern+" / 5"});
@@ -367,6 +822,7 @@
         },
         {
           key:"purpose",label:"Propósito",tool:"mlq",toolLabel:"MLQ-10",
+          icon: "self_improvement",
           getDetails:function(p){
             var rows=[],mlq=p.purpose.mlq;
             if(mlq.presence!==null)rows.push({label:"Presencia de sentido",value:mlq.presence+" / 7"});
@@ -383,73 +839,225 @@
         var details=completed?d.getDetails(profile):[];
         var summary=completed?d.getSummary(profile):null;
 
-        var card=document.createElement("div"); card.className="dim-card";
-        var header=document.createElement("div"); header.className="dim-card-header";
-        var titleWrap=document.createElement("div"); titleWrap.style.cssText="display:flex;align-items:center;gap:var(--space-sm)";
-        var titleEl=document.createElement("span"); titleEl.className="dim-card-title"; titleEl.textContent=d.label;
-        titleWrap.appendChild(titleEl);
-        var badge=document.createElement("span"); badge.className="tag";
-        if(completed){badge.classList.add("tag-orange");badge.textContent="Completado";}
-        else{badge.style.opacity="0.5";badge.textContent="Pendiente";}
-        titleWrap.appendChild(badge); header.appendChild(titleWrap);
-        var toggleBtn=document.createElement("button"); toggleBtn.className="toggle-btn"; toggleBtn.textContent="Ver detalles";
-        header.appendChild(toggleBtn); card.appendChild(header);
+        var card=document.createElement("div");
+        card.className="glass-panel rounded-xl overflow-hidden";
 
-        var body=document.createElement("div"); body.className="dim-card-body hidden";
+        var header=document.createElement("div");
+        header.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:0.75rem';
+
+        var headerLeft = document.createElement("div");
+        headerLeft.style.cssText='display:flex;align-items:center;gap:10px;';
+
+        var iconEl = document.createElement("span");
+        iconEl.className="material-symbols-outlined";
+        iconEl.style.cssText='font-size:18px;color:' + (completed ? '#ff9068' : '#46465c');
+        iconEl.textContent=d.icon;
+
+        var titleWrap=document.createElement("div");
+
+        var titleEl=document.createElement("p");
+        titleEl.style.cssText='font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:0.9375rem;color:#f9f9f9';
+        titleEl.textContent=d.label;
+        titleWrap.appendChild(titleEl);
+
+        if (summary) {
+          var sumEl = document.createElement("p");
+          sumEl.style.cssText='font-family:"Space Mono",monospace;font-size:10px;color:#aaa8c3;margin-top:2px';
+          sumEl.textContent=summary;
+          titleWrap.appendChild(sumEl);
+        }
+
+        headerLeft.appendChild(iconEl);
+        headerLeft.appendChild(titleWrap);
+
+        var rightGroup = document.createElement("div");
+        rightGroup.style.cssText='display:flex;align-items:center;gap:8px;flex-shrink:0';
+
+        var badge=document.createElement("span");
+        badge.className='dim-tag';
+        if(completed){
+          badge.classList.add("dim-tag-complete");
+          badge.textContent="Completado";
+        } else {
+          badge.classList.add("dim-tag-pending");
+          badge.textContent="Pendiente";
+        }
+        rightGroup.appendChild(badge);
+
+        var toggleIcon = document.createElement("span");
+        toggleIcon.className="material-symbols-outlined text-outline";
+        toggleIcon.style.fontSize='18px';
+        toggleIcon.textContent='expand_more';
+        rightGroup.appendChild(toggleIcon);
+
+        header.appendChild(headerLeft);
+        header.appendChild(rightGroup);
+        card.appendChild(header);
+
+        var body=document.createElement("div");
+        body.className="dim-card-body hidden";
+        body.style.cssText='padding:0 1.25rem 1.25rem;border-top:1px solid rgba(70,70,92,0.15)';
+
         if(!completed){
-          var np=document.createElement("p"); np.className="text-muted text-sm";
-          np.textContent="No completado aun. Usa "+d.toolLabel+" para explorar esta dimension.";
+          var np=document.createElement("p");
+          np.style.cssText='color:#aaa8c3;font-size:0.875rem;padding-top:1rem';
+          np.textContent="No completado aún. Usá "+d.toolLabel+" para explorar esta dimensión.";
           body.appendChild(np);
         } else if(details.length>0){
-          var ul=document.createElement("ul"); ul.className="dim-data-list";
+          var ul=document.createElement("ul");
+          ul.style.cssText='list-style:none;padding:0;margin:1rem 0 0';
           details.forEach(function(row){
-            var li=document.createElement("li"); li.className="score-row";
-            var lel=document.createElement("span"); lel.textContent=row.label;
-            var vel=document.createElement("span"); vel.className="score-val"; vel.textContent=row.value;
-            li.appendChild(lel); li.appendChild(vel); ul.appendChild(li);
+            var li=document.createElement("li");
+            li.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(70,70,92,0.1);font-size:0.875rem';
+
+            var lel=document.createElement("span");
+            lel.style.color='#aaa8c3';
+            lel.textContent=row.label;
+
+            var vel=document.createElement("span");
+            vel.style.cssText='font-family:"Space Grotesk",sans-serif;font-weight:700;color:#ff9068';
+            vel.textContent=row.value;
+
+            li.appendChild(lel);
+            li.appendChild(vel);
+            ul.appendChild(li);
           });
           body.appendChild(ul);
         } else {
-          var nd=document.createElement("p"); nd.className="text-muted text-sm";
-          nd.textContent="Dimension completada. Abre la herramienta para ver detalles.";
+          var nd=document.createElement("p");
+          nd.style.cssText='color:#aaa8c3;font-size:0.875rem;padding-top:1rem';
+          nd.textContent="Dimensión completada. Abrí la herramienta para ver detalles.";
           body.appendChild(nd);
         }
 
-        if(summary){
-          var sel=document.createElement("p"); sel.className="text-sm text-muted";
-          sel.style.marginTop="var(--space-sm)"; sel.textContent=summary;
-          body.appendChild(sel);
-        }
-        var toolLink=document.createElement("a"); toolLink.href="../"+d.tool+"/index.html";
-        toolLink.className="btn btn-ghost text-sm";
-        toolLink.style.cssText="margin-top:var(--space-md);display:inline-block";
+        var toolLink=document.createElement("a");
+        toolLink.href="../"+d.tool+"/index.html";
+        toolLink.style.cssText='display:inline-flex;align-items:center;gap:4px;margin-top:1rem;font-family:"Space Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#ff9068';
         toolLink.textContent="Abrir "+d.toolLabel;
-        body.appendChild(toolLink); card.appendChild(body);
+        body.appendChild(toolLink);
+
+        card.appendChild(body);
 
         function toggleBody(){
           var h=body.classList.contains("hidden");
           body.classList.toggle("hidden",!h);
-          toggleBtn.textContent=h?"Cerrar":"Ver detalles";
+          toggleIcon.textContent=h?'expand_less':'expand_more';
         }
-        toggleBtn.addEventListener("click",function(e){e.stopPropagation();toggleBody();});
         header.addEventListener("click",toggleBody);
         container.appendChild(card);
       });
     }
 
+    /* == RENDER: KEY INSIGHTS GRID == */
+    function renderKeyInsightsGrid(profile) {
+      var grid = document.getElementById('key-insights-grid');
+      grid.textContent = '';
+
+      var scores = calcDimensionScores(profile);
+      var completedCount = ["values","strengths","identity","purpose"].filter(function(k){
+        return profile[k] && profile[k].completed;
+      }).length;
+
+      var insights = [];
+
+      if (profile.identity && profile.identity.completed) {
+        var ad = profile.identity.adaptability;
+        if (ad && ad.curiosity !== null) {
+          insights.push({
+            icon: 'explore',
+            title: 'Adaptabilidad Alta',
+            body: 'Alta curiosidad favorece transiciones de rol exitosas.',
+            citation: 'Savickas (2012)'
+          });
+        }
+      }
+
+      if (profile.values && profile.values.completed && profile.strengths && profile.strengths.completed) {
+        insights.push({
+          icon: 'align_horizontal_left',
+          title: 'Alineación Valores',
+          body: 'Valores y fortalezas mapeados. Buscá roles que activen ambos.',
+          citation: 'McKinsey & Straw (2021)'
+        });
+      }
+
+      if (profile.purpose && profile.purpose.completed && profile.purpose.mlq) {
+        var mlq = profile.purpose.mlq;
+        if (mlq.presence !== null) {
+          insights.push({
+            icon: 'savings',
+            title: 'Salud Financiera',
+            body: 'La estabilidad financiera amplía las opciones de carrera.',
+            citation: 'N1 Proprietary Data'
+          });
+        }
+      }
+
+      if (completedCount >= 2) {
+        insights.push({
+          icon: 'hub',
+          title: 'Red Profesional',
+          body: 'Una red activa multiplica el acceso a oportunidades no publicadas.',
+          citation: 'Social Capital Studies'
+        });
+      }
+
+      if (insights.length === 0) {
+        var placeholder = document.createElement('div');
+        placeholder.style.cssText = 'grid-column:1/-1;padding:1rem;text-align:center;color:#74738b;font-size:0.875rem';
+        placeholder.textContent = 'Completá al menos dos herramientas para ver insights transversales.';
+        grid.appendChild(placeholder);
+        return;
+      }
+
+      insights.forEach(function(ins) {
+        var card = document.createElement('div');
+        card.className = 'insight-key-card';
+
+        var topRow = document.createElement('div');
+        topRow.style.cssText = 'display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px';
+
+        var iconEl = document.createElement('span');
+        iconEl.className = 'material-symbols-outlined text-primary';
+        iconEl.style.fontSize = '16px';
+        iconEl.textContent = ins.icon;
+
+        var badge = document.createElement('span');
+        badge.style.cssText = 'font-family:"Space Mono",monospace;font-size:8px;color:#74738b;text-transform:uppercase;letter-spacing:0.08em';
+        badge.textContent = 'Evidence';
+
+        topRow.appendChild(iconEl);
+        topRow.appendChild(badge);
+        card.appendChild(topRow);
+
+        var title = document.createElement('p');
+        title.style.cssText = 'font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:0.75rem;color:#f9f9f9;margin-bottom:4px';
+        title.textContent = ins.title;
+        card.appendChild(title);
+
+        var body = document.createElement('p');
+        body.style.cssText = 'font-size:0.6875rem;color:#aaa8c3;line-height:1.4;margin-bottom:6px';
+        body.textContent = ins.body;
+        card.appendChild(body);
+
+        var cite = document.createElement('p');
+        cite.style.cssText = 'font-family:"Space Mono",monospace;font-size:8px;color:#74738b;text-transform:uppercase;letter-spacing:0.06em';
+        cite.textContent = ins.citation;
+        card.appendChild(cite);
+
+        grid.appendChild(card);
+      });
+    }
+
+    /* == RENDER: CROSS-DIMENSIONAL INSIGHTS == */
     function renderInsights(profile) {
       var rEl=document.getElementById("reinforcements-section");
       var cEl=document.getElementById("conflicts-section");
-      rEl.innerHTML=""; cEl.innerHTML="";
+      rEl.textContent=""; cEl.textContent="";
       var completedCount=["values","strengths","identity","purpose"].filter(function(k){
         return profile[k]&&profile[k].completed;
       }).length;
-      if(completedCount<2){
-        var neu=document.createElement("div"); neu.className="insight-block insight-neutral";
-        var np=document.createElement("p");
-        np.textContent="Completa al menos dos herramientas para ver insights transversales.";
-        neu.appendChild(np); rEl.appendChild(neu); return;
-      }
+      if(completedCount<2){return;}
 
       if(profile.values&&profile.values.completed&&profile.strengths&&profile.strengths.completed){
         var cv=(profile.values.core_values||[]).map(function(v){return v.toLowerCase();});
@@ -463,94 +1071,107 @@
             });
           });
         });
-        var b=document.createElement("div"); b.className="insight-block insight-reinforcement";
+        var b=document.createElement("div");
+        b.className="insight-reinforcement rounded-lg p-3";
         var bp=document.createElement("p");
+        bp.style.cssText='font-size:0.875rem;color:#e5e3ff';
         bp.textContent=aligned
-          ?"Refuerzo: tus valores y fortalezas apuntan en la misma direccion."
-          :"Valores y Fortalezas completados. Explora los patrones entre ambas dimensiones.";
+          ?"Refuerzo: tus valores y fortalezas apuntan en la misma dirección."
+          :"Valores y Fortalezas completados. Explorá los patrones entre ambas dimensiones.";
         b.appendChild(bp); rEl.appendChild(b);
       }
 
       (profile.synthesis&&profile.synthesis.reinforcements?profile.synthesis.reinforcements:[]).forEach(function(r){
-        var b=document.createElement("div"); b.className="insight-block insight-reinforcement";
-        var p=document.createElement("p"); p.textContent=r; b.appendChild(p); rEl.appendChild(b);
+        var b=document.createElement("div"); b.className="insight-reinforcement rounded-lg p-3";
+        var p=document.createElement("p"); p.style.cssText='font-size:0.875rem;color:#e5e3ff'; p.textContent=r; b.appendChild(p); rEl.appendChild(b);
       });
 
       var cp=profile.triage&&profile.triage.career_path;
       var ctrl=profile.identity&&profile.identity.adaptability&&profile.identity.adaptability.control;
       if(cp==="stay_grow"&&ctrl!==null&&ctrl<3.5){
-        var c1=document.createElement("div"); c1.className="insight-block insight-conflict";
+        var c1=document.createElement("div"); c1.className="insight-conflict rounded-lg p-3";
         var c1p=document.createElement("p");
-        c1p.textContent="Atencion: tu nivel de agencia (Control CAAS) es bajo \u2014 puede dificultar el crecimiento donde estas.";
+        c1p.style.cssText='font-size:0.875rem;color:#e5e3ff';
+        c1p.textContent="Atención: tu nivel de agencia (Control CAAS) es bajo — puede dificultar el crecimiento donde estás.";
         c1.appendChild(c1p); cEl.appendChild(c1);
       }
 
       var sec=profile.values&&profile.values.schwartz_profile&&profile.values.schwartz_profile.security;
       if(cp==="go_independent"&&sec!==null&&sec>7){
-        var c2=document.createElement("div"); c2.className="insight-block insight-conflict";
+        var c2=document.createElement("div"); c2.className="insight-conflict rounded-lg p-3";
         var c2p=document.createElement("p");
-        c2p.textContent="Tensión: valorás mucho la seguridad pero considerás la independencia \u2014 esto merece exploración.";
+        c2p.style.cssText='font-size:0.875rem;color:#e5e3ff';
+        c2p.textContent="Tensión: valorás mucho la seguridad pero considerás la independencia — esto merece exploración.";
         c2.appendChild(c2p); cEl.appendChild(c2);
       }
 
       (profile.synthesis&&profile.synthesis.conflicts?profile.synthesis.conflicts:[]).forEach(function(c){
-        var b=document.createElement("div"); b.className="insight-block insight-conflict";
-        var p=document.createElement("p"); p.textContent=c; b.appendChild(p); cEl.appendChild(b);
+        var b=document.createElement("div"); b.className="insight-conflict rounded-lg p-3";
+        var p=document.createElement("p"); p.style.cssText='font-size:0.875rem;color:#e5e3ff'; p.textContent=c; b.appendChild(p); cEl.appendChild(b);
       });
     }
 
+    /* == RENDER: CAREER RECOMMENDATION == */
     function renderRecommendation(profile) {
-      var container=document.getElementById("career-recommendation"); container.innerHTML="";
+      var container=document.getElementById("career-recommendation"); container.textContent="";
       var CAREER_RECS={
         stay_grow:{
-          headline:"Crece donde estas",
+          headline:"Crece donde estás",
           steps:[
-            "Usa Bull's Eye para clarificar que valores te da tu rol actual.",
-            "Usa Compass para identificar que dimension de adaptabilidad reforzar.",
-            "Explora la skill n1-construye-afuera para mapear un plan de crecimiento interno."
+            "Usá Bull's Eye para clarificar qué valores te da tu rol actual.",
+            "Usá Compass para identificar qué dimensión de adaptabilidad reforzar.",
+            "Explorá la skill n1-construye-afuera para mapear un plan de crecimiento interno."
           ]
         },
         move:{
-          headline:"Movete estrategicamente",
+          headline:"Movete estratégicamente",
           steps:[
-            "Usa Ghost Check para evaluar ofertas antes de aplicar.",
+            "Usá Ghost Check para evaluar ofertas antes de aplicar.",
             "Completá tu perfil N1 para tener claridad de qué buscás en el siguiente rol.",
-            "Explora n1-construye-afuera \u2014 CV Audit + Interview Prep."
+            "Explorá n1-construye-afuera — CV Audit + Interview Prep."
           ]
         },
         go_independent:{
-          headline:"Construi tu independencia",
+          headline:"Construí tu independencia",
           steps:[
-            "Usa Flow Logger para identificar tus actividades de mayor energia.",
-            "Usa Runway Calculator para saber cuanto tiempo tenes.",
-            "Explora n1-construye-afuera \u2014 Network Map + Profile Builder."
+            "Usá Flow Logger para identificar tus actividades de mayor energía.",
+            "Usá Runway Calculator para saber cuánto tiempo tenés.",
+            "Explorá n1-construye-afuera — Network Map + Profile Builder."
           ]
         },
         pause_reset:{
           headline:"Pausa y replanteo",
           steps:[
-            "Empezá por Bull's Eye \u2014 claridad de valores primero.",
-            "MLQ-10 para entender tu relacion actual con el sentido del trabajo.",
-            "Explora n1-busca-adentro para la dimension de identidad."
+            "Empezá por Bull's Eye — claridad de valores primero.",
+            "MLQ-10 para entender tu relación actual con el sentido del trabajo.",
+            "Explorá n1-busca-adentro para la dimensión de identidad."
           ]
         }
       };
       var cp=profile.triage&&profile.triage.career_path;
       var rec=cp?CAREER_RECS[cp]:null;
       if(!rec){
-        var nr=document.createElement("p"); nr.className="text-muted";
-        nr.textContent="Completa el triage en la pagina principal para ver tu recomendacion.";
+        var nr=document.createElement("p");
+        nr.style.cssText='color:#aaa8c3;font-size:0.875rem';
+        nr.textContent="Completá el triage en la página principal para ver tu recomendación.";
         container.appendChild(nr); return;
       }
-      var h3=document.createElement("h3"); h3.textContent=rec.headline; container.appendChild(h3);
-      var ol=document.createElement("ol"); ol.style.cssText="margin-top:var(--space-md);padding-left:var(--space-lg)";
+      var h3=document.createElement("h4");
+      h3.style.cssText='font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1rem;color:#ff9068;margin-bottom:0.75rem';
+      h3.textContent=rec.headline;
+      container.appendChild(h3);
+      var ol=document.createElement("ol");
+      ol.style.cssText='padding-left:1.25rem;display:flex;flex-direction:column;gap:0.5rem';
       rec.steps.forEach(function(s){
-        var li=document.createElement("li"); li.textContent=s;
-        li.style.marginBottom="var(--space-sm)"; ol.appendChild(li);
+        var li=document.createElement("li");
+        li.style.cssText='font-size:0.875rem;color:#aaa8c3;line-height:1.5';
+        li.textContent=s;
+        ol.appendChild(li);
       });
       container.appendChild(ol);
     }
 
+    /* == WIRE EXPORT BUTTONS == */
     function wireExportButtons(profile) {
       var es=document.getElementById("export-status");
       function showStatus(msg){es.textContent=msg;es.style.display="block";setTimeout(function(){es.style.display="none";},2000);}
@@ -562,71 +1183,102 @@
         document.body.removeChild(a); URL.revokeObjectURL(url);
       }
 
-      document.getElementById("btn-download-yaml").addEventListener("click",function(){
-        try{triggerDownload(N1.generateYAML(profile),"n1-profile.yaml","text/yaml");showStatus("YAML descargado.");}
-        catch(e){showStatus("Error al generar YAML.");}
-      });
+      // Primary header download
+      var btnDownloadYaml = document.getElementById("btn-download-yaml");
+      if (btnDownloadYaml) {
+        btnDownloadYaml.addEventListener("click",function(){
+          try{triggerDownload(N1.generateYAML(profile),"n1-profile.yaml","text/yaml");showStatus("YAML descargado.");}
+          catch(e){showStatus("Error al generar YAML.");}
+        });
+      }
 
-      document.getElementById("btn-download-template").addEventListener("click",function(){
-        var cv=(profile.values&&profile.values.core_values)||[];
-        var ss=(profile.strengths&&profile.strengths.signature_strengths)||[];
-        var ad=(profile.identity&&profile.identity.adaptability)||{};
-        var mlq=(profile.purpose&&profile.purpose.mlq)||{};
-        var triage=profile.triage||{};
-        function safe(v){return(v!==null&&v!==undefined)?v:"\u2014";}
-        var cvLines=cv.length>0?cv.slice(0,3).map(function(v,i){return(i+1)+". "+v;}).join("\n"):"— Completar con Bull's Eye";
-        var ssLines=ss.length>0?ss.slice(0,3).map(function(s,i){return(i+1)+". "+s;}).join("\n"):"— Completar con Flow Logger";
-        var t=[
-          "# Mi Sistema N1 \u2014 El Sistema Eres T\u00fa","",
-          "## Perfil de Autoconocimiento","",
-          "**Version:** "+(profile.version||"1.0"),
-          "**Actualizado:** "+(profile.updated||"\u2014"),"",
-          "## Valores Centrales",cvLines,"",
-          "## Fortalezas Clave",ssLines,"",
-          "## Adaptabilidad (CAAS-12)",
-          "Concern: "+safe(ad.concern)+" | Control: "+safe(ad.control)+" | Curiosity: "+safe(ad.curiosity)+" | Confidence: "+safe(ad.confidence),"",
-          "## Propósito (MLQ-10)",
-          "Presencia: "+safe(mlq.presence)+" | Búsqueda: "+safe(mlq.search)+" | Cuadrante: "+safe(mlq.quadrant),"",
-          "## Camino Actual",triage.career_path||"— Completar el triage","",
-          "---",
-          "Instrucciones para tu Claude Project:",
-          "Soy usuario de N1. Cuando me des orientación de carrera, usá este perfil como contexto.",
-          "Aplica el marco SCCT y la teoria de carrera proteica. Responde en espanol colombiano."
-        ].join("\n");
-        triggerDownload(t,"n1-system-template.md","text/markdown");
-        showStatus("System Template descargado.");
-      });
+      // Export card buttons
+      var btnYamlExport = document.getElementById("btn-download-yaml-export");
+      if (btnYamlExport) {
+        btnYamlExport.addEventListener("click",function(){
+          try{triggerDownload(N1.generateYAML(profile),"n1-profile.yaml","text/yaml");showStatus("YAML descargado.");}
+          catch(e){showStatus("Error al generar YAML.");}
+        });
+      }
 
-      document.getElementById("btn-download-scorecard").addEventListener("click",function(){
-        var scores=calcDimensionScores(profile);
-        var cp=profile.triage&&profile.triage.career_path;
-        var hmap={stay_grow:"Crece donde estas",move:"Movete estrategicamente",go_independent:"Construi tu independencia",pause_reset:"Pausa y replanteo"};
-        var headline=cp?(hmap[cp]||"Autoconocimiento profesional completo"):"Autoconocimiento profesional completo";
-        try{
-          var dataUrl=N1.generateScorecard({
-            title:"Mi Perfil N1",subtitle:"Autoconocimiento profesional completo",chartType:"bar",
-            scores:[{label:"Valores",value:scores.values,max:10},{label:"Fortalezas",value:scores.strengths,max:10},{label:"Identidad",value:scores.identity,max:10},{label:"Propósito",value:scores.purpose,max:10}],
-            interpretation:headline
-          });
-          N1.downloadScorecard(dataUrl,"n1-perfil-completo.png");
-          showStatus("Scorecard descargado.");
-        }catch(e){showStatus("Error al generar scorecard.");}
-      });
+      var btnTemplate = document.getElementById("btn-download-template");
+      if (btnTemplate) {
+        btnTemplate.addEventListener("click",function(){
+          var cv=(profile.values&&profile.values.core_values)||[];
+          var ss=(profile.strengths&&profile.strengths.signature_strengths)||[];
+          var ad=(profile.identity&&profile.identity.adaptability)||{};
+          var mlq=(profile.purpose&&profile.purpose.mlq)||{};
+          var triage=profile.triage||{};
+          function safe(v){return(v!==null&&v!==undefined)?v:"—";}
+          var cvLines=cv.length>0?cv.slice(0,3).map(function(v,i){return(i+1)+". "+v;}).join("\n"):"— Completar con Bull's Eye";
+          var ssLines=ss.length>0?ss.slice(0,3).map(function(s,i){return(i+1)+". "+s;}).join("\n"):"— Completar con Flow Logger";
+          var t=[
+            "# Mi Sistema N1 — El Sistema Eres Tú","",
+            "## Perfil de Autoconocimiento","",
+            "**Version:** "+(profile.version||"1.0"),
+            "**Actualizado:** "+(profile.updated||"—"),"",
+            "## Valores Centrales",cvLines,"",
+            "## Fortalezas Clave",ssLines,"",
+            "## Adaptabilidad (CAAS-12)",
+            "Concern: "+safe(ad.concern)+" | Control: "+safe(ad.control)+" | Curiosity: "+safe(ad.curiosity)+" | Confidence: "+safe(ad.confidence),"",
+            "## Propósito (MLQ-10)",
+            "Presencia: "+safe(mlq.presence)+" | Búsqueda: "+safe(mlq.search)+" | Cuadrante: "+safe(mlq.quadrant),"",
+            "## Camino Actual",triage.career_path||"— Completar el triage","",
+            "---",
+            "Instrucciones para tu Claude Project:",
+            "Soy usuario de N1. Cuando me des orientación de carrera, usá este perfil como contexto.",
+            "Aplica el marco SCCT y la teoría de carrera proteica. Responde en español colombiano."
+          ].join("\n");
+          triggerDownload(t,"n1-system-template.md","text/markdown");
+          showStatus("System Template descargado.");
+        });
+      }
+
+      var btnScorecard = document.getElementById("btn-download-scorecard");
+      if (btnScorecard) {
+        btnScorecard.addEventListener("click",function(){
+          var scores=calcDimensionScores(profile);
+          var cp=profile.triage&&profile.triage.career_path;
+          var hmap={stay_grow:"Crece donde estás",move:"Movete estratégicamente",go_independent:"Construí tu independencia",pause_reset:"Pausa y replanteo"};
+          var headline=cp?(hmap[cp]||"Autoconocimiento profesional completo"):"Autoconocimiento profesional completo";
+          try{
+            var dataUrl=N1.generateScorecard({
+              title:"Mi Perfil N1",subtitle:"Autoconocimiento profesional completo",chartType:"bar",
+              scores:[{label:"Valores",value:scores.values,max:10},{label:"Fortalezas",value:scores.strengths,max:10},{label:"Identidad",value:scores.identity,max:10},{label:"Propósito",value:scores.purpose,max:10}],
+              interpretation:headline
+            });
+            N1.downloadScorecard(dataUrl,"n1-perfil-completo.png");
+            showStatus("Scorecard descargado.");
+          }catch(e){showStatus("Error al generar scorecard.");}
+        });
+      }
+
+      // LinkedIn share button
+      var btnLinkedIn = document.getElementById("btn-linkedin-share");
+      if (btnLinkedIn) {
+        btnLinkedIn.addEventListener("click", function() {
+          var url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent('https://n1career.github.io/N1/profile/');
+          window.open(url, '_blank', 'noopener,noreferrer');
+        });
+      }
     }
 
-    /* == MAIN == */
+    /* == MAIN: SHOW DASHBOARD == */
     function showSynthesizer(profile) {
       document.getElementById("import-screen").style.display="none";
       document.getElementById("synthesizer-screen").style.display="block";
-      document.getElementById("profile-updated").textContent="Actualizado: "+(profile.updated||"\u2014");
-      renderCompletionBadges(profile);
+      document.getElementById("profile-updated").textContent="Actualizado: "+(profile.updated||"—");
+      renderScoreBadges(profile);
       renderRadarChart(profile);
+      renderDimensionSummaryRow(profile);
       renderDimensionCards(profile);
+      renderKeyInsightsGrid(profile);
       renderInsights(profile);
       renderRecommendation(profile);
       wireExportButtons(profile);
     }
 
+    /* == INIT == */
     document.addEventListener("DOMContentLoaded",function(){
       var existing=N1.loadProfile();
       if(existing&&(
@@ -647,7 +1299,7 @@
       loadBtn.addEventListener("click",function(){
         var text=yamlInput.value.trim();
         if(!/version\s*:/m.test(text)||!/values\s*:|strengths\s*:|identity\s*:|purpose\s*:/m.test(text)){
-          errorEl.textContent="Formato invalido \u2014 asegurate de pegar el YAML completo de N1";
+          errorEl.textContent="Formato inválido — asegurate de pegar el YAML completo de N1";
           errorEl.style.display="block"; return;
         }
         showSynthesizer(buildProfileFromYaml(text));
