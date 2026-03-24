@@ -105,7 +105,7 @@ strengths:
     vicarious_models: [] # role models observed succeeding at similar tasks
     social_persuasion: [] # encouragement received from credible others
     physiological: null # current physiological/emotional state affecting efficacy (free text)
-  flow_activities: [] # activities that produce flow state — format: {activity, challenge, skill, state}
+  flow_activities: [] # activities that produce flow state — format: {name, challenge, skill, zone}
   career_implications: [] # how strengths profile translates to career considerations
 
 # ── IDENTITY (Ibarra + Marcia + Savickas) ──
@@ -204,7 +204,7 @@ evolution:
 | `strengths.self_efficacy.vicarious_models`    | array   | free text strings                                  | no                  | Bandura (1977)        |
 | `strengths.self_efficacy.social_persuasion`   | array   | free text strings                                  | no                  | Bandura (1977)        |
 | `strengths.self_efficacy.physiological`       | string  | free text                                          | no                  | Bandura (1977)        |
-| `strengths.flow_activities`                   | array   | {activity, challenge, skill, state}                | no                  | Csikszentmihalyi      |
+| `strengths.flow_activities`                   | array   | {name, challenge, skill, zone}                     | no                  | Csikszentmihalyi      |
 | `identity.completed`                          | boolean | true \| false                                      | yes                 | —                     |
 | `identity.identity_status`                    | enum    | achieved \| moratorium \| foreclosed \| diffused   | no                  | Marcia (1966)         |
 | `identity.adaptability.concern`               | float   | 1-5                                                | no                  | CAAS (Savickas 2012)  |
