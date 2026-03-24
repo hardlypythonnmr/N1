@@ -1,607 +1,968 @@
 <!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ghost Check — N1</title>
-    <meta name="description" content="Pegá el texto de una oferta de trabajo y descubrí si es real o un ghost job. Herramienta gratuita de N1." />
-    <meta property="og:title" content="Ghost Check — N1" />
-    <meta property="og:description" content="Pegá el texto de una oferta de trabajo y descubrí si es real o un ghost job. Herramienta gratuita." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://n1career.github.io/N1/ghost-check/" />
-    <meta property="og:image" content="https://n1career.github.io/N1/web/og-image.png" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23e85d26' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
-    <link rel="stylesheet" href="../styles.css" />
-  </head>
-  <body>
+<html class="dark" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ghost Check — N1</title>
+  <meta name="description" content="Pegá el texto de una oferta de trabajo y descubrí si es real o un ghost job. Herramienta gratuita de N1." />
+  <meta property="og:title" content="Ghost Check — N1" />
+  <meta property="og:description" content="Pegá el texto de una oferta de trabajo y descubrí si es real o un ghost job. Herramienta gratuita." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://n1career.github.io/N1/ghost-check/" />
+  <meta property="og:image" content="https://n1career.github.io/N1/web/og-image.png" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ff9068' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-low": "#111127",
+            "primary": "#ff9068",
+            "on-background": "#e5e3ff",
+            "surface-tint": "#ff9068",
+            "primary-dim": "#ff743f",
+            "surface": "#0c0c1f",
+            "surface-dim": "#0c0c1f",
+            "on-surface": "#e5e3ff",
+            "on-primary-container": "#451100",
+            "on-secondary": "#505066",
+            "tertiary": "#f9f9f9",
+            "on-primary": "#591800",
+            "surface-variant": "#23233f",
+            "surface-container-lowest": "#000000",
+            "primary-container": "#ff7947",
+            "primary-fixed": "#ff7947",
+            "secondary-container": "#45455b",
+            "surface-bright": "#292948",
+            "on-secondary-container": "#d0cee9",
+            "outline": "#74738b",
+            "secondary": "#e2e0fc",
+            "error": "#ff716c",
+            "surface-container-high": "#1d1d37",
+            "primary-fixed-dim": "#f5662f",
+            "on-error": "#490006",
+            "surface-container": "#17172f",
+            "background": "#0c0c1f",
+            "surface-container-highest": "#23233f",
+            "inverse-primary": "#ab3700",
+            "on-surface-variant": "#aaa8c3",
+            "outline-variant": "#46465c",
+            "inverse-on-surface": "#53536a",
+            "on-error-container": "#ffa8a3",
+            "error-dim": "#d7383b"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Space Grotesk"],
+            "mono": ["Space Mono"]
+          },
+          borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0c0c1f;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(255, 144, 104, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(255, 144, 104, 0.10) 0%, transparent 45%);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Ghost border textarea */
+    #job-input {
+      resize: vertical;
+      min-height: 160px;
+      background: rgba(35, 35, 63, 0.5);
+      color: #e5e3ff;
+      border: 1px solid rgba(70, 70, 92, 0.4);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    #job-input:focus {
+      border-color: rgba(255, 144, 104, 0.5);
+      box-shadow: 0 0 0 2px rgba(255, 144, 104, 0.08);
+    }
+    #job-input::placeholder {
+      color: rgba(170, 168, 195, 0.5);
+    }
+    /* SVG gauge arc */
+    .gauge-track {
+      fill: none;
+      stroke: rgba(70, 70, 92, 0.4);
+      stroke-width: 14;
+      stroke-linecap: round;
+    }
+    .gauge-fill {
+      fill: none;
+      stroke-width: 14;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s;
+    }
+    /* Signal cards */
+    .signal-fired {
+      background: rgba(255, 113, 108, 0.08);
+      border: 1px solid rgba(255, 113, 108, 0.2);
+    }
+    .signal-ok {
+      background: rgba(35, 35, 63, 0.5);
+      border: 1px solid rgba(70, 70, 92, 0.2);
+    }
+    /* Range input dark theme */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: rgba(70, 70, 92, 0.5);
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ff9068;
+      cursor: pointer;
+      border: 2px solid #0c0c1f;
+      box-shadow: 0 0 8px rgba(255, 144, 104, 0.4);
+    }
+    /* Email input dark */
+    .email-input-dark {
+      background: rgba(17, 17, 39, 0.8);
+      border: 1px solid rgba(70, 70, 92, 0.4);
+      color: #e5e3ff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .email-input-dark:focus {
+      border-color: rgba(255, 144, 104, 0.5);
+    }
+    .email-input-dark::placeholder {
+      color: rgba(170, 168, 195, 0.4);
+    }
+    /* Breakdown card hover */
+    .breakdown-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .breakdown-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px -8px rgba(0,0,0,0.4);
+    }
+    /* Smooth show/hide */
+    .screen-hidden { display: none !important; }
+  </style>
+</head>
+<body class="font-body text-on-surface min-h-screen flex flex-col">
 
-    <!-- NAVIGATION -->
-    <nav class="nav" aria-label="Navegación principal">
-      <a href="../index.html" class="nav-back" aria-label="Volver a N1">N1</a>
-      <span class="nav-logo">Ghost <span>Check</span></span>
-    </nav>
+  <!-- FIXED HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-[#0c0c1f]/60 backdrop-blur-xl border-b border-[#46465c]/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)]">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-[640px] mx-auto">
+      <a href="../index.html" class="text-[#ff9068] scale-95 active:scale-90 transition-transform" aria-label="Volver a N1">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <h1 class="font-headline uppercase tracking-widest text-sm text-[#ff9068] font-bold">GHOST CHECK</h1>
+      <div class="text-[#46465c]">
+        <span class="material-symbols-outlined">account_circle</span>
+      </div>
+    </div>
+  </header>
 
-    <!-- MAIN CONTENT -->
-    <main>
-      <div class="container">
+  <!-- MAIN -->
+  <main class="flex-grow flex flex-col items-center px-6 pt-24 pb-32 max-w-[640px] mx-auto w-full">
 
-        <!-- SAFETY DISCLAIMER: static text hardcoded in HTML, no JS injection -->
-        <div class="disclaimer" id="disclaimer" role="note" aria-label="Aviso importante">
-          <p>
-            N1 es una herramienta de orientación profesional basada en investigación.
-            No es terapia, no es asesoría psicológica, y no reemplaza la orientación
-            de un profesional de salud mental o coach certificado.
-          </p>
-          <p>
-            Ghost Check es una guia basada en patrones observados, no una garantia.
-            Siempre verifica la empresa en LinkedIn antes de invertir tiempo en aplicar.
+    <!-- SAFETY DISCLAIMER -->
+    <div class="w-full mt-4 mb-6 p-4 rounded-xl bg-surface-container-low border border-outline-variant/10 flex items-start gap-3" role="note" aria-label="Aviso importante">
+      <div class="p-1.5 rounded bg-primary/10 text-primary flex-shrink-0 mt-0.5">
+        <span class="material-symbols-outlined text-sm" style="font-size:16px;">info</span>
+      </div>
+      <p class="text-xs text-on-surface-variant leading-relaxed">
+        N1 es orientacion profesional basada en investigacion — no es terapia ni reemplaza un profesional.
+        Ghost Check es una guia de patrones, no una garantia. Verifica siempre la empresa en LinkedIn.
+      </p>
+    </div>
+
+    <!-- INPUT SCREEN -->
+    <section id="input-screen" class="w-full" aria-labelledby="tool-title">
+
+      <!-- Hero -->
+      <div class="text-center mb-8">
+        <p class="font-mono text-[0.6875rem] text-primary tracking-[0.2em] uppercase mb-3">Herramienta N1</p>
+        <h2 id="tool-title" class="font-headline text-3xl md:text-4xl font-bold text-tertiary leading-tight mb-3">
+          Ghost Check<br/>
+          <span class="text-primary">Job Analyzer</span>
+        </h2>
+        <p class="text-on-surface-variant text-sm leading-relaxed max-w-sm mx-auto">
+          Analiza ofertas laborales en busca de senales de "ghost job" con patrones validados por investigacion.
+        </p>
+      </div>
+
+      <!-- Input card -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden mb-4">
+        <div class="absolute -top-20 -right-20 w-40 h-40 bg-primary/8 blur-[60px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10">
+          <label for="job-input" class="block font-mono text-[0.6875rem] text-primary tracking-[0.15em] uppercase mb-3">
+            Texto de la oferta
+          </label>
+          <textarea
+            id="job-input"
+            rows="8"
+            placeholder="Pega aca el texto completo de la oferta de trabajo..."
+            aria-label="Texto de la oferta de trabajo"
+            aria-describedby="cultural-note"
+            class="w-full rounded-lg px-4 py-3 text-sm leading-relaxed font-body"
+          ></textarea>
+          <p id="cultural-note" class="mt-2 text-xs text-on-surface-variant/60">
+            Nota: en LATAM es comun no incluir salario. El score es una guia, no una sentencia.
           </p>
         </div>
-
-        <!-- INPUT SCREEN -->
-        <section id="input-screen" aria-labelledby="tool-title">
-          <div class="card" style="margin-top: var(--space-lg);">
-            <h1 id="tool-title" style="margin-bottom: var(--space-sm);">Ghost Check</h1>
-            <p class="text-muted" style="margin-bottom: var(--space-lg);">
-              Pegá el texto completo de la oferta de trabajo y descubrí si es real.
-            </p>
-
-            <div style="margin-bottom: var(--space-sm);">
-              <label for="job-input" class="visually-hidden">Texto de la oferta de trabajo</label>
-              <textarea
-                id="job-input"
-                rows="12"
-                placeholder="Pega aca el texto de la oferta de trabajo..."
-                aria-label="Texto de la oferta de trabajo"
-                aria-describedby="cultural-note"
-                style="width: 100%; padding: var(--space-md); border: 2px solid var(--n1-border); border-radius: var(--n1-radius-sm); font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.5; resize: vertical; transition: border-color var(--transition-fast); background-color: var(--n1-white); color: var(--n1-black);"
-              ></textarea>
-            </div>
-
-            <small
-              id="cultural-note"
-              class="cultural-note text-muted text-sm"
-              style="display: block; margin-bottom: var(--space-lg);"
-            >
-              Nota: en LATAM es común no incluir salario. El score es una guía, no una sentencia.
-            </small>
-
-            <button
-              id="analyze-btn"
-              class="btn btn-primary"
-              disabled
-              aria-disabled="true"
-              style="width: 100%;"
-            >
-              Analizar oferta
-            </button>
-          </div>
-        </section>
-
-        <!-- RESULTS SCREEN (hidden initially) -->
-        <section
-          id="results-screen"
-          aria-labelledby="results-verdict"
-          style="display: none; margin-top: var(--space-lg);"
-        >
-          <div class="card">
-
-            <!-- Score circle + verdict -->
-            <div style="text-align: center; margin-bottom: var(--space-lg);">
-              <div
-                id="score-circle"
-                role="img"
-                style="display: inline-flex; align-items: center; justify-content: center; width: 120px; height: 120px; border-radius: 50%; font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; color: #fff; margin: 0 auto var(--space-md);"
-              ></div>
-              <p
-                id="verdict-label"
-                class="verdict-label"
-                style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700; margin-bottom: 0;"
-              ></p>
-            </div>
-
-            <hr class="divider" />
-
-            <!-- Per-signal breakdown -->
-            <div style="margin-bottom: var(--space-lg);">
-              <h3
-                style="font-size: 0.75rem; font-family: var(--font-heading); color: var(--n1-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-md);"
-              >
-                Señales detectadas
-              </h3>
-              <ul
-                id="signals-list"
-                class="signals-list"
-                style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-sm);"
-                aria-label="Lista de señales analizadas"
-              ></ul>
-            </div>
-
-            <hr class="divider" />
-
-            <!-- Interpretation -->
-            <div class="interpretation" style="margin-bottom: var(--space-lg);">
-              <h3>Interpretación</h3>
-              <p id="interpretation-text" class="interpretation"></p>
-            </div>
-
-            <!-- SCORECARD PREVIEW (generated by JS on results render) -->
-            <img
-              id="scorecard-preview-img"
-              class="n1-scorecard-preview"
-              alt="Vista previa del scorecard"
-              style="display:none;"
-              aria-label="Vista previa del scorecard descargable"
-            />
-
-            <!-- Action buttons -->
-            <div class="results-actions">
-              <button id="download-scorecard" class="btn btn-secondary">Descargar scorecard</button>
-              <button id="copy-linkedin" class="btn btn-secondary">Copiar texto LinkedIn</button>
-              <button id="export-yaml" class="btn btn-secondary">Exportar perfil YAML</button>
-              <button id="reset-btn" class="btn btn-primary">Analizar otra oferta</button>
-            </div>
-
-            <!-- Export confirm -->
-            <p
-              id="export-confirm"
-              style="display: none; text-align: center; color: var(--n1-muted); font-size: 0.875rem; margin-top: var(--space-sm);"
-              role="status"
-              aria-live="polite"
-            >
-              Guardado en tu perfil.
-            </p>
-
-            <!-- EMAIL CAPTURE (INTG-03 — D-07, D-08) -->
-            <div
-              class="n1-email-section"
-              id="n1-email-section"
-              aria-label="Suscripción al newsletter"
-            >
-              <p class="n1-email-section-label">Newsletter</p>
-              <p class="n1-email-section-title">Recibí insights de carrera cada semana</p>
-              <p class="n1-email-section-desc">
-                Sin spam. Investigación aplicada — en español.
-              </p>
-              <form
-                id="n1-tool-email-form"
-                class="n1-email-section-form"
-                action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
-                method="POST"
-                target="popupwindow"
-                novalidate
-                aria-label="Formulario de suscripción"
-              >
-                <label for="n1-tool-email" class="visually-hidden"
-                  >Tu dirección de correo</label
-                >
-                <input
-                  type="email"
-                  name="email"
-                  id="n1-tool-email"
-                  class="n1-email-section-input"
-                  placeholder="tu@email.com"
-                  required
-                  autocomplete="email"
-                  aria-required="true"
-                />
-                <input type="hidden" name="tag" value="tool-completion" />
-                <button type="submit" class="btn btn-primary" style="flex-shrink:0;">
-                  Suscribirme
-                </button>
-              </form>
-              <p
-                class="n1-email-section-success"
-                id="n1-tool-email-success"
-                role="status"
-                aria-live="polite"
-              >
-                Listo. Te llegará el primer correo pronto.
-              </p>
-            </div>
-
-          </div>
-        </section>
-
       </div>
-    </main>
 
-    <!-- SHARED ASSESSMENT ENGINE -->
-    <script src="../assessment-engine.js"></script>
+      <!-- Analyze button -->
+      <button
+        id="analyze-btn"
+        disabled
+        aria-disabled="true"
+        class="w-full py-4 bg-gradient-to-br from-primary to-primary-container rounded-xl font-headline font-bold uppercase tracking-widest text-sm text-on-primary-fixed shadow-[0_10px_20px_-5px_rgba(255,144,104,0.3)] hover:shadow-[0_0_24px_rgba(255,144,104,0.35)] transition-all duration-300 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2"
+      >
+        <span class="material-symbols-outlined text-base" style="font-size:20px;">search</span>
+        Analizar oferta
+      </button>
 
-    <!-- GHOST CHECK LOGIC (inline, no external dependencies beyond assessment-engine.js) -->
-    <script>
-      "use strict";
+    </section>
 
-      /* ── GHOST CHECK SIGNALS ────────────────────────────────────────────
-         10 binary signals. Each adds weight to ghost score. Total max: 100.
-         detect(t) receives raw posting text string. Returns boolean.
-         ──────────────────────────────────────────────────────────────────── */
+    <!-- RESULTS SCREEN (hidden initially) -->
+    <section id="results-screen" class="w-full screen-hidden" aria-labelledby="results-verdict">
 
-      var GHOST_SIGNALS = [
-        {
-          id: "no_salary_range",
-          label: "No indica rango salarial",
-          weight: 15,
-          detect: function (t) {
-            return !/(salario|sueldo|compensacion|\$|COP|USD|salary)/i.test(t);
-          },
-        },
-        {
-          id: "no_company_name",
-          label: "No menciona la empresa",
-          weight: 20,
-          detect: function (t) {
-            return /(empresa confidencial|confidential|cliente de)/i.test(t);
-          },
-        },
-        {
-          id: "vague_role",
-          label: "Descripcion del rol vaga",
-          weight: 15,
-          detect: function (t) {
-            return t.length < 400;
-          },
-        },
-        {
-          id: "unrealistic_requirements",
-          label: "Requisitos irreales para el nivel",
-          weight: 10,
-          detect: function (t) {
-            var matches = t.match(/(\d+)\+?\s*a[no]s/gi) || [];
-            var total = matches.reduce(function (sum, x) {
-              return sum + parseInt(x, 10);
-            }, 0);
-            return total > 8;
-          },
-        },
-        {
-          id: "urgent_language",
-          label: "Lenguaje de urgencia vacia",
-          weight: 5,
-          detect: function (t) {
-            return /(inmediatamente|urgente|ya mismo|asap)/i.test(t);
-          },
-        },
-        {
-          id: "generic_benefits",
-          label: "Beneficios genericos",
-          weight: 5,
-          detect: function (t) {
-            return (
-              /(excelente ambiente|beneficios competitivos)/i.test(t) &&
-              !/(seguro|prima|bono)/i.test(t)
-            );
-          },
-        },
-        {
-          id: "no_team_context",
-          label: "No describe equipo ni manager",
-          weight: 10,
-          detect: function (t) {
-            return !/(equipo|manager|reporta|team)/i.test(t);
-          },
-        },
-        {
-          id: "email_only",
-          label: "Solo acepta CV por email",
-          weight: 5,
-          detect: function (t) {
-            return (
-              /(enviar cv|manda tu hoja de vida)/i.test(t) &&
-              !/(aplica|apply|portal)/i.test(t)
-            );
-          },
-        },
-        {
-          id: "reposted",
-          label: "Indicios de reposteo multiple",
-          weight: 10,
-          detect: function (t) {
-            return /(actualiz|updated|repost|volvemos a publicar)/i.test(t);
-          },
-        },
-        {
-          id: "level_mismatch",
-          label: "Nivel no coincide con requisitos",
-          weight: 5,
-          detect: function (t) {
-            return (
-              /(junior|entry.level)/i.test(t) &&
-              /(\d+\+?\s*a[no]s|maestria|certificacion)/i.test(t)
-            );
-          },
-        },
-      ];
+      <!-- Score gauge card -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-8 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden mb-6 text-center">
+        <div class="absolute -top-24 -left-24 w-48 h-48 bg-primary/8 blur-[80px] rounded-full pointer-events-none"></div>
+        <div class="absolute -bottom-16 -right-16 w-36 h-36 bg-error/5 blur-[60px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10">
+          <p class="font-mono text-[0.6875rem] text-primary tracking-[0.2em] uppercase mb-6">Analysis Results</p>
 
-      /* ── PURE SCORING FUNCTIONS ─────────────────────────────────────── */
+          <!-- SVG Arc Gauge -->
+          <div class="flex justify-center mb-6">
+            <svg id="gauge-svg" viewBox="0 0 200 130" width="240" height="156" aria-hidden="true">
+              <!-- Gradient definition -->
+              <defs>
+                <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#22c55e" />
+                  <stop offset="40%" stop-color="#f59e0b" />
+                  <stop offset="75%" stop-color="#ff9068" />
+                  <stop offset="100%" stop-color="#ef4444" />
+                </linearGradient>
+              </defs>
+              <!-- Track arc: half circle centered at 100,120, radius 80 -->
+              <!-- Arc from 180° to 0° = from left to right across top -->
+              <path
+                class="gauge-track"
+                d="M 20,120 A 80,80 0 0,1 180,120"
+                stroke="rgba(70,70,92,0.35)"
+              />
+              <!-- Fill arc -->
+              <path
+                id="gauge-fill-path"
+                class="gauge-fill"
+                d="M 20,120 A 80,80 0 0,1 180,120"
+                stroke="url(#gaugeGrad)"
+                stroke-dasharray="251.2"
+                stroke-dashoffset="251.2"
+              />
+              <!-- Score number -->
+              <text id="gauge-score-text" x="100" y="108" text-anchor="middle" font-family="Space Mono, monospace" font-size="32" font-weight="700" fill="#f9f9f9">0</text>
+              <text x="100" y="124" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#aaa8c3">Ghost Score</text>
+            </svg>
+          </div>
 
-      function analyzePosting(text) {
-        var signals = GHOST_SIGNALS.map(function (s) {
-          return Object.assign({}, s, { fired: s.detect(text) });
-        });
-        var score = signals
-          .filter(function (s) { return s.fired; })
-          .reduce(function (sum, s) { return sum + s.weight; }, 0);
-        return { score: score, signals: signals };
+          <!-- Verdict label -->
+          <p id="verdict-label" class="font-headline text-xl font-bold mb-2"></p>
+          <!-- Score accessibility label -->
+          <div id="score-aria" role="img" aria-label="Ghost score" class="sr-only"></div>
+        </div>
+      </div>
+
+      <!-- Ghost Signals Breakdown: 3 category cards -->
+      <div class="mb-6">
+        <p class="font-mono text-[0.6875rem] text-on-surface-variant tracking-[0.2em] uppercase mb-4">Ghost Signals Breakdown</p>
+        <div class="grid grid-cols-3 gap-3">
+
+          <!-- Red Flags -->
+          <div class="breakdown-card bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-7 h-7 rounded-lg bg-red-500/15 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-red-400" style="font-size:16px;font-variation-settings:'FILL' 1;">warning</span>
+              </div>
+              <span class="font-mono text-[0.6rem] text-red-400 uppercase tracking-wider leading-tight">Red Flags<br/>(Severe)</span>
+            </div>
+            <ul id="red-flags-list" class="space-y-1.5"></ul>
+          </div>
+
+          <!-- Yellow Warnings -->
+          <div class="breakdown-card bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-7 h-7 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-amber-400" style="font-size:16px;font-variation-settings:'FILL' 1;">error</span>
+              </div>
+              <span class="font-mono text-[0.6rem] text-amber-400 uppercase tracking-wider leading-tight">Yellow Warnings<br/>(Moderate)</span>
+            </div>
+            <ul id="yellow-warnings-list" class="space-y-1.5"></ul>
+          </div>
+
+          <!-- Green Indicators -->
+          <div class="breakdown-card bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-7 h-7 rounded-lg bg-green-500/15 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-green-400" style="font-size:16px;font-variation-settings:'FILL' 1;">check_circle</span>
+              </div>
+              <span class="font-mono text-[0.6rem] text-green-400 uppercase tracking-wider leading-tight">Green Indicators<br/>(Positive)</span>
+            </div>
+            <ul id="green-indicators-list" class="space-y-1.5"></ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Full signal list (accessible detail) -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] mb-6 relative overflow-hidden">
+        <div class="absolute -top-16 -right-16 w-32 h-32 bg-primary/6 blur-[50px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10">
+          <p class="font-mono text-[0.6875rem] text-on-surface-variant tracking-[0.15em] uppercase mb-4">Senales detectadas</p>
+          <ul id="signals-list" class="space-y-2" aria-label="Lista de senales analizadas"></ul>
+
+          <div class="mt-6 pt-5 border-t border-outline-variant/20">
+            <p class="font-mono text-[0.6875rem] text-primary tracking-[0.15em] uppercase mb-2">Interpretacion</p>
+            <p id="interpretation-text" class="text-sm text-on-surface-variant leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scorecard preview -->
+      <img
+        id="scorecard-preview-img"
+        class="w-full rounded-xl mb-6 border border-outline-variant/20"
+        alt="Vista previa del scorecard"
+        style="display:none;"
+        aria-label="Vista previa del scorecard descargable"
+      />
+
+      <!-- Action buttons -->
+      <div class="space-y-3 mb-8">
+        <button id="reset-btn" class="w-full py-4 bg-gradient-to-br from-primary to-primary-container rounded-xl font-headline font-bold uppercase tracking-widest text-sm text-on-primary-fixed shadow-[0_10px_20px_-5px_rgba(255,144,104,0.3)] hover:shadow-[0_0_24px_rgba(255,144,104,0.35)] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-base" style="font-size:18px;">refresh</span>
+          Analizar otra oferta
+        </button>
+        <div class="grid grid-cols-3 gap-2">
+          <button id="download-scorecard" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+            Scorecard
+          </button>
+          <button id="copy-linkedin" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:18px;">share</span>
+            LinkedIn
+          </button>
+          <button id="export-yaml" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:18px;">save</span>
+            YAML
+          </button>
+        </div>
+      </div>
+
+      <!-- Export confirm -->
+      <p
+        id="export-confirm"
+        style="display: none;"
+        class="text-center text-on-surface-variant text-sm mb-4"
+        role="status"
+        aria-live="polite"
+      >
+        Guardado en tu perfil.
+      </p>
+
+      <!-- EMAIL CAPTURE -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden" id="n1-email-section" aria-label="Suscripcion al newsletter">
+        <div class="absolute -bottom-16 -left-16 w-36 h-36 bg-primary/6 blur-[60px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10">
+          <p class="font-mono text-[0.6875rem] text-primary tracking-[0.2em] uppercase mb-1">Newsletter</p>
+          <p class="font-headline text-lg font-bold text-tertiary mb-1">Recibí insights de carrera cada semana</p>
+          <p class="text-xs text-on-surface-variant mb-4">Sin spam. Investigacion aplicada — en espanol.</p>
+          <form
+            id="n1-tool-email-form"
+            action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
+            method="POST"
+            target="popupwindow"
+            novalidate
+            aria-label="Formulario de suscripcion"
+            class="flex gap-2"
+          >
+            <label for="n1-tool-email" class="sr-only">Tu direccion de correo</label>
+            <input
+              type="email"
+              name="email"
+              id="n1-tool-email"
+              class="email-input-dark flex-1 rounded-lg px-4 py-3 text-sm font-body"
+              placeholder="tu@email.com"
+              required
+              autocomplete="email"
+              aria-required="true"
+            />
+            <input type="hidden" name="tag" value="tool-completion" />
+            <button type="submit" class="py-3 px-5 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold uppercase tracking-wider text-xs text-on-primary-fixed shadow-[0_6px_16px_-4px_rgba(255,144,104,0.3)] hover:shadow-[0_0_16px_rgba(255,144,104,0.3)] transition-all active:scale-95 flex-shrink-0">
+              Suscribirme
+            </button>
+          </form>
+          <p
+            class="text-sm text-primary mt-3 hidden"
+            id="n1-tool-email-success"
+            role="status"
+            aria-live="polite"
+          >
+            Listo. Te llegara el primer correo pronto.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-surface-container-highest border border-outline-variant/30 text-on-surface px-5 py-3 rounded-xl text-sm font-body shadow-[0_10px_40px_-5px_rgba(0,0,0,0.5)] opacity-0 transition-opacity duration-300 pointer-events-none" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 right-0 h-20 bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50">
+    <div class="flex justify-around items-center h-full px-4 max-w-[640px] mx-auto">
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../index.html">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Inicio</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 translate-y-[-2px] transition-all" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">manage_search</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Ghost</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../bulls-eye/index.html">
+        <span class="material-symbols-outlined">my_location</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Bull's Eye</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../compass/index.html">
+        <span class="material-symbols-outlined">explore</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Compass</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ATMOSPHERIC BACKGROUND -->
+  <div class="fixed inset-0 pointer-events-none -z-10">
+    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary/8 blur-[150px] rounded-full"></div>
+  </div>
+
+  <!-- SHARED ASSESSMENT ENGINE -->
+  <script src="../assessment-engine.js"></script>
+
+  <!-- GHOST CHECK LOGIC -->
+  <script>
+    "use strict";
+
+    /* ── GHOST CHECK SIGNALS ────────────────────────────────────────────
+       10 binary signals. Each adds weight to ghost score. Total max: 100.
+       detect(t) receives raw posting text string. Returns boolean.
+       ──────────────────────────────────────────────────────────────────── */
+
+    var GHOST_SIGNALS = [
+      {
+        id: "no_salary_range",
+        label: "No indica rango salarial",
+        weight: 15,
+        severity: "yellow",
+        detect: function (t) {
+          return !/(salario|sueldo|compensacion|\$|COP|USD|salary)/i.test(t);
+        },
+      },
+      {
+        id: "no_company_name",
+        label: "No menciona la empresa",
+        weight: 20,
+        severity: "red",
+        detect: function (t) {
+          return /(empresa confidencial|confidential|cliente de)/i.test(t);
+        },
+      },
+      {
+        id: "vague_role",
+        label: "Descripcion del rol vaga",
+        weight: 15,
+        severity: "yellow",
+        detect: function (t) {
+          return t.length < 400;
+        },
+      },
+      {
+        id: "unrealistic_requirements",
+        label: "Requisitos irreales para el nivel",
+        weight: 10,
+        severity: "red",
+        detect: function (t) {
+          var matches = t.match(/(\d+)\+?\s*a[no]s/gi) || [];
+          var total = matches.reduce(function (sum, x) {
+            return sum + parseInt(x, 10);
+          }, 0);
+          return total > 8;
+        },
+      },
+      {
+        id: "urgent_language",
+        label: "Lenguaje de urgencia vacia",
+        weight: 5,
+        severity: "yellow",
+        detect: function (t) {
+          return /(inmediatamente|urgente|ya mismo|asap)/i.test(t);
+        },
+      },
+      {
+        id: "generic_benefits",
+        label: "Beneficios genericos",
+        weight: 5,
+        severity: "yellow",
+        detect: function (t) {
+          return (
+            /(excelente ambiente|beneficios competitivos)/i.test(t) &&
+            !/(seguro|prima|bono)/i.test(t)
+          );
+        },
+      },
+      {
+        id: "no_team_context",
+        label: "No describe equipo ni manager",
+        weight: 10,
+        severity: "red",
+        detect: function (t) {
+          return !/(equipo|manager|reporta|team)/i.test(t);
+        },
+      },
+      {
+        id: "email_only",
+        label: "Solo acepta CV por email",
+        weight: 5,
+        severity: "yellow",
+        detect: function (t) {
+          return (
+            /(enviar cv|manda tu hoja de vida)/i.test(t) &&
+            !/(aplica|apply|portal)/i.test(t)
+          );
+        },
+      },
+      {
+        id: "reposted",
+        label: "Indicios de reposteo multiple",
+        weight: 10,
+        severity: "red",
+        detect: function (t) {
+          return /(actualiz|updated|repost|volvemos a publicar)/i.test(t);
+        },
+      },
+      {
+        id: "level_mismatch",
+        label: "Nivel no coincide con requisitos",
+        weight: 5,
+        severity: "yellow",
+        detect: function (t) {
+          return (
+            /(junior|entry.level)/i.test(t) &&
+            /(\d+\+?\s*a[no]s|maestria|certificacion)/i.test(t)
+          );
+        },
+      },
+    ];
+
+    /* ── PURE SCORING FUNCTIONS ─────────────────────────────────────── */
+
+    function analyzePosting(text) {
+      var signals = GHOST_SIGNALS.map(function (s) {
+        return Object.assign({}, s, { fired: s.detect(text) });
+      });
+      var score = signals
+        .filter(function (s) { return s.fired; })
+        .reduce(function (sum, s) { return sum + s.weight; }, 0);
+      return { score: score, signals: signals };
+    }
+
+    function getVerdict(score) {
+      if (score <= 25) return { label: "Probablemente real", color: "#22c55e" };
+      if (score <= 50) return { label: "Oferta sospechosa", color: "#f59e0b" };
+      if (score <= 75) return { label: "Alta probabilidad de ghost job", color: "#ff9068" };
+      return { label: "Ghost job confirmado", color: "#ef4444" };
+    }
+
+    function getInterpretation(score) {
+      if (score <= 25) {
+        return "Esta oferta muestra senales de ser legitima. Igual verifica la empresa en LinkedIn antes de aplicar.";
       }
-
-      function getVerdict(score) {
-        if (score <= 25) return { label: "Probablemente real", color: "#22c55e" };
-        if (score <= 50) return { label: "Oferta sospechosa", color: "#f59e0b" };
-        if (score <= 75) return { label: "Alta probabilidad de ghost job", color: "#E85D26" };
-        return { label: "Ghost job confirmado", color: "#dc2626" };
+      if (score <= 50) {
+        return "Esta oferta tiene algunas senales de alerta. Busca la empresa en LinkedIn y verifica que el rol existe antes de invertir tiempo.";
       }
-
-      function getInterpretation(score) {
-        if (score <= 25) {
-          return "Esta oferta muestra señales de ser legítima. Igual verifica la empresa en LinkedIn antes de aplicar.";
-        }
-        if (score <= 50) {
-          return "Esta oferta tiene algunas señales de alerta. Buscá la empresa en LinkedIn y verificá que el rol existe antes de invertir tiempo.";
-        }
-        if (score <= 75) {
-          return "Esta oferta tiene muchas señales de ser un ghost job. Aplicar puede ser una pérdida de tiempo y energía. Priorizá ofertas con menos señales de alerta.";
-        }
-        return "Esta oferta tiene todas las señales de un ghost job. Muy probablemente no hay una posición real detrás. Usá ese tiempo en ofertas verificables.";
+      if (score <= 75) {
+        return "Esta oferta tiene muchas senales de ser un ghost job. Aplicar puede ser una perdida de tiempo y energia. Priorizá ofertas con menos senales de alerta.";
       }
+      return "Esta oferta tiene todas las senales de un ghost job. Muy probablemente no hay una posicion real detras. Usa ese tiempo en ofertas verificables.";
+    }
 
-      /* ── DOM HELPERS (XSS-safe: textContent only, no innerHTML) ──────── */
+    /* ── DOM HELPERS (XSS-safe: textContent only, no innerHTML) ──────── */
 
-      function clearChildren(node) {
-        while (node.firstChild) {
-          node.removeChild(node.firstChild);
-        }
+    function clearChildren(node) {
+      while (node.firstChild) {
+        node.removeChild(node.firstChild);
       }
+    }
 
-      function setTextById(id, text) {
-        var node = document.getElementById(id);
-        if (node) node.textContent = text;
+    function setTextById(id, text) {
+      var node = document.getElementById(id);
+      if (node) node.textContent = text;
+    }
+
+    /* ── GAUGE ANIMATION ─────────────────────────────────────────────── */
+
+    function animateGauge(score) {
+      var path = document.getElementById("gauge-fill-path");
+      var scoreText = document.getElementById("gauge-score-text");
+      var totalLength = 251.2; /* half-circle arc length for r=80 */
+      var offset = totalLength - (score / 100) * totalLength;
+
+      /* Force reflow to restart animation */
+      path.style.strokeDashoffset = String(totalLength);
+      path.getBoundingClientRect();
+
+      /* Animate */
+      requestAnimationFrame(function () {
+        path.style.strokeDashoffset = String(offset);
+      });
+
+      /* Count up score number */
+      var start = 0;
+      var duration = 800;
+      var startTime = null;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var current = Math.round(progress * score);
+        scoreText.textContent = String(current);
+        if (progress < 1) requestAnimationFrame(step);
       }
+      requestAnimationFrame(step);
+    }
 
-      /* ── STATE ──────────────────────────────────────────────────────── */
+    /* ── STATE ──────────────────────────────────────────────────────── */
 
-      var lastResult = null;
+    var lastResult = null;
 
-      /* ── RENDER RESULTS ─────────────────────────────────────────────── */
+    /* ── RENDER BREAKDOWN CARDS ─────────────────────────────────────── */
 
-      function renderResults(result) {
-        var verdict = getVerdict(result.score);
+    function renderBreakdownCards(signals) {
+      var fired = signals.filter(function (s) { return s.fired; });
+      var ok    = signals.filter(function (s) { return !s.fired; });
 
-        // Score circle — textContent for score number
-        var circle = document.getElementById("score-circle");
-        circle.textContent = String(result.score);
-        circle.style.backgroundColor = verdict.color;
-        circle.setAttribute("aria-label", "Ghost score: " + String(result.score) + " de 100");
+      var redList    = document.getElementById("red-flags-list");
+      var yellowList = document.getElementById("yellow-warnings-list");
+      var greenList  = document.getElementById("green-indicators-list");
 
-        // Verdict — textContent
-        var verdictEl = document.getElementById("verdict-label");
-        verdictEl.textContent = verdict.label;
-        verdictEl.style.color = verdict.color;
+      clearChildren(redList);
+      clearChildren(yellowList);
+      clearChildren(greenList);
 
-        // Signals list — build with createElement + textContent, clear with removeChild
-        var signalsList = document.getElementById("signals-list");
-        clearChildren(signalsList);
-
-        result.signals.forEach(function (signal) {
+      /* Red flags: fired signals with severity "red" */
+      var reds = fired.filter(function (s) { return s.severity === "red"; });
+      if (reds.length === 0) {
+        var li = document.createElement("li");
+        li.className = "text-[0.65rem] text-on-surface-variant/50 italic";
+        li.textContent = "Ninguna";
+        redList.appendChild(li);
+      } else {
+        reds.forEach(function (s) {
           var li = document.createElement("li");
-          li.style.cssText = [
-            "display: flex",
-            "align-items: center",
-            "gap: var(--space-sm)",
-            "padding: var(--space-sm) var(--space-md)",
-            "border-radius: var(--n1-radius-sm)",
-            "font-size: 0.9375rem",
-          ].join(";");
-
-          var icon = document.createElement("span");
-          icon.setAttribute("aria-hidden", "true");
-          icon.style.cssText = [
-            "display: inline-flex",
-            "align-items: center",
-            "justify-content: center",
-            "width: 20px",
-            "height: 20px",
-            "border-radius: 50%",
-            "font-size: 0.75rem",
-            "font-weight: 700",
-            "color: #fff",
-            "flex-shrink: 0",
-          ].join(";");
-
-          var labelSpan = document.createElement("span");
-          labelSpan.textContent = signal.label;
-
-          if (signal.fired) {
-            li.style.backgroundColor = "#fff0eb";
-            li.style.border = "1px solid #f9c4af";
-            icon.textContent = "!";
-            icon.style.backgroundColor = "#E85D26";
-
-            var weight = document.createElement("span");
-            weight.textContent = "+" + String(signal.weight) + " pts";
-            weight.style.cssText = [
-              "margin-left: auto",
-              "font-family: var(--font-heading)",
-              "font-size: 0.75rem",
-              "font-weight: 700",
-              "color: #E85D26",
-              "flex-shrink: 0",
-            ].join(";");
-
-            li.appendChild(icon);
-            li.appendChild(labelSpan);
-            li.appendChild(weight);
-          } else {
-            li.style.backgroundColor = "var(--n1-surface)";
-            li.style.border = "1px solid var(--n1-border)";
-            icon.textContent = "v";
-            icon.style.backgroundColor = "#22c55e";
-            labelSpan.style.color = "var(--n1-muted)";
-
-            li.appendChild(icon);
-            li.appendChild(labelSpan);
-          }
-
-          signalsList.appendChild(li);
+          li.className = "flex items-start gap-1.5";
+          var dot = document.createElement("span");
+          dot.className = "w-1 h-1 rounded-full bg-red-400 mt-1.5 flex-shrink-0";
+          dot.setAttribute("aria-hidden", "true");
+          var txt = document.createElement("span");
+          txt.className = "text-[0.65rem] text-red-300 leading-snug";
+          txt.textContent = s.label;
+          li.appendChild(dot);
+          li.appendChild(txt);
+          redList.appendChild(li);
         });
-
-        // Interpretation — textContent
-        setTextById("interpretation-text", getInterpretation(result.score));
       }
 
-      /* ── EVENT WIRING ───────────────────────────────────────────────── */
-
-      document.addEventListener("DOMContentLoaded", function () {
-        var textarea = document.getElementById("job-input");
-        var analyzeBtn = document.getElementById("analyze-btn");
-        var inputScreen = document.getElementById("input-screen");
-        var resultsScreen = document.getElementById("results-screen");
-        var exportConfirm = document.getElementById("export-confirm");
-
-        // Enable analyze button when textarea has content
-        textarea.addEventListener("input", function () {
-          var hasContent = textarea.value.trim().length > 0;
-          analyzeBtn.disabled = !hasContent;
-          analyzeBtn.setAttribute("aria-disabled", hasContent ? "false" : "true");
+      /* Yellow warnings: fired signals with severity "yellow" */
+      var yellows = fired.filter(function (s) { return s.severity === "yellow"; });
+      if (yellows.length === 0) {
+        var li2 = document.createElement("li");
+        li2.className = "text-[0.65rem] text-on-surface-variant/50 italic";
+        li2.textContent = "Ninguna";
+        yellowList.appendChild(li2);
+      } else {
+        yellows.forEach(function (s) {
+          var li2 = document.createElement("li");
+          li2.className = "flex items-start gap-1.5";
+          var dot2 = document.createElement("span");
+          dot2.className = "w-1 h-1 rounded-full bg-amber-400 mt-1.5 flex-shrink-0";
+          dot2.setAttribute("aria-hidden", "true");
+          var txt2 = document.createElement("span");
+          txt2.className = "text-[0.65rem] text-amber-300 leading-snug";
+          txt2.textContent = s.label;
+          li2.appendChild(dot2);
+          li2.appendChild(txt2);
+          yellowList.appendChild(li2);
         });
+      }
 
-        // Textarea focus styles
-        textarea.addEventListener("focus", function () {
-          textarea.style.borderColor = "var(--n1-orange)";
-          textarea.style.outline = "none";
+      /* Green indicators: signals that did NOT fire */
+      var greens = ok.slice(0, 4); /* cap to avoid overflow */
+      if (greens.length === 0) {
+        var li3 = document.createElement("li");
+        li3.className = "text-[0.65rem] text-on-surface-variant/50 italic";
+        li3.textContent = "Ninguna";
+        greenList.appendChild(li3);
+      } else {
+        greens.forEach(function (s) {
+          var li3 = document.createElement("li");
+          li3.className = "flex items-start gap-1.5";
+          var dot3 = document.createElement("span");
+          dot3.className = "w-1 h-1 rounded-full bg-green-400 mt-1.5 flex-shrink-0";
+          dot3.setAttribute("aria-hidden", "true");
+          var txt3 = document.createElement("span");
+          txt3.className = "text-[0.65rem] text-green-300 leading-snug";
+          txt3.textContent = s.label;
+          li3.appendChild(dot3);
+          li3.appendChild(txt3);
+          greenList.appendChild(li3);
         });
-        textarea.addEventListener("blur", function () {
-          textarea.style.borderColor = "var(--n1-border)";
+      }
+    }
+
+    /* ── RENDER RESULTS ─────────────────────────────────────────────── */
+
+    function renderResults(result) {
+      var verdict = getVerdict(result.score);
+
+      /* Gauge + animated score */
+      animateGauge(result.score);
+
+      /* Verdict label */
+      var verdictEl = document.getElementById("verdict-label");
+      verdictEl.textContent = verdict.label;
+      verdictEl.style.color = verdict.color;
+
+      /* Aria label for score */
+      setTextById("score-aria", "Ghost score: " + String(result.score) + " de 100 — " + verdict.label);
+
+      /* Breakdown cards */
+      renderBreakdownCards(result.signals);
+
+      /* Full signals list */
+      var signalsList = document.getElementById("signals-list");
+      clearChildren(signalsList);
+
+      result.signals.forEach(function (signal) {
+        var li = document.createElement("li");
+        li.className = signal.fired
+          ? "signal-fired flex items-center gap-3 px-4 py-3 rounded-lg text-sm"
+          : "signal-ok flex items-center gap-3 px-4 py-3 rounded-lg text-sm";
+
+        var icon = document.createElement("span");
+        icon.setAttribute("aria-hidden", "true");
+        icon.className = "material-symbols-outlined flex-shrink-0";
+        icon.style.fontSize = "16px";
+        icon.style.fontVariationSettings = "'FILL' 1";
+
+        var labelSpan = document.createElement("span");
+        labelSpan.className = signal.fired ? "text-on-surface flex-1" : "text-on-surface-variant flex-1";
+        labelSpan.textContent = signal.label;
+
+        if (signal.fired) {
+          icon.style.color = signal.severity === "red" ? "#f87171" : "#fbbf24";
+          icon.textContent = signal.severity === "red" ? "warning" : "error";
+          var weight = document.createElement("span");
+          weight.className = "font-mono text-xs font-bold flex-shrink-0";
+          weight.style.color = signal.severity === "red" ? "#f87171" : "#fbbf24";
+          weight.textContent = "+" + String(signal.weight) + " pts";
+          li.appendChild(icon);
+          li.appendChild(labelSpan);
+          li.appendChild(weight);
+        } else {
+          icon.style.color = "#4ade80";
+          icon.textContent = "check_circle";
+          li.appendChild(icon);
+          li.appendChild(labelSpan);
+        }
+
+        signalsList.appendChild(li);
+      });
+
+      /* Interpretation */
+      setTextById("interpretation-text", getInterpretation(result.score));
+    }
+
+    /* ── TOAST HELPER ───────────────────────────────────────────────── */
+
+    function showToast(msg) {
+      var toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.style.opacity = "1";
+      setTimeout(function () { toast.style.opacity = "0"; }, 2400);
+    }
+
+    /* ── EVENT WIRING ───────────────────────────────────────────────── */
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var textarea = document.getElementById("job-input");
+      var analyzeBtn = document.getElementById("analyze-btn");
+      var inputScreen = document.getElementById("input-screen");
+      var resultsScreen = document.getElementById("results-screen");
+      var exportConfirm = document.getElementById("export-confirm");
+
+      /* Enable analyze button when textarea has content */
+      textarea.addEventListener("input", function () {
+        var hasContent = textarea.value.trim().length > 0;
+        analyzeBtn.disabled = !hasContent;
+        analyzeBtn.setAttribute("aria-disabled", hasContent ? "false" : "true");
+      });
+
+      /* Analyze button click */
+      analyzeBtn.addEventListener("click", function () {
+        var text = textarea.value;
+        if (!text.trim()) return;
+        lastResult = analyzePosting(text);
+        renderResults(lastResult);
+        exportConfirm.style.display = "none";
+        inputScreen.classList.add("screen-hidden");
+        resultsScreen.classList.remove("screen-hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        /* Generate scorecard preview */
+        var verdict = getVerdict(lastResult.score);
+        var scorecardConfig = {
+          title: "Ghost Check",
+          subtitle: "Analisis de oferta de trabajo",
+          badge: lastResult.score + "%",
+          accentColor: "#1A1A1A",
+          scores: [{ label: "Ghost Score", value: lastResult.score, max: 100 }],
+          interpretation: verdict.label,
+          chartType: "bar",
+        };
+        var previewUrl = N1.generateScorecardPreview(scorecardConfig);
+        var previewImg = document.getElementById("scorecard-preview-img");
+        if (previewImg && previewUrl) {
+          previewImg.src = previewUrl;
+          previewImg.style.display = "block";
+        }
+      });
+
+      /* Download scorecard */
+      document.getElementById("download-scorecard").addEventListener("click", function () {
+        if (!lastResult) return;
+        var verdict = getVerdict(lastResult.score);
+        var dataUrl = N1.generateScorecard({
+          title: "Ghost Check",
+          subtitle: "Analisis de oferta de trabajo",
+          badge: lastResult.score + "%",
+          accentColor: "#1A1A1A",
+          scores: [{ label: "Ghost Score", value: lastResult.score, max: 100 }],
+          interpretation: verdict.label,
+          chartType: "bar",
         });
+        if (dataUrl) {
+          N1.downloadScorecard(dataUrl, "n1-ghost-check.png");
+        }
+      });
 
-        // Analyze button click — run scoring, render results
-        analyzeBtn.addEventListener("click", function () {
-          var text = textarea.value;
-          if (!text.trim()) return;
-          lastResult = analyzePosting(text);
-          renderResults(lastResult);
-          exportConfirm.style.display = "none";
-          inputScreen.style.display = "none";
-          resultsScreen.style.display = "block";
-          resultsScreen.scrollIntoView({ behavior: "smooth", block: "start" });
-
-          // Generate scorecard preview
-          var verdict = getVerdict(lastResult.score);
-          var scorecardConfig = {
-            title: "Ghost Check",
-            subtitle: "Análisis de oferta de trabajo",
-            badge: lastResult.score + "%",
-            accentColor: "#1A1A1A",
-            scores: [{ label: "Ghost Score", value: lastResult.score, max: 100 }],
-            interpretation: verdict.label,
-            chartType: "bar",
-          };
-          var previewUrl = N1.generateScorecardPreview(scorecardConfig);
-          var previewImg = document.getElementById("scorecard-preview-img");
-          if (previewImg && previewUrl) {
-            previewImg.src = previewUrl;
-            previewImg.style.display = "block";
-          }
-        });
-
-        // Download scorecard — N1.generateScorecard + N1.downloadScorecard
-        document.getElementById("download-scorecard").addEventListener("click", function () {
-          if (!lastResult) return;
-          var verdict = getVerdict(lastResult.score);
-          var dataUrl = N1.generateScorecard({
-            title: "Ghost Check",
-            subtitle: "Análisis de oferta de trabajo",
-            badge: lastResult.score + "%",
-            accentColor: "#1A1A1A",
-            scores: [{ label: "Ghost Score", value: lastResult.score, max: 100 }],
-            interpretation: verdict.label,
-            chartType: "bar",
-          });
-          if (dataUrl) {
-            N1.downloadScorecard(dataUrl, "n1-ghost-check.png");
-          }
-        });
-
-        // Copy LinkedIn text — string concat only, user-pasted job text never included
-        document.getElementById("copy-linkedin").addEventListener("click", function () {
-          if (!lastResult) return;
-          var verdict = getVerdict(lastResult.score);
-          var linkedinText =
-            "Analice esta oferta con N1 Ghost Check: " +
-            String(lastResult.score) +
-            "/100 — " +
-            verdict.label +
-            "\n\nHerramienta gratuita: https://[tu-usuario].github.io/N1/ghost-check/" +
-            "\n\n#GhostJob #Empleabilidad #N1";
-          N1.copyLinkedInText(linkedinText).then(function () {
-            N1.showToast("Texto copiado al portapapeles");
-          });
-        });
-
-        // Export profile YAML — immutable concat pattern (no mutation)
-        document.getElementById("export-yaml").addEventListener("click", function () {
-          if (!lastResult) return;
-          var existing = N1.loadProfile();
-          var prevAssessments =
-            existing && existing.evolution && existing.evolution.assessments
-              ? existing.evolution.assessments
-              : [];
-          var newEntry = {
-            date: new Date().toISOString(),
-            instrument: "ghost-check",
-            scores: {
-              ghost_score: lastResult.score,
-              signals_fired: lastResult.signals
-                .filter(function (s) { return s.fired; })
-                .map(function (s) { return s.id; }),
-            },
-          };
-          var updatedAssessments = prevAssessments.concat([newEntry]);
-          N1.saveToProfile("evolution", { assessments: updatedAssessments });
-          N1.exportYAML("evolution", { assessments: updatedAssessments });
-          exportConfirm.style.display = "block";
-        });
-
-        // Reset — clear textarea, hide results, show input
-        document.getElementById("reset-btn").addEventListener("click", function () {
-          textarea.value = "";
-          analyzeBtn.disabled = true;
-          analyzeBtn.setAttribute("aria-disabled", "true");
-          lastResult = null;
-          resultsScreen.style.display = "none";
-          inputScreen.style.display = "block";
-          textarea.focus();
+      /* Copy LinkedIn text */
+      document.getElementById("copy-linkedin").addEventListener("click", function () {
+        if (!lastResult) return;
+        var verdict = getVerdict(lastResult.score);
+        var linkedinText =
+          "Analice esta oferta con N1 Ghost Check: " +
+          String(lastResult.score) +
+          "/100 — " +
+          verdict.label +
+          "\n\nHerramienta gratuita: https://n1career.github.io/N1/ghost-check/" +
+          "\n\n#GhostJob #Empleabilidad #N1";
+        N1.copyLinkedInText(linkedinText).then(function () {
+          showToast("Texto copiado al portapapeles");
         });
       });
 
-      /* ── EMAIL CAPTURE WIRING (INTG-03) ── */
-      (function () {
-        var emailForm = document.getElementById("n1-tool-email-form");
-        var emailInput = document.getElementById("n1-tool-email");
-        var successMsg = document.getElementById("n1-tool-email-success");
-        if (!emailForm || !emailInput || !successMsg) return;
+      /* Export profile YAML */
+      document.getElementById("export-yaml").addEventListener("click", function () {
+        if (!lastResult) return;
+        var existing = N1.loadProfile();
+        var prevAssessments =
+          existing && existing.evolution && existing.evolution.assessments
+            ? existing.evolution.assessments
+            : [];
+        var newEntry = {
+          date: new Date().toISOString(),
+          instrument: "ghost-check",
+          scores: {
+            ghost_score: lastResult.score,
+            signals_fired: lastResult.signals
+              .filter(function (s) { return s.fired; })
+              .map(function (s) { return s.id; }),
+          },
+        };
+        var updatedAssessments = prevAssessments.concat([newEntry]);
+        N1.saveToProfile("evolution", { assessments: updatedAssessments });
+        N1.exportYAML("evolution", { assessments: updatedAssessments });
+        exportConfirm.style.display = "block";
+      });
 
-        emailForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-          var email = emailInput.value.trim();
-          if (!email) return;
-          fetch(emailForm.action, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: "email=" + encodeURIComponent(email) + "&tag=tool-completion",
+      /* Reset */
+      document.getElementById("reset-btn").addEventListener("click", function () {
+        textarea.value = "";
+        analyzeBtn.disabled = true;
+        analyzeBtn.setAttribute("aria-disabled", "true");
+        lastResult = null;
+        resultsScreen.classList.add("screen-hidden");
+        inputScreen.classList.remove("screen-hidden");
+        textarea.focus();
+      });
+    });
+
+    /* ── EMAIL CAPTURE WIRING ── */
+    (function () {
+      var emailForm = document.getElementById("n1-tool-email-form");
+      var emailInput = document.getElementById("n1-tool-email");
+      var successMsg = document.getElementById("n1-tool-email-success");
+      if (!emailForm || !emailInput || !successMsg) return;
+
+      emailForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var email = emailInput.value.trim();
+        if (!email) return;
+        fetch(emailForm.action, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "email=" + encodeURIComponent(email) + "&tag=tool-completion",
+        })
+          .then(function () {
+            emailForm.style.display = "none";
+            successMsg.classList.remove("hidden");
           })
-            .then(function () {
-              emailForm.style.display = "none";
-              successMsg.style.display = "block";
-            })
-            .catch(function () {
-              emailForm.submit();
-            });
-        });
-      })();
-    </script>
+          .catch(function () {
+            emailForm.submit();
+          });
+      });
+    })();
+  </script>
 
-  </body>
+</body>
 </html>
