@@ -371,7 +371,7 @@
           <span class="material-symbols-outlined text-base" style="font-size:18px;">refresh</span>
           Analizar otra oferta
         </button>
-        <div class="grid grid-cols-3 gap-2">
+        <div class="grid grid-cols-4 gap-2">
           <button id="download-scorecard" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
             <span class="material-symbols-outlined" style="font-size:18px;">download</span>
             Scorecard
@@ -379,6 +379,10 @@
           <button id="copy-linkedin" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
             <span class="material-symbols-outlined" style="font-size:18px;">share</span>
             LinkedIn
+          </button>
+          <button id="share-linkedin-url" type="button" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:18px;">open_in_new</span>
+            Compartir
           </button>
           <button id="export-yaml" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
             <span class="material-symbols-outlined" style="font-size:18px;">save</span>
@@ -765,6 +769,9 @@
     /* ── RENDER RESULTS ─────────────────────────────────────────────── */
 
     function renderResults(result) {
+      // Mark Ghost Check as completed for progress tracking
+      localStorage.setItem("n1-ghost-completed", "true");
+
       var verdict = getVerdict(result.score);
 
       /* Gauge + animated score */
@@ -915,6 +922,33 @@
         });
       });
 
+      /* LinkedIn URL share */
+      var shareLinkedInBtn = document.getElementById("share-linkedin-url");
+      if (shareLinkedInBtn) {
+        shareLinkedInBtn.addEventListener("click", function () {
+          var n1Url = "https://hardlypythonnmr.github.io/N1/";
+          // Use lastResult for score and verdict (same source as copy-linkedin handler)
+          var score = lastResult ? String(lastResult.score) : null;
+          var verdictData = lastResult ? getVerdict(lastResult.score) : null;
+          var verdictLabel = verdictData ? verdictData.label : null;
+          var text =
+            score && verdictLabel
+              ? "Analicé una oferta con Ghost Check de N1 y obtuve un score de " +
+                score +
+                "/100. " +
+                verdictLabel +
+                ". " +
+                n1Url
+              : n1Url;
+          var shareUrl =
+            "https://www.linkedin.com/sharing/share-offsite/?url=" +
+            encodeURIComponent(n1Url) +
+            "&summary=" +
+            encodeURIComponent(text);
+          window.open(shareUrl, "_blank", "noopener,noreferrer");
+        });
+      }
+
       /* Export profile YAML */
       document.getElementById("export-yaml").addEventListener("click", function () {
         if (!lastResult) return;
@@ -961,6 +995,7 @@
       if (!emailForm || !emailInput || !successMsg) return;
 
       emailForm.addEventListener("submit", function (e) {
+        localStorage.setItem("n1-email-captured", "true");
         e.preventDefault();
         var email = emailInput.value.trim();
         if (!email) return;
