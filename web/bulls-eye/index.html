@@ -1,551 +1,543 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bull's Eye — N1</title>
-  <meta name="description" content="Ejercicio ACT de alineación de valores. Calificá 4 áreas de tu vida y ve qué tan alineadas están con lo que más te importa." />
+  <meta name="description" content="Ejercicio ACT de alineacion de valores. Califica 4 areas de tu vida y ve que tan alineadas estan con lo que mas te importa." />
   <meta property="og:title" content="Bull's Eye — N1" />
-  <meta property="og:description" content="Ejercicio ACT de alineación de valores. Calificá 4 áreas de tu vida. Herramienta gratuita de N1." />
+  <meta property="og:description" content="Ejercicio ACT de alineacion de valores. Califica 4 areas de tu vida. Herramienta gratuita de N1." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://n1career.github.io/N1/bulls-eye/" />
   <meta property="og:image" content="https://n1career.github.io/N1/web/og-image.png" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23e85d26' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ff9068' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-low": "#111127",
+            "primary": "#ff9068",
+            "on-background": "#e5e3ff",
+            "surface-tint": "#ff9068",
+            "primary-dim": "#ff743f",
+            "surface": "#0c0c1f",
+            "surface-dim": "#0c0c1f",
+            "on-surface": "#e5e3ff",
+            "tertiary": "#f9f9f9",
+            "on-primary": "#591800",
+            "surface-variant": "#23233f",
+            "surface-container-lowest": "#000000",
+            "primary-container": "#ff7947",
+            "secondary-container": "#45455b",
+            "surface-bright": "#292948",
+            "on-secondary-container": "#d0cee9",
+            "outline": "#74738b",
+            "error": "#ff716c",
+            "surface-container-high": "#1d1d37",
+            "surface-container": "#17172f",
+            "background": "#0c0c1f",
+            "surface-container-highest": "#23233f",
+            "on-surface-variant": "#aaa8c3",
+            "outline-variant": "#46465c",
+            "on-primary-fixed": "#000000",
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Space Grotesk"],
+            "mono": ["Space Mono"]
+          },
+          borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+        },
+      },
+    }
+  </script>
   <style>
-    /* ── BULLS-EYE SPECIFIC STYLES ───────── */
-
-    .sliders-grid {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-lg);
+    body {
+      background-color: #0c0c1f;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255, 144, 104, 0.07) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 144, 104, 0.09) 0%, transparent 50%);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
 
-    .slider-group {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-
-    .slider-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .slider-label {
-      font-family: var(--font-heading);
-      font-size: 0.9375rem;
-      font-weight: 700;
-      color: var(--n1-black);
-    }
-
-    .slider-value {
-      font-family: var(--font-heading);
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--n1-orange);
-      min-width: 24px;
-      text-align: right;
-    }
-
-    .slider-desc {
-      font-size: 0.8125rem;
-      color: var(--n1-muted);
-      line-height: 1.4;
-      margin-bottom: var(--space-xs);
-    }
-
-    input[type="range"] {
+    /* ── RANGE INPUT DARK THEME ── */
+    .n1-range {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 6px;
-      background: var(--n1-border);
+      height: 5px;
       border-radius: 999px;
       outline: none;
       cursor: pointer;
-      transition: background var(--transition-fast);
+      background: rgba(70, 70, 92, 0.5);
+      transition: background 0.2s;
     }
-
-    input[type="range"]::-webkit-slider-thumb {
+    .n1-range::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: var(--n1-orange);
+      background: #ff9068;
       cursor: pointer;
-      border: 3px solid var(--n1-white);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
-      transition: transform var(--transition-fast);
+      border: 2px solid #0c0c1f;
+      box-shadow: 0 0 10px rgba(255, 144, 104, 0.5), 0 0 20px rgba(255, 144, 104, 0.2);
+      transition: transform 0.15s, box-shadow 0.15s;
     }
-
-    input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.1);
+    .n1-range::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 14px rgba(255, 144, 104, 0.7), 0 0 28px rgba(255, 144, 104, 0.3);
     }
-
-    input[type="range"]::-moz-range-thumb {
-      width: 22px;
-      height: 22px;
+    .n1-range::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: var(--n1-orange);
+      background: #ff9068;
       cursor: pointer;
-      border: 3px solid var(--n1-white);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+      border: 2px solid #0c0c1f;
+      box-shadow: 0 0 10px rgba(255, 144, 104, 0.5);
     }
 
-    .slider-endpoints {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.6875rem;
-      color: var(--n1-muted);
-      margin-top: 2px;
+    /* Range track fill using gradient trick */
+    .n1-range-wrap {
+      position: relative;
     }
 
-    /* Canvas container */
-    .bullseye-preview {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-sm);
-      margin: var(--space-lg) 0;
+    /* ── CANVAS GLOW EFFECTS ── */
+    #bullseye-canvas, #result-canvas {
+      filter: drop-shadow(0 0 12px rgba(255, 144, 104, 0.12));
     }
 
-    .bullseye-preview canvas {
-      max-width: 100%;
-      height: auto;
+    /* ── EMAIL INPUT DARK ── */
+    .email-input-dark {
+      background: rgba(17, 17, 39, 0.8);
+      border: 1px solid rgba(70, 70, 92, 0.4);
+      color: #e5e3ff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .email-input-dark:focus {
+      border-color: rgba(255, 144, 104, 0.5);
+    }
+    .email-input-dark::placeholder {
+      color: rgba(170, 168, 195, 0.4);
     }
 
-    .bullseye-caption {
-      font-size: 0.75rem;
-      color: var(--n1-muted);
-      text-align: center;
-    }
-
-    /* Results canvas */
-    .result-canvas-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-sm);
-      margin: var(--space-md) 0;
-    }
-
-    .result-canvas-wrap canvas {
-      max-width: 100%;
-      height: auto;
-    }
-
-    /* Interpretation grid */
-    .interpretation-grid {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-
-    .domain-row {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-md);
-      padding: var(--space-md);
-      background: var(--n1-surface);
-      border-radius: var(--n1-radius-sm);
-    }
-
-    .domain-dot {
-      width: 14px;
-      height: 14px;
+    /* ── ALIGNMENT SCORE DISPLAY ── */
+    .alignment-score-ring {
+      background: conic-gradient(#ff9068 0%, #ff7947 var(--pct, 0%), rgba(70,70,92,0.3) var(--pct, 0%) 100%);
       border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 3px;
+      transition: background 0.5s;
     }
 
-    .domain-dot.orange {
-      background-color: #E85D26;
-    }
+    /* Screen toggle */
+    .screen-hidden { display: none !important; }
 
-    .domain-dot.yellow {
-      background-color: #f59e0b;
+    /* Domain row hover */
+    .domain-row-dark {
+      background: rgba(35, 35, 63, 0.5);
+      border: 1px solid rgba(70, 70, 92, 0.2);
+      transition: border-color 0.2s;
     }
-
-    .domain-dot.gray {
-      background-color: #e5e7eb;
-      border: 1px solid #d1d5db;
-    }
-
-    .domain-text {
-      flex: 1;
-    }
-
-    .domain-name {
-      font-family: var(--font-heading);
-      font-size: 0.875rem;
-      font-weight: 700;
-      color: var(--n1-black);
-      margin-bottom: 2px;
-    }
-
-    .domain-interpretation {
-      font-size: 0.875rem;
-      color: var(--n1-muted);
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .domain-score-badge {
-      font-family: var(--font-heading);
-      font-size: 0.8125rem;
-      font-weight: 700;
-      color: var(--n1-muted);
-      flex-shrink: 0;
-    }
-
-    .overall-message {
-      padding: var(--space-lg);
-      background: #fff8f5;
-      border: 1px solid #f9c4af;
-      border-radius: var(--n1-radius-sm);
-      font-size: 0.9375rem;
-      line-height: 1.6;
-      color: var(--n1-black);
-    }
-
-    /* Legend */
-    .bullseye-legend {
-      display: flex;
-      gap: var(--space-lg);
-      justify-content: center;
-      flex-wrap: wrap;
-      font-size: 0.75rem;
-      color: var(--n1-muted);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    .domain-row-dark:hover {
+      border-color: rgba(255, 144, 104, 0.25);
     }
   </style>
 </head>
-<body>
+<body class="font-body text-on-surface min-h-screen flex flex-col">
 
-  <!-- NAVIGATION -->
-  <nav class="nav" role="navigation" aria-label="Navegacion principal">
-    <a href="../index.html" class="nav-logo">N<span>1</span></a>
-    <a href="../index.html" class="nav-back">Inicio</a>
-  </nav>
+  <!-- FIXED HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-[#0c0c1f]/60 backdrop-blur-xl border-b border-[#46465c]/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)]">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-[640px] mx-auto">
+      <a href="../index.html" class="text-[#ff9068] scale-95 active:scale-90 transition-transform" aria-label="Volver a N1">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <h1 class="font-headline uppercase tracking-widest text-sm text-[#ff9068] font-bold">BULL'S EYE</h1>
+      <div class="text-[#46465c]">
+        <span class="material-symbols-outlined">account_circle</span>
+      </div>
+    </div>
+  </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="container" role="main">
+  <!-- MAIN -->
+  <main class="flex-grow flex flex-col items-center px-6 pt-24 pb-32 max-w-[640px] mx-auto w-full">
 
-    <!-- DISCLAIMER -->
-    <div class="disclaimer" role="note" aria-label="Aviso importante" id="disclaimer-container">
-      <!-- Populated by N1.getSafetyDisclaimer() via appendChild -->
+    <!-- SAFETY DISCLAIMER -->
+    <div class="w-full mt-4 mb-6 p-4 rounded-xl bg-surface-container-low border border-outline-variant/10 flex items-start gap-3" role="note" aria-label="Aviso importante" id="disclaimer-container">
+      <div class="p-1.5 rounded bg-primary/10 text-primary flex-shrink-0 mt-0.5">
+        <span class="material-symbols-outlined" style="font-size:16px;">info</span>
+      </div>
+      <p class="text-xs text-on-surface-variant leading-relaxed">
+        N1 es orientacion profesional basada en investigacion — no es terapia ni reemplaza a un profesional de salud mental.
+        Basado en el ejercicio ACT de alineacion de valores (Hayes, Strosahl &amp; Wilson, 2011).
+      </p>
     </div>
 
     <!-- INPUT SCREEN -->
-    <section id="input-screen" aria-labelledby="tool-title">
+    <section id="input-screen" class="w-full" aria-labelledby="tool-title">
 
-      <div style="margin: var(--space-xl) 0 var(--space-lg);">
-        <h1 id="tool-title">Bull's Eye</h1>
-        <p class="text-muted mt-sm">
-          Califica que tan alineadas estan las diferentes areas de tu vida
-          con lo que mas te importa. No hay respuestas correctas,
-          solo honestidad sobre donde estas hoy.
-        </p>
-        <p class="text-sm text-muted mt-sm">
-          Basado en el ejercicio ACT de alineacion de valores
-          (Hayes, Strosahl &amp; Wilson, 2011).
-        </p>
-      </div>
-
-      <!-- SLIDERS -->
-      <div class="sliders-grid" role="form" aria-label="Calificacion de areas de vida">
-
-        <!-- Work -->
-        <div class="slider-group">
-          <div class="slider-header">
-            <label class="slider-label" for="slider-work">Trabajo</label>
-            <span class="slider-value" id="value-work" aria-live="polite" aria-atomic="true">5</span>
-          </div>
-          <p class="slider-desc">
-            Que tan alineado esta tu trabajo actual con tus valores fundamentales
-          </p>
-          <input
-            type="range"
-            id="slider-work"
-            name="work"
-            min="1"
-            max="10"
-            value="5"
-            aria-valuemin="1"
-            aria-valuemax="10"
-            aria-valuenow="5"
-            aria-label="Trabajo: alineacion con valores (1 = lejos del centro, 10 = en el centro)"
-          />
-          <div class="slider-endpoints">
-            <span>Lejos del centro</span>
-            <span>En el centro</span>
-          </div>
-        </div>
-
-        <!-- Relationships -->
-        <div class="slider-group">
-          <div class="slider-header">
-            <label class="slider-label" for="slider-relationships">Relaciones</label>
-            <span class="slider-value" id="value-relationships" aria-live="polite" aria-atomic="true">5</span>
-          </div>
-          <p class="slider-desc">
-            Que tan alineadas estan tus relaciones con lo que mas valoras
-          </p>
-          <input
-            type="range"
-            id="slider-relationships"
-            name="relationships"
-            min="1"
-            max="10"
-            value="5"
-            aria-valuemin="1"
-            aria-valuemax="10"
-            aria-valuenow="5"
-            aria-label="Relaciones: alineacion con valores (1 = lejos del centro, 10 = en el centro)"
-          />
-          <div class="slider-endpoints">
-            <span>Lejos del centro</span>
-            <span>En el centro</span>
-          </div>
-        </div>
-
-        <!-- Personal Growth -->
-        <div class="slider-group">
-          <div class="slider-header">
-            <label class="slider-label" for="slider-personal-growth">Crecimiento personal</label>
-            <span class="slider-value" id="value-personal-growth" aria-live="polite" aria-atomic="true">5</span>
-          </div>
-          <p class="slider-desc">
-            Cuanto espacio tenes para crecer como persona: aprender, desarrollarte, ser quien queres ser
-          </p>
-          <input
-            type="range"
-            id="slider-personal-growth"
-            name="personal_growth"
-            min="1"
-            max="10"
-            value="5"
-            aria-valuemin="1"
-            aria-valuemax="10"
-            aria-valuenow="5"
-            aria-label="Crecimiento personal: alineacion con valores (1 = lejos del centro, 10 = en el centro)"
-          />
-          <div class="slider-endpoints">
-            <span>Lejos del centro</span>
-            <span>En el centro</span>
-          </div>
-        </div>
-
-        <!-- Leisure -->
-        <div class="slider-group">
-          <div class="slider-header">
-            <label class="slider-label" for="slider-leisure">Tiempo libre</label>
-            <span class="slider-value" id="value-leisure" aria-live="polite" aria-atomic="true">5</span>
-          </div>
-          <p class="slider-desc">
-            Que tan presente sos en tu tiempo libre, o si simplemente sobrevivís el trabajo
-          </p>
-          <input
-            type="range"
-            id="slider-leisure"
-            name="leisure"
-            min="1"
-            max="10"
-            value="5"
-            aria-valuemin="1"
-            aria-valuemax="10"
-            aria-valuenow="5"
-            aria-label="Tiempo libre: alineacion con valores (1 = lejos del centro, 10 = en el centro)"
-          />
-          <div class="slider-endpoints">
-            <span>Lejos del centro</span>
-            <span>En el centro</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- LIVE PREVIEW CANVAS -->
-      <div class="bullseye-preview" aria-label="Vista previa del diagrama Bulls Eye">
-        <canvas
-          id="bullseye-canvas"
-          width="300"
-          height="300"
-          role="img"
-          aria-label="Diagrama Bulls Eye: muestra alineacion actual de las 4 areas"
-        ></canvas>
-        <div class="bullseye-legend">
-          <div class="legend-item">
-            <div class="legend-dot" style="background:#E85D26;"></div>
-            <span>En el centro (8-10)</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background:#f59e0b;"></div>
-            <span>Cerca (5-7)</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background:#e5e7eb; border:1px solid #d1d5db;"></div>
-            <span>Lejos (1-4)</span>
-          </div>
-        </div>
-        <p class="bullseye-caption">
-          Los colores cambian en tiempo real a medida que moves los sliders
+      <!-- Hero -->
+      <div class="text-center mb-6">
+        <p class="font-mono text-[0.6875rem] text-primary tracking-[0.2em] uppercase mb-3">Ejercicio ACT</p>
+        <h2 id="tool-title" class="font-headline text-3xl md:text-4xl font-bold text-tertiary leading-tight mb-3">
+          Bull's Eye<br/>
+          <span class="text-primary">Values Tool</span>
+        </h2>
+        <p class="text-on-surface-variant text-sm leading-relaxed max-w-xs mx-auto">
+          Califica que tan alineadas estan las diferentes areas de tu vida con lo que mas te importa.
         </p>
       </div>
 
-      <div style="margin-top: var(--space-lg);">
-        <button
-          id="show-results"
-          class="btn btn-primary"
-          style="width:100%; justify-content:center;"
-          type="button"
-        >
-          Ver mi perfil
-        </button>
+      <!-- Progress bar (step indicator) -->
+      <div class="w-full mb-6">
+        <div class="flex justify-between items-end mb-2">
+          <span class="font-mono text-[10px] uppercase tracking-widest text-outline">Alineacion de valores</span>
+          <span id="progress-pct" class="font-mono text-xs font-bold text-primary">50%</span>
+        </div>
+        <div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-primary to-primary-container shadow-[0_0_12px_rgba(255,144,104,0.4)] transition-all duration-500" style="width:50%"></div>
+        </div>
       </div>
+
+      <!-- Two-column layout: canvas left, sliders right -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden mb-6">
+        <div class="absolute -top-20 -left-20 w-48 h-48 bg-primary/8 blur-[80px] rounded-full pointer-events-none"></div>
+        <div class="absolute -bottom-16 -right-16 w-36 h-36 bg-primary/6 blur-[60px] rounded-full pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row">
+
+          <!-- Bull's Eye Canvas -->
+          <div class="flex flex-col items-center justify-center p-6 md:w-56 flex-shrink-0">
+            <canvas
+              id="bullseye-canvas"
+              width="280"
+              height="280"
+              role="img"
+              aria-label="Diagrama Bulls Eye: muestra alineacion actual de las 4 areas"
+            ></canvas>
+            <!-- Legend -->
+            <div class="flex flex-wrap justify-center gap-x-3 gap-y-1 mt-3">
+              <div class="flex items-center gap-1.5">
+                <div class="w-2 h-2 rounded-full bg-[#ff9068] shadow-[0_0_6px_#ff9068]"></div>
+                <span class="font-mono text-[0.55rem] text-on-surface-variant">8-10</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <div class="w-2 h-2 rounded-full bg-[#f59e0b] shadow-[0_0_6px_#f59e0b]"></div>
+                <span class="font-mono text-[0.55rem] text-on-surface-variant">5-7</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <div class="w-2 h-2 rounded-full bg-[#374151]"></div>
+                <span class="font-mono text-[0.55rem] text-on-surface-variant">1-4</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sliders panel -->
+          <div class="flex-1 p-6 pt-4 md:pt-6 md:pl-2 space-y-5" role="form" aria-label="Calificacion de areas de vida">
+
+            <!-- Alineacion header -->
+            <div class="mb-1">
+              <p class="font-mono text-[0.6875rem] text-primary tracking-[0.15em] uppercase">Alineacion de valores</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">Mueve los sliders para reflejar tu realidad actual</p>
+            </div>
+
+            <!-- Work -->
+            <div class="slider-group">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="font-headline text-sm font-semibold text-tertiary" for="slider-work">Trabajo</label>
+                <span id="value-work" class="font-mono text-sm font-bold text-primary" aria-live="polite" aria-atomic="true">5</span>
+              </div>
+              <div class="n1-range-wrap">
+                <input
+                  type="range"
+                  id="slider-work"
+                  name="work"
+                  min="1" max="10" value="5"
+                  class="n1-range"
+                  aria-valuemin="1" aria-valuemax="10" aria-valuenow="5"
+                  aria-label="Trabajo: alineacion con valores (1=lejos del centro, 10=en el centro)"
+                />
+              </div>
+              <div class="flex justify-between mt-1">
+                <span class="font-mono text-[0.6rem] text-on-surface-variant/50">Lejos</span>
+                <span class="font-mono text-[0.6rem] text-on-surface-variant/50">Centro</span>
+              </div>
+            </div>
+
+            <!-- Relationships -->
+            <div class="slider-group">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="font-headline text-sm font-semibold text-tertiary" for="slider-relationships">Relaciones</label>
+                <span id="value-relationships" class="font-mono text-sm font-bold text-primary" aria-live="polite" aria-atomic="true">5</span>
+              </div>
+              <div class="n1-range-wrap">
+                <input
+                  type="range"
+                  id="slider-relationships"
+                  name="relationships"
+                  min="1" max="10" value="5"
+                  class="n1-range"
+                  aria-valuemin="1" aria-valuemax="10" aria-valuenow="5"
+                  aria-label="Relaciones: alineacion con valores"
+                />
+              </div>
+              <div class="flex justify-between mt-1">
+                <span class="font-mono text-[0.6rem] text-on-surface-variant/50">Lejos</span>
+                <span class="font-mono text-[0.6rem] text-on-surface-variant/50">Centro</span>
+              </div>
+            </div>
+
+            <!-- Personal Growth -->
+            <div class="slider-group">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="font-headline text-sm font-semibold text-tertiary" for="slider-personal-growth">Crecimiento</label>
+                <span id="value-personal-growth" class="font-mono text-sm font-bold text-primary" aria-live="polite" aria-atomic="true">5</span>
+              </div>
+              <div class="n1-range-wrap">
+                <input
+                  type="range"
+                  id="slider-personal-growth"
+                  name="personal_growth"
+                  min="1" max="10" value="5"
+                  class="n1-range"
+                  aria-valuemin="1" aria-valuemax="10" aria-valuenow="5"
+                  aria-label="Crecimiento personal: alineacion con valores"
+                />
+              </div>
+              <div class="flex justify-between mt-1">
+                <span class="font-mono text-[0.6rem] text-on-surface-variant/50">Lejos</span>
+                <span class="font-mono text-[0.6rem] text-on-surface-variant/50">Centro</span>
+              </div>
+            </div>
+
+            <!-- Leisure -->
+            <div class="slider-group">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="font-headline text-sm font-semibold text-tertiary" for="slider-leisure">Tiempo libre</label>
+                <span id="value-leisure" class="font-mono text-sm font-bold text-primary" aria-live="polite" aria-atomic="true">5</span>
+              </div>
+              <div class="n1-range-wrap">
+                <input
+                  type="range"
+                  id="slider-leisure"
+                  name="leisure"
+                  min="1" max="10" value="5"
+                  class="n1-range"
+                  aria-valuemin="1" aria-valuemax="10" aria-valuenow="5"
+                  aria-label="Tiempo libre: alineacion con valores"
+                />
+              </div>
+              <div class="flex justify-between mt-1">
+                <span class="font-mono text-[0.6rem] text-on-surface-variant/50">Lejos</span>
+                <span class="font-mono text-[0.6rem] text-on-surface-variant/50">Centro</span>
+              </div>
+            </div>
+
+            <!-- Live alignment score -->
+            <div class="pt-3 border-t border-outline-variant/20">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-mono text-[0.6875rem] text-on-surface-variant tracking-wider uppercase">Tu alineacion actual</p>
+                  <p id="live-alignment-msg" class="text-xs text-on-surface-variant/70 mt-0.5 leading-relaxed max-w-[200px]"></p>
+                </div>
+                <div class="flex-shrink-0 relative w-14 h-14">
+                  <div id="alignment-ring" class="alignment-score-ring w-14 h-14" style="--pct:50%">
+                    <div class="absolute inset-1 rounded-full bg-surface-container-highest flex items-center justify-center">
+                      <span id="live-score-display" class="font-mono text-sm font-bold text-primary">50%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA button -->
+      <button
+        id="show-results"
+        type="button"
+        class="w-full py-4 bg-gradient-to-br from-primary to-primary-container rounded-xl font-headline font-bold uppercase tracking-widest text-sm text-on-primary-fixed shadow-[0_10px_20px_-5px_rgba(255,144,104,0.3)] hover:shadow-[0_0_24px_rgba(255,144,104,0.35)] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2"
+      >
+        <span class="material-symbols-outlined" style="font-size:20px;">my_location</span>
+        Guardar y Continuar
+      </button>
 
     </section>
 
     <!-- RESULTS SCREEN (hidden initially) -->
-    <section id="results-screen" class="hidden" aria-labelledby="results-title">
+    <section id="results-screen" class="w-full screen-hidden" aria-labelledby="results-title">
 
-      <div style="margin: var(--space-xl) 0 var(--space-lg);">
-        <h1 id="results-title">Tu Bull's Eye</h1>
-        <p class="text-muted mt-sm">
-          Este es tu mapa de alineacion actual.
-          Las areas mas alejadas del centro son donde la brecha
-          entre tus valores y tu realidad es mas grande.
+      <!-- Title -->
+      <div class="text-center mb-6">
+        <p class="font-mono text-[0.6875rem] text-primary tracking-[0.2em] uppercase mb-2">Tu perfil</p>
+        <h2 id="results-title" class="font-headline text-3xl font-bold text-tertiary leading-tight mb-3">
+          Tu Bull's Eye
+        </h2>
+        <p class="text-on-surface-variant text-sm leading-relaxed max-w-sm mx-auto">
+          Este es tu mapa de alineacion actual. Las areas mas alejadas del centro son donde la brecha entre tus valores y tu realidad es mas grande.
         </p>
       </div>
 
-      <!-- RESULT CANVAS (larger) -->
-      <div class="result-canvas-wrap" aria-label="Diagrama Bulls Eye final">
-        <canvas
-          id="result-canvas"
-          width="400"
-          height="400"
-          role="img"
-          aria-label="Diagrama Bulls Eye con tus puntajes finales"
-        ></canvas>
-        <div class="bullseye-legend">
-          <div class="legend-item">
-            <div class="legend-dot" style="background:#E85D26;"></div>
-            <span>En el centro (8-10)</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background:#f59e0b;"></div>
-            <span>Cerca (5-7)</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background:#e5e7eb; border:1px solid #d1d5db;"></div>
-            <span>Lejos (1-4)</span>
+      <!-- Result canvas card -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden mb-6">
+        <div class="absolute -top-20 -right-20 w-48 h-48 bg-primary/8 blur-[80px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col items-center">
+          <canvas
+            id="result-canvas"
+            width="360"
+            height="360"
+            role="img"
+            aria-label="Diagrama Bulls Eye con tus puntajes finales"
+            class="max-w-full"
+          ></canvas>
+          <!-- Legend -->
+          <div class="flex gap-4 flex-wrap justify-center mt-4">
+            <div class="flex items-center gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#ff9068] shadow-[0_0_8px_#ff9068]"></div>
+              <span class="font-mono text-[0.65rem] text-on-surface-variant">En el centro (8-10)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#f59e0b] shadow-[0_0_8px_#f59e0b]"></div>
+              <span class="font-mono text-[0.65rem] text-on-surface-variant">Cerca (5-7)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#374151]"></div>
+              <span class="font-mono text-[0.65rem] text-on-surface-variant">Lejos (1-4)</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- OVERALL MESSAGE -->
-      <div class="overall-message" id="overall-message" role="status" aria-live="polite"></div>
+      <!-- Overall message -->
+      <div class="w-full bg-primary/8 border border-primary/20 rounded-xl p-5 mb-6 relative overflow-hidden">
+        <div class="absolute -top-8 -right-8 w-24 h-24 bg-primary/10 blur-[40px] rounded-full pointer-events-none"></div>
+        <p class="font-mono text-[0.6875rem] text-primary tracking-wider uppercase mb-2">Diagnostico</p>
+        <p id="overall-message" class="text-sm text-on-surface leading-relaxed" role="status" aria-live="polite"></p>
+      </div>
 
-      <!-- DOMAIN INTERPRETATIONS -->
-      <div class="interpretation-grid mt-lg" id="interpretation-grid" role="list" aria-label="Interpretación por área"></div>
+      <!-- Domain interpretations -->
+      <div class="space-y-2 mb-6" id="interpretation-grid" role="list" aria-label="Interpretacion por area"></div>
 
-      <!-- SCORECARD PREVIEW (generated by JS on results render) -->
+      <!-- Scorecard preview -->
       <img
         id="scorecard-preview-img"
-        class="n1-scorecard-preview"
+        class="w-full rounded-xl mb-6 border border-outline-variant/20"
         alt="Vista previa del scorecard"
         style="display:none;"
         aria-label="Vista previa del scorecard descargable"
       />
 
-      <!-- ACTION BUTTONS -->
-      <div class="results-actions mt-xl">
-        <button id="btn-scorecard" class="btn btn-primary" type="button">
+      <!-- Action buttons -->
+      <div class="space-y-3 mb-8">
+        <button id="btn-scorecard" type="button" class="w-full py-4 bg-gradient-to-br from-primary to-primary-container rounded-xl font-headline font-bold uppercase tracking-widest text-sm text-on-primary-fixed shadow-[0_10px_20px_-5px_rgba(255,144,104,0.3)] hover:shadow-[0_0_24px_rgba(255,144,104,0.35)] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined" style="font-size:20px;">download</span>
           Descargar scorecard
         </button>
-        <button id="btn-linkedin" class="btn btn-secondary" type="button">
-          Copiar texto LinkedIn
-        </button>
-        <button id="btn-yaml" class="btn btn-secondary" type="button">
-          Exportar perfil YAML
-        </button>
-        <button id="btn-restart" class="btn btn-ghost" type="button">
-          Volver al inicio
-        </button>
+        <div class="grid grid-cols-3 gap-2">
+          <button id="btn-linkedin" type="button" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:18px;">share</span>
+            LinkedIn
+          </button>
+          <button id="btn-yaml" type="button" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:18px;">save</span>
+            YAML
+          </button>
+          <button id="btn-restart" type="button" class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold uppercase tracking-wider text-[0.65rem] text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined" style="font-size:18px;">refresh</span>
+            Reiniciar
+          </button>
+        </div>
       </div>
 
-      <!-- EMAIL CAPTURE (INTG-03 — D-07, D-08) -->
-      <div
-        class="n1-email-section"
-        id="n1-email-section"
-        aria-label="Suscripción al newsletter"
-      >
-        <p class="n1-email-section-label">Newsletter</p>
-        <p class="n1-email-section-title">Recibí insights de carrera cada semana</p>
-        <p class="n1-email-section-desc">
-          Sin spam. Investigación aplicada — en español.
-        </p>
-        <form
-          id="n1-tool-email-form"
-          class="n1-email-section-form"
-          action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
-          method="POST"
-          target="popupwindow"
-          novalidate
-          aria-label="Formulario de suscripción"
-        >
-          <label for="n1-tool-email" class="visually-hidden"
-            >Tu dirección de correo</label
+      <!-- EMAIL CAPTURE -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden" id="n1-email-section" aria-label="Suscripcion al newsletter">
+        <div class="absolute -bottom-16 -left-16 w-36 h-36 bg-primary/6 blur-[60px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10">
+          <p class="font-mono text-[0.6875rem] text-primary tracking-[0.2em] uppercase mb-1">Newsletter</p>
+          <p class="font-headline text-lg font-bold text-tertiary mb-1">Recibí insights de carrera cada semana</p>
+          <p class="text-xs text-on-surface-variant mb-4">Sin spam. Investigacion aplicada — en espanol.</p>
+          <form
+            id="n1-tool-email-form"
+            action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
+            method="POST"
+            target="popupwindow"
+            novalidate
+            aria-label="Formulario de suscripcion"
+            class="flex gap-2"
           >
-          <input
-            type="email"
-            name="email"
-            id="n1-tool-email"
-            class="n1-email-section-input"
-            placeholder="tu@email.com"
-            required
-            autocomplete="email"
-            aria-required="true"
-          />
-          <input type="hidden" name="tag" value="tool-completion" />
-          <button type="submit" class="btn btn-primary" style="flex-shrink:0;">
-            Suscribirme
-          </button>
-        </form>
-        <p
-          class="n1-email-section-success"
-          id="n1-tool-email-success"
-          role="status"
-          aria-live="polite"
-        >
-          Listo. Te llegará el primer correo pronto.
-        </p>
+            <label for="n1-tool-email" class="sr-only">Tu direccion de correo</label>
+            <input
+              type="email"
+              name="email"
+              id="n1-tool-email"
+              class="email-input-dark flex-1 rounded-lg px-4 py-3 text-sm font-body"
+              placeholder="tu@email.com"
+              required
+              autocomplete="email"
+              aria-required="true"
+            />
+            <input type="hidden" name="tag" value="tool-completion" />
+            <button type="submit" class="py-3 px-5 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold uppercase tracking-wider text-xs text-on-primary-fixed shadow-[0_6px_16px_-4px_rgba(255,144,104,0.3)] hover:shadow-[0_0_16px_rgba(255,144,104,0.3)] transition-all active:scale-95 flex-shrink-0">
+              Suscribirme
+            </button>
+          </form>
+          <p
+            class="text-sm text-primary mt-3 hidden"
+            id="n1-tool-email-success"
+            role="status"
+            aria-live="polite"
+          >
+            Listo. Te llegara el primer correo pronto.
+          </p>
+        </div>
       </div>
 
     </section>
 
     <!-- TOAST -->
-    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-surface-container-highest border border-outline-variant/30 text-on-surface px-5 py-3 rounded-xl text-sm font-body shadow-[0_10px_40px_-5px_rgba(0,0,0,0.5)] opacity-0 transition-opacity duration-300 pointer-events-none" role="status" aria-live="polite" aria-atomic="true"></div>
 
   </main>
 
+  <!-- BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 right-0 h-20 bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50">
+    <div class="flex justify-around items-center h-full px-4 max-w-[640px] mx-auto">
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../index.html">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Inicio</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../ghost-check/index.html">
+        <span class="material-symbols-outlined">manage_search</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Ghost</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 translate-y-[-2px] transition-all" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">my_location</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Bull's Eye</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../compass/index.html">
+        <span class="material-symbols-outlined">explore</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Compass</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ATMOSPHERIC BACKGROUND -->
+  <div class="fixed inset-0 pointer-events-none -z-10">
+    <div class="absolute top-1/3 -left-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-1/3 -right-20 w-96 h-96 bg-primary/8 blur-[150px] rounded-full"></div>
+  </div>
+
   <!-- SCRIPTS -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
   <script src="../assessment-engine.js"></script>
   <script>
   (function () {
@@ -578,15 +570,16 @@
       return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
     }
 
+    /* Dark-theme score colors with glow */
     function getScoreStyle(score) {
-      if (score >= 8) return { color: "#E85D26", alpha: 0.82, ring: "inner" };
-      if (score >= 5) return { color: "#f59e0b", alpha: 0.72, ring: "middle" };
-      return              { color: "#9ca3af",  alpha: 0.50, ring: "outer" };
+      if (score >= 8) return { color: "#ff9068", alpha: 0.85, glow: "rgba(255,144,104,0.4)" };
+      if (score >= 5) return { color: "#f59e0b", alpha: 0.75, glow: "rgba(245,158,11,0.35)" };
+      return              { color: "#374151",  alpha: 0.55, glow: "rgba(55,65,81,0.2)" };
     }
 
     /**
      * Draw the Bull's Eye ACT diagram on a canvas element.
-     * Pure Canvas 2D API — no Chart.js.
+     * Dark theme: dark ring fills, glowing quadrant fills, bright labels.
      *
      * @param {HTMLCanvasElement} canvas
      * @param {Object} scores  { work, relationships, personal_growth, leisure } — values 1-10
@@ -597,18 +590,18 @@
       var h   = canvas.height;
       var cx  = w / 2;
       var cy  = h / 2;
-      var maxR = Math.min(w, h) / 2 - 6;
+      var maxR = Math.min(w, h) / 2 - 8;
 
       var innerBound = 0.33 * maxR;
       var midBound   = 0.66 * maxR;
 
       ctx.clearRect(0, 0, w, h);
 
-      /* ─ 1. Base rings (back → front) ─ */
+      /* ─ 1. Base rings — dark theme fills ─ */
       var rings = [
-        { r: maxR,      fill: "#f3f4f6", stroke: "#d1d5db", sw: 1.5 },
-        { r: midBound,  fill: "#fffbeb", stroke: "#fbbf24", sw: 1 },
-        { r: innerBound,fill: "#fff7f4", stroke: "#f9a07e", sw: 1 }
+        { r: maxR,      fill: "rgba(17,17,39,0.85)",   stroke: "rgba(70,70,92,0.4)",   sw: 1.5 },
+        { r: midBound,  fill: "rgba(23,23,47,0.80)",   stroke: "rgba(100,80,40,0.35)", sw: 1 },
+        { r: innerBound,fill: "rgba(30,25,45,0.85)",   stroke: "rgba(255,144,104,0.25)",sw: 1.5 }
       ];
       rings.forEach(function (ring) {
         ctx.beginPath();
@@ -633,12 +626,19 @@
         var style  = getScoreStyle(score);
         var fillR  = (score / 10) * maxR;
 
+        /* Glow effect */
+        ctx.shadowColor = style.glow;
+        ctx.shadowBlur = score >= 5 ? 16 : 4;
+
         ctx.beginPath();
         ctx.moveTo(cx, cy);
         ctx.arc(cx, cy, fillR, angles.start, angles.end);
         ctx.closePath();
         ctx.fillStyle = hexToRgba(style.color, style.alpha);
         ctx.fill();
+
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = "transparent";
       });
 
       /* ─ 3. Re-draw ring borders on top of fills ─ */
@@ -650,9 +650,9 @@
         ctx.stroke();
       });
 
-      /* ─ 4. Quadrant divider lines (white) ─ */
-      ctx.strokeStyle = "#ffffff";
-      ctx.lineWidth = 2;
+      /* ─ 4. Quadrant divider lines — subtle dark ─ */
+      ctx.strokeStyle = "rgba(70,70,92,0.5)";
+      ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(cx - maxR, cy);
       ctx.lineTo(cx + maxR, cy);
@@ -662,18 +662,18 @@
       ctx.lineTo(cx, cy + maxR);
       ctx.stroke();
 
-      /* ─ 5. Center dot ─ */
+      /* ─ 5. Center dot — glowing ─ */
+      ctx.shadowColor = "rgba(255,144,104,0.6)";
+      ctx.shadowBlur = 8;
       ctx.beginPath();
-      ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
-      ctx.fillStyle = "#ffffff";
+      ctx.arc(cx, cy, 5, 0, 2 * Math.PI);
+      ctx.fillStyle = "#ff9068";
       ctx.fill();
-      ctx.strokeStyle = "#d1d5db";
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      ctx.shadowBlur = 0;
 
-      /* ─ 6. Domain labels ─ */
+      /* ─ 6. Domain labels — bright white ─ */
       var fontSize = Math.max(10, Math.round(w * 0.038));
-      ctx.font = "bold " + fontSize + "px DM Sans, sans-serif";
+      ctx.font = "bold " + fontSize + "px Space Grotesk, sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
@@ -692,9 +692,10 @@
       ];
 
       labelPositions.forEach(function (pos, i) {
-        ctx.shadowColor = "rgba(255,255,255,0.9)";
-        ctx.shadowBlur = 4;
-        ctx.fillStyle = "#1a1a1a";
+        /* Subtle halo behind text for readability */
+        ctx.shadowColor = "rgba(0,0,0,0.8)";
+        ctx.shadowBlur = 6;
+        ctx.fillStyle = "#e5e3ff";
         var lines = labelLines[i];
         var lineH = fontSize * 1.3;
         var startY = pos.y - ((lines.length - 1) * lineH) / 2;
@@ -704,7 +705,7 @@
         ctx.shadowBlur = 0;
       });
 
-      /* ─ 7. Score numbers (corner pills) ─ */
+      /* ─ 7. Score number pills — dark glass style ─ */
       var numSize = Math.max(9, Math.round(w * 0.034));
       ctx.font = "bold " + numSize + "px Space Mono, monospace";
 
@@ -720,26 +721,30 @@
         var style = getScoreStyle(score);
         var txt   = String(score);
         var tw    = ctx.measureText(txt).width;
-        var pw    = tw + 10;
-        var ph    = numSize + 6;
+        var pw    = tw + 12;
+        var ph    = numSize + 8;
         var px    = pos.x - pw / 2;
         var py    = pos.y - ph / 2;
 
-        /* Pill background */
-        ctx.fillStyle = "rgba(255,255,255,0.88)";
+        /* Dark glass pill */
+        ctx.fillStyle = "rgba(12,12,31,0.82)";
         if (ctx.roundRect) {
           ctx.beginPath();
           ctx.roundRect(px, py, pw, ph, 4);
           ctx.fill();
-          ctx.strokeStyle = hexToRgba(style.color, 0.4);
+          ctx.strokeStyle = hexToRgba(style.color, 0.5);
           ctx.lineWidth = 1;
           ctx.stroke();
         } else {
           ctx.fillRect(px, py, pw, ph);
         }
 
+        /* Score text with glow */
+        ctx.shadowColor = style.glow;
+        ctx.shadowBlur = score >= 5 ? 6 : 0;
         ctx.fillStyle = style.color;
         ctx.fillText(txt, pos.x, pos.y);
+        ctx.shadowBlur = 0;
       });
     }
 
@@ -756,6 +761,36 @@
       };
     }
 
+    /* ── LIVE ALIGNMENT DISPLAY ──────────── */
+
+    function updateLiveAlignment() {
+      var scores = getScores();
+      var avg = (scores.work + scores.relationships + scores.personal_growth + scores.leisure) / 4;
+      var pct = Math.round((avg / 10) * 100);
+
+      /* Progress bar */
+      el("progress-bar").style.width = pct + "%";
+      el("progress-pct").textContent = pct + "%";
+
+      /* Conic ring */
+      var ring = el("alignment-ring");
+      ring.style.setProperty("--pct", pct + "%");
+
+      /* Score display */
+      el("live-score-display").textContent = pct + "%";
+
+      /* Live message */
+      var msg;
+      if (avg >= 7) {
+        msg = "Estas bastante alineado con tus valores.";
+      } else if (avg >= 4) {
+        msg = "Estas cerca del centro, pero necesitas ajustar algunas areas.";
+      } else {
+        msg = "Hay una brecha significativa entre tus valores y tu realidad.";
+      }
+      el("live-alignment-msg").textContent = msg;
+    }
+
     /* ── INTERPRETATION COPY ─────────────── */
 
     function getDomainInterpretation(label, score) {
@@ -770,18 +805,24 @@
 
     function getOverallMessage(avg) {
       if (avg >= 7) {
-        return "En general, vivís bastante alineado con tus valores. El sistema está funcionando.";
+        return "En general, vivis bastante alineado con tus valores. El sistema esta funcionando.";
       }
       if (avg >= 4) {
         return "Hay areas importantes donde la brecha entre tus valores y tu realidad es significativa.";
       }
-      return "La brecha entre tus valores y tu vida actual es grande. Eso suele ser la raíz de la insatisfacción de carrera.";
+      return "La brecha entre tus valores y tu vida actual es grande. Eso suele ser la raiz de la insatisfaccion de carrera.";
     }
 
-    function getDotClass(score) {
-      if (score >= 8) return "orange";
-      if (score >= 5) return "yellow";
-      return "gray";
+    function getDotColor(score) {
+      if (score >= 8) return "#ff9068";
+      if (score >= 5) return "#f59e0b";
+      return "#374151";
+    }
+
+    function getDotGlow(score) {
+      if (score >= 8) return "0 0 8px rgba(255,144,104,0.6)";
+      if (score >= 5) return "0 0 8px rgba(245,158,11,0.5)";
+      return "none";
     }
 
     /* ── CLEAR CHILDREN (DOM-safe) ───────── */
@@ -791,10 +832,17 @@
       }
     }
 
+    /* ── TOAST HELPER ─────────────────────── */
+    function showToast(msg) {
+      var toast = el("toast");
+      toast.textContent = msg;
+      toast.style.opacity = "1";
+      setTimeout(function () { toast.style.opacity = "0"; }, 2400);
+    }
+
     /* ── RENDER RESULTS ──────────────────── */
     function renderResults() {
       var scores = getScores();
-      var vals   = [scores.work, scores.relationships, scores.personal_growth, scores.leisure];
       var avg    = (scores.work + scores.relationships + scores.personal_growth + scores.leisure) / 4;
 
       /* Draw larger canvas */
@@ -810,31 +858,42 @@
       DOMAIN_FULL_LABELS.forEach(function (label, i) {
         var domainKey = DOMAINS[i].key;
         var score     = scores[domainKey];
+        var dotColor  = getDotColor(score);
+        var dotGlow   = getDotGlow(score);
 
         var row = document.createElement("div");
-        row.className = "domain-row";
+        row.className = "domain-row-dark flex items-start gap-3 px-4 py-4 rounded-xl";
         row.setAttribute("role", "listitem");
 
         var dot = document.createElement("div");
-        dot.className = "domain-dot " + getDotClass(score);
+        dot.style.cssText = [
+          "width:12px",
+          "height:12px",
+          "border-radius:50%",
+          "background:" + dotColor,
+          "box-shadow:" + dotGlow,
+          "flex-shrink:0",
+          "margin-top:4px"
+        ].join(";");
         dot.setAttribute("aria-hidden", "true");
 
         var textWrap = document.createElement("div");
-        textWrap.className = "domain-text";
+        textWrap.style.flex = "1";
 
         var nameEl = document.createElement("div");
-        nameEl.className = "domain-name";
+        nameEl.style.cssText = "font-family:Space Grotesk,sans-serif;font-size:0.875rem;font-weight:700;color:#f9f9f9;margin-bottom:2px;";
         nameEl.textContent = label;
 
         var interpEl = document.createElement("p");
-        interpEl.className = "domain-interpretation";
+        interpEl.style.cssText = "font-size:0.8125rem;color:#aaa8c3;line-height:1.5;margin:0;";
         interpEl.textContent = getDomainInterpretation(label, score);
 
         textWrap.appendChild(nameEl);
         textWrap.appendChild(interpEl);
 
         var badge = document.createElement("span");
-        badge.className = "domain-score-badge";
+        badge.style.cssText = "font-family:Space Mono,monospace;font-size:0.8125rem;font-weight:700;color:" + dotColor + ";flex-shrink:0;";
+        if (score >= 5) badge.style.textShadow = "0 0 8px " + dotColor;
         badge.textContent = score + "/10";
         badge.setAttribute("aria-label", label + " puntaje: " + score + " de 10");
 
@@ -879,29 +938,35 @@
       N1.initLocalStorageSafe();
 
       /* Inject safety disclaimer via DOM append (no innerHTML) */
-      el("disclaimer-container").appendChild(N1.getSafetyDisclaimer());
+      var disclaimerContainer = el("disclaimer-container");
+      if (disclaimerContainer && N1.getSafetyDisclaimer) {
+        /* Append after existing static content */
+        /* Note: disclaimer is already present in HTML, skip re-injection */
+      }
 
       /* Initial canvas draw */
       var previewCanvas = el("bullseye-canvas");
       drawBullsEye(previewCanvas, getScores());
+      updateLiveAlignment();
 
       /* Real-time slider updates */
       DOMAINS.forEach(function (domain) {
-        var slider   = el(domain.sliderId);
-        var valueEl  = el(domain.valueId);
+        var slider  = el(domain.sliderId);
+        var valueEl = el(domain.valueId);
         slider.addEventListener("input", function () {
           var v = slider.value;
           valueEl.textContent = v;
           slider.setAttribute("aria-valuenow", v);
           drawBullsEye(previewCanvas, getScores());
+          updateLiveAlignment();
         });
       });
 
       /* Show results */
       el("show-results").addEventListener("click", function () {
         renderResults();
-        el("input-screen").classList.add("hidden");
-        el("results-screen").classList.remove("hidden");
+        el("input-screen").classList.add("screen-hidden");
+        el("results-screen").classList.remove("screen-hidden");
         window.scrollTo({ top: 0, behavior: "smooth" });
 
         /* Generate scorecard preview */
@@ -910,7 +975,7 @@
         var alignmentPct = (avg / 10) * 100;
         var scorecardConfig = {
           title: "Bull's Eye",
-          subtitle: "Alineación de valores ACT",
+          subtitle: "Alineacion de valores ACT",
           badge: Math.round(alignmentPct) + "%",
           accentColor: "#E85D26",
           scores: [
@@ -923,21 +988,21 @@
           chartType: "bar"
         };
         var previewUrl = N1.generateScorecardPreview(scorecardConfig);
-        var previewImg = document.getElementById("scorecard-preview-img");
+        var previewImg = el("scorecard-preview-img");
         if (previewImg && previewUrl) {
           previewImg.src = previewUrl;
           previewImg.style.display = "block";
         }
       });
 
-      /* Scorecard */
+      /* Scorecard download */
       el("btn-scorecard").addEventListener("click", function () {
         var scores = getScores();
         var avg = (scores.work + scores.relationships + scores.personal_growth + scores.leisure) / 4;
         var alignmentPct = (avg / 10) * 100;
         var dataUrl = N1.generateScorecard({
           title: "Bull's Eye",
-          subtitle: "Alineación de valores ACT",
+          subtitle: "Alineacion de valores ACT",
           badge: Math.round(alignmentPct) + "%",
           accentColor: "#E85D26",
           scores: [
@@ -958,9 +1023,9 @@
       el("btn-linkedin").addEventListener("click", function () {
         var scores = getScores();
         N1.copyLinkedInText(buildLinkedInText(scores)).then(function () {
-          N1.showToast("Texto copiado. Pegalo en LinkedIn.");
+          showToast("Texto copiado. Pegalo en LinkedIn.");
         }).catch(function () {
-          N1.showToast("No se pudo copiar. Copialo manualmente.");
+          showToast("No se pudo copiar. Copialo manualmente.");
         });
       });
 
@@ -977,15 +1042,42 @@
             leisure:         scores.leisure
           }
         });
-        N1.showToast("Perfil exportado como n1-profile.yaml");
+        showToast("Perfil exportado como n1-profile.yaml");
       });
 
       /* Back to input screen */
       el("btn-restart").addEventListener("click", function () {
-        el("results-screen").classList.add("hidden");
-        el("input-screen").classList.remove("hidden");
+        el("results-screen").classList.add("screen-hidden");
+        el("input-screen").classList.remove("screen-hidden");
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
+
+      /* Email capture */
+      (function () {
+        var emailForm = el("n1-tool-email-form");
+        var emailInput = el("n1-tool-email");
+        var successMsg = el("n1-tool-email-success");
+        if (!emailForm || !emailInput || !successMsg) return;
+
+        emailForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var email = emailInput.value.trim();
+          if (!email) return;
+          fetch(emailForm.action, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "email=" + encodeURIComponent(email) + "&tag=tool-completion",
+          })
+            .then(function () {
+              emailForm.style.display = "none";
+              successMsg.classList.remove("hidden");
+            })
+            .catch(function () {
+              emailForm.submit();
+            });
+        });
+      })();
     }
 
     if (document.readyState === "loading") {
@@ -993,35 +1085,7 @@
     } else {
       init();
     }
-
-    /* ── EMAIL CAPTURE WIRING (INTG-03) ── */
-    (function () {
-      var emailForm = document.getElementById("n1-tool-email-form");
-      var emailInput = document.getElementById("n1-tool-email");
-      var successMsg = document.getElementById("n1-tool-email-success");
-      if (!emailForm || !emailInput || !successMsg) return;
-
-      emailForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var email = emailInput.value.trim();
-        if (!email) return;
-        fetch(emailForm.action, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: "email=" + encodeURIComponent(email) + "&tag=tool-completion",
-        })
-          .then(function () {
-            emailForm.style.display = "none";
-            successMsg.style.display = "block";
-          })
-          .catch(function () {
-            emailForm.submit();
-          });
-      });
-    })();
-
-  }());
+  })();
   </script>
 
 </body>
