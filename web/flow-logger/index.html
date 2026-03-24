@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,568 +10,424 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://n1career.github.io/N1/flow-logger/" />
   <meta property="og:image" content="https://n1career.github.io/N1/web/og-image.png" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23e85d26' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ff9068' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary-fixed": "#e2e0fc",
+            "on-tertiary-fixed": "#4f5051",
+            "tertiary-dim": "#ebebeb",
+            "on-primary-fixed": "#000000",
+            "surface-container-low": "#111127",
+            "tertiary-container": "#ebebeb",
+            "primary": "#ff9068",
+            "on-background": "#e5e3ff",
+            "surface-tint": "#ff9068",
+            "primary-dim": "#ff743f",
+            "surface": "#0c0c1f",
+            "surface-dim": "#0c0c1f",
+            "on-surface": "#e5e3ff",
+            "on-primary-container": "#451100",
+            "on-secondary-fixed-variant": "#5a5971",
+            "on-secondary": "#505066",
+            "tertiary": "#f9f9f9",
+            "on-primary": "#591800",
+            "inverse-surface": "#fcf8ff",
+            "surface-variant": "#23233f",
+            "surface-container-lowest": "#000000",
+            "secondary-dim": "#d4d2ed",
+            "on-secondary-fixed": "#3e3d53",
+            "primary-container": "#ff7947",
+            "on-tertiary-container": "#555757",
+            "primary-fixed": "#ff7947",
+            "secondary-container": "#45455b",
+            "surface-bright": "#292948",
+            "on-secondary-container": "#d0cee9",
+            "outline": "#74738b",
+            "tertiary-fixed-dim": "#f0f1f1",
+            "secondary-fixed-dim": "#d4d2ed",
+            "on-tertiary": "#5e5f5f",
+            "error-container": "#9f0519",
+            "secondary": "#e2e0fc",
+            "error": "#ff716c",
+            "surface-container-high": "#1d1d37",
+            "primary-fixed-dim": "#f5662f",
+            "tertiary-fixed": "#ffffff",
+            "on-tertiary-fixed-variant": "#6c6d6e",
+            "on-error": "#490006",
+            "surface-container": "#17172f",
+            "background": "#0c0c1f",
+            "surface-container-highest": "#23233f",
+            "inverse-primary": "#ab3700",
+            "on-surface-variant": "#aaa8c3",
+            "outline-variant": "#46465c",
+            "inverse-on-surface": "#53536a",
+            "on-primary-fixed-variant": "#551700",
+            "on-error-container": "#ffa8a3",
+            "error-dim": "#d7383b"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Space Grotesk"],
+            "mono": ["Space Mono"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* ── Flow Logger local styles ─────────────── */
-    .section-card {
-      background: var(--n1-white);
-      border: 1px solid var(--n1-border);
-      border-radius: var(--n1-radius);
-      padding: var(--space-xl);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      margin-bottom: var(--space-lg);
+    body {
+      background-color: #0c0c1f;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255, 144, 104, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 144, 104, 0.08) 0%, transparent 40%);
     }
-
-    .section-card h2 {
-      font-size: 1.125rem;
-      margin-bottom: var(--space-md);
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
-
-    /* Form */
-    .form-group {
-      margin-bottom: var(--space-lg);
+    .glass-panel {
+      background: rgba(35, 35, 63, 0.7);
+      backdrop-filter: blur(20px);
     }
-
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.9375rem;
-      margin-bottom: var(--space-sm);
-      color: var(--n1-black);
-    }
-
-    .form-group input[type="text"] {
-      width: 100%;
-      padding: 10px var(--space-md);
-      border: 2px solid var(--n1-border);
-      border-radius: var(--n1-radius-sm);
-      font-size: 0.9375rem;
-      color: var(--n1-black);
-      background: var(--n1-white);
-      transition: border-color var(--transition-fast);
-    }
-
-    .form-group input[type="text"]:focus {
-      border-color: var(--n1-orange);
-      outline: none;
-    }
-
-    /* Rating group with slider */
-    .rating-group {
-      margin-bottom: var(--space-lg);
-    }
-
-    .rating-group label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.9375rem;
-      margin-bottom: var(--space-sm);
-      color: var(--n1-black);
-    }
-
-    .rating-row {
-      display: flex;
-      align-items: center;
-      gap: var(--space-md);
-    }
-
-    .rating-row input[type="range"] {
-      flex: 1;
+    /* Dark slider styling */
+    .dark-slider {
+      -webkit-appearance: none;
+      appearance: none;
       height: 6px;
-      -webkit-appearance: none;
-      appearance: none;
-      background: var(--n1-border);
+      background: #17172f;
       border-radius: 999px;
       outline: none;
       cursor: pointer;
+      border: 1px solid #46465c;
     }
-
-    .rating-row input[type="range"]::-webkit-slider-thumb {
+    .dark-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: var(--n1-orange);
+      background: #ff9068;
       cursor: pointer;
-      border: 2px solid var(--n1-white);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      border: 2px solid #0c0c1f;
+      box-shadow: 0 0 8px rgba(255, 144, 104, 0.4);
     }
-
-    .rating-row input[type="range"]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
+    .dark-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: var(--n1-orange);
+      background: #ff9068;
       cursor: pointer;
-      border: 2px solid var(--n1-white);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      border: 2px solid #0c0c1f;
+      box-shadow: 0 0 8px rgba(255, 144, 104, 0.4);
     }
-
-    .rating-value {
-      font-family: var(--font-heading);
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--n1-orange);
-      min-width: 24px;
-      text-align: center;
+    .dark-slider:focus::-webkit-slider-thumb {
+      box-shadow: 0 0 0 3px rgba(255, 144, 104, 0.2);
     }
-
-    /* State preview badge */
-    .state-preview {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-lg);
-      padding: var(--space-sm) var(--space-md);
-      border-radius: var(--n1-radius-sm);
-      font-size: 0.875rem;
-      font-weight: 600;
-      background: var(--n1-surface);
-      border: 1px solid var(--n1-border);
-      color: var(--n1-muted);
-      transition: background var(--transition-fast), color var(--transition-fast);
-    }
-
-    .state-preview.state-flow {
-      background: #fff0eb;
-      border-color: var(--n1-orange);
-      color: var(--n1-orange);
-    }
-
-    .state-preview.state-anxiety {
-      background: #fff0f0;
-      border-color: #e05252;
-      color: #c0392b;
-    }
-
-    .state-preview.state-boredom {
-      background: #f0f4ff;
-      border-color: #6b8cda;
-      color: #3a5bbf;
-    }
-
-    .state-preview.state-apathy {
-      background: var(--n1-surface);
-      border-color: var(--n1-border);
-      color: var(--n1-muted);
-    }
-
-    /* Activity list */
-    .activity-empty {
-      color: var(--n1-muted);
-      font-size: 0.9375rem;
-      text-align: center;
-      padding: var(--space-xl) 0;
-    }
-
-    .activity-item {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--space-md);
-      padding: var(--space-md) 0;
-      border-bottom: 1px solid var(--n1-border);
-    }
-
-    .activity-item:last-child {
-      border-bottom: none;
-    }
-
-    .activity-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .activity-name {
-      font-weight: 600;
-      font-size: 0.9375rem;
-      color: var(--n1-black);
-      margin-bottom: var(--space-xs);
-      word-break: break-word;
-    }
-
-    .activity-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-xs);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      line-height: 1;
-      white-space: nowrap;
-    }
-
-    .badge-challenge {
-      background: #f5f5f5;
-      color: var(--n1-muted);
-      border: 1px solid var(--n1-border);
-    }
-
-    .badge-skill {
-      background: #f5f5f5;
-      color: var(--n1-muted);
-      border: 1px solid var(--n1-border);
-    }
-
-    .badge-flow {
-      background: #fff0eb;
-      color: var(--n1-orange);
-      border: 1px solid #f9c4af;
-    }
-
-    .badge-anxiety {
-      background: #fff0f0;
-      color: #c0392b;
-      border: 1px solid #f5a5a5;
-    }
-
-    .badge-boredom {
-      background: #f0f4ff;
-      color: #3a5bbf;
-      border: 1px solid #afc0f5;
-    }
-
-    .badge-apathy {
-      background: var(--n1-surface);
-      color: var(--n1-muted);
-      border: 1px solid var(--n1-border);
-    }
-
-    .btn-delete {
-      flex-shrink: 0;
-      background: none;
-      border: none;
-      color: var(--n1-muted);
-      cursor: pointer;
-      font-size: 1rem;
-      padding: var(--space-xs) var(--space-sm);
-      border-radius: var(--n1-radius-sm);
-      transition: color var(--transition-fast), background var(--transition-fast);
-      line-height: 1;
-    }
-
-    .btn-delete:hover {
-      color: #c0392b;
-      background: #fff0f0;
-    }
-
-    /* Chart */
-    .chart-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
-    }
-
-    #flow-canvas {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .chart-empty {
-      color: var(--n1-muted);
-      font-size: 0.875rem;
-      text-align: center;
-      padding: var(--space-xl) 0;
-    }
-
-    /* Insight box */
-    .insight-box {
-      background: var(--n1-surface);
-      border-radius: var(--n1-radius-sm);
-      border-left: 3px solid var(--n1-orange);
-      padding: var(--space-md) var(--space-lg);
-      margin-top: var(--space-md);
-    }
-
-    .insight-box p {
-      font-size: 0.9375rem;
-      color: var(--n1-black);
-      margin-bottom: var(--space-sm);
-    }
-
-    .insight-box p:last-child {
-      margin-bottom: 0;
-    }
-
-    .insight-stats {
-      font-size: 0.875rem;
-      color: var(--n1-muted);
-    }
-
-    /* Export */
-    #export-confirm {
-      font-size: 0.875rem;
-      color: #2d7a45;
-      margin-top: var(--space-sm);
-    }
-
-    /* Legend */
-    .zone-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-      margin-top: var(--space-md);
-      font-size: 0.75rem;
-    }
-
-    .zone-legend-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .legend-dot-flow   { background: #E85D26; }
-    .legend-dot-anxiety  { background: #e05252; }
-    .legend-dot-boredom  { background: #6b8cda; }
-    .legend-dot-apathy   { background: #aaaaaa; }
+    /* Zone badge colors */
+    .badge-zone-flow     { background: rgba(255,144,104,0.15); color: #ff9068; border: 1px solid rgba(255,144,104,0.3); }
+    .badge-zone-anxiety  { background: rgba(224,82,82,0.15);   color: #ef4444; border: 1px solid rgba(224,82,82,0.3); }
+    .badge-zone-boredom  { background: rgba(107,140,218,0.15); color: #60a5fa; border: 1px solid rgba(107,140,218,0.3); }
+    .badge-zone-apathy   { background: rgba(116,115,139,0.15); color: #aaa8c3; border: 1px solid rgba(116,115,139,0.3); }
+    /* Hidden utility */
+    .hidden { display: none !important; }
   </style>
 </head>
-<body>
+<body class="font-body text-on-surface min-h-screen flex flex-col">
 
-  <!-- Navigation -->
-  <nav class="nav" aria-label="Navegación principal">
-    <a href="../index.html" class="nav-logo">N<span>1</span></a>
-    <a href="../index.html" class="nav-back">Inicio</a>
-  </nav>
+  <!-- Fixed Header -->
+  <header class="fixed top-0 w-full z-50 bg-[#0c0c1f]/60 backdrop-blur-xl border-b border-[#46465c]/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)]">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-[640px] mx-auto">
+      <a href="../index.html" class="text-[#ff9068] scale-95 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <h1 class="font-headline uppercase tracking-widest text-sm text-[#ff9068] font-bold">N1 Flow Logger</h1>
+      <div class="text-[#46465c]">
+        <span class="material-symbols-outlined">scatter_plot</span>
+      </div>
+    </div>
+  </header>
 
-  <!-- Main content -->
-  <main class="container">
-    <h1>Flow Logger</h1>
-    <p class="text-muted">
-      Registrá actividades que hacés y rate-alas por desafío y habilidad.
-      Con el tiempo vas a ver donde esta tu zona de flow.
-    </p>
+  <!-- Main Content -->
+  <main class="flex-grow flex flex-col items-center px-6 pt-24 pb-32 max-w-[640px] mx-auto w-full">
+
+    <!-- Page hero -->
+    <div class="w-full mb-8">
+      <div class="inline-block mb-3 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+        <span class="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">Csikszentmihalyi, 1990</span>
+      </div>
+      <h2 class="font-headline text-3xl font-bold tracking-tight text-tertiary mb-2">Flow Logger</h2>
+      <p class="text-on-surface-variant text-sm leading-relaxed">
+        Registrá actividades que hacés y rate-alas por desafío y habilidad. Con el tiempo vas a ver dónde está tu zona de flow.
+      </p>
+    </div>
 
     <!-- SECTION: Add activity -->
-    <section id="add-activity" class="section-card" aria-label="Agregar actividad">
-      <h2>Agregar actividad</h2>
+    <section id="add-activity" class="w-full glass-panel rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] mb-6 relative overflow-hidden" aria-label="Agregar actividad">
+      <div class="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 blur-[60px] rounded-full pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="flex items-center gap-2 mb-5">
+          <span class="material-symbols-outlined text-primary text-sm">add_circle</span>
+          <h2 class="font-headline text-base font-bold text-tertiary uppercase tracking-tight">Agregar actividad</h2>
+        </div>
 
-      <div class="form-group">
-        <label for="activity-name">Nombre de la actividad</label>
-        <input
-          type="text"
-          id="activity-name"
-          placeholder="Ej: dar una presentacion, escribir codigo, revisar PRs"
-          autocomplete="off"
-          aria-required="true"
-          aria-describedby="activity-hint"
-        />
-        <p id="activity-hint" class="text-muted text-sm" style="margin-top: 4px; margin-bottom: 0;">
-          Algo específico que hacés en el trabajo o en lo que te desarrollás profesionalmente.
-        </p>
-      </div>
+        <!-- Activity name input -->
+        <div class="mb-5">
+          <label for="activity-name" class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 block">
+            Nombre de la actividad
+          </label>
+          <input
+            type="text"
+            id="activity-name"
+            placeholder="Ej: dar una presentación, escribir código, revisar PRs"
+            autocomplete="off"
+            aria-required="true"
+            aria-describedby="activity-hint"
+            class="w-full bg-surface-container border border-outline-variant/40 rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors"
+          />
+          <p id="activity-hint" class="text-xs text-on-surface-variant mt-2">
+            Algo específico que hacés en el trabajo o en lo que te desarrollás profesionalmente.
+          </p>
+        </div>
 
-      <div class="rating-group" role="group" aria-labelledby="challenge-label">
-        <label id="challenge-label" for="challenge-rating">
-          Desafío (1 = muy fácil, 5 = al límite)
-        </label>
-        <div class="rating-row">
+        <!-- Challenge slider -->
+        <div class="mb-5" role="group" aria-labelledby="challenge-label">
+          <div class="flex justify-between items-center mb-2">
+            <label id="challenge-label" for="challenge-rating" class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+              Desafío
+            </label>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-on-surface-variant">muy fácil</span>
+              <span id="challenge-display" class="font-mono text-base font-bold text-primary min-w-[1.5rem] text-center" aria-live="polite">3</span>
+              <span class="text-xs text-on-surface-variant">al límite</span>
+            </div>
+          </div>
           <input
             type="range"
             id="challenge-rating"
-            min="1"
-            max="5"
-            value="3"
-            step="1"
-            aria-valuemin="1"
-            aria-valuemax="5"
-            aria-valuenow="3"
+            class="dark-slider w-full"
+            min="1" max="5" value="3" step="1"
+            aria-valuemin="1" aria-valuemax="5" aria-valuenow="3"
             aria-labelledby="challenge-label"
           />
-          <span class="rating-value" id="challenge-display" aria-live="polite">3</span>
         </div>
-      </div>
 
-      <div class="rating-group" role="group" aria-labelledby="skill-label">
-        <label id="skill-label" for="skill-rating">
-          Habilidad (1 = principiante, 5 = experto)
-        </label>
-        <div class="rating-row">
+        <!-- Skill slider -->
+        <div class="mb-5" role="group" aria-labelledby="skill-label">
+          <div class="flex justify-between items-center mb-2">
+            <label id="skill-label" for="skill-rating" class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+              Habilidad
+            </label>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-on-surface-variant">principiante</span>
+              <span id="skill-display" class="font-mono text-base font-bold text-primary min-w-[1.5rem] text-center" aria-live="polite">3</span>
+              <span class="text-xs text-on-surface-variant">experto</span>
+            </div>
+          </div>
           <input
             type="range"
             id="skill-rating"
-            min="1"
-            max="5"
-            value="3"
-            step="1"
-            aria-valuemin="1"
-            aria-valuemax="5"
-            aria-valuenow="3"
+            class="dark-slider w-full"
+            min="1" max="5" value="3" step="1"
+            aria-valuemin="1" aria-valuemax="5" aria-valuenow="3"
             aria-labelledby="skill-label"
           />
-          <span class="rating-value" id="skill-display" aria-live="polite">3</span>
         </div>
-      </div>
 
-      <div id="state-preview" class="state-preview state-flow" role="status" aria-live="polite">
-        Zona: Flow
-      </div>
+        <!-- Zone preview badge -->
+        <div class="mb-5">
+          <div id="state-preview" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg font-mono text-xs font-bold badge-zone-flow" role="status" aria-live="polite">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">electric_bolt</span>
+            <span id="state-preview-text">Zona: Flow</span>
+          </div>
+        </div>
 
-      <button
-        id="add-btn"
-        class="btn btn-primary"
-        type="button"
-        disabled
-        aria-disabled="true"
-      >
-        Agregar actividad
-      </button>
+        <button
+          id="add-btn"
+          type="button"
+          disabled
+          aria-disabled="true"
+          class="w-full py-4 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold uppercase tracking-widest text-xs text-on-primary-fixed shadow-[0_10px_20px_-5px_rgba(255,144,104,0.3)] hover:shadow-[0_0_20px_rgba(255,144,104,0.4)] transition-all duration-300 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed">
+          Agregar actividad
+        </button>
+      </div>
     </section>
 
     <!-- SECTION: Activity list -->
-    <section id="activity-list" class="section-card" aria-label="Actividades registradas">
-      <h2>Actividades</h2>
+    <section id="activity-list" class="w-full glass-panel rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] mb-6" aria-label="Actividades registradas">
+      <div class="flex items-center gap-2 mb-5">
+        <span class="material-symbols-outlined text-primary text-sm">format_list_bulleted</span>
+        <h2 class="font-headline text-base font-bold text-tertiary uppercase tracking-tight">Actividades</h2>
+      </div>
       <div id="activities-container">
         <!-- Populated by JS -->
       </div>
     </section>
 
     <!-- SECTION: Flow chart -->
-    <section id="flow-chart" class="section-card" aria-label="Gráfico de flow">
-      <h2>Mapa de flow</h2>
-      <p class="text-muted text-sm">
+    <section id="flow-chart" class="w-full glass-panel rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] mb-6" aria-label="Gráfico de flow">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-primary text-sm">scatter_plot</span>
+        <h2 class="font-headline text-base font-bold text-tertiary uppercase tracking-tight">Mapa de flow</h2>
+      </div>
+      <p class="text-xs text-on-surface-variant mb-5">
         Cada punto es una actividad. El eje X muestra tu habilidad, el eje Y muestra el desafío.
       </p>
 
       <div id="chart-area">
-        <p id="chart-empty" class="chart-empty">Agregá actividades arriba para ver el gráfico.</p>
-        <div id="chart-wrapper" class="chart-wrapper hidden" aria-hidden="true">
+        <p id="chart-empty" class="text-on-surface-variant text-sm text-center py-8">Agregá actividades arriba para ver el gráfico.</p>
+        <div id="chart-wrapper" class="hidden" aria-hidden="true">
           <canvas id="flow-canvas" width="400" height="400" aria-label="Grafico de dispersion de actividades por zona de flow"></canvas>
         </div>
       </div>
 
-      <div class="zone-legend" aria-label="Leyenda de zonas">
-        <div class="zone-legend-item">
-          <div class="legend-dot legend-dot-flow" aria-hidden="true"></div>
-          <span>Flow</span>
+      <!-- Zone legend -->
+      <div class="flex flex-wrap gap-3 mt-4" aria-label="Leyenda de zonas">
+        <div class="flex items-center gap-1.5">
+          <div class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#ff9068;"></div>
+          <span class="font-mono text-[10px] text-on-surface-variant uppercase">Flow</span>
         </div>
-        <div class="zone-legend-item">
-          <div class="legend-dot legend-dot-anxiety" aria-hidden="true"></div>
-          <span>Ansiedad</span>
+        <div class="flex items-center gap-1.5">
+          <div class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#ef4444;"></div>
+          <span class="font-mono text-[10px] text-on-surface-variant uppercase">Ansiedad</span>
         </div>
-        <div class="zone-legend-item">
-          <div class="legend-dot legend-dot-boredom" aria-hidden="true"></div>
-          <span>Aburrimiento</span>
+        <div class="flex items-center gap-1.5">
+          <div class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#60a5fa;"></div>
+          <span class="font-mono text-[10px] text-on-surface-variant uppercase">Aburrimiento</span>
         </div>
-        <div class="zone-legend-item">
-          <div class="legend-dot legend-dot-apathy" aria-hidden="true"></div>
-          <span>Apatia</span>
+        <div class="flex items-center gap-1.5">
+          <div class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#aaa8c3;"></div>
+          <span class="font-mono text-[10px] text-on-surface-variant uppercase">Apatia</span>
         </div>
       </div>
 
-      <!-- Insight shown when >= 3 activities -->
-      <div id="insight-area"></div>
+      <!-- Insight area (shown when >= 3 activities) -->
+      <div id="insight-area" class="mt-4"></div>
     </section>
 
     <!-- SECTION: Export -->
-    <section id="export-section" class="section-card" aria-label="Exportar perfil">
-      <h2>Exportar a perfil</h2>
-      <p>
+    <section id="export-section" class="w-full glass-panel rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] mb-6" aria-label="Exportar perfil">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="material-symbols-outlined text-primary text-sm">download</span>
+        <h2 class="font-headline text-base font-bold text-tertiary uppercase tracking-tight">Exportar a perfil</h2>
+      </div>
+      <p class="text-xs text-on-surface-variant mb-5">
         Exporta tus actividades de flow a tu perfil N1. El YAML descargado incluye el campo
-        <code>strengths.flow_activities</code> con todas tus actividades.
+        <code class="font-mono text-primary text-[10px]">strengths.flow_activities</code> con todas tus actividades.
       </p>
 
-      <!-- SCORECARD PREVIEW (generated by JS when activities exist) -->
+      <!-- Scorecard preview -->
       <img
         id="scorecard-preview-img"
-        class="n1-scorecard-preview"
+        class="w-full rounded-xl mb-5 border border-outline-variant/20"
         alt="Vista previa del scorecard"
         style="display:none;"
         aria-label="Vista previa del scorecard descargable"
       />
 
-      <button
-        id="export-scorecard"
-        class="btn btn-secondary"
-        type="button"
-      >
-        Descargar scorecard
-      </button>
-      <button
-        id="export-profile"
-        class="btn btn-secondary"
-        type="button"
-      >
-        Exportar perfil YAML
-      </button>
-      <p id="export-confirm" class="hidden" role="status" aria-live="polite">
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <button
+          id="export-scorecard"
+          type="button"
+          class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed flex items-center justify-center gap-2 py-4 rounded-lg font-headline font-bold text-xs tracking-tight shadow-[0_0_20px_rgba(255,144,104,0.3)] transition-transform active:scale-95">
+          <span class="material-symbols-outlined text-[18px]">download</span>
+          Scorecard
+        </button>
+        <button
+          id="export-profile"
+          type="button"
+          class="border border-outline-variant text-on-surface flex items-center justify-center gap-2 py-4 rounded-lg font-headline font-bold text-xs tracking-tight hover:bg-white/5 transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[18px]">code</span>
+          Perfil YAML
+        </button>
+      </div>
+
+      <p id="export-confirm" class="hidden text-xs text-primary mt-2" role="status" aria-live="polite">
         Guardado en tu perfil. Descarga iniciada.
       </p>
 
-      <!-- EMAIL CAPTURE (INTG-03 — D-07, D-08) -->
-      <div
-        class="n1-email-section"
-        id="n1-email-section"
-        aria-label="Suscripción al newsletter"
-        style="margin-top: var(--space-xl);"
-      >
-        <p class="n1-email-section-label">Newsletter</p>
-        <p class="n1-email-section-title">Recibí insights de carrera cada semana</p>
-        <p class="n1-email-section-desc">
-          Sin spam. Investigación aplicada — en español.
-        </p>
+      <!-- Email capture -->
+      <div class="mt-6 pt-6 border-t border-outline-variant/20" id="n1-email-section" aria-label="Suscripción al newsletter">
+        <div class="inline-block mb-3 px-2 py-0.5 bg-primary/10 border border-primary/20 rounded-full">
+          <span class="font-mono text-[9px] text-primary uppercase tracking-[0.2em]">Newsletter</span>
+        </div>
+        <p class="font-headline text-base font-bold text-tertiary mb-1">Recibí insights de carrera cada semana</p>
+        <p class="text-xs text-on-surface-variant mb-4">Sin spam. Investigación aplicada — en español.</p>
         <form
           id="n1-tool-email-form"
-          class="n1-email-section-form"
           action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
           method="POST"
           target="popupwindow"
           novalidate
           aria-label="Formulario de suscripción"
+          class="flex gap-3"
         >
-          <label for="n1-tool-email" class="visually-hidden"
-            >Tu dirección de correo</label
-          >
+          <label for="n1-tool-email" class="sr-only">Tu dirección de correo</label>
           <input
             type="email"
             name="email"
             id="n1-tool-email"
-            class="n1-email-section-input"
             placeholder="tu@email.com"
             required
             autocomplete="email"
             aria-required="true"
+            class="flex-1 bg-surface-container border border-outline-variant/40 rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors"
           />
           <input type="hidden" name="tag" value="tool-completion" />
-          <button type="submit" class="btn btn-primary" style="flex-shrink:0;">
+          <button type="submit"
+            class="flex-shrink-0 px-4 py-3 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold text-xs text-on-primary-fixed uppercase tracking-wider active:scale-95 transition-transform">
             Suscribirme
           </button>
         </form>
-        <p
-          class="n1-email-section-success"
-          id="n1-tool-email-success"
-          role="status"
-          aria-live="polite"
-        >
+        <p class="text-xs text-primary mt-3" id="n1-tool-email-success" style="display:none;" role="status" aria-live="polite">
           Listo. Te llegará el primer correo pronto.
         </p>
       </div>
     </section>
 
     <!-- Disclaimer -->
-    <div id="disclaimer-container"></div>
+    <div id="disclaimer-container" class="w-full mb-6"></div>
+
+    <!-- Toast -->
+    <div class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-4 py-3 bg-surface-container-highest border border-outline-variant/40 rounded-xl text-sm text-on-surface shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] opacity-0 pointer-events-none transition-opacity duration-300" id="toast" role="status" aria-live="polite"></div>
 
   </main>
 
-  <!-- Toast notification -->
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 h-20 bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50">
+    <div class="flex justify-around items-center h-full px-4 max-w-[640px] mx-auto">
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../index.html">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Inicio</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 translate-y-[-2px] transition-all" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">scatter_plot</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Flow</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../compass/index.html">
+        <span class="material-symbols-outlined">explore</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Compass</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../index.html">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Herramientas</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Background atmospheric elements -->
+  <div class="fixed inset-0 pointer-events-none -z-10">
+    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary/10 blur-[150px] rounded-full"></div>
+  </div>
 
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -582,7 +438,7 @@
     (function () {
       "use strict";
 
-      /* ── CONSTANTS ──────────────────────── */
+      /* CONSTANTS */
       var STORAGE_KEY = "n1-flow-activities";
 
       var ZONE_LABELS = {
@@ -593,10 +449,24 @@
       };
 
       var ZONE_COLORS = {
-        flow:    "#E85D26",
-        anxiety: "#e05252",
-        boredom: "#6b8cda",
-        apathy:  "#aaaaaa"
+        flow:    "#ff9068",
+        anxiety: "#ef4444",
+        boredom: "#60a5fa",
+        apathy:  "#aaa8c3"
+      };
+
+      var ZONE_BADGE_CLASSES = {
+        flow:    "badge-zone-flow",
+        anxiety: "badge-zone-anxiety",
+        boredom: "badge-zone-boredom",
+        apathy:  "badge-zone-apathy"
+      };
+
+      var ZONE_ICONS = {
+        flow:    "electric_bolt",
+        anxiety: "warning",
+        boredom: "sentiment_neutral",
+        apathy:  "do_not_disturb"
       };
 
       var ZONE_INSIGHTS = {
@@ -606,13 +476,7 @@
         apathy:  "La mayoria de tus actividades no te generan compromiso. Vale la pena explorar si hay algo que naturalmente te absorba mas."
       };
 
-      /* ── ZONE DERIVATION (pure function) ── */
-      /**
-       * Derives the flow zone from challenge and skill ratings.
-       * @param {number} challenge - 1-5
-       * @param {number} skill - 1-5
-       * @returns {"flow"|"anxiety"|"boredom"|"apathy"}
-       */
+      /* ZONE DERIVATION (pure function) */
       function getFlowZone(challenge, skill) {
         var diff = Math.abs(challenge - skill);
         if (challenge >= 3 && skill >= 3 && diff <= 1) return "flow";
@@ -621,7 +485,7 @@
         return "apathy";
       }
 
-      /* ── STORAGE ─────────────────────────── */
+      /* STORAGE */
       function loadActivities() {
         try {
           var raw = localStorage.getItem(STORAGE_KEY);
@@ -633,70 +497,97 @@
         }
       }
 
-      function saveActivities(activities) {
+      function saveActivities(list) {
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(activities));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
         } catch (e) {
-          N1.showToast("No se pudo guardar. El almacenamiento local puede estar lleno.", 4000);
+          showToast("No se pudo guardar. El almacenamiento local puede estar lleno.", 4000);
         }
       }
 
-      /* ── STATE ───────────────────────────── */
+      /* STATE */
       var activities = loadActivities();
 
-      /* ── DOM REFS ────────────────────────── */
-      var activityNameInput = document.getElementById("activity-name");
-      var challengeInput    = document.getElementById("challenge-rating");
-      var skillInput        = document.getElementById("skill-rating");
-      var challengeDisplay  = document.getElementById("challenge-display");
-      var skillDisplay      = document.getElementById("skill-display");
-      var statePreview      = document.getElementById("state-preview");
-      var addBtn            = document.getElementById("add-btn");
+      /* DOM REFS */
+      var activityNameInput   = document.getElementById("activity-name");
+      var challengeInput      = document.getElementById("challenge-rating");
+      var skillInput          = document.getElementById("skill-rating");
+      var challengeDisplay    = document.getElementById("challenge-display");
+      var skillDisplay        = document.getElementById("skill-display");
+      var statePreviewEl      = document.getElementById("state-preview");
+      var statePreviewTextEl  = document.getElementById("state-preview-text");
+      var addBtn              = document.getElementById("add-btn");
       var activitiesContainer = document.getElementById("activities-container");
-      var chartEmpty        = document.getElementById("chart-empty");
-      var chartWrapper      = document.getElementById("chart-wrapper");
-      var insightArea       = document.getElementById("insight-area");
-      var exportBtn         = document.getElementById("export-profile");
-      var exportConfirm     = document.getElementById("export-confirm");
-      var toastEl           = document.getElementById("toast");
+      var chartEmpty          = document.getElementById("chart-empty");
+      var chartWrapper        = document.getElementById("chart-wrapper");
+      var insightArea         = document.getElementById("insight-area");
+      var exportBtn           = document.getElementById("export-profile");
+      var exportConfirm       = document.getElementById("export-confirm");
+      var toastEl             = document.getElementById("toast");
 
-      var flowChart = null; // Chart.js instance
+      var flowChart = null;
 
-      /* ── UI: State preview ───────────────── */
+      /* TOAST */
+      function showToast(msg, duration) {
+        if (!toastEl) return;
+        toastEl.textContent = msg;
+        toastEl.style.opacity = "1";
+        toastEl.style.pointerEvents = "auto";
+        setTimeout(function () {
+          toastEl.style.opacity = "0";
+          toastEl.style.pointerEvents = "none";
+        }, duration || 2000);
+      }
+
+      /* UI: Zone preview badge */
       function updateStatePreview() {
         var challenge = parseInt(challengeInput.value, 10);
         var skill     = parseInt(skillInput.value, 10);
         var zone      = getFlowZone(challenge, skill);
 
-        // Clear classes and set new one
-        statePreview.className = "state-preview state-" + zone;
+        /* Remove all zone classes, add correct one */
+        statePreviewEl.className = "inline-flex items-center gap-2 px-3 py-2 rounded-lg font-mono text-xs font-bold " + ZONE_BADGE_CLASSES[zone];
 
-        // Use textContent — no innerHTML
-        statePreview.textContent = "Zona: " + ZONE_LABELS[zone];
-        statePreview.setAttribute("aria-label", "Zona derivada: " + ZONE_LABELS[zone]);
+        /* Clear and rebuild content safely */
+        while (statePreviewEl.firstChild) statePreviewEl.removeChild(statePreviewEl.firstChild);
+
+        var iconSpan = document.createElement("span");
+        iconSpan.className = "material-symbols-outlined text-sm";
+        iconSpan.style.fontVariationSettings = "'FILL' 1";
+        iconSpan.textContent = ZONE_ICONS[zone];
+        statePreviewEl.appendChild(iconSpan);
+
+        var textSpan = document.createElement("span");
+        textSpan.textContent = "Zona: " + ZONE_LABELS[zone];
+        statePreviewEl.appendChild(textSpan);
+
+        statePreviewEl.setAttribute("aria-label", "Zona derivada: " + ZONE_LABELS[zone]);
       }
 
-      /* ── UI: Activity list ───────────────── */
+      /* UI: Activity list */
       function renderActivityList() {
-        // Clear container safely
         while (activitiesContainer.firstChild) {
           activitiesContainer.removeChild(activitiesContainer.firstChild);
         }
 
         if (activities.length === 0) {
           var emptyMsg = document.createElement("div");
-          emptyMsg.className = "activity-empty";
+          emptyMsg.className = "text-center py-8";
+
           var emptyTitle = document.createElement("p");
+          emptyTitle.className = "text-on-surface-variant text-sm mb-3";
           emptyTitle.textContent = "Todavía no hay actividades. Agregá la primera arriba.";
           emptyMsg.appendChild(emptyTitle);
+
           var examplesLabel = document.createElement("p");
-          examplesLabel.style.cssText = "font-size:0.8125rem;color:var(--n1-muted);margin-top:8px;font-weight:600;";
+          examplesLabel.className = "font-mono text-[10px] text-outline uppercase tracking-widest mb-2";
           examplesLabel.textContent = "Ejemplos para empezar:";
           emptyMsg.appendChild(examplesLabel);
+
           var examples = ["Dar una presentación al equipo", "Resolver un bug complejo", "Mentorear a alguien junior", "Escribir documentación técnica"];
           var ul = document.createElement("ul");
-          ul.style.cssText = "font-size:0.8125rem;color:var(--n1-muted);padding-left:20px;margin:4px 0 0;";
-          examples.forEach(function(ex) {
+          ul.className = "text-xs text-on-surface-variant space-y-1 list-none";
+          examples.forEach(function (ex) {
             var li = document.createElement("li");
             li.textContent = ex;
             ul.appendChild(li);
@@ -708,33 +599,33 @@
 
         activities.forEach(function (act, index) {
           var item = document.createElement("div");
-          item.className = "activity-item";
+          item.className = "flex items-start justify-between gap-3 py-4 border-b border-outline-variant/20 last:border-b-0";
           item.setAttribute("data-index", String(index));
 
-          // Info column
+          /* Info column */
           var info = document.createElement("div");
-          info.className = "activity-info";
+          info.className = "flex-1 min-w-0";
 
           var nameEl = document.createElement("div");
-          nameEl.className = "activity-name";
-          nameEl.textContent = act.activity; // textContent — safe for user input
+          nameEl.className = "font-medium text-on-surface text-sm mb-2 break-words";
+          nameEl.textContent = act.activity;
 
           var badges = document.createElement("div");
-          badges.className = "activity-badges";
+          badges.className = "flex flex-wrap gap-1.5";
 
-          // Challenge badge
+          /* Challenge badge */
           var cBadge = document.createElement("span");
-          cBadge.className = "badge badge-challenge";
-          cBadge.textContent = "Desafio: " + act.challenge;
+          cBadge.className = "inline-flex items-center px-2 py-0.5 rounded font-mono text-[10px] bg-surface-container border border-outline-variant/40 text-on-surface-variant";
+          cBadge.textContent = "D:" + act.challenge;
 
-          // Skill badge
+          /* Skill badge */
           var sBadge = document.createElement("span");
-          sBadge.className = "badge badge-skill";
-          sBadge.textContent = "Habilidad: " + act.skill;
+          sBadge.className = "inline-flex items-center px-2 py-0.5 rounded font-mono text-[10px] bg-surface-container border border-outline-variant/40 text-on-surface-variant";
+          sBadge.textContent = "H:" + act.skill;
 
-          // Zone badge
+          /* Zone badge */
           var zBadge = document.createElement("span");
-          zBadge.className = "badge badge-" + act.state;
+          zBadge.className = "inline-flex items-center px-2 py-0.5 rounded font-mono text-[10px] font-bold " + ZONE_BADGE_CLASSES[act.state];
           zBadge.textContent = ZONE_LABELS[act.state];
 
           badges.appendChild(cBadge);
@@ -744,17 +635,20 @@
           info.appendChild(nameEl);
           info.appendChild(badges);
 
-          // Delete button
+          /* Delete button */
           var delBtn = document.createElement("button");
-          delBtn.className = "btn-delete";
-          delBtn.setAttribute("type", "button");
+          delBtn.type = "button";
+          delBtn.className = "flex-shrink-0 p-2 rounded-lg text-outline hover:text-error hover:bg-error/10 transition-all";
           delBtn.setAttribute("aria-label", "Eliminar actividad: " + act.activity);
           delBtn.setAttribute("data-index", String(index));
-          delBtn.textContent = "×";
+
+          var delIcon = document.createElement("span");
+          delIcon.className = "material-symbols-outlined text-sm";
+          delIcon.textContent = "delete";
+          delBtn.appendChild(delIcon);
 
           delBtn.addEventListener("click", function () {
-            var idx = parseInt(this.getAttribute("data-index"), 10);
-            deleteActivity(idx);
+            deleteActivity(parseInt(this.getAttribute("data-index"), 10));
           });
 
           item.appendChild(info);
@@ -763,16 +657,13 @@
         });
       }
 
-      /* ── UI: Flow chart ──────────────────── */
+      /* UI: Flow chart — dark theme */
       function renderChart() {
         if (activities.length === 0) {
           chartEmpty.classList.remove("hidden");
           chartWrapper.classList.add("hidden");
           chartWrapper.setAttribute("aria-hidden", "true");
-          if (flowChart) {
-            flowChart.destroy();
-            flowChart = null;
-          }
+          if (flowChart) { flowChart.destroy(); flowChart = null; }
           return;
         }
 
@@ -780,87 +671,53 @@
         chartWrapper.classList.remove("hidden");
         chartWrapper.removeAttribute("aria-hidden");
 
-        // Build datasets — one dataset per zone so each can have a label
+        /* Build datasets per zone */
         var datasets = {
-          flow:    { label: "Flow",          data: [], backgroundColor: ZONE_COLORS.flow,    pointRadius: 8, pointHoverRadius: 10 },
-          anxiety: { label: "Ansiedad",      data: [], backgroundColor: ZONE_COLORS.anxiety, pointRadius: 8, pointHoverRadius: 10 },
-          boredom: { label: "Aburrimiento",  data: [], backgroundColor: ZONE_COLORS.boredom, pointRadius: 8, pointHoverRadius: 10 },
-          apathy:  { label: "Apatia",        data: [], backgroundColor: ZONE_COLORS.apathy,  pointRadius: 8, pointHoverRadius: 10 }
+          flow:    { label: "Flow",         data: [], backgroundColor: ZONE_COLORS.flow,    pointRadius: 8, pointHoverRadius: 10 },
+          anxiety: { label: "Ansiedad",     data: [], backgroundColor: ZONE_COLORS.anxiety, pointRadius: 8, pointHoverRadius: 10 },
+          boredom: { label: "Aburrimiento", data: [], backgroundColor: ZONE_COLORS.boredom, pointRadius: 8, pointHoverRadius: 10 },
+          apathy:  { label: "Apatia",       data: [], backgroundColor: ZONE_COLORS.apathy,  pointRadius: 8, pointHoverRadius: 10 }
         };
 
         activities.forEach(function (act) {
           datasets[act.state].data.push({ x: act.skill, y: act.challenge, label: act.activity });
         });
 
-        var chartDatasets = Object.keys(datasets).map(function (zone) {
-          return datasets[zone];
-        });
-
+        var chartDatasets = Object.keys(datasets).map(function (z) { return datasets[z]; });
         var canvas = document.getElementById("flow-canvas");
 
-        if (flowChart) {
-          flowChart.destroy();
-          flowChart = null;
-        }
+        if (flowChart) { flowChart.destroy(); flowChart = null; }
 
-        // Custom background plugin: draws zone regions behind the scatter points
+        /* Background zone plugin — dark theme colors */
         var backgroundPlugin = {
           id: "zoneBackground",
           beforeDraw: function (chart) {
             var ctx = chart.ctx;
             var xAxis = chart.scales["x"];
             var yAxis = chart.scales["y"];
-
             if (!xAxis || !yAxis) return;
 
-            // Helper: convert data coords to pixel coords
-            function px(val, axis) {
-              return axis.getPixelForValue(val);
-            }
-
-            // Axis boundaries in pixels
-            var x1 = px(1, xAxis);
-            var x5 = px(5, xAxis);
-            var y1 = px(1, yAxis);
-            var y5 = px(5, yAxis);
+            function px(val, axis) { return axis.getPixelForValue(val); }
 
             ctx.save();
-
-            // Clip to chart area
             ctx.beginPath();
             ctx.rect(xAxis.left, yAxis.top, xAxis.right - xAxis.left, yAxis.bottom - yAxis.top);
             ctx.clip();
 
-            // Flow zone: challenge >= 3 AND skill >= 3 AND |c-s| <= 1
-            // Approximate as diagonal band — draw for each grid cell
             ctx.globalAlpha = 0.07;
 
-            // Draw all background gray first
-            ctx.fillStyle = "#aaaaaa";
-            ctx.fillRect(xAxis.left, yAxis.top, xAxis.right - xAxis.left, yAxis.bottom - yAxis.top);
-
-            // Paint cells
+            /* Paint cells */
             for (var c = 1; c <= 5; c++) {
               for (var s = 1; s <= 5; s++) {
                 var zone = getFlowZone(c, s);
-                var color;
-                if (zone === "flow")    color = "#E85D26";
-                else if (zone === "anxiety") color = "#e05252";
-                else if (zone === "boredom") color = "#6b8cda";
-                else                        color = "#aaaaaa";
-
-                // Cell bounds in data coords
+                ctx.fillStyle = ZONE_COLORS[zone];
                 var cellX1 = px(s - 0.5, xAxis);
                 var cellX2 = px(s + 0.5, xAxis);
-                var cellY1 = px(c + 0.5, yAxis); // higher y value = lower pixel
+                var cellY1 = px(c + 0.5, yAxis);
                 var cellY2 = px(c - 0.5, yAxis);
-
-                ctx.fillStyle = color;
                 ctx.fillRect(
-                  Math.min(cellX1, cellX2),
-                  Math.min(cellY1, cellY2),
-                  Math.abs(cellX2 - cellX1),
-                  Math.abs(cellY2 - cellY1)
+                  Math.min(cellX1, cellX2), Math.min(cellY1, cellY2),
+                  Math.abs(cellX2 - cellX1), Math.abs(cellY2 - cellY1)
                 );
               }
             }
@@ -870,34 +727,26 @@
           }
         };
 
-        // Activity name labels drawn after scatter points
+        /* Label plugin — light text for dark bg */
         var labelPlugin = {
           id: "activityLabels",
           afterDraw: function (chart) {
             var ctx = chart.ctx;
             ctx.save();
-            ctx.font = "11px DM Sans, sans-serif";
-            ctx.fillStyle = "#1a1a1a";
+            ctx.font = "11px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillStyle = "#aaa8c3";
             ctx.textAlign = "center";
             ctx.textBaseline = "bottom";
 
             chart.data.datasets.forEach(function (dataset) {
-              dataset.data.forEach(function (point) {
-                var meta = chart.getDatasetMeta(chart.data.datasets.indexOf(dataset));
-                if (!meta || !meta.data) return;
-
-                var idx = dataset.data.indexOf(point);
+              var meta = chart.getDatasetMeta(chart.data.datasets.indexOf(dataset));
+              if (!meta || !meta.data) return;
+              dataset.data.forEach(function (point, idx) {
                 var el = meta.data[idx];
                 if (!el) return;
-
-                var x = el.x;
-                var y = el.y - 10; // offset above the point
-
-                // Truncate long names
                 var name = point.label || "";
-                if (name.length > 20) name = name.substring(0, 18) + "…";
-
-                ctx.fillText(name, x, y);
+                if (name.length > 20) name = name.substring(0, 18) + "\u2026";
+                ctx.fillText(name, el.x, el.y - 10);
               });
             });
 
@@ -908,9 +757,7 @@
         flowChart = new Chart(canvas, {
           type: "scatter",
           plugins: [backgroundPlugin, labelPlugin],
-          data: {
-            datasets: chartDatasets
-          },
+          data: { datasets: chartDatasets },
           options: {
             responsive: true,
             maintainAspectRatio: true,
@@ -919,17 +766,23 @@
                 display: true,
                 position: "bottom",
                 labels: {
-                  font: { family: "DM Sans, sans-serif", size: 12 },
+                  color: "#aaa8c3",
+                  font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 },
                   padding: 12,
                   usePointStyle: true,
                   pointStyleWidth: 10
                 }
               },
               tooltip: {
+                backgroundColor: "rgba(35,35,63,0.95)",
+                titleColor: "#f9f9f9",
+                bodyColor: "#aaa8c3",
+                borderColor: "#46465c",
+                borderWidth: 1,
                 callbacks: {
                   label: function (context) {
                     var point = context.raw;
-                    return point.label + " — D:" + point.y + " H:" + point.x;
+                    return (point.label || "") + " — D:" + point.y + " H:" + point.x;
                   }
                 }
               }
@@ -939,89 +792,96 @@
                 title: {
                   display: true,
                   text: "Habilidad",
-                  font: { family: "Space Mono, monospace", size: 11 }
+                  color: "#aaa8c3",
+                  font: { family: "'Space Mono', monospace", size: 11 }
                 },
                 min: 0.5,
                 max: 5.5,
                 ticks: {
+                  color: "#74738b",
                   stepSize: 1,
                   callback: function (value) {
                     if (value >= 1 && value <= 5 && Number.isInteger(value)) return String(value);
                     return "";
                   }
                 },
-                grid: { color: "rgba(0,0,0,0.05)" }
+                grid: { color: "rgba(70,70,92,0.3)" }
               },
               y: {
                 title: {
                   display: true,
                   text: "Desafio",
-                  font: { family: "Space Mono, monospace", size: 11 }
+                  color: "#aaa8c3",
+                  font: { family: "'Space Mono', monospace", size: 11 }
                 },
                 min: 0.5,
                 max: 5.5,
                 ticks: {
+                  color: "#74738b",
                   stepSize: 1,
                   callback: function (value) {
                     if (value >= 1 && value <= 5 && Number.isInteger(value)) return String(value);
                     return "";
                   }
                 },
-                grid: { color: "rgba(0,0,0,0.05)" }
+                grid: { color: "rgba(70,70,92,0.3)" }
               }
             }
           }
         });
       }
 
-      /* ── UI: Insight ─────────────────────── */
+      /* UI: Insight */
       function renderInsight() {
-        // Clear insight area
-        while (insightArea.firstChild) {
-          insightArea.removeChild(insightArea.firstChild);
-        }
-
+        while (insightArea.firstChild) insightArea.removeChild(insightArea.firstChild);
         if (activities.length < 3) return;
 
-        // Count by zone
         var counts = { flow: 0, anxiety: 0, boredom: 0, apathy: 0 };
         activities.forEach(function (act) {
           counts[act.state] = (counts[act.state] || 0) + 1;
         });
 
-        // Find dominant zone
         var dominant = "apathy";
         var maxCount = -1;
         Object.keys(counts).forEach(function (zone) {
-          if (counts[zone] > maxCount) {
-            maxCount = counts[zone];
-            dominant = zone;
-          }
+          if (counts[zone] > maxCount) { maxCount = counts[zone]; dominant = zone; }
         });
 
         var box = document.createElement("div");
-        box.className = "insight-box";
+        box.className = "p-4 rounded-xl bg-surface-container-low border border-outline-variant/10 flex items-start gap-3";
 
-        // Stats line
-        var statsEl = document.createElement("p");
-        statsEl.className = "insight-stats";
+        var iconDiv = document.createElement("div");
+        iconDiv.className = "p-2 rounded flex-shrink-0 " + ZONE_BADGE_CLASSES[dominant];
+        var iconSpan = document.createElement("span");
+        iconSpan.className = "material-symbols-outlined text-sm";
+        iconSpan.style.fontVariationSettings = "'FILL' 1";
+        iconSpan.textContent = ZONE_ICONS[dominant];
+        iconDiv.appendChild(iconSpan);
+        box.appendChild(iconDiv);
+
+        var textDiv = document.createElement("div");
+
         var parts = [];
         if (counts.flow > 0)    parts.push(counts.flow + " en flow");
         if (counts.anxiety > 0) parts.push(counts.anxiety + " en ansiedad");
         if (counts.boredom > 0) parts.push(counts.boredom + " en aburrimiento");
         if (counts.apathy > 0)  parts.push(counts.apathy + " en apatia");
-        statsEl.textContent = "Tus actividades: " + parts.join(", ") + ".";
 
-        // Interpretation line
+        var statsEl = document.createElement("p");
+        statsEl.className = "font-mono text-[10px] text-outline uppercase tracking-widest mb-1";
+        statsEl.textContent = parts.join(" · ");
+        textDiv.appendChild(statsEl);
+
         var interpEl = document.createElement("p");
-        interpEl.textContent = "La mayoria de tus actividades estan en zona " + ZONE_LABELS[dominant].toLowerCase() + ". " + ZONE_INSIGHTS[dominant];
+        interpEl.className = "text-xs text-on-surface-variant leading-relaxed";
+        interpEl.textContent = ZONE_INSIGHTS[dominant];
+        textDiv.appendChild(interpEl);
 
-        box.appendChild(statsEl);
-        box.appendChild(interpEl);
+        box.appendChild(textDiv);
         insightArea.appendChild(box);
       }
 
-      /* ── ACTIONS ─────────────────────────── */
+      /* ACTIONS */
       function addActivity() {
         var name = activityNameInput.value.trim();
         if (!name) return;
@@ -1030,26 +890,14 @@
         var skill     = parseInt(skillInput.value, 10);
         var state     = getFlowZone(challenge, skill);
 
-        // Build activity object (immutable — new object each time)
-        var newActivity = {
-          activity:  name,
-          challenge: challenge,
-          skill:     skill,
-          state:     state
-        };
-
-        // Create new array (immutable pattern)
-        activities = activities.concat([newActivity]);
+        activities = activities.concat([{ activity: name, challenge: challenge, skill: skill, state: state }]);
         saveActivities(activities);
 
-        // Reset form
+        /* Reset form */
         activityNameInput.value = "";
-        challengeInput.value = "3";
-        skillInput.value = "3";
-        challengeDisplay.textContent = "3";
-        skillDisplay.textContent = "3";
-        challengeInput.setAttribute("aria-valuenow", "3");
-        skillInput.setAttribute("aria-valuenow", "3");
+        challengeInput.value = "3"; skillInput.value = "3";
+        challengeDisplay.textContent = "3"; skillDisplay.textContent = "3";
+        challengeInput.setAttribute("aria-valuenow", "3"); skillInput.setAttribute("aria-valuenow", "3");
         updateStatePreview();
         updateAddButton();
 
@@ -1058,24 +906,19 @@
         renderInsight();
         updateScorecardPreview();
 
-        N1.showToast("Actividad agregada.", 2000);
+        showToast("Actividad agregada.", 2000);
         activityNameInput.focus();
       }
 
       function deleteActivity(index) {
-        var act = activities[index];
-        if (!act) return;
-
-        // Create new array without the deleted item (immutable)
+        if (!activities[index]) return;
         activities = activities.filter(function (_, i) { return i !== index; });
         saveActivities(activities);
-
         renderActivityList();
         renderChart();
         renderInsight();
         updateScorecardPreview();
-
-        N1.showToast("Actividad eliminada.", 2000);
+        showToast("Actividad eliminada.", 2000);
       }
 
       function updateAddButton() {
@@ -1084,27 +927,23 @@
         addBtn.setAttribute("aria-disabled", String(!hasName));
       }
 
-      /* ── EVENT LISTENERS ─────────────────── */
+      /* EVENT LISTENERS */
       challengeInput.addEventListener("input", function () {
-        var val = this.value;
-        challengeDisplay.textContent = val;
-        this.setAttribute("aria-valuenow", val);
+        challengeDisplay.textContent = this.value;
+        this.setAttribute("aria-valuenow", this.value);
         updateStatePreview();
       });
 
       skillInput.addEventListener("input", function () {
-        var val = this.value;
-        skillDisplay.textContent = val;
-        this.setAttribute("aria-valuenow", val);
+        skillDisplay.textContent = this.value;
+        this.setAttribute("aria-valuenow", this.value);
         updateStatePreview();
       });
 
       activityNameInput.addEventListener("input", updateAddButton);
 
       activityNameInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" && !addBtn.disabled) {
-          addActivity();
-        }
+        if (e.key === "Enter" && !addBtn.disabled) addActivity();
       });
 
       addBtn.addEventListener("click", function () {
@@ -1112,53 +951,34 @@
       });
 
       exportBtn.addEventListener("click", function () {
-        // Build flow activities array in profile format
         var flowActivities = activities.map(function (a) {
-          return {
-            activity:  a.activity,
-            challenge: a.challenge,
-            skill:     a.skill,
-            state:     a.state
-          };
+          return { activity: a.activity, challenge: a.challenge, skill: a.skill, state: a.state };
         });
-
-        // Load existing profile, save flow_activities, export YAML
         N1.saveToProfile("strengths", { flow_activities: flowActivities });
         N1.exportYAML();
-
         exportConfirm.classList.remove("hidden");
-
-        // Hide confirmation after 4 seconds
-        setTimeout(function () {
-          exportConfirm.classList.add("hidden");
-        }, 4000);
+        setTimeout(function () { exportConfirm.classList.add("hidden"); }, 4000);
       });
 
-      /* ── SCORECARD EXPORT BUTTON ─────────────── */
+      /* SCORECARD */
       var exportScorecardBtn = document.getElementById("export-scorecard");
       if (exportScorecardBtn) {
         exportScorecardBtn.addEventListener("click", function () {
-          if (activities.length === 0) {
-            N1.showToast("Agregá actividades primero.", 2000);
-            return;
-          }
-          var scorecardConfig = buildScorecardConfig();
-          var dataUrl = N1.generateScorecard(scorecardConfig);
-          if (dataUrl) {
-            N1.downloadScorecard(dataUrl, "n1-flow-logger-scorecard.png");
-          }
+          if (activities.length === 0) { showToast("Agregá actividades primero.", 2000); return; }
+          var cfg = buildScorecardConfig();
+          var dataUrl = N1.generateScorecard(cfg);
+          if (dataUrl) N1.downloadScorecard(dataUrl, "n1-flow-logger-scorecard.png");
         });
       }
 
-      /* ── SCORECARD CONFIG BUILDER ────────────── */
       function buildScorecardConfig() {
-        var topActivities = activities.slice(0, 5);
+        var top = activities.slice(0, 5);
         return {
           title: "Flow Logger",
           subtitle: "Actividades de alto rendimiento",
           badge: activities.length + " actividades",
-          accentColor: "#E85D26",
-          scores: topActivities.map(function (a) {
+          accentColor: "#ff9068",
+          scores: top.map(function (a) {
             return { label: a.activity, value: (a.challenge + a.skill) / 2, max: 10 };
           }),
           interpretation: "Tus actividades de mayor energía y flow.",
@@ -1168,8 +988,7 @@
 
       function updateScorecardPreview() {
         if (activities.length === 0) return;
-        var scorecardConfig = buildScorecardConfig();
-        var previewUrl = N1.generateScorecardPreview(scorecardConfig);
+        var previewUrl = N1.generateScorecardPreview(buildScorecardConfig());
         var previewImg = document.getElementById("scorecard-preview-img");
         if (previewImg && previewUrl) {
           previewImg.src = previewUrl;
@@ -1177,32 +996,27 @@
         }
       }
 
-      /* ── INIT ────────────────────────────── */
+      /* INIT */
       (function init() {
-        // Check localStorage availability
         N1.initLocalStorageSafe();
 
-        // Append safety disclaimer
         var disclaimerContainer = document.getElementById("disclaimer-container");
         if (disclaimerContainer) {
           disclaimerContainer.appendChild(N1.getSafetyDisclaimer());
         }
 
-        // Set initial state preview
         updateStatePreview();
-
-        // Render list and chart from stored activities
         renderActivityList();
         renderChart();
         renderInsight();
         updateScorecardPreview();
       })();
 
-      /* ── EMAIL CAPTURE WIRING (INTG-03) ── */
+      /* EMAIL CAPTURE (INTG-03) */
       (function () {
-        var emailForm = document.getElementById("n1-tool-email-form");
-        var emailInput = document.getElementById("n1-tool-email");
-        var successMsg = document.getElementById("n1-tool-email-success");
+        var emailForm   = document.getElementById("n1-tool-email-form");
+        var emailInput  = document.getElementById("n1-tool-email");
+        var successMsg  = document.getElementById("n1-tool-email-success");
         if (!emailForm || !emailInput || !successMsg) return;
 
         emailForm.addEventListener("submit", function (e) {
@@ -1215,13 +1029,8 @@
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: "email=" + encodeURIComponent(email) + "&tag=tool-completion",
           })
-            .then(function () {
-              emailForm.style.display = "none";
-              successMsg.style.display = "block";
-            })
-            .catch(function () {
-              emailForm.submit();
-            });
+            .then(function () { emailForm.style.display = "none"; successMsg.style.display = "block"; })
+            .catch(function () { emailForm.submit(); });
         });
       })();
 
