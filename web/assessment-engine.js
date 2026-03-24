@@ -1289,7 +1289,7 @@
    * Compute a unified "Claridad de perfil" percentage from available dimension scores.
    * Returns { score: N (0-100), basedOn: N (1-4), tension: { high, low, spread } | null }
    * Returns null if no dimension data is present.
-   * NOTE: strengths is multiplied ×10 inside this function to normalize to 0-100.
+   * NOTE: all raw scores (0-10 from calcDimensionScores) are multiplied ×10 here to normalize to 0-100.
    */
   N1.computeProfileClarity = function (profile) {
     if (!profile) return null;
@@ -1297,10 +1297,10 @@
 
     // Normalize strengths from 0-10 to 0-100 BEFORE any averaging or spread checks
     var normalized = {
-      values: raw.values,
+      values: raw.values * 10,
       strengths: raw.strengths * 10,
-      identity: raw.identity,
-      purpose: raw.purpose,
+      identity: raw.identity * 10,
+      purpose: raw.purpose * 10,
     };
 
     var labels = {
@@ -1413,6 +1413,12 @@
     );
     form.setAttribute("method", "post");
     form.setAttribute("target", "popupwindow");
+
+    var tagInput = document.createElement("input");
+    tagInput.type = "hidden";
+    tagInput.name = "tag";
+    tagInput.value = "tool-completion";
+    form.appendChild(tagInput);
 
     var label = document.createElement("p");
     label.className = "text-sm text-on-surface-variant mb-3";
