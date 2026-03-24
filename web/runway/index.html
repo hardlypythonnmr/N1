@@ -1174,7 +1174,7 @@
         var n1Url = 'https://hardlypythonnmr.github.io/N1/';
         // Read months from lastResults (the likely/probable scenario)
         var months = null;
-        if (typeof lastResults !== 'undefined' && lastResults) {
+        if (lastResults) {
           var likelyResult = lastResults.find(function (r) { return r.key === 'likely'; });
           if (likelyResult) {
             months = likelyResult.isIndefinite ? 'indefinidos' : String(Math.round(likelyResult.months || 0));
