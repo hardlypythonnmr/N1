@@ -961,7 +961,7 @@
 
       ctx.fillStyle = COLOR_MUTED;
       ctx.font = '13px "Space Mono", monospace';
-      ctx.fillText("INTERPRETACION", interpLeft + 20, interpTop2 + 28);
+      ctx.fillText("INTERPRETACIÓN", interpLeft + 20, interpTop2 + 28);
 
       ctx.fillStyle = COLOR_BLACK;
       ctx.font = '15px "DM Sans", sans-serif';

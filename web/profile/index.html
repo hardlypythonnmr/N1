@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mi Perfil N1 — El Sistema Eres Tú</title>
-  <meta name="description" content="Explora todas tus dimensiones de autoconocimiento en un solo lugar. Valores, Fortalezas, Identidad y Proposito." />
+  <meta name="description" content="Explorá todas tus dimensiones de autoconocimiento en un solo lugar. Valores, Fortalezas, Identidad y Propósito." />
   <link rel="stylesheet" href="../styles.css" />
   <style>
     .tag { display:inline-block; padding:var(--space-xs) var(--space-sm); border-radius:var(--n1-radius-sm); font-size:0.8125rem; font-family:var(--font-heading); background-color:var(--n1-surface); border:1px solid var(--n1-border); color:var(--n1-muted); }
@@ -249,7 +249,7 @@
     function renderCompletionBadges(profile) {
       var container=document.getElementById("completion-badges");
       container.innerHTML="";
-      [{key:"values",label:"Valores"},{key:"strengths",label:"Fortalezas"},{key:"identity",label:"Identidad"},{key:"purpose",label:"Proposito"}].forEach(function(d){
+      [{key:"values",label:"Valores"},{key:"strengths",label:"Fortalezas"},{key:"identity",label:"Identidad"},{key:"purpose",label:"Propósito"}].forEach(function(d){
         var span=document.createElement("span");
         span.className="tag";
         if (profile[d.key]&&profile[d.key].completed===true) {
@@ -268,7 +268,7 @@
       _radarChartInstance=new Chart(canvas,{
         type:"radar",
         data:{
-          labels:["Valores","Fortalezas","Identidad","Proposito"],
+          labels:["Valores","Fortalezas","Identidad","Propósito"],
           datasets:[{
             label:"Tu perfil",
             data:[scores.values,scores.strengths,scores.identity,scores.purpose],
@@ -332,11 +332,11 @@
           }
         },
         {
-          key:"purpose",label:"Proposito",tool:"mlq",toolLabel:"MLQ-10",
+          key:"purpose",label:"Propósito",tool:"mlq",toolLabel:"MLQ-10",
           getDetails:function(p){
             var rows=[],mlq=p.purpose.mlq;
             if(mlq.presence!==null)rows.push({label:"Presencia de sentido",value:mlq.presence+" / 7"});
-            if(mlq.search!==null)rows.push({label:"Busqueda de sentido",value:mlq.search+" / 7"});
+            if(mlq.search!==null)rows.push({label:"Búsqueda de sentido",value:mlq.search+" / 7"});
             if(mlq.quadrant)rows.push({label:"Cuadrante",value:mlq.quadrant});
             return rows;
           },
@@ -455,7 +455,7 @@
       if(cp==="go_independent"&&sec!==null&&sec>7){
         var c2=document.createElement("div"); c2.className="insight-block insight-conflict";
         var c2p=document.createElement("p");
-        c2p.textContent="Tension: valor\u00e1s mucho la seguridad pero consider\u00e1s la independencia \u2014 esto merece exploracion.";
+        c2p.textContent="Tensión: valorás mucho la seguridad pero considerás la independencia \u2014 esto merece exploración.";
         c2.appendChild(c2p); cEl.appendChild(c2);
       }
 
@@ -480,7 +480,7 @@
           headline:"Movete estrategicamente",
           steps:[
             "Usa Ghost Check para evaluar ofertas antes de aplicar.",
-            "Completa tu perfil N1 para tener claridad de que buscas en el siguiente rol.",
+            "Completá tu perfil N1 para tener claridad de qué buscás en el siguiente rol.",
             "Explora n1-construye-afuera \u2014 CV Audit + Interview Prep."
           ]
         },
@@ -495,7 +495,7 @@
         pause_reset:{
           headline:"Pausa y replanteo",
           steps:[
-            "Empieza por Bull's Eye \u2014 claridad de valores primero.",
+            "Empezá por Bull's Eye \u2014 claridad de valores primero.",
             "MLQ-10 para entender tu relacion actual con el sentido del trabajo.",
             "Explora n1-busca-adentro para la dimension de identidad."
           ]
@@ -551,12 +551,12 @@
           "## Fortalezas Clave",ssLines,"",
           "## Adaptabilidad (CAAS-12)",
           "Concern: "+safe(ad.concern)+" | Control: "+safe(ad.control)+" | Curiosity: "+safe(ad.curiosity)+" | Confidence: "+safe(ad.confidence),"",
-          "## Proposito (MLQ-10)",
-          "Presencia: "+safe(mlq.presence)+" | Busqueda: "+safe(mlq.search)+" | Cuadrante: "+safe(mlq.quadrant),"",
+          "## Propósito (MLQ-10)",
+          "Presencia: "+safe(mlq.presence)+" | Búsqueda: "+safe(mlq.search)+" | Cuadrante: "+safe(mlq.quadrant),"",
           "## Camino Actual",triage.career_path||"— Completar el triage","",
           "---",
           "Instrucciones para tu Claude Project:",
-          "Soy usuario de N1. Cuando me des orientacion de carrera, usa este perfil como contexto.",
+          "Soy usuario de N1. Cuando me des orientación de carrera, usá este perfil como contexto.",
           "Aplica el marco SCCT y la teoria de carrera proteica. Responde en espanol colombiano."
         ].join("\n");
         triggerDownload(t,"n1-system-template.md","text/markdown");
@@ -571,7 +571,7 @@
         try{
           var dataUrl=N1.generateScorecard({
             title:"Mi Perfil N1",subtitle:"Autoconocimiento profesional completo",chartType:"bar",
-            scores:[{label:"Valores",value:scores.values,max:10},{label:"Fortalezas",value:scores.strengths,max:10},{label:"Identidad",value:scores.identity,max:10},{label:"Proposito",value:scores.purpose,max:10}],
+            scores:[{label:"Valores",value:scores.values,max:10},{label:"Fortalezas",value:scores.strengths,max:10},{label:"Identidad",value:scores.identity,max:10},{label:"Propósito",value:scores.purpose,max:10}],
             interpretation:headline
           });
           N1.downloadScorecard(dataUrl,"n1-perfil-completo.png");

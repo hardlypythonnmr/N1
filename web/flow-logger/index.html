@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flow Logger — N1</title>
-  <meta name="description" content="Registra actividades con ratings de desafio y habilidad. Ve cuales te ponen en zona de flow." />
+  <meta name="description" content="Registrá actividades con ratings de desafío y habilidad. Ve cuáles te ponen en zona de flow." />
   <link rel="stylesheet" href="../styles.css" />
   <style>
     /* ── Flow Logger local styles ─────────────── */
@@ -340,7 +340,7 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="nav" aria-label="Navegacion principal">
+  <nav class="nav" aria-label="Navegación principal">
     <a href="../index.html" class="nav-logo">N<span>1</span></a>
     <a href="../index.html" class="nav-back">Inicio</a>
   </nav>
@@ -349,7 +349,7 @@
   <main class="container">
     <h1>Flow Logger</h1>
     <p class="text-muted">
-      Registra actividades que haces y rate-alas por desafio y habilidad.
+      Registrá actividades que hacés y rate-alas por desafío y habilidad.
       Con el tiempo vas a ver donde esta tu zona de flow.
     </p>
 
@@ -368,13 +368,13 @@
           aria-describedby="activity-hint"
         />
         <p id="activity-hint" class="text-muted text-sm" style="margin-top: 4px; margin-bottom: 0;">
-          Algo especifico que haces en el trabajo o en lo que te desarrollas profesionalmente.
+          Algo específico que hacés en el trabajo o en lo que te desarrollás profesionalmente.
         </p>
       </div>
 
       <div class="rating-group" role="group" aria-labelledby="challenge-label">
         <label id="challenge-label" for="challenge-rating">
-          Desafio (1 = muy facil, 5 = al limite)
+          Desafío (1 = muy fácil, 5 = al límite)
         </label>
         <div class="rating-row">
           <input
@@ -438,14 +438,14 @@
     </section>
 
     <!-- SECTION: Flow chart -->
-    <section id="flow-chart" class="section-card" aria-label="Grafico de flow">
+    <section id="flow-chart" class="section-card" aria-label="Gráfico de flow">
       <h2>Mapa de flow</h2>
       <p class="text-muted text-sm">
-        Cada punto es una actividad. El eje X muestra tu habilidad, el eje Y muestra el desafio.
+        Cada punto es una actividad. El eje X muestra tu habilidad, el eje Y muestra el desafío.
       </p>
 
       <div id="chart-area">
-        <p id="chart-empty" class="chart-empty">Agrega actividades arriba para ver el grafico.</p>
+        <p id="chart-empty" class="chart-empty">Agregá actividades arriba para ver el gráfico.</p>
         <div id="chart-wrapper" class="chart-wrapper hidden" aria-hidden="true">
           <canvas id="flow-canvas" width="400" height="400" aria-label="Grafico de dispersion de actividades por zona de flow"></canvas>
         </div>
@@ -595,8 +595,8 @@
 
       var ZONE_INSIGHTS = {
         flow:    "Tu trabajo actual te genera mucho flow. Eso es un indicador clave de fit.",
-        anxiety: "Muchas de tus actividades estan por encima de tu nivel actual. Eso puede ser oportunidad de crecimiento — o una senal de burnout.",
-        boredom: "Estas underutilized en muchas actividades. Tu nivel de habilidad supera el desafio — busca proyectos mas exigentes.",
+        anxiety: "Muchas de tus actividades están por encima de tu nivel actual. Eso puede ser oportunidad de crecimiento — o una señal de burnout.",
+        boredom: "Estás underutilized en muchas actividades. Tu nivel de habilidad supera el desafío — buscá proyectos más exigentes.",
         apathy:  "La mayoria de tus actividades no te generan compromiso. Vale la pena explorar si hay algo que naturalmente te absorba mas."
       };
 
@@ -1118,7 +1118,7 @@
       if (exportScorecardBtn) {
         exportScorecardBtn.addEventListener("click", function () {
           if (activities.length === 0) {
-            N1.showToast("Agrega actividades primero.", 2000);
+            N1.showToast("Agregá actividades primero.", 2000);
             return;
           }
           var scorecardConfig = buildScorecardConfig();

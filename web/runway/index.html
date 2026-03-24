@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Runway Calculator — N1</title>
-  <meta name="description" content="Calcula cuantos meses de runway financiero tenes para hacer un cambio de carrera. Tres escenarios: conservador, probable, optimista." />
+  <meta name="description" content="Calculá cuántos meses de runway financiero tenés para hacer un cambio de carrera. Tres escenarios: conservador, probable, optimista." />
   <link rel="stylesheet" href="../styles.css" />
   <style>
     /* ── PAGE-LEVEL OVERRIDES ──────────────── */
@@ -408,8 +408,8 @@
     <!-- FINANCIAL DISCLAIMER -->
     <div class="disclaimer" role="note" aria-label="Aviso importante">
       <p>
-        <strong>Aviso:</strong> Esta calculadora es una herramienta de orientacion financiera basica, no asesoria financiera certificada.
-        Los calculos son estimados y no reemplazan el analisis de un asesor financiero.
+        <strong>Aviso:</strong> Esta calculadora es una herramienta de orientación financiera básica, no asesoría financiera certificada.
+        Los cálculos son estimados y no reemplazan el análisis de un asesor financiero.
         Para decisiones de alto impacto, consulta con un profesional certificado.
       </p>
     </div>
@@ -417,7 +417,7 @@
     <!-- PAGE HEADER -->
     <div class="page-header">
       <h1>Runway Calculator</h1>
-      <p>Calcula cuantos meses de runway financiero tenes para hacer un cambio de carrera.</p>
+      <p>Calculá cuántos meses de runway financiero tenés para hacer un cambio de carrera.</p>
     </div>
 
     <!-- CALCULATOR SECTION -->
@@ -458,7 +458,7 @@
             aria-describedby="savings-hint"
           />
         </div>
-        <p class="input-hint" id="savings-hint">Total que tenes disponible para vivir durante la transicion</p>
+        <p class="input-hint" id="savings-hint">Total que tenés disponible para vivir durante la transición</p>
       </div>
 
       <!-- MONTHLY EXPENSES INPUT -->
@@ -481,7 +481,7 @@
 
       <!-- INCOME SOURCES -->
       <div id="income-sources-section" aria-labelledby="income-section-title">
-        <h3 id="income-section-title">Ingresos durante la transicion (opcional)</h3>
+        <h3 id="income-section-title">Ingresos durante la transición (opcional)</h3>
         <p>Freelance, parte-tiempo, renta, apoyo familiar — cualquier ingreso que esperas mantener.</p>
         <div id="income-list" aria-label="Lista de fuentes de ingreso"></div>
         <button
@@ -537,10 +537,10 @@
       <div class="cultural-note" role="note">
         <p class="cultural-note-label">Contexto Colombia / LATAM</p>
         <p>
-          En Colombia, un runway de 6-12 meses suele ser suficiente para una transicion profesional
-          si hay claridad sobre el siguiente paso. El mercado laboral en Bogota y Medellin permite
-          movimientos relativamente rapidos en sectores tech y servicios. Un runway de 3 meses
-          es ajustado — solo recomendable si ya tenes una oferta o cliente confirmado.
+          En Colombia, un runway de 6-12 meses suele ser suficiente para una transición profesional
+          si hay claridad sobre el siguiente paso. El mercado laboral en Bogotá y Medellín permite
+          movimientos relativamente rápidos en sectores tech y servicios. Un runway de 3 meses
+          es ajustado — solo recomendable si ya tenés una oferta o cliente confirmado.
         </p>
       </div>
 
@@ -723,22 +723,22 @@
      */
     function getRunwayContext(result) {
       if (result.isIndefinite) {
-        return 'Tus ingresos cubren los gastos — la transicion es financieramente sostenible indefinidamente.';
+        return 'Tus ingresos cubren los gastos — la transición es financieramente sostenible indefinidamente.';
       }
       if (result.months === null) {
-        return 'Sin ahorros suficientes para sostener la transicion. Asegura un ingreso antes de hacer el cambio.';
+        return 'Sin ahorros suficientes para sostener la transición. Asegurá un ingreso antes de hacer el cambio.';
       }
       var months = result.rawMonths;
       if (result.overCap) months = 36;
 
       if (months < 3) {
-        return 'Tiempo muy ajustado — considera reducir gastos o asegurar un ingreso antes de saltar.';
+        return 'Tiempo muy ajustado — considerá reducir gastos o asegurar un ingreso antes de saltar.';
       } else if (months < 6) {
-        return 'Tiempo justo para una transicion enfocada. Recomendable solo si ya tenes claridad sobre el paso siguiente.';
+        return 'Tiempo justo para una transición enfocada. Recomendable solo si ya tenés claridad sobre el paso siguiente.';
       } else if (months < 12) {
-        return 'Runway solido para una transicion planificada. Suficiente para explorar, aprender, y conectar.';
+        return 'Runway sólido para una transición planificada. Suficiente para explorar, aprender, y conectar.';
       } else {
-        return 'Runway excepcional. Tenes tiempo real para hacer la transicion bien.';
+        return 'Runway excepcional. Tenés tiempo real para hacer la transición bien.';
       }
     }
 

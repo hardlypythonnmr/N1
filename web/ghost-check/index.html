@@ -6,14 +6,14 @@
     <title>Ghost Check - N1</title>
     <meta
       name="description"
-      content="Pega el texto de una oferta de trabajo y descubri si es real o un ghost job. Herramienta gratuita de N1."
+      content="Pegá el texto de una oferta de trabajo y descubrí si es real o un ghost job. Herramienta gratuita de N1."
     />
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
 
     <!-- NAVIGATION -->
-    <nav class="nav" aria-label="Navegacion principal">
+    <nav class="nav" aria-label="Navegación principal">
       <a href="../index.html" class="nav-back" aria-label="Volver a N1">N1</a>
       <span class="nav-logo">Ghost <span>Check</span></span>
     </nav>
@@ -25,8 +25,8 @@
         <!-- SAFETY DISCLAIMER: static text hardcoded in HTML, no JS injection -->
         <div class="disclaimer" id="disclaimer" role="note" aria-label="Aviso importante">
           <p>
-            N1 es una herramienta de orientacion profesional basada en investigacion.
-            No es terapia, no es asesoria psicologica, y no reemplaza la orientacion
+            N1 es una herramienta de orientación profesional basada en investigación.
+            No es terapia, no es asesoría psicológica, y no reemplaza la orientación
             de un profesional de salud mental o coach certificado.
           </p>
           <p>
@@ -40,7 +40,7 @@
           <div class="card" style="margin-top: var(--space-lg);">
             <h1 id="tool-title" style="margin-bottom: var(--space-sm);">Ghost Check</h1>
             <p class="text-muted" style="margin-bottom: var(--space-lg);">
-              Pega el texto completo de la oferta de trabajo y descubri si es real.
+              Pegá el texto completo de la oferta de trabajo y descubrí si es real.
             </p>
 
             <div style="margin-bottom: var(--space-sm);">
@@ -60,7 +60,7 @@
               class="cultural-note text-muted text-sm"
               style="display: block; margin-bottom: var(--space-lg);"
             >
-              Nota: en LATAM es comun no incluir salario. El score es una guia, no una sentencia.
+              Nota: en LATAM es común no incluir salario. El score es una guía, no una sentencia.
             </small>
 
             <button
@@ -104,13 +104,13 @@
               <h3
                 style="font-size: 0.75rem; font-family: var(--font-heading); color: var(--n1-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-md);"
               >
-                Senales detectadas
+                Señales detectadas
               </h3>
               <ul
                 id="signals-list"
                 class="signals-list"
                 style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-sm);"
-                aria-label="Lista de senales analizadas"
+                aria-label="Lista de señales analizadas"
               ></ul>
             </div>
 
@@ -118,7 +118,7 @@
 
             <!-- Interpretation -->
             <div class="interpretation" style="margin-bottom: var(--space-lg);">
-              <h3>Interpretacion</h3>
+              <h3>Interpretación</h3>
               <p id="interpretation-text" class="interpretation"></p>
             </div>
 
@@ -332,15 +332,15 @@
 
       function getInterpretation(score) {
         if (score <= 25) {
-          return "Esta oferta muestra senales de ser legitima. Igual verifica la empresa en LinkedIn antes de aplicar.";
+          return "Esta oferta muestra señales de ser legítima. Igual verifica la empresa en LinkedIn antes de aplicar.";
         }
         if (score <= 50) {
-          return "Esta oferta tiene algunas senales de alerta. Busca la empresa en LinkedIn y verifica que el rol existe antes de invertir tiempo.";
+          return "Esta oferta tiene algunas señales de alerta. Buscá la empresa en LinkedIn y verificá que el rol existe antes de invertir tiempo.";
         }
         if (score <= 75) {
-          return "Esta oferta tiene muchas senales de ser un ghost job. Aplicar puede ser una perdida de tiempo y energia. Prioriza ofertas con menos senales de alerta.";
+          return "Esta oferta tiene muchas señales de ser un ghost job. Aplicar puede ser una pérdida de tiempo y energía. Priorizá ofertas con menos señales de alerta.";
         }
-        return "Esta oferta tiene todas las senales de un ghost job. Muy probablemente no hay una posicion real detras. Usa ese tiempo en ofertas verificables.";
+        return "Esta oferta tiene todas las señales de un ghost job. Muy probablemente no hay una posición real detrás. Usá ese tiempo en ofertas verificables.";
       }
 
       /* ── DOM HELPERS (XSS-safe: textContent only, no innerHTML) ──────── */
