@@ -1,4 +1,6 @@
 .memsearch/
 screenshots/
 .playwright-mcp/
+.claude/
+stitch/
 n1-landing-page.png
