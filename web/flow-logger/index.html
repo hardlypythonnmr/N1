@@ -206,7 +206,7 @@
             </label>
             <div class="flex items-center gap-2">
               <span class="text-xs text-on-surface-variant">muy fácil</span>
-              <span id="challenge-display" class="font-mono text-base font-bold text-primary min-w-[1.5rem] text-center" aria-live="polite">3</span>
+              <span id="challenge-display" class="font-mono text-base font-bold text-primary min-w-[1.5rem] text-center" aria-live="polite">5</span>
               <span class="text-xs text-on-surface-variant">al límite</span>
             </div>
           </div>
@@ -214,8 +214,8 @@
             type="range"
             id="challenge-rating"
             class="dark-slider w-full"
-            min="1" max="5" value="3" step="1"
-            aria-valuemin="1" aria-valuemax="5" aria-valuenow="3"
+            min="1" max="10" value="5" step="1"
+            aria-valuemin="1" aria-valuemax="10" aria-valuenow="5"
             aria-labelledby="challenge-label"
           />
         </div>
@@ -228,7 +228,7 @@
             </label>
             <div class="flex items-center gap-2">
               <span class="text-xs text-on-surface-variant">principiante</span>
-              <span id="skill-display" class="font-mono text-base font-bold text-primary min-w-[1.5rem] text-center" aria-live="polite">3</span>
+              <span id="skill-display" class="font-mono text-base font-bold text-primary min-w-[1.5rem] text-center" aria-live="polite">5</span>
               <span class="text-xs text-on-surface-variant">experto</span>
             </div>
           </div>
@@ -236,8 +236,8 @@
             type="range"
             id="skill-rating"
             class="dark-slider w-full"
-            min="1" max="5" value="3" step="1"
-            aria-valuemin="1" aria-valuemax="5" aria-valuenow="3"
+            min="1" max="10" value="5" step="1"
+            aria-valuemin="1" aria-valuemax="10" aria-valuenow="5"
             aria-labelledby="skill-label"
           />
         </div>
@@ -479,9 +479,9 @@
       /* ZONE DERIVATION (pure function) */
       function getFlowZone(challenge, skill) {
         var diff = Math.abs(challenge - skill);
-        if (challenge >= 3 && skill >= 3 && diff <= 1) return "flow";
-        if (challenge > skill + 1) return "anxiety";
-        if (skill > challenge + 1) return "boredom";
+        if (challenge >= 6 && skill >= 6 && diff <= 2) return "flow";
+        if (challenge > skill && diff > 2) return "anxiety"; // scaled from diff > 1 (1-5 scale)
+        if (skill > challenge && diff > 2) return "boredom"; // scaled from diff > 1 (1-5 scale)
         return "apathy";
       }
 
@@ -608,7 +608,7 @@
 
           var nameEl = document.createElement("div");
           nameEl.className = "font-medium text-on-surface text-sm mb-2 break-words";
-          nameEl.textContent = act.activity;
+          nameEl.textContent = act.name;
 
           var badges = document.createElement("div");
           badges.className = "flex flex-wrap gap-1.5";
@@ -625,8 +625,8 @@
 
           /* Zone badge */
           var zBadge = document.createElement("span");
-          zBadge.className = "inline-flex items-center px-2 py-0.5 rounded font-mono text-[10px] font-bold " + ZONE_BADGE_CLASSES[act.state];
-          zBadge.textContent = ZONE_LABELS[act.state];
+          zBadge.className = "inline-flex items-center px-2 py-0.5 rounded font-mono text-[10px] font-bold " + ZONE_BADGE_CLASSES[act.zone];
+          zBadge.textContent = ZONE_LABELS[act.zone];
 
           badges.appendChild(cBadge);
           badges.appendChild(sBadge);
@@ -639,7 +639,7 @@
           var delBtn = document.createElement("button");
           delBtn.type = "button";
           delBtn.className = "flex-shrink-0 p-2 rounded-lg text-outline hover:text-error hover:bg-error/10 transition-all";
-          delBtn.setAttribute("aria-label", "Eliminar actividad: " + act.activity);
+          delBtn.setAttribute("aria-label", "Eliminar actividad: " + act.name);
           delBtn.setAttribute("data-index", String(index));
 
           var delIcon = document.createElement("span");
@@ -680,7 +680,7 @@
         };
 
         activities.forEach(function (act) {
-          datasets[act.state].data.push({ x: act.skill, y: act.challenge, label: act.activity });
+          datasets[act.zone].data.push({ x: act.skill, y: act.challenge, label: act.name });
         });
 
         var chartDatasets = Object.keys(datasets).map(function (z) { return datasets[z]; });
@@ -838,7 +838,7 @@
 
         var counts = { flow: 0, anxiety: 0, boredom: 0, apathy: 0 };
         activities.forEach(function (act) {
-          counts[act.state] = (counts[act.state] || 0) + 1;
+          counts[act.zone] = (counts[act.zone] || 0) + 1;
         });
 
         var dominant = "apathy";
@@ -888,16 +888,16 @@
 
         var challenge = parseInt(challengeInput.value, 10);
         var skill     = parseInt(skillInput.value, 10);
-        var state     = getFlowZone(challenge, skill);
+        var zone      = getFlowZone(challenge, skill);
 
-        activities = activities.concat([{ activity: name, challenge: challenge, skill: skill, state: state }]);
+        activities = activities.concat([{ name: name, challenge: challenge, skill: skill, zone: zone }]);
         saveActivities(activities);
 
         /* Reset form */
         activityNameInput.value = "";
-        challengeInput.value = "3"; skillInput.value = "3";
-        challengeDisplay.textContent = "3"; skillDisplay.textContent = "3";
-        challengeInput.setAttribute("aria-valuenow", "3"); skillInput.setAttribute("aria-valuenow", "3");
+        challengeInput.value = "5"; skillInput.value = "5";
+        challengeDisplay.textContent = "5"; skillDisplay.textContent = "5";
+        challengeInput.setAttribute("aria-valuenow", "5"); skillInput.setAttribute("aria-valuenow", "5");
         updateStatePreview();
         updateAddButton();
 
@@ -952,7 +952,7 @@
 
       exportBtn.addEventListener("click", function () {
         var flowActivities = activities.map(function (a) {
-          return { activity: a.activity, challenge: a.challenge, skill: a.skill, state: a.state };
+          return { name: a.name, challenge: a.challenge, skill: a.skill, zone: a.zone };
         });
         N1.saveToProfile("strengths", { flow_activities: flowActivities });
         N1.exportYAML();
@@ -979,7 +979,7 @@
           badge: activities.length + " actividades",
           accentColor: "#ff9068",
           scores: top.map(function (a) {
-            return { label: a.activity, value: (a.challenge + a.skill) / 2, max: 10 };
+            return { label: a.name, value: (a.challenge + a.skill) / 2, max: 10 };
           }),
           interpretation: "Tus actividades de mayor energía y flow.",
           chartType: "bar"
