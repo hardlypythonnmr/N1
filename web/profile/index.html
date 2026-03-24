@@ -1307,8 +1307,9 @@
             (profile.values.bulls_eye && profile.values.bulls_eye.work !== null))) ||
           (profile.identity && profile.identity.completed) ||
           (profile.purpose &&
-            profile.purpose.mlq &&
-            profile.purpose.mlq.presence !== null) ||
+            (profile.purpose.completed ||
+              (profile.purpose.mlq &&
+                profile.purpose.mlq.presence !== null))) ||
           (profile.strengths && profile.strengths.completed));
       if (emptyState) {
         if (hasData) {
