@@ -297,7 +297,7 @@
         <div class="grid grid-cols-3 gap-3">
 
           <!-- Red Flags -->
-          <div class="breakdown-card bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
+          <div class="breakdown-card h-full bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
             <div class="flex items-center gap-2 mb-3">
               <div class="w-7 h-7 rounded-lg bg-red-500/15 flex items-center justify-center flex-shrink-0">
                 <span class="material-symbols-outlined text-red-400" style="font-size:16px;font-variation-settings:'FILL' 1;">warning</span>
@@ -308,7 +308,7 @@
           </div>
 
           <!-- Yellow Warnings -->
-          <div class="breakdown-card bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
+          <div class="breakdown-card h-full bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
             <div class="flex items-center gap-2 mb-3">
               <div class="w-7 h-7 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
                 <span class="material-symbols-outlined text-amber-400" style="font-size:16px;font-variation-settings:'FILL' 1;">error</span>
@@ -319,7 +319,7 @@
           </div>
 
           <!-- Green Indicators -->
-          <div class="breakdown-card bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
+          <div class="breakdown-card h-full bg-surface-container-highest/70 backdrop-blur-xl rounded-xl p-4 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.3)]">
             <div class="flex items-center gap-2 mb-3">
               <div class="w-7 h-7 rounded-lg bg-green-500/15 flex items-center justify-center flex-shrink-0">
                 <span class="material-symbols-outlined text-green-400" style="font-size:16px;font-variation-settings:'FILL' 1;">check_circle</span>
@@ -347,13 +347,15 @@
       </div>
 
       <!-- Scorecard preview -->
-      <img
-        id="scorecard-preview-img"
-        class="w-full rounded-xl mb-6 border border-outline-variant/20"
-        alt="Vista previa del scorecard"
-        style="display:none;"
-        aria-label="Vista previa del scorecard descargable"
-      />
+      <div id="scorecard-preview-wrapper" class="bg-surface-container-high border border-outline-variant/30 rounded-xl p-3 mb-6" style="display:none;">
+        <p class="font-mono text-[0.6rem] uppercase tracking-widest text-outline mb-2">Vista previa</p>
+        <img
+          id="scorecard-preview-img"
+          class="w-full rounded-lg"
+          alt="Vista previa del scorecard"
+          aria-label="Vista previa del scorecard descargable"
+        />
+      </div>
 
       <!-- Action buttons -->
       <div class="space-y-3 mb-8">
@@ -860,9 +862,10 @@
         };
         var previewUrl = N1.generateScorecardPreview(scorecardConfig);
         var previewImg = document.getElementById("scorecard-preview-img");
+        var previewWrapper = document.getElementById("scorecard-preview-wrapper");
         if (previewImg && previewUrl) {
           previewImg.src = previewUrl;
-          previewImg.style.display = "block";
+          if (previewWrapper) previewWrapper.style.display = "block";
         }
       });
 

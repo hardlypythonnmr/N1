@@ -673,10 +673,10 @@
 
         /* Build datasets per zone */
         var datasets = {
-          flow:    { label: "Flow",         data: [], backgroundColor: ZONE_COLORS.flow,    pointRadius: 8, pointHoverRadius: 10 },
-          anxiety: { label: "Ansiedad",     data: [], backgroundColor: ZONE_COLORS.anxiety, pointRadius: 8, pointHoverRadius: 10 },
-          boredom: { label: "Aburrimiento", data: [], backgroundColor: ZONE_COLORS.boredom, pointRadius: 8, pointHoverRadius: 10 },
-          apathy:  { label: "Apatia",       data: [], backgroundColor: ZONE_COLORS.apathy,  pointRadius: 8, pointHoverRadius: 10 }
+          flow:    { label: "Flow",         data: [], backgroundColor: ZONE_COLORS.flow,    borderColor: "rgba(255,255,255,0.6)", borderWidth: 1.5, pointRadius: 8, pointHoverRadius: 10 },
+          anxiety: { label: "Ansiedad",     data: [], backgroundColor: ZONE_COLORS.anxiety, borderColor: "rgba(255,255,255,0.6)", borderWidth: 1.5, pointRadius: 8, pointHoverRadius: 10 },
+          boredom: { label: "Aburrimiento", data: [], backgroundColor: ZONE_COLORS.boredom, borderColor: "rgba(255,255,255,0.6)", borderWidth: 1.5, pointRadius: 8, pointHoverRadius: 10 },
+          apathy:  { label: "Apatia",       data: [], backgroundColor: ZONE_COLORS.apathy,  borderColor: "rgba(255,255,255,0.6)", borderWidth: 1.5, pointRadius: 8, pointHoverRadius: 10 }
         };
 
         activities.forEach(function (act) {
@@ -704,7 +704,7 @@
             ctx.rect(xAxis.left, yAxis.top, xAxis.right - xAxis.left, yAxis.bottom - yAxis.top);
             ctx.clip();
 
-            ctx.globalAlpha = 0.07;
+            ctx.globalAlpha = 0.12;
 
             /* Paint cells */
             for (var c = 1; c <= 5; c++) {
@@ -733,8 +733,8 @@
           afterDraw: function (chart) {
             var ctx = chart.ctx;
             ctx.save();
-            ctx.font = "11px 'Plus Jakarta Sans', sans-serif";
-            ctx.fillStyle = "#aaa8c3";
+            ctx.font = "bold 11px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillStyle = "rgba(229,227,255,0.8)";
             ctx.textAlign = "center";
             ctx.textBaseline = "bottom";
 
@@ -792,39 +792,39 @@
                 title: {
                   display: true,
                   text: "Habilidad",
-                  color: "#aaa8c3",
+                  color: "rgba(229,227,255,0.7)",
                   font: { family: "'Space Mono', monospace", size: 11 }
                 },
                 min: 0.5,
                 max: 5.5,
                 ticks: {
-                  color: "#74738b",
+                  color: "rgba(229,227,255,0.5)",
                   stepSize: 1,
                   callback: function (value) {
                     if (value >= 1 && value <= 5 && Number.isInteger(value)) return String(value);
                     return "";
                   }
                 },
-                grid: { color: "rgba(70,70,92,0.3)" }
+                grid: { color: "rgba(70,70,92,0.6)" }
               },
               y: {
                 title: {
                   display: true,
                   text: "Desafio",
-                  color: "#aaa8c3",
+                  color: "rgba(229,227,255,0.7)",
                   font: { family: "'Space Mono', monospace", size: 11 }
                 },
                 min: 0.5,
                 max: 5.5,
                 ticks: {
-                  color: "#74738b",
+                  color: "rgba(229,227,255,0.5)",
                   stepSize: 1,
                   callback: function (value) {
                     if (value >= 1 && value <= 5 && Number.isInteger(value)) return String(value);
                     return "";
                   }
                 },
-                grid: { color: "rgba(70,70,92,0.3)" }
+                grid: { color: "rgba(70,70,92,0.6)" }
               }
             }
           }

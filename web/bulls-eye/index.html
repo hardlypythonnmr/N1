@@ -212,7 +212,7 @@
         <div class="absolute -top-20 -left-20 w-48 h-48 bg-primary/8 blur-[80px] rounded-full pointer-events-none"></div>
         <div class="absolute -bottom-16 -right-16 w-36 h-36 bg-primary/6 blur-[60px] rounded-full pointer-events-none"></div>
 
-        <div class="relative z-10 flex flex-col md:flex-row">
+        <div class="relative z-10 flex flex-col md:flex-row md:divide-x md:divide-outline-variant/30">
 
           <!-- Bull's Eye Canvas -->
           <div class="flex flex-col items-center justify-center p-6 md:w-56 flex-shrink-0">
@@ -343,18 +343,10 @@
 
             <!-- Live alignment score -->
             <div class="pt-3 border-t border-outline-variant/20">
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="font-mono text-[0.6875rem] text-on-surface-variant tracking-wider uppercase">Tu alineacion actual</p>
-                  <p id="live-alignment-msg" class="text-xs text-on-surface-variant/70 mt-0.5 leading-relaxed max-w-[200px]"></p>
-                </div>
-                <div class="flex-shrink-0 relative w-14 h-14">
-                  <div id="alignment-ring" class="alignment-score-ring w-14 h-14" style="--pct:50%">
-                    <div class="absolute inset-1 rounded-full bg-surface-container-highest flex items-center justify-center">
-                      <span id="live-score-display" class="font-mono text-sm font-bold text-primary">50%</span>
-                    </div>
-                  </div>
-                </div>
+              <div class="bg-surface-container-high/50 border border-outline-variant/30 rounded-xl p-4 text-center">
+                <p class="font-mono text-[0.6875rem] text-on-surface-variant tracking-wider uppercase mb-2">Tu alineacion actual</p>
+                <p id="live-score-display" class="text-3xl font-bold text-primary font-headline">50%</p>
+                <p id="live-alignment-msg" class="text-xs text-on-surface-variant/70 mt-1 leading-relaxed"></p>
               </div>
             </div>
 
@@ -771,10 +763,6 @@
       /* Progress bar */
       el("progress-bar").style.width = pct + "%";
       el("progress-pct").textContent = pct + "%";
-
-      /* Conic ring */
-      var ring = el("alignment-ring");
-      ring.style.setProperty("--pct", pct + "%");
 
       /* Score display */
       el("live-score-display").textContent = pct + "%";
