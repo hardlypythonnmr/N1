@@ -577,46 +577,12 @@
       return blank;
     }
 
-    /* == DIMENSION SCORE CALCULATORS == */
-    function calcDimensionScores(profile) {
-      var valuesScore=0;
-      if (profile.values && profile.values.schwartz_profile) {
-        var sp=profile.values.schwartz_profile;
-        var vals=Object.keys(sp).map(function(k){return sp[k];}).filter(function(v){return v!==null&&!isNaN(v);});
-        if (vals.length>0) valuesScore=Math.round((vals.reduce(function(a,b){return a+b;},0)/vals.length/9)*100)/10;
-      }
-      if (valuesScore === 0 && profile.values && profile.values.bulls_eye) {
-        var be = profile.values.bulls_eye;
-        var beVals = [be.work, be.relationships, be.personal_growth, be.leisure].filter(function(v) { return v !== null && !isNaN(v); });
-        if (beVals.length > 0) valuesScore = Math.round((beVals.reduce(function(a,b){return a+b;},0) / beVals.length / 10) * 100) / 10;
-      }
-      var strengthsScore=0;
-      if (profile.strengths) {
-        var sig=(profile.strengths.signature_strengths||[]).length;
-        var fl=(profile.strengths.flow_activities||[]).length;
-        strengthsScore=Math.min(sig>0?sig:fl,10);
-      }
-      var identityScore=0;
-      if (profile.identity && profile.identity.adaptability) {
-        var ad=profile.identity.adaptability;
-        var adv=[ad.concern,ad.control,ad.curiosity,ad.confidence].filter(function(v){return v!==null&&!isNaN(v);});
-        if (adv.length>0) identityScore=Math.round((adv.reduce(function(a,b){return a+b;},0)/adv.length/5)*100)/10;
-      }
-      var purposeScore=0;
-      if (profile.purpose && profile.purpose.mlq) {
-        var mlq=profile.purpose.mlq;
-        var mlqv=[mlq.presence,mlq.search].filter(function(v){return v!==null&&!isNaN(v);});
-        if (mlqv.length>0) purposeScore=Math.round((mlqv.reduce(function(a,b){return a+b;},0)/mlqv.length/7)*100)/10;
-      }
-      return {values:valuesScore, strengths:strengthsScore, identity:identityScore, purpose:purposeScore};
-    }
-
     /* == RENDER: CIRCULAR SCORE BADGES == */
     function renderScoreBadges(profile) {
       var container = document.getElementById('score-badges-row');
       container.textContent = '';
 
-      var scores = calcDimensionScores(profile);
+      var scores = N1.calcDimensionScores(profile);
       var badgeData = [
         {
           label: 'Propósito',
@@ -675,7 +641,7 @@
     var _radarChartInstance=null;
 
     function renderRadarChart(profile) {
-      var scores=calcDimensionScores(profile);
+      var scores=N1.calcDimensionScores(profile);
       var canvas=document.getElementById("n1-synthesizer-radar");
       if (_radarChartInstance) { _radarChartInstance.destroy(); _radarChartInstance=null; }
       _radarChartInstance=new Chart(canvas,{
@@ -721,7 +687,7 @@
       var container = document.getElementById('dimension-summary-row');
       container.textContent = '';
 
-      var scores = calcDimensionScores(profile);
+      var scores = N1.calcDimensionScores(profile);
       var summaries = [
         {
           icon: 'psychology',
@@ -983,7 +949,7 @@
       var grid = document.getElementById('key-insights-grid');
       grid.textContent = '';
 
-      var scores = calcDimensionScores(profile);
+      var scores = N1.calcDimensionScores(profile);
       var completedCount = ["values","strengths","identity","purpose"].filter(function(k){
         return profile[k] && profile[k].completed;
       }).length;
@@ -1267,7 +1233,7 @@
       var btnScorecard = document.getElementById("btn-download-scorecard");
       if (btnScorecard) {
         btnScorecard.addEventListener("click",function(){
-          var scores=calcDimensionScores(profile);
+          var scores=N1.calcDimensionScores(profile);
           var cp=profile.triage&&profile.triage.career_path;
           var hmap={stay_grow:"Crece donde estás",move:"Movete estratégicamente",go_independent:"Construí tu independencia",pause_reset:"Pausa y replanteo"};
           var headline=cp?(hmap[cp]||"Autoconocimiento profesional completo"):"Autoconocimiento profesional completo";

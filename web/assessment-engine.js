@@ -1185,6 +1185,106 @@
     }, duration);
   };
 
+  /* ── DIMENSION SCORE CALCULATORS ────── */
+
+  /**
+   * Derive dimension scores from a loaded profile object.
+   * Returns { values: 0-100, strengths: 0-10, identity: 0-100, purpose: 0-100 }.
+   * strengths is 0-10 (raw count cap); callers that need 0-100 must multiply ×10.
+   */
+  N1.calcDimensionScores = function (profile) {
+    var valuesScore = 0;
+    if (profile.values && profile.values.schwartz_profile) {
+      var sp = profile.values.schwartz_profile;
+      var vals = Object.keys(sp)
+        .map(function (k) {
+          return sp[k];
+        })
+        .filter(function (v) {
+          return v !== null && !isNaN(v);
+        });
+      if (vals.length > 0)
+        valuesScore =
+          Math.round(
+            (vals.reduce(function (a, b) {
+              return a + b;
+            }, 0) /
+              vals.length /
+              9) *
+              100,
+          ) / 10;
+    }
+    if (valuesScore === 0 && profile.values && profile.values.bulls_eye) {
+      var be = profile.values.bulls_eye;
+      var beVals = [
+        be.work,
+        be.relationships,
+        be.personal_growth,
+        be.leisure,
+      ].filter(function (v) {
+        return v !== null && !isNaN(v);
+      });
+      if (beVals.length > 0)
+        valuesScore =
+          Math.round(
+            (beVals.reduce(function (a, b) {
+              return a + b;
+            }, 0) /
+              beVals.length /
+              10) *
+              100,
+          ) / 10;
+    }
+    var strengthsScore = 0;
+    if (profile.strengths) {
+      var sig = (profile.strengths.signature_strengths || []).length;
+      var fl = (profile.strengths.flow_activities || []).length;
+      strengthsScore = Math.min(sig > 0 ? sig : fl, 10);
+    }
+    var identityScore = 0;
+    if (profile.identity && profile.identity.adaptability) {
+      var ad = profile.identity.adaptability;
+      var adv = [ad.concern, ad.control, ad.curiosity, ad.confidence].filter(
+        function (v) {
+          return v !== null && !isNaN(v);
+        },
+      );
+      if (adv.length > 0)
+        identityScore =
+          Math.round(
+            (adv.reduce(function (a, b) {
+              return a + b;
+            }, 0) /
+              adv.length /
+              5) *
+              100,
+          ) / 10;
+    }
+    var purposeScore = 0;
+    if (profile.purpose && profile.purpose.mlq) {
+      var mlq = profile.purpose.mlq;
+      var mlqv = [mlq.presence, mlq.search].filter(function (v) {
+        return v !== null && !isNaN(v);
+      });
+      if (mlqv.length > 0)
+        purposeScore =
+          Math.round(
+            (mlqv.reduce(function (a, b) {
+              return a + b;
+            }, 0) /
+              mlqv.length /
+              7) *
+              100,
+          ) / 10;
+    }
+    return {
+      values: valuesScore,
+      strengths: strengthsScore,
+      identity: identityScore,
+      purpose: purposeScore,
+    };
+  };
+
   /* ── EXPOSE ON WINDOW ────────────────── */
 
   window.N1 = N1;
