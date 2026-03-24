@@ -148,7 +148,7 @@
       display: none;
     }
     .screen.active {
-      display: block;
+      display: flex;
     }
     /* Toast */
     .n1-toast {
@@ -202,7 +202,9 @@
         <span class="material-symbols-outlined">arrow_back</span>
       </a>
       <span class="font-headline uppercase tracking-widest text-sm text-primary font-bold">N1 Compass</span>
-      <span class="material-symbols-outlined text-[#46465c] hover:text-primary transition-colors cursor-pointer">account_circle</span>
+      <a href="../profile/index.html" class="text-[#46465c] hover:text-primary transition-colors" aria-label="Mi perfil N1">
+        <span class="material-symbols-outlined">account_circle</span>
+      </a>
     </div>
   </header>
 
@@ -519,23 +521,25 @@
   </main>
 
   <!-- Bottom navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 flex justify-around items-center h-20 px-4 max-w-[640px] mx-auto bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50 rounded-t-xl">
-    <a href="../index.html" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
-      <span class="material-symbols-outlined">home</span>
-      <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Inicio</span>
-    </a>
-    <a href="#" class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 transition-all">
-      <span class="material-symbols-outlined">explore</span>
-      <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Compass</span>
-    </a>
-    <a href="../ghost-check/index.html" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
-      <span class="material-symbols-outlined">insert_chart</span>
-      <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Reportes</span>
-    </a>
-    <a href="#" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
-      <span class="material-symbols-outlined">person</span>
-      <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Perfil</span>
-    </a>
+  <nav class="fixed bottom-0 left-0 right-0 h-20 bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50">
+    <div class="flex justify-around items-center h-full px-4 max-w-[640px] mx-auto">
+      <a href="../index.html" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Inicio</span>
+      </a>
+      <a href="../index.html#herramientas" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Herramientas</span>
+      </a>
+      <a href="#" class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 transition-all">
+        <span class="material-symbols-outlined">explore</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Compass</span>
+      </a>
+      <a href="../profile/index.html" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
+        <span class="material-symbols-outlined">person</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Perfil</span>
+      </a>
+    </div>
   </nav>
 
   <!-- Toast -->
@@ -825,6 +829,7 @@
                   grid: { color: "rgba(70, 70, 92, 0.3)" },
                   angleLines: { color: "rgba(70, 70, 92, 0.3)" },
                   pointLabels: {
+                    display: false,
                     color: "#aaa8c3",
                     font: { family: "'Space Grotesk', sans-serif", size: 11, weight: "600" }
                   }
@@ -931,7 +936,7 @@
 
             var insightText = document.createElement("p");
             insightText.className = "text-xs text-on-surface-variant";
-            insightText.textContent = "Segun Savickas & Porfeli (2012), esta dimension predice la capacidad de adaptacion a transiciones laborales no planificadas.";
+            insightText.textContent = DIMENSION_INSIGHTS[dim.key] || "Segun Savickas & Porfeli (2012), esta dimension predice la capacidad de adaptacion a transiciones laborales no planificadas.";
 
             insightBox.appendChild(insightHeader);
             insightBox.appendChild(insightText);

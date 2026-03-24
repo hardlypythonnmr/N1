@@ -171,9 +171,9 @@
         <span class="material-symbols-outlined">arrow_back</span>
       </a>
       <h1 class="font-headline uppercase tracking-widest text-sm text-[#ff9068] font-bold">GHOST CHECK</h1>
-      <div class="text-[#46465c]">
+      <a href="../profile/index.html" class="text-[#46465c] hover:text-primary transition-colors" aria-label="Mi perfil N1">
         <span class="material-symbols-outlined">account_circle</span>
-      </div>
+      </a>
     </div>
   </header>
 
@@ -186,8 +186,8 @@
         <span class="material-symbols-outlined text-sm" style="font-size:16px;">info</span>
       </div>
       <p class="text-xs text-on-surface-variant leading-relaxed">
-        N1 es orientacion profesional basada en investigacion — no es terapia ni reemplaza un profesional.
-        Ghost Check es una guia de patrones, no una garantia. Verifica siempre la empresa en LinkedIn.
+        N1 es orientación profesional basada en investigación — no es terapia ni reemplaza un profesional.
+        Ghost Check es una guía de patrones, no una garantía. Verificá siempre la empresa en LinkedIn.
       </p>
     </div>
 
@@ -445,17 +445,17 @@
         <span class="material-symbols-outlined">home</span>
         <span class="font-headline text-[10px] uppercase font-bold mt-1">Inicio</span>
       </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../index.html#herramientas">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Herramientas</span>
+      </a>
       <a class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 translate-y-[-2px] transition-all" href="#">
         <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">manage_search</span>
         <span class="font-headline text-[10px] uppercase font-bold mt-1">Ghost</span>
       </a>
-      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../bulls-eye/index.html">
-        <span class="material-symbols-outlined">my_location</span>
-        <span class="font-headline text-[10px] uppercase font-bold mt-1">Bull's Eye</span>
-      </a>
-      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../compass/index.html">
-        <span class="material-symbols-outlined">explore</span>
-        <span class="font-headline text-[10px] uppercase font-bold mt-1">Compass</span>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../profile/index.html">
+        <span class="material-symbols-outlined">person</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Perfil</span>
       </a>
     </div>
   </nav>
@@ -494,7 +494,7 @@
         weight: 20,
         severity: "red",
         detect: function (t) {
-          return /(empresa confidencial|confidential|cliente de)/i.test(t);
+          return !(/((?:en|para|at|@)\s+[A-Z]\w+|empresa:\s*\S)/i.test(t)) || /(empresa confidencial|confidential|cliente de)/i.test(t);
         },
       },
       {
@@ -512,7 +512,7 @@
         weight: 10,
         severity: "red",
         detect: function (t) {
-          var matches = t.match(/(\d+)\+?\s*a[no]s/gi) || [];
+          var matches = t.match(/(\d+)\+?\s*(?:a[nñ]os|years?|yrs?)/gi) || [];
           var total = matches.reduce(function (sum, x) {
             return sum + parseInt(x, 10);
           }, 0);
@@ -525,7 +525,7 @@
         weight: 5,
         severity: "yellow",
         detect: function (t) {
-          return /(inmediatamente|urgente|ya mismo|asap)/i.test(t);
+          return /(inmediatamente|urgente|ya mismo|asap|24\/7|disponibilidad total|immediately)/i.test(t);
         },
       },
       {
