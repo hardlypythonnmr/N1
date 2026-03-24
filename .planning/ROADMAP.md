@@ -131,7 +131,7 @@ Plans:
 - [ ] 04-01-PLAN.md — N1 Busca Adentro GPT (instructions + 4 knowledge files + examples) (Wave 1)
 - [ ] 04-02-PLAN.md — N1 Construye Afuera GPT (instructions + 4 knowledge files + examples) (Wave 1)
 - [ ] 04-03-PLAN.md — N1 Compass GPT (instructions + 3 knowledge files + examples) (Wave 1)
-- [ ] 04-04-PLAN.md — N1 Ghost Check GPT (instructions + 3 knowledge files + examples) (Wave 1)
+- [x] 04-04-PLAN.md — N1 Ghost Check GPT (instructions + 3 knowledge files + examples) (Wave 1)
 
 ### Phase 5: Claude Skills Publishing
 
@@ -180,7 +180,7 @@ Phases execute in dependency order. Phase 1 and Phase 2 can run in parallel afte
 | 1. Static Web Tools         | 8/8            | Complete    | 2026-03-23 |
 | 2. AI Skills                | 5/5            | Complete    | 2026-03-23 |
 | 3. Integration + Scorecards | 2/3            | In Progress |            |
-| 4. ChatGPT GPTs             | 0/4            | Not started | -          |
+| 4. ChatGPT GPTs             | 1/4 | In Progress|  |
 | 5. Claude Skills Publishing | 0/TBD          | Not started | -          |
 | 6. GitHub Pages Deployment  | 0/TBD          | Not started | -          |
 | 7. First Ship               | 0/TBD          | Not started | -          |
