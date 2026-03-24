@@ -513,7 +513,8 @@
         weight: 15,
         severity: "red",
         detect: function (t) {
-          return t.length < 400;
+          // Short posting OR no concrete responsibilities listed
+          return t.length < 400 || !/(responsabilidades|responsabilities|funciones|duties|responsibilities|tareas|vas a|you will|encargado)/i.test(t);
         },
       },
       {
@@ -544,10 +545,10 @@
         weight: 10,
         severity: "yellow",
         detect: function (t) {
-          return (
-            /(excelente ambiente|beneficios competitivos)/i.test(t) &&
-            !/(seguro|prima|bono)/i.test(t)
-          );
+          // No specific benefits listed OR generic/TBD placeholder
+          var hasGeneric = /(excelente ambiente|beneficios competitivos|tbd|a convenir|por definir|competitivo|atractivo)/i.test(t);
+          var hasSpecific = /(seguro de salud|seguro medico|prima|bono|vacaciones|eps|arl|pension|auxilio)/i.test(t);
+          return hasGeneric || !hasSpecific;
         },
       },
       {
@@ -565,10 +566,9 @@
         weight: 15,
         severity: "red",
         detect: function (t) {
-          return (
-            /(enviar cv|manda tu hoja de vida)/i.test(t) &&
-            !/(aplica|apply|portal)/i.test(t)
-          );
+          var mentionsEmail = /(cv por email|hoja de vida.*email|resume.*email|enviar.*email|solo.*email|aceptamos.*email|send.*email|mail.*cv|@\w+\.\w+)/i.test(t);
+          var hasPortal = /(aplica en|apply at|portal|postulate|postulá|linkedin\.com\/jobs|indeed|workday|greenhouse)/i.test(t);
+          return mentionsEmail && !hasPortal;
         },
       },
       {
@@ -577,7 +577,10 @@
         weight: 10,
         severity: "yellow",
         detect: function (t) {
-          return /(actualiz|updated|repost|volvemos a publicar)/i.test(t);
+          // Explicit repost indicators OR mentions age > 60 days
+          var explicitRepost = /(actualiz|updated|repost|volvemos a publicar|publicado nuevamente|re-publicad)/i.test(t);
+          var oldPosting = /(\b[6-9]\d|\b[1-9]\d{2})\s*d[ií]as/i.test(t); // 60+ days
+          return explicitRepost || oldPosting;
         },
       },
       {
@@ -586,10 +589,11 @@
         weight: 10,
         severity: "yellow",
         detect: function (t) {
-          return (
-            /(junior|entry.level)/i.test(t) &&
-            /(\d+\+?\s*a[no]s|maestria|certificacion)/i.test(t)
-          );
+          // Junior mentioned alongside high experience requirements, OR contradictory level labels
+          var hasJunior = /(junior|entry.level|entry level|trainee|practicante)/i.test(t);
+          var hasSenior = /(senior|sr\.|lead|principal|architect)/i.test(t);
+          var highExp = /(\d+)\+?\s*a[nñ]os/.test(t) && parseInt((t.match(/(\d+)\+?\s*a[nñ]os/i) || ['0'])[0]) >= 8;
+          return (hasJunior && hasSenior) || (hasJunior && highExp);
         },
       },
     ];
