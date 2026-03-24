@@ -73,6 +73,64 @@
       line-height: 1.6;
     }
 
+    .hero-research-link {
+      font-size: 0.875rem;
+      margin-bottom: var(--space-xl);
+    }
+
+    /* How it works */
+    .how-it-works {
+      padding: var(--space-2xl) var(--space-md);
+      background-color: var(--n1-black);
+    }
+
+    .how-it-works .section-label {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .how-it-works .section-title {
+      color: var(--n1-white);
+      margin-bottom: var(--space-xl);
+    }
+
+    .steps-row {
+      display: flex;
+      gap: var(--space-lg);
+      max-width: 640px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .step-item {
+      flex: 1;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .step-number {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--n1-orange);
+      line-height: 1;
+      margin-bottom: var(--space-sm);
+    }
+
+    .step-label {
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--n1-white);
+      margin-bottom: var(--space-xs);
+    }
+
+    .step-desc {
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+      margin: 0;
+    }
+
     .hero-cta {
       display: flex;
       gap: var(--space-md);
@@ -494,6 +552,10 @@
 
       </div>
 
+      <p class="hero-research-link">
+        <a href="https://github.com/nicodalessandro11/N1/blob/main/shared/research-base.md" target="_blank" rel="noopener" aria-label="Ver la base de investigación completa">Ver la investigación detrás de N1 &rarr;</a>
+      </p>
+
       <h1 class="hero-tagline">El sistema eres tú.</h1>
 
       <p class="hero-sub">
@@ -511,6 +573,31 @@
         </a>
       </div>
 
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works" aria-label="Cómo funciona N1">
+      <div class="section-container" style="text-align:center;">
+        <p class="section-label">Cómo funciona</p>
+        <h2 class="section-title">Tres pasos. Sin registro.</h2>
+        <div class="steps-row" role="list">
+          <div class="step-item" role="listitem">
+            <div class="step-number">1</div>
+            <p class="step-label">Hacé el triage</p>
+            <p class="step-desc">3 preguntas para identificar tu situación y recibir la secuencia de herramientas más útil.</p>
+          </div>
+          <div class="step-item" role="listitem">
+            <div class="step-number">2</div>
+            <p class="step-label">Completá las herramientas</p>
+            <p class="step-desc">Cada herramienta mide una dimensión distinta: valores, fortalezas, propósito, adaptabilidad.</p>
+          </div>
+          <div class="step-item" role="listitem">
+            <div class="step-number">3</div>
+            <p class="step-label">Obtené tu perfil</p>
+            <p class="step-desc">Tu perfil integrado queda guardado en este navegador y es portable a Claude o ChatGPT.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- TRIAGE QUIZ -->
