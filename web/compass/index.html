@@ -488,15 +488,26 @@
     </div>
 
     <!-- LinkedIn -->
-    <button
-      id="btn-linkedin"
-      class="w-full flex items-center justify-center gap-2 py-4 rounded-lg bg-[#0077b5] text-white font-headline font-bold text-sm transition-transform active:scale-95 shadow-lg mb-6"
-    >
-      <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-      </svg>
-      Publicar en LinkedIn
-    </button>
+    <div class="grid grid-cols-2 gap-3 mb-6">
+      <button
+        id="btn-linkedin"
+        class="flex items-center justify-center gap-2 py-4 rounded-lg bg-[#0077b5] text-white font-headline font-bold text-sm transition-transform active:scale-95 shadow-lg"
+      >
+        <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+        Copiar texto
+      </button>
+      <button
+        id="share-linkedin-url"
+        class="flex items-center justify-center gap-2 py-4 rounded-lg border border-[#0077b5] text-[#0077b5] font-headline font-bold text-sm transition-transform active:scale-95 hover:bg-[#0077b5]/10"
+      >
+        <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+        Compartir
+      </button>
+    </div>
 
     <!-- Email capture -->
     <div class="glass-panel rounded-xl border border-outline-variant/20 p-6 mb-6">
@@ -1005,6 +1016,10 @@
 
         // Wire action buttons
         wireButtons(concern, control, curiosity, confidence);
+
+        // Email capture banner
+        var resultsEl = document.getElementById("screen-results");
+        if (resultsEl) { N1.showEmailCaptureBanner(resultsEl); }
       }
 
       /* ── ACTION BUTTONS ──────────────────────────────────────── */
@@ -1071,6 +1086,30 @@
             }).catch(function () {
               showToast("No se pudo copiar — intenta manualmente");
             });
+          });
+        }
+
+        // LinkedIn URL share
+        var compassShareBtn = document.getElementById("share-linkedin-url");
+        if (compassShareBtn) {
+          var newShareBtn = compassShareBtn.cloneNode(true);
+          compassShareBtn.parentNode.replaceChild(newShareBtn, compassShareBtn);
+          newShareBtn.addEventListener("click", function () {
+            var n1Url = "https://hardlypythonnmr.github.io/N1/";
+            var label = getScoreLabel(avg);
+            var text =
+              "Mi adaptabilidad de carrera (CAAS-12) es " +
+              label +
+              " — " +
+              avg.toFixed(1) +
+              "/5 en identidad profesional. " +
+              n1Url;
+            var shareUrl =
+              "https://www.linkedin.com/sharing/share-offsite/?url=" +
+              encodeURIComponent(n1Url) +
+              "&summary=" +
+              encodeURIComponent(text);
+            window.open(shareUrl, "_blank", "noopener,noreferrer");
           });
         }
 
