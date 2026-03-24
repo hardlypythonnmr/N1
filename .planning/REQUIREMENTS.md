@@ -51,7 +51,7 @@
 
 - [ ] **GPT-01**: N1 Busca Adentro GPT — compressed instructions (~1,800 tokens) + knowledge files
 - [ ] **GPT-02**: N1 Construye Afuera GPT — compressed instructions + career tools knowledge
-- [ ] **GPT-03**: N1 Compass GPT — compressed instructions + assessment knowledge
+- [x] **GPT-03**: N1 Compass GPT — compressed instructions + assessment knowledge
 - [x] **GPT-04**: N1 Ghost Check GPT — compressed instructions + signal detection knowledge
 - [x] **GPT-05**: All GPTs produce profile YAML compatible with Claude Skills
 - [x] **GPT-06**: All GPTs include Spanish + English bilingual behavior and safety disclaimer
@@ -144,7 +144,7 @@
 | INTG-04     | Phase 3 | Complete |
 | GPT-01      | Phase 4 | Pending |
 | GPT-02      | Phase 4 | Pending |
-| GPT-03      | Phase 4 | Pending |
+| GPT-03      | Phase 4 | Complete |
 | GPT-04      | Phase 4 | Complete |
 | GPT-05      | Phase 4 | Complete |
 | GPT-06      | Phase 4 | Complete |

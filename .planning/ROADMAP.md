@@ -130,7 +130,7 @@ Plans:
 
 - [ ] 04-01-PLAN.md — N1 Busca Adentro GPT (instructions + 4 knowledge files + examples) (Wave 1)
 - [ ] 04-02-PLAN.md — N1 Construye Afuera GPT (instructions + 4 knowledge files + examples) (Wave 1)
-- [ ] 04-03-PLAN.md — N1 Compass GPT (instructions + 3 knowledge files + examples) (Wave 1)
+- [x] 04-03-PLAN.md — N1 Compass GPT (instructions + 3 knowledge files + examples) (Wave 1)
 - [x] 04-04-PLAN.md — N1 Ghost Check GPT (instructions + 3 knowledge files + examples) (Wave 1)
 
 ### Phase 5: Claude Skills Publishing
