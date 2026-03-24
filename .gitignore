@@ -1,1 +1,4 @@
 .memsearch/
+screenshots/
+.playwright-mcp/
+n1-landing-page.png

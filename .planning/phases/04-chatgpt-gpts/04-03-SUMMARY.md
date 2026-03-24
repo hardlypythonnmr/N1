@@ -97,3 +97,14 @@ Word count required trimming from 1,598 to 1,398 (inline fix, no behavioral chan
 ## Known Stubs
 
 None. All files are complete. No placeholder data flows to user-facing output. YAML block in instructions.md intentionally uses `X` placeholders — these are template markers for the GPT to fill at runtime, not UI stubs.
+
+## Self-Check: PASSED
+
+- FOUND: gpts/compass/instructions.md (1,398 words)
+- FOUND: gpts/compass/knowledge/caas-guide.md
+- FOUND: gpts/compass/knowledge/research-citations.md
+- FOUND: gpts/compass/knowledge/profile-format.md
+- FOUND: gpts/compass/examples.md
+- FOUND commit: 53bd12e (Task 1)
+- FOUND commit: 836036d (Task 2)
+- FOUND commit: 171a978 (metadata)

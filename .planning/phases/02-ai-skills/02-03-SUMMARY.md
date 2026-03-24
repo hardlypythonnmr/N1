@@ -113,5 +113,11 @@ None — the SKILL.md is complete and self-contained. No hardcoded empty values 
 
 ---
 
+## Self-Check: PASSED
+
+- skills/ghost-check/SKILL.md: FOUND
+- .planning/phases/02-ai-skills/02-03-SUMMARY.md: FOUND
+- commit 4933c86: FOUND
+
 _Phase: 02-ai-skills_
 _Completed: 2026-03-23_
