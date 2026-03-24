@@ -1,347 +1,844 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Compass CAAS-12 — Adaptabilidad de Carrera | N1</title>
-  <meta name="description" content="Evaluación validada de adaptabilidad de carrera. 12 preguntas, resultados en 5 minutos. Basado en el modelo CAAS de Savickas (2012)." />
+  <meta name="description" content="Evaluacion validada de adaptabilidad de carrera. 12 preguntas, resultados en 5 minutos. Basado en el modelo CAAS de Savickas (2012)." />
   <meta property="og:title" content="Compass CAAS-12 — N1" />
-  <meta property="og:description" content="Evaluación validada de adaptabilidad de carrera. 12 preguntas, resultados en 5 minutos. Herramienta gratuita." />
+  <meta property="og:description" content="Evaluacion validada de adaptabilidad de carrera. 12 preguntas, resultados en 5 minutos. Herramienta gratuita." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://n1career.github.io/N1/compass/" />
   <meta property="og:image" content="https://n1career.github.io/N1/web/og-image.png" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23e85d26' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ff9068' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='black'>N1</text></svg>" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind config -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary-fixed": "#e2e0fc",
+            "on-tertiary-fixed": "#4f5051",
+            "tertiary-dim": "#ebebeb",
+            "on-primary-fixed": "#000000",
+            "surface-container-low": "#111127",
+            "tertiary-container": "#ebebeb",
+            "primary": "#ff9068",
+            "on-background": "#e5e3ff",
+            "surface-tint": "#ff9068",
+            "primary-dim": "#ff743f",
+            "surface": "#0c0c1f",
+            "surface-dim": "#0c0c1f",
+            "on-surface": "#e5e3ff",
+            "on-primary-container": "#451100",
+            "on-secondary-fixed-variant": "#5a5971",
+            "on-secondary": "#505066",
+            "tertiary": "#f9f9f9",
+            "on-primary": "#591800",
+            "inverse-surface": "#fcf8ff",
+            "surface-variant": "#23233f",
+            "surface-container-lowest": "#000000",
+            "secondary-dim": "#d4d2ed",
+            "on-secondary-fixed": "#3e3d53",
+            "primary-container": "#ff7947",
+            "on-tertiary-container": "#555757",
+            "primary-fixed": "#ff7947",
+            "secondary-container": "#45455b",
+            "surface-bright": "#292948",
+            "on-secondary-container": "#d0cee9",
+            "outline": "#74738b",
+            "tertiary-fixed-dim": "#f0f1f1",
+            "secondary-fixed-dim": "#d4d2ed",
+            "on-tertiary": "#5e5f5f",
+            "error-container": "#9f0519",
+            "secondary": "#e2e0fc",
+            "error": "#ff716c",
+            "surface-container-high": "#1d1d37",
+            "primary-fixed-dim": "#f5662f",
+            "tertiary-fixed": "#ffffff",
+            "on-tertiary-fixed-variant": "#6c6d6e",
+            "on-error": "#490006",
+            "surface-container": "#17172f",
+            "background": "#0c0c1f",
+            "surface-container-highest": "#23233f",
+            "inverse-primary": "#ab3700",
+            "on-surface-variant": "#aaa8c3",
+            "outline-variant": "#46465c",
+            "inverse-on-surface": "#53536a",
+            "on-primary-fixed-variant": "#551700",
+            "on-error-container": "#ffa8a3",
+            "error-dim": "#d7383b"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Space Grotesk"],
+            "mono": ["Space Mono"]
+          },
+          borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }
+        }
+      }
+    }
+  </script>
+
+  <!-- Shared styles -->
   <link rel="stylesheet" href="../styles.css" />
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-panel {
+      background: rgba(35, 35, 63, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .glass-panel-dark {
+      background: rgba(12, 12, 31, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .glow-accent {
+      filter: blur(80px);
+      opacity: 0.4;
+    }
+    .glow-orange {
+      box-shadow: 0 0 20px rgba(255, 144, 104, 0.3);
+    }
+    .radar-grid {
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+    /* Option button selected state */
+    .option-btn.selected {
+      border-color: #ff9068 !important;
+      background: rgba(255, 144, 104, 0.1) !important;
+      box-shadow: 0 0 8px rgba(255, 144, 104, 0.2);
+    }
+    .option-btn.selected .option-dot {
+      opacity: 1 !important;
+    }
+    .option-btn.selected .option-dot-ring {
+      border-color: #ff9068 !important;
+      box-shadow: 0 0 8px rgba(255, 144, 104, 0.4);
+    }
+    .option-btn.selected .option-text {
+      color: #f9f9f9 !important;
+      font-weight: 700 !important;
+    }
+    /* Dimension card expandable */
+    .dim-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .dim-details.open {
+      max-height: 320px;
+    }
+    /* Screen show/hide */
+    .screen {
+      display: none;
+    }
+    .screen.active {
+      display: block;
+    }
+    /* Toast */
+    .n1-toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(35, 35, 63, 0.95);
+      border: 1px solid rgba(255, 144, 104, 0.3);
+      color: #f9f9f9;
+      padding: 10px 20px;
+      border-radius: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 200;
+      pointer-events: none;
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+    .n1-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    /* Progress glow */
+    .progress-glow {
+      box-shadow: 0 0 12px rgba(255, 144, 104, 0.4);
+    }
+    /* Scorecard preview */
+    #scorecard-preview-img {
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255, 144, 104, 0.2);
+      max-width: 100%;
+    }
+  </style>
 </head>
-<body>
 
-  <!-- NAVIGATION -->
-  <nav class="nav" aria-label="Navegación principal">
-    <a href="../index.html" class="nav-logo">N<span>1</span></a>
-    <a href="../index.html" class="nav-back">Volver al inicio</a>
-  </nav>
+<body class="bg-background text-on-surface font-body min-h-screen selection:bg-primary selection:text-on-primary-fixed overflow-x-hidden">
 
-  <main class="container">
+  <!-- Background ambient glow -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <div class="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] bg-primary glow-accent rounded-full"></div>
+    <div class="absolute top-[40%] -right-[10%] w-[50%] h-[50%] bg-surface-bright glow-accent rounded-full"></div>
+  </div>
 
-    <!-- DISCLAIMER (from safety-protocol.md, Section 1) -->
-    <div class="disclaimer" id="disclaimer" role="note" aria-label="Aviso importante">
-      <p><strong>N1 es una herramienta de orientación profesional basada en investigación.</strong></p>
-      <p>No es terapia, no es asesoría psicológica, y no reemplaza la orientación de un profesional de salud mental o coach certificado.</p>
-      <p>Si estás atravesando una crisis emocional severa, te pido que busques apoyo profesional: <strong>Colombia: Línea 106</strong> (salud mental, 24 horas) — <strong>Internacional: findahelpline.com</strong></p>
+  <!-- Fixed Header -->
+  <header class="fixed top-0 w-full z-50 bg-[#0c0c1f]/60 backdrop-blur-xl border-b border-[#46465c]/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)]">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-[640px] mx-auto">
+      <a href="../index.html" id="header-back-btn" class="text-primary transition-transform active:scale-90 flex items-center gap-1">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <span class="font-headline uppercase tracking-widest text-sm text-primary font-bold">N1 Compass</span>
+      <span class="material-symbols-outlined text-[#46465c] hover:text-primary transition-colors cursor-pointer">account_circle</span>
     </div>
+  </header>
 
-    <!-- INTRO SCREEN -->
-    <div id="intro-screen" class="card mt-lg">
-      <h1>Compass CAAS-12</h1>
-      <p class="text-muted mt-sm">Medición validada de adaptabilidad de carrera. 12 preguntas sobre cómo enfrentás tu desarrollo profesional. Basado en el modelo de Savickas (2012).</p>
-      <p class="mt-md">El instrumento mide cuatro dimensiones: <strong>Concern</strong> (orientación al futuro), <strong>Control</strong> (agencia), <strong>Curiosity</strong> (exploración) y <strong>Confidence</strong> (confianza en ejecutar).</p>
-      <p class="text-sm text-muted mt-md">Savickas et al. (2012) — Career Adapt-Abilities Scale. Validado en 13 países. Tiempo estimado: 4-5 minutos.</p>
-      <div class="btn-group mt-xl">
-        <button id="start-btn" class="btn btn-primary">Empezar la evaluación</button>
+  <!-- ══════════════════════════════════════
+       SCREEN 1: START
+       ══════════════════════════════════════ -->
+  <main id="screen-start" class="screen active relative z-10 pt-24 pb-32 px-4 flex flex-col items-center">
+
+    <!-- Disclaimer -->
+    <div class="w-full max-w-[640px] mb-6 glass-panel-dark rounded-xl border border-[#46465c]/20 px-5 py-4">
+      <div class="flex gap-3 items-start">
+        <span class="material-symbols-outlined text-outline text-sm mt-0.5">info</span>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          N1 es una herramienta de <strong class="text-on-surface">orientacion profesional</strong> basada en investigacion.
+          No es terapia ni reemplaza la orientacion de un profesional de salud mental.
+          Crisis en Colombia: <strong class="text-primary">Linea 106</strong> &mdash; Internacional: <strong class="text-primary">findahelpline.com</strong>
+        </p>
       </div>
     </div>
 
-    <!-- ASSESSMENT CONTAINER (N1.createAssessment renders here) -->
-    <div id="assessment-container" class="hidden"></div>
+    <!-- Hero -->
+    <div class="w-full max-w-[640px] mb-10 text-center">
+      <span class="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-primary mb-4 block">Evaluacion CAAS-12</span>
+      <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-tertiary mb-5 uppercase">Tu Brujula Profesional</h1>
+      <p class="text-on-surface-variant text-base leading-relaxed max-w-md mx-auto">
+        Medi tu adaptabilidad en cuatro dimensiones criticas. Basado en el modelo CAAS de Savickas (2012), validado en 13 paises.
+      </p>
+    </div>
 
-    <!-- RESULTS SCREEN (hidden initially) -->
-    <section id="results-screen" class="hidden" role="region" aria-label="Resultados Compass CAAS-12">
+    <!-- Main card -->
+    <div class="w-full max-w-[640px] glass-panel rounded-xl border border-outline-variant/30 p-8 md:p-10">
 
-      <div class="results-screen">
-
-        <!-- Header -->
-        <div class="results-header">
-          <h1>Tu perfil de adaptabilidad</h1>
-          <p class="text-muted">CAAS-12 — Savickas (2012)</p>
+      <!-- Dimensions grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-7 mb-10">
+        <div class="group">
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-variant text-primary group-hover:shadow-[0_0_15px_rgba(255,144,104,0.3)] transition-all">
+              <span class="material-symbols-outlined">visibility</span>
+            </div>
+            <h3 class="font-mono text-sm font-bold tracking-widest uppercase text-tertiary">Concern</h3>
+          </div>
+          <p class="text-sm text-on-surface-variant leading-relaxed">Capacidad para mirar hacia adelante y prepararte para lo que viene.</p>
         </div>
-
-        <!-- Radar Chart -->
-        <div class="chart-container" id="chart-container">
-          <canvas id="radar-canvas" width="500" height="400" aria-label="Gráfico de radar con tus cuatro dimensiones de adaptabilidad de carrera"></canvas>
+        <div class="group">
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-variant text-primary group-hover:shadow-[0_0_15px_rgba(255,144,104,0.3)] transition-all">
+              <span class="material-symbols-outlined">settings_accessibility</span>
+            </div>
+            <h3 class="font-mono text-sm font-bold tracking-widest uppercase text-tertiary">Control</h3>
+          </div>
+          <p class="text-sm text-on-surface-variant leading-relaxed">Sentido de responsabilidad y autonomia sobre tus decisiones profesionales.</p>
         </div>
-
-        <!-- Overall score -->
-        <div class="card">
-          <p class="text-sm text-muted font-heading" style="text-transform:uppercase; letter-spacing:0.05em;">Puntuación global</p>
-          <p id="overall-score-text" class="mt-sm" style="font-size:1.1rem;"></p>
+        <div class="group">
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-variant text-primary group-hover:shadow-[0_0_15px_rgba(255,144,104,0.3)] transition-all">
+              <span class="material-symbols-outlined">travel_explore</span>
+            </div>
+            <h3 class="font-mono text-sm font-bold tracking-widest uppercase text-tertiary">Curiosity</h3>
+          </div>
+          <p class="text-sm text-on-surface-variant leading-relaxed">Disposicion para explorar nuevas opciones, roles y escenarios de crecimiento.</p>
         </div>
-
-        <!-- Per-dimension interpretations (populated via DOM API) -->
-        <div id="interpretations"></div>
-
-        <!-- Cultural calibration note (per WEB-10) -->
-        <div class="disclaimer">
-          <p id="cultural-note" class="text-sm"></p>
+        <div class="group">
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-variant text-primary group-hover:shadow-[0_0_15px_rgba(255,144,104,0.3)] transition-all">
+              <span class="material-symbols-outlined">bolt</span>
+            </div>
+            <h3 class="font-mono text-sm font-bold tracking-widest uppercase text-tertiary">Confidence</h3>
+          </div>
+          <p class="text-sm text-on-surface-variant leading-relaxed">Seguridad en tus habilidades para superar obstaculos y alcanzar metas.</p>
         </div>
+      </div>
 
-        <!-- SCORECARD PREVIEW (generated by JS on results render) -->
-        <img
-          id="scorecard-preview-img"
-          class="n1-scorecard-preview"
-          alt="Vista previa del scorecard"
-          style="display:none;"
-          aria-label="Vista previa del scorecard descargable"
-        />
+      <!-- Separator -->
+      <div class="h-px w-full bg-gradient-to-r from-transparent via-outline-variant/40 to-transparent mb-10"></div>
 
-        <!-- Action buttons -->
-        <div class="results-actions">
-          <button id="btn-scorecard" class="btn btn-primary">Descargar scorecard</button>
-          <button id="btn-linkedin" class="btn btn-secondary">Copiar texto LinkedIn</button>
-          <button id="btn-export" class="btn btn-secondary">Exportar perfil YAML</button>
-          <a href="../index.html" class="btn btn-ghost">Volver al inicio</a>
+      <!-- Assessment details -->
+      <div class="bg-surface-container-low/50 rounded-lg p-5 mb-10 border border-outline-variant/10">
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-primary mt-0.5">info</span>
+          <div>
+            <p class="text-sm font-mono text-tertiary uppercase mb-2">Detalles Tecnicos</p>
+            <ul class="text-sm text-on-surface-variant space-y-2">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary/40 flex-shrink-0"></span>
+                12 preguntas de seleccion multiple (escala Likert 1-5)
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary/40 flex-shrink-0"></span>
+                Tiempo estimado: 4-5 minutos
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary/40 flex-shrink-0"></span>
+                Resultados con perfil N1 exportable
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
 
-        <!-- EMAIL CAPTURE (INTG-03 — D-07, D-08) -->
-        <div
-          class="n1-email-section"
-          id="n1-email-section"
-          aria-label="Suscripción al newsletter"
+      <!-- CTA -->
+      <button
+        id="start-btn"
+        class="w-full py-5 px-8 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold text-lg uppercase tracking-widest rounded-lg shadow-[0_8px_30px_rgb(255,144,104,0.2)] hover:shadow-[0_0_25px_rgba(255,144,104,0.4)] transition-all active:scale-95 group flex items-center justify-center gap-3"
+      >
+        Empezar Evaluacion
+        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+      </button>
+    </div>
+
+    <!-- Quote -->
+    <div class="mt-14 text-center max-w-[400px]">
+      <p class="italic text-on-surface-variant/60 text-sm">
+        "El sistema no es algo externo &mdash; el sistema eres vos, adaptandote a un mundo en constante flujo."
+      </p>
+    </div>
+  </main>
+
+  <!-- ══════════════════════════════════════
+       SCREEN 2: QUESTIONS
+       ══════════════════════════════════════ -->
+  <main id="screen-questions" class="screen relative z-10 pt-24 pb-32 px-4 flex flex-col items-center">
+    <div class="w-full max-w-[640px]">
+
+      <!-- Progress bar -->
+      <div class="w-full mb-10">
+        <div class="flex justify-between items-end mb-2">
+          <span class="font-mono text-[10px] uppercase tracking-widest text-outline">Evaluacion CAAS-12</span>
+          <span class="font-mono text-xs font-bold text-primary" id="q-counter">01 / 12</span>
+        </div>
+        <div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-primary to-primary-container transition-all duration-500 progress-glow" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Question card -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-8 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden mb-8">
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="font-mono text-[0.6875rem] text-primary mb-5 tracking-[0.2em] uppercase" id="q-dimension-label">Dimension: Concern</div>
+          <h2 class="font-headline text-2xl md:text-3xl font-bold leading-tight text-tertiary mb-10" id="q-text">
+            Pensar en como sera mi futuro profesional
+          </h2>
+          <div class="space-y-3" id="q-options"></div>
+        </div>
+      </div>
+
+      <!-- Contextual insight (plain text, no HTML injection) -->
+      <div class="w-full mb-8 p-4 rounded-xl bg-surface-container-low border border-outline-variant/10 flex items-start gap-4">
+        <div class="p-2 rounded bg-primary/10 text-primary flex-shrink-0">
+          <span class="material-symbols-outlined text-sm">info</span>
+        </div>
+        <p class="text-xs text-on-surface-variant leading-relaxed" id="q-insight-text">
+          Respondé honestamente. Esta evaluacion no tiene respuestas correctas o incorrectas — solo tu perspectiva actual sobre tu carrera.
+        </p>
+      </div>
+
+      <!-- Nav actions -->
+      <div class="w-full flex items-center justify-between gap-4">
+        <button
+          id="q-prev-btn"
+          class="flex-1 py-4 border border-outline-variant/40 rounded-lg font-headline font-bold uppercase tracking-widest text-xs text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95"
         >
-          <p class="n1-email-section-label">Newsletter</p>
-          <p class="n1-email-section-title">Recibí insights de carrera cada semana</p>
-          <p class="n1-email-section-desc">
-            Sin spam. Investigación aplicada — en español.
-          </p>
-          <form
-            id="n1-tool-email-form"
-            class="n1-email-section-form"
-            action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
-            method="POST"
-            target="popupwindow"
-            novalidate
-            aria-label="Formulario de suscripción"
-          >
-            <label for="n1-tool-email" class="visually-hidden"
-              >Tu dirección de correo</label
-            >
-            <input
-              type="email"
-              name="email"
-              id="n1-tool-email"
-              class="n1-email-section-input"
-              placeholder="tu@email.com"
-              required
-              autocomplete="email"
-              aria-required="true"
-            />
-            <input type="hidden" name="tag" value="tool-completion" />
-            <button type="submit" class="btn btn-primary" style="flex-shrink:0;">
-              Suscribirme
-            </button>
-          </form>
-          <p
-            class="n1-email-section-success"
-            id="n1-tool-email-success"
-            role="status"
-            aria-live="polite"
-          >
-            Listo. Te llegará el primer correo pronto.
-          </p>
-        </div>
+          Anterior
+        </button>
+        <button
+          id="q-next-btn"
+          class="flex-[2] py-4 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold uppercase tracking-widest text-xs text-on-primary-fixed shadow-[0_10px_20px_-5px_rgba(255,144,104,0.3)] hover:shadow-[0_0_20px_rgba(255,144,104,0.4)] transition-all duration-300 active:scale-95 opacity-40 cursor-not-allowed"
+          disabled
+        >
+          Siguiente
+        </button>
+      </div>
+    </div>
+  </main>
 
+  <!-- ══════════════════════════════════════
+       SCREEN 3: RESULTS
+       ══════════════════════════════════════ -->
+  <main id="screen-results" class="screen relative z-10 pt-24 pb-32 px-4 max-w-[640px] mx-auto overflow-hidden">
+
+    <!-- Ambient illumination -->
+    <div class="absolute top-20 -left-20 w-64 h-64 bg-primary/20 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+    <div class="absolute bottom-40 -right-20 w-80 h-80 bg-primary/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+
+    <!-- Header -->
+    <section class="text-center mb-10">
+      <div class="inline-block mb-4 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+        <span class="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">Evaluacion Completada</span>
+      </div>
+      <h1 class="font-headline text-4xl font-bold tracking-tight text-white mb-2">Tu perfil de adaptabilidad</h1>
+      <p class="text-on-surface-variant text-sm font-medium">CAAS-12 &mdash; Savickas (2012)</p>
+    </section>
+
+    <!-- Radar: decorative SVG grid + Chart.js canvas -->
+    <section class="relative w-full max-w-[400px] mx-auto mb-12">
+      <div class="relative aspect-square w-full flex items-center justify-center">
+        <!-- Decorative grid rings -->
+        <div class="absolute inset-0 border border-outline-variant/30 radar-grid scale-100 opacity-20 pointer-events-none"></div>
+        <div class="absolute inset-0 border border-outline-variant/30 radar-grid scale-[0.75] opacity-20 pointer-events-none"></div>
+        <div class="absolute inset-0 border border-outline-variant/30 radar-grid scale-[0.5] opacity-20 pointer-events-none"></div>
+        <div class="absolute inset-0 border border-outline-variant/30 radar-grid scale-[0.25] opacity-20 pointer-events-none"></div>
+        <!-- Axis labels -->
+        <div class="absolute top-1 left-1/2 -translate-x-1/2 font-mono text-[9px] text-on-surface-variant uppercase tracking-widest pointer-events-none">Concern</div>
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 font-mono text-[9px] text-on-surface-variant uppercase tracking-widest rotate-90 translate-x-10 pointer-events-none">Control</div>
+        <div class="absolute bottom-1 left-1/2 -translate-x-1/2 font-mono text-[9px] text-on-surface-variant uppercase tracking-widest pointer-events-none">Curiosity</div>
+        <div class="absolute left-0 top-1/2 -translate-y-1/2 font-mono text-[9px] text-on-surface-variant uppercase tracking-widest -rotate-90 -translate-x-10 pointer-events-none">Confidence</div>
+        <!-- Chart.js canvas -->
+        <canvas id="radar-canvas" class="w-full h-full drop-shadow-[0_0_15px_rgba(255,144,104,0.4)]" aria-label="Grafico de radar con tus cuatro dimensiones de adaptabilidad"></canvas>
+        <!-- Center score overlay -->
+        <div class="absolute flex flex-col items-center pointer-events-none">
+          <span class="font-headline text-4xl font-bold text-white leading-none" id="overall-score-display">-</span>
+          <span class="font-mono text-[9px] text-primary mt-1">SISTEMA N1</span>
+        </div>
       </div>
     </section>
 
+    <!-- Divider -->
+    <div class="mb-8 px-4 flex items-center gap-4">
+      <div class="h-[1px] flex-1 bg-outline-variant/20"></div>
+      <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest whitespace-nowrap">Dimensiones</span>
+      <div class="h-[1px] flex-1 bg-outline-variant/20"></div>
+    </div>
+
+    <!-- Dimension cards -->
+    <div class="space-y-4 mb-8" id="dimension-cards"></div>
+
+    <!-- Cultural note -->
+    <div class="glass-panel-dark rounded-xl border border-outline-variant/10 px-5 py-4 mb-8">
+      <div class="flex gap-3 items-start">
+        <span class="material-symbols-outlined text-outline text-sm mt-0.5">info</span>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          Nota: en contextos con alta incertidumbre economica como LATAM, scores mas bajos en Concern y Control son comunes y no indican un deficit. Este perfil es un punto de partida, no un juicio. (Savickas &amp; Porfeli, 2012)
+        </p>
+      </div>
+    </div>
+
+    <!-- Scorecard preview -->
+    <img id="scorecard-preview-img" alt="Vista previa del scorecard" style="display:none;" class="mb-6 w-full" />
+
+    <!-- Actions -->
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <button
+        id="btn-scorecard"
+        class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed flex items-center justify-center gap-2 py-4 rounded-lg font-headline font-bold text-sm tracking-tight glow-orange transition-transform active:scale-95"
+      >
+        <span class="material-symbols-outlined text-[20px]">download</span>
+        Scorecard
+      </button>
+      <button
+        id="btn-export"
+        class="border border-outline-variant text-on-surface flex items-center justify-center gap-2 py-4 rounded-lg font-headline font-bold text-sm tracking-tight hover:bg-white/5 transition-all active:scale-95"
+      >
+        <span class="material-symbols-outlined text-[20px]">code</span>
+        YAML
+      </button>
+    </div>
+
+    <!-- LinkedIn -->
+    <button
+      id="btn-linkedin"
+      class="w-full flex items-center justify-center gap-2 py-4 rounded-lg bg-[#0077b5] text-white font-headline font-bold text-sm transition-transform active:scale-95 shadow-lg mb-6"
+    >
+      <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+      </svg>
+      Publicar en LinkedIn
+    </button>
+
+    <!-- Email capture -->
+    <div class="glass-panel rounded-xl border border-outline-variant/20 p-6 mb-6">
+      <p class="font-mono text-[10px] text-primary uppercase tracking-widest mb-1">Newsletter</p>
+      <p class="font-headline text-lg font-bold text-tertiary mb-2">Recibí insights de carrera cada semana</p>
+      <p class="text-sm text-on-surface-variant mb-4">Sin spam. Investigacion aplicada — en espanol.</p>
+      <form
+        id="n1-tool-email-form"
+        action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
+        method="POST"
+        target="popupwindow"
+        novalidate
+        class="flex gap-3"
+      >
+        <label for="n1-tool-email" class="sr-only">Tu direccion de correo</label>
+        <input
+          type="email"
+          name="email"
+          id="n1-tool-email"
+          placeholder="tu@email.com"
+          required
+          autocomplete="email"
+          class="flex-1 bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 text-sm text-on-surface placeholder-outline focus:outline-none focus:border-primary transition-colors"
+        />
+        <input type="hidden" name="tag" value="tool-completion" />
+        <button
+          type="submit"
+          class="px-5 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold text-sm rounded-lg shadow-[0_4px_15px_rgba(255,144,104,0.2)] hover:shadow-[0_0_15px_rgba(255,144,104,0.4)] transition-all active:scale-95 whitespace-nowrap"
+        >
+          Suscribirme
+        </button>
+      </form>
+      <p class="text-sm text-primary mt-3" id="n1-tool-email-success" style="display:none;">
+        Listo. Te llegara el primer correo pronto.
+      </p>
+    </div>
+
+    <!-- Back home -->
+    <a
+      href="../index.html"
+      class="w-full flex items-center justify-center gap-2 py-4 border border-outline-variant/40 rounded-lg font-headline font-bold text-sm text-outline hover:text-tertiary hover:border-tertiary transition-all active:scale-95"
+    >
+      <span class="material-symbols-outlined text-[18px]">home</span>
+      Volver al inicio
+    </a>
+
   </main>
 
-  <!-- Toast notification container -->
-  <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+  <!-- Bottom navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 flex justify-around items-center h-20 px-4 max-w-[640px] mx-auto bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50 rounded-t-xl">
+    <a href="../index.html" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
+      <span class="material-symbols-outlined">home</span>
+      <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Inicio</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 transition-all">
+      <span class="material-symbols-outlined">explore</span>
+      <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Compass</span>
+    </a>
+    <a href="../ghost-check/index.html" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
+      <span class="material-symbols-outlined">insert_chart</span>
+      <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Reportes</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 hover:text-[#f9f9f9] transition-all">
+      <span class="material-symbols-outlined">person</span>
+      <span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Perfil</span>
+    </a>
+  </nav>
 
-  <!-- SCRIPTS: chart.js CDN, then assessment engine, then inline logic -->
+  <!-- Toast -->
+  <div id="n1-toast" class="n1-toast" role="status" aria-live="polite"></div>
+
+  <!-- Scripts: Chart.js, assessment engine, inline logic -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
   <script src="../assessment-engine.js"></script>
   <script>
     (function () {
       "use strict";
 
+      /* ── SCREEN MANAGER ──────────────────────────────────────── */
+
+      function showScreen(id) {
+        document.querySelectorAll(".screen").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        var el = document.getElementById(id);
+        if (el) { el.classList.add("active"); }
+        window.scrollTo(0, 0);
+      }
+
+      /* ── TOAST HELPER ─────────────────────────────────────────── */
+
+      function showToast(msg) {
+        var t = document.getElementById("n1-toast");
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(function () { t.classList.remove("show"); }, 2800);
+      }
+
       /* ── CAAS-12 QUESTIONS ─────────────────────────────────────── */
 
       var QUESTIONS = [
-        {
-          id: "c1",
-          text: "Pensar en como sera mi futuro profesional",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c2",
-          text: "Darme cuenta de que las decisiones de hoy afectan mi futuro",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c3",
-          text: "Prepararme para el futuro",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c4",
-          text: "Mantener mis decisiones de carrera en mis propias manos",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c5",
-          text: "Tomar responsabilidad por mis acciones",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c6",
-          text: "Defender mis creencias y valores",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c7",
-          text: "Explorar el ambiente que me rodea",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c8",
-          text: "Buscar oportunidades para crecer como persona",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c9",
-          text: "Imaginarme como seria en un nuevo trabajo",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c10",
-          text: "Trabajar eficientemente",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c11",
-          text: "Aprender las habilidades requeridas para un nuevo trabajo",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        },
-        {
-          id: "c12",
-          text: "Superar obstaculos",
-          type: "likert5",
-          labels: { 1: "Casi nada", 2: "Poco", 3: "Algo", 4: "Bastante", 5: "Muchisimo" }
-        }
+        { id: "c1",  text: "Pensar en como sera mi futuro profesional",                    dimension: "concern",    dimensionLabel: "Concern — Orientacion al futuro" },
+        { id: "c2",  text: "Darme cuenta de que las decisiones de hoy afectan mi futuro", dimension: "concern",    dimensionLabel: "Concern — Orientacion al futuro" },
+        { id: "c3",  text: "Prepararme para el futuro",                                    dimension: "concern",    dimensionLabel: "Concern — Orientacion al futuro" },
+        { id: "c4",  text: "Mantener mis decisiones de carrera en mis propias manos",      dimension: "control",    dimensionLabel: "Control — Agencia profesional" },
+        { id: "c5",  text: "Tomar responsabilidad por mis acciones",                       dimension: "control",    dimensionLabel: "Control — Agencia profesional" },
+        { id: "c6",  text: "Defender mis creencias y valores",                             dimension: "control",    dimensionLabel: "Control — Agencia profesional" },
+        { id: "c7",  text: "Explorar el ambiente que me rodea",                            dimension: "curiosity",  dimensionLabel: "Curiosity — Exploracion" },
+        { id: "c8",  text: "Buscar oportunidades para crecer como persona",                dimension: "curiosity",  dimensionLabel: "Curiosity — Exploracion" },
+        { id: "c9",  text: "Imaginarme como seria en un nuevo trabajo",                    dimension: "curiosity",  dimensionLabel: "Curiosity — Exploracion" },
+        { id: "c10", text: "Trabajar eficientemente",                                      dimension: "confidence", dimensionLabel: "Confidence — Autoeficacia" },
+        { id: "c11", text: "Aprender las habilidades requeridas para un nuevo trabajo",    dimension: "confidence", dimensionLabel: "Confidence — Autoeficacia" },
+        { id: "c12", text: "Superar obstaculos",                                           dimension: "confidence", dimensionLabel: "Confidence — Autoeficacia" }
       ];
+
+      var LIKERT_OPTIONS = [
+        { value: 1, label: "Casi nada" },
+        { value: 2, label: "Poco" },
+        { value: 3, label: "Algo" },
+        { value: 4, label: "Bastante" },
+        { value: 5, label: "Muchisimo" }
+      ];
+
+      // Insight text per dimension — plain text only (no HTML), safe for textContent
+      var DIMENSION_INSIGHTS = {
+        concern:    "Esta dimension mide tu capacidad de anticipacion. Responder honestamente calibra la precision de tu mapa de carrera N1.",
+        control:    "Esta dimension mide tu sentido de agencia. Las personas con alto control navegan cambios laborales con mayor claridad y menor ansiedad.",
+        curiosity:  "Esta dimension mide tu apertura a explorar posibilidades. Alta curiosidad correlaciona con transiciones de carrera exitosas (Savickas, 2012).",
+        confidence: "Esta dimension mide tu autoeficacia percibida — la creencia en tu capacidad para ejecutar acciones y superar obstaculos profesionales."
+      };
+
+      /* ── QUESTION STATE ───────────────────────────────────────── */
+
+      var answers = {};
+      var currentIdx = 0;
+
+      /* ── RENDER QUESTION ──────────────────────────────────────── */
+
+      function renderQuestion(idx) {
+        var q     = QUESTIONS[idx];
+        var total = QUESTIONS.length;
+
+        // Counter
+        var counter = document.getElementById("q-counter");
+        if (counter) {
+          counter.textContent = String(idx + 1).padStart(2, "0") + " / " + String(total).padStart(2, "0");
+        }
+
+        // Progress bar
+        var bar = document.getElementById("progress-bar");
+        if (bar) {
+          bar.style.width = Math.round((idx / total) * 100) + "%";
+        }
+
+        // Dimension label (safe — static data)
+        var dimLabel = document.getElementById("q-dimension-label");
+        if (dimLabel) { dimLabel.textContent = "Dimension: " + q.dimensionLabel; }
+
+        // Question text (safe — static data)
+        var qText = document.getElementById("q-text");
+        if (qText) { qText.textContent = q.text; }
+
+        // Insight — textContent only, no HTML
+        var insight = document.getElementById("q-insight-text");
+        if (insight && DIMENSION_INSIGHTS[q.dimension]) {
+          insight.textContent = DIMENSION_INSIGHTS[q.dimension];
+        }
+
+        // Options — built via DOM API, no innerHTML
+        var optContainer = document.getElementById("q-options");
+        if (optContainer) {
+          while (optContainer.firstChild) { optContainer.removeChild(optContainer.firstChild); }
+
+          LIKERT_OPTIONS.forEach(function (opt) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "option-btn group w-full flex items-center justify-between p-5 rounded-lg border border-outline-variant/20 bg-surface-container/40 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300 text-left";
+            btn.dataset.value = String(opt.value);
+
+            if (answers[q.id] === opt.value) {
+              btn.classList.add("selected");
+            }
+
+            var labelSpan = document.createElement("span");
+            labelSpan.className = "option-text font-medium text-on-surface-variant group-hover:text-tertiary transition-colors";
+            labelSpan.textContent = opt.label;
+
+            var ringDiv = document.createElement("div");
+            ringDiv.className = "option-dot-ring w-6 h-6 rounded-full border-2 border-outline-variant group-hover:border-primary flex items-center justify-center transition-all flex-shrink-0";
+
+            var dotDiv = document.createElement("div");
+            dotDiv.className = "option-dot w-2.5 h-2.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity";
+
+            ringDiv.appendChild(dotDiv);
+            btn.appendChild(labelSpan);
+            btn.appendChild(ringDiv);
+
+            btn.addEventListener("click", function () {
+              answers[q.id] = parseInt(this.dataset.value, 10);
+              var allBtns = optContainer.querySelectorAll(".option-btn");
+              allBtns.forEach(function (b) { b.classList.remove("selected"); });
+              btn.classList.add("selected");
+              var nextBtn = document.getElementById("q-next-btn");
+              if (nextBtn) {
+                nextBtn.disabled = false;
+                nextBtn.classList.remove("opacity-40", "cursor-not-allowed");
+              }
+            });
+
+            optContainer.appendChild(btn);
+          });
+        }
+
+        // Prev button state
+        var prevBtn = document.getElementById("q-prev-btn");
+        if (prevBtn) {
+          if (idx === 0) {
+            prevBtn.disabled = true;
+            prevBtn.classList.add("opacity-40", "cursor-not-allowed");
+          } else {
+            prevBtn.disabled = false;
+            prevBtn.classList.remove("opacity-40", "cursor-not-allowed");
+          }
+        }
+
+        // Next button state
+        var nextBtn = document.getElementById("q-next-btn");
+        if (nextBtn) {
+          var isLast     = idx === total - 1;
+          var isAnswered = answers[q.id] !== undefined;
+          nextBtn.textContent = isLast ? "Ver Resultados" : "Siguiente";
+          if (isAnswered) {
+            nextBtn.disabled = false;
+            nextBtn.classList.remove("opacity-40", "cursor-not-allowed");
+          } else {
+            nextBtn.disabled = true;
+            nextBtn.classList.add("opacity-40", "cursor-not-allowed");
+          }
+        }
+      }
 
       /* ── SCORING ─────────────────────────────────────────────── */
 
-      function calcSubscale(answers, ids) {
+      function calcSubscale(ids) {
         var vals = ids.map(function (id) { return parseFloat(answers[id]) || 0; });
         return Math.round((vals.reduce(function (a, b) { return a + b; }, 0) / vals.length) * 10) / 10;
       }
 
-      /* ── INTERPRETATION TEXTS ────────────────────────────────── */
+      /* ── INTERPRETATIONS ─────────────────────────────────────── */
 
       var INTERPRETATIONS = {
         concern: {
-          high: "Tenés una orientación sólida hacia tu futuro profesional. Planeás con anticipación y ves las decisiones de hoy como inversiones para mañana.",
-          low:  "Tu orientación hacia el futuro profesional tiene espacio para crecer. Hacer planes concretos a 3-6 meses puede ayudarte a reducir incertidumbre."
+          high: "Tenes una orientacion solida hacia tu futuro profesional. Planeas con anticipacion y ves las decisiones de hoy como inversiones para manana.",
+          mid:  "Tu orientacion al futuro es moderada. Definir objetivos concretos a 3-6 meses puede ayudarte a consolidar esta dimension.",
+          low:  "Tu orientacion hacia el futuro profesional tiene espacio para crecer. Hacer planes concretos a 3-6 meses puede ayudarte a reducir incertidumbre."
         },
         control: {
-          high: "Asumís la responsabilidad de tus decisiones de carrera con confianza. Eso es una fortaleza enorme en contextos de cambio.",
-          low:  "Hay oportunidad de fortalecer tu sentido de agencia sobre tu carrera. Empezá identificando una decisión pequeña que está totalmente en tus manos."
+          high: "Asumis la responsabilidad de tus decisiones de carrera con confianza. Eso es una fortaleza enorme en contextos de cambio.",
+          mid:  "Tu sentido de agencia es moderado. Identificar decisiones que estan completamente en tus manos puede fortalecer esta dimension.",
+          low:  "Hay oportunidad de fortalecer tu sentido de agencia sobre tu carrera. Empezo identificando una decision pequena que esta totalmente en tus manos."
         },
         curiosity: {
-          high: "Tu disposición a explorar posibilidades es un activo clave para la transición. Las personas con alta curiosidad se adaptan más rápido a mercados cambiantes.",
-          low:  "Desarrollar la curiosidad sobre tu entorno profesional puede abrirte puertas que no ves aún. Probá hablar con una persona de un campo diferente esta semana."
+          high: "Tu disposicion a explorar posibilidades es un activo clave para la transicion. Las personas con alta curiosidad se adaptan mas rapido a mercados cambiantes.",
+          mid:  "Tu curiosidad profesional es saludable. Expandirla activamente puede acelerar tu crecimiento — proba hablar con alguien de un campo distinto.",
+          low:  "Desarrollar la curiosidad sobre tu entorno profesional puede abrirte puertas. Proba hablar con una persona de un campo diferente esta semana."
         },
         confidence: {
-          high: "Tenés una confianza sólida en tu capacidad para ejecutar. Eso facilita asumir nuevos desafíos sin paralizarte.",
-          low:  "Tu confianza en ejecutar tiene espacio para crecer. Identificar tus 3 logros más concretos del último año puede recalibrar esa percepción."
+          high: "Tenes una confianza solida en tu capacidad para ejecutar. Eso facilita asumir nuevos desafios sin paralizarte.",
+          mid:  "Tu autoeficacia es moderada. Documentar tus logros concretos del ultimo anio puede recalibrar esta percepcion positivamente.",
+          low:  "Tu confianza en ejecutar tiene espacio para crecer. Identificar tus 3 logros mas concretos del ultimo anio puede recalibrar esa percepcion."
         }
       };
 
-      var DIMENSION_LABELS = {
-        concern:    "Concern",
-        control:    "Control",
-        curiosity:  "Curiosity",
-        confidence: "Confidence"
+      var DIMENSION_META = {
+        concern:    { icon: "visibility",            subtitle: "ORIENTACION AL FUTURO" },
+        control:    { icon: "settings_accessibility", subtitle: "AGENCIA PROFESIONAL" },
+        curiosity:  { icon: "travel_explore",         subtitle: "EXPLORACION DE POSIBILIDADES" },
+        confidence: { icon: "bolt",                   subtitle: "AUTOEFICACIA PERCIBIDA" }
       };
 
-      /* ── DOM HELPERS (no innerHTML on variable data) ─────────── */
+      function getInterpLevel(score) {
+        if (score >= 4.0) return "high";
+        if (score >= 2.8) return "mid";
+        return "low";
+      }
 
-      function clearChildren(el) {
-        while (el.firstChild) {
-          el.removeChild(el.firstChild);
-        }
+      function getScoreLabel(score) {
+        if (score >= 4.0) return "SOBRESALIENTE";
+        if (score >= 3.0) return "SOLIDO";
+        if (score >= 2.0) return "MODERADO";
+        return "AREA DE MEJORA";
       }
 
       /* ── RENDER RESULTS ──────────────────────────────────────── */
 
-      function renderResults(answers) {
-        var concern    = calcSubscale(answers, ["c1", "c2", "c3"]);
-        var control    = calcSubscale(answers, ["c4", "c5", "c6"]);
-        var curiosity  = calcSubscale(answers, ["c7", "c8", "c9"]);
-        var confidence = calcSubscale(answers, ["c10", "c11", "c12"]);
+      var radarChartInstance = null;
 
-        var overall = Math.round(((concern + control + curiosity + confidence) / 4) * 10) / 10;
+      function renderResults() {
+        var concern    = calcSubscale(["c1", "c2", "c3"]);
+        var control    = calcSubscale(["c4", "c5", "c6"]);
+        var curiosity  = calcSubscale(["c7", "c8", "c9"]);
+        var confidence = calcSubscale(["c10", "c11", "c12"]);
+        var overall    = Math.round(((concern + control + curiosity + confidence) / 4) * 10) / 10;
 
-        /* Hide assessment, show results */
-        var assessmentEl = document.getElementById("assessment-container");
-        var resultsEl    = document.getElementById("results-screen");
-        var introEl      = document.getElementById("intro-screen");
+        showScreen("screen-results");
 
-        if (assessmentEl) { assessmentEl.className = "hidden"; }
-        if (introEl) { introEl.className = "hidden"; }
-        if (resultsEl) { resultsEl.className = ""; }
+        // Center score
+        var scoreDisplay = document.getElementById("overall-score-display");
+        if (scoreDisplay) { scoreDisplay.textContent = overall.toFixed(1); }
 
-        /* Overall score text (textContent only) */
-        var overallEl = document.getElementById("overall-score-text");
-        if (overallEl) {
-          overallEl.textContent = "Puntuación global: " + overall + " / 5 — medida de tu capacidad global para adaptarte a cambios en la carrera.";
+        // Destroy existing chart if any
+        if (radarChartInstance) {
+          radarChartInstance.destroy();
+          radarChartInstance = null;
         }
 
-        /* Radar chart (Chart.js — no user data in DOM, only in canvas context) */
+        // Chart.js radar
         var canvas = document.getElementById("radar-canvas");
         if (canvas) {
-          new Chart(canvas, {
+          radarChartInstance = new Chart(canvas, {
             type: "radar",
             data: {
               labels: ["Concern", "Control", "Curiosity", "Confidence"],
               datasets: [{
                 label: "Tu perfil",
                 data: [concern, control, curiosity, confidence],
-                backgroundColor: "rgba(232, 93, 38, 0.2)",
-                borderColor: "#E85D26",
-                pointBackgroundColor: "#E85D26",
-                pointBorderColor: "#fff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "#E85D26"
+                backgroundColor: "rgba(255, 144, 104, 0.2)",
+                borderColor: "#ff9068",
+                borderWidth: 1.5,
+                pointBackgroundColor: "#ff9068",
+                pointBorderColor: "#0c0c1f",
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: "#f9f9f9",
+                pointHoverBorderColor: "#ff9068"
               }]
             },
             options: {
+              responsive: true,
+              maintainAspectRatio: true,
               scales: {
                 r: {
                   min: 1,
                   max: 5,
                   ticks: {
                     stepSize: 1,
-                    font: { family: "'DM Sans', sans-serif", size: 11 }
+                    color: "rgba(170, 168, 195, 0.5)",
+                    font: { family: "'Space Mono', monospace", size: 9 },
+                    backdropColor: "transparent"
                   },
+                  grid: { color: "rgba(70, 70, 92, 0.3)" },
+                  angleLines: { color: "rgba(70, 70, 92, 0.3)" },
                   pointLabels: {
-                    font: { family: "'Space Mono', monospace", size: 12, weight: "700" }
+                    color: "#aaa8c3",
+                    font: { family: "'Space Grotesk', sans-serif", size: 11, weight: "600" }
                   }
                 }
               },
-              plugins: {
-                legend: { display: false }
-              }
+              plugins: { legend: { display: false } }
             }
           });
         }
 
-        /* Per-dimension interpretations — DOM API only, no innerHTML */
-        var intContainer = document.getElementById("interpretations");
-        if (intContainer) {
-          clearChildren(intContainer);
+        // Dimension cards — all DOM API, no innerHTML
+        var cardContainer = document.getElementById("dimension-cards");
+        if (cardContainer) {
+          while (cardContainer.firstChild) { cardContainer.removeChild(cardContainer.firstChild); }
 
           var dims = [
             { key: "concern",    score: concern },
@@ -351,44 +848,120 @@
           ];
 
           dims.forEach(function (dim) {
-            var block = document.createElement("div");
-            block.className = "interpretation mt-md";
+            var meta       = DIMENSION_META[dim.key];
+            var level      = getInterpLevel(dim.score);
+            var interpText = INTERPRETATIONS[dim.key][level];
+            var scoreLabel = getScoreLabel(dim.score);
+            var isHigh     = level === "high";
 
-            /* Header row: label + score badge */
-            var header = document.createElement("div");
-            header.style.display = "flex";
-            header.style.alignItems = "center";
-            header.style.justifyContent = "space-between";
-            header.style.marginBottom = "8px";
+            // Card wrapper
+            var card = document.createElement("div");
+            card.className = "glass-panel rounded-xl p-6 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300 cursor-pointer";
 
-            var label = document.createElement("h3");
-            label.textContent = DIMENSION_LABELS[dim.key];
+            // Top row
+            var topRow = document.createElement("div");
+            topRow.className = "flex justify-between items-start mb-1";
 
-            var badge = document.createElement("span");
-            badge.className = "tag tag-orange";
-            badge.textContent = dim.score.toFixed(1) + " / 5";
+            var leftCol = document.createElement("div");
+            leftCol.className = "flex items-center gap-3";
 
-            header.appendChild(label);
-            header.appendChild(badge);
+            var iconWrap = document.createElement("div");
+            iconWrap.className = "w-9 h-9 flex items-center justify-center rounded-lg bg-surface-variant text-primary flex-shrink-0";
+            var iconEl = document.createElement("span");
+            iconEl.className = "material-symbols-outlined text-base";
+            iconEl.textContent = meta.icon;
+            iconWrap.appendChild(iconEl);
 
-            /* Interpretation text */
-            var text = document.createElement("p");
-            var isHigh = dim.score >= 4;
-            text.textContent = INTERPRETATIONS[dim.key][isHigh ? "high" : "low"];
+            var nameCol = document.createElement("div");
+            var dimName = document.createElement("h3");
+            dimName.className = "font-headline text-lg font-bold text-white uppercase tracking-tight";
+            dimName.textContent = dim.key.charAt(0).toUpperCase() + dim.key.slice(1);
+            var dimSub = document.createElement("p");
+            dimSub.className = "text-[10px] text-on-surface-variant font-mono mt-0.5";
+            dimSub.textContent = meta.subtitle;
+            nameCol.appendChild(dimName);
+            nameCol.appendChild(dimSub);
 
-            block.appendChild(header);
-            block.appendChild(text);
-            intContainer.appendChild(block);
+            leftCol.appendChild(iconWrap);
+            leftCol.appendChild(nameCol);
+
+            var rightCol = document.createElement("div");
+            rightCol.className = "flex flex-col items-end flex-shrink-0 ml-2";
+            var scoreVal = document.createElement("span");
+            scoreVal.className = "text-2xl font-bold " + (isHigh ? "text-primary" : "text-on-surface");
+            scoreVal.textContent = dim.score.toFixed(1);
+            var scoreUnit = document.createElement("span");
+            scoreUnit.className = "text-[9px] font-mono " + (isHigh ? "text-primary/60" : "text-on-surface-variant");
+            scoreUnit.textContent = scoreLabel;
+            rightCol.appendChild(scoreVal);
+            rightCol.appendChild(scoreUnit);
+
+            topRow.appendChild(leftCol);
+            topRow.appendChild(rightCol);
+
+            // Mini progress bar
+            var barOuter = document.createElement("div");
+            barOuter.className = "h-0.5 w-full bg-surface-container-highest rounded-full overflow-hidden mt-3 mb-4";
+            var barInner = document.createElement("div");
+            barInner.className = "h-full bg-gradient-to-r from-primary to-primary-container rounded-full";
+            barInner.style.width = Math.round(((dim.score - 1) / 4) * 100) + "%";
+            barOuter.appendChild(barInner);
+
+            // Expandable details
+            var details = document.createElement("div");
+            details.className = "dim-details";
+
+            var interpP = document.createElement("p");
+            interpP.className = "text-sm text-on-surface leading-relaxed mb-3";
+            interpP.textContent = interpText;
+
+            var insightBox = document.createElement("div");
+            insightBox.className = "bg-surface/50 rounded-lg p-3 border border-outline-variant/5";
+
+            var insightHeader = document.createElement("div");
+            insightHeader.className = "flex items-center gap-2 mb-1.5";
+            var insightIcon = document.createElement("span");
+            insightIcon.className = "material-symbols-outlined text-primary text-sm";
+            insightIcon.textContent = "verified";
+            var insightLabel = document.createElement("span");
+            insightLabel.className = "font-mono text-[9px] text-on-surface-variant";
+            insightLabel.textContent = "INSIGHT TECNICO";
+            insightHeader.appendChild(insightIcon);
+            insightHeader.appendChild(insightLabel);
+
+            var insightText = document.createElement("p");
+            insightText.className = "text-xs text-on-surface-variant";
+            insightText.textContent = "Segun Savickas & Porfeli (2012), esta dimension predice la capacidad de adaptacion a transiciones laborales no planificadas.";
+
+            insightBox.appendChild(insightHeader);
+            insightBox.appendChild(insightText);
+
+            details.appendChild(interpP);
+            details.appendChild(insightBox);
+
+            // Chevron toggle
+            var chevronRow = document.createElement("div");
+            chevronRow.className = "flex justify-center mt-2";
+            var chevron = document.createElement("span");
+            chevron.className = "material-symbols-outlined text-outline-variant/40 transition-transform duration-300";
+            chevron.textContent = "expand_more";
+            chevronRow.appendChild(chevron);
+
+            card.addEventListener("click", function () {
+              var isOpen = details.classList.contains("open");
+              details.classList.toggle("open");
+              chevron.style.transform = isOpen ? "" : "rotate(180deg)";
+            });
+
+            card.appendChild(topRow);
+            card.appendChild(barOuter);
+            card.appendChild(details);
+            card.appendChild(chevronRow);
+            cardContainer.appendChild(card);
           });
         }
 
-        /* Cultural calibration note (per WEB-10) — textContent only */
-        var culturalEl = document.getElementById("cultural-note");
-        if (culturalEl) {
-          culturalEl.textContent = "Nota: en contextos con alta incertidumbre económica como LATAM, scores más bajos en Concern y Control son comunes y no indican un déficit. Este perfil es un punto de partida, no un juicio. (Savickas & Porfeli, 2012 — validación en 13 países.)";
-        }
-
-        /* Save to profile — identity.adaptability */
+        // Save to profile
         N1.saveToProfile("identity", {
           completed: true,
           mode: "quick",
@@ -400,7 +973,7 @@
           }
         });
 
-        /* Wire action buttons */
+        // Wire action buttons
         wireButtons(concern, control, curiosity, confidence);
       }
 
@@ -420,21 +993,22 @@
       function wireButtons(concern, control, curiosity, confidence) {
         var avg = Math.round(((concern + control + curiosity + confidence) / 4) * 10) / 10;
 
-        /* Generate scorecard preview */
         var scorecardConfig = {
           title: "Compass CAAS-12",
           subtitle: "Adaptabilidad de carrera — Savickas (2012)",
           badge: avg.toFixed(1) + "/5",
-          accentColor: "#E85D26",
+          accentColor: "#ff9068",
           scores: [
-            { label: "Concern",    value: concern,    max: 7 },
-            { label: "Control",    value: control,    max: 7 },
-            { label: "Curiosity",  value: curiosity,  max: 7 },
-            { label: "Confidence", value: confidence, max: 7 }
+            { label: "Concern",    value: concern,    max: 5 },
+            { label: "Control",    value: control,    max: 5 },
+            { label: "Curiosity",  value: curiosity,  max: 5 },
+            { label: "Confidence", value: confidence, max: 5 }
           ],
           interpretation: "Perfil de adaptabilidad de carrera",
           chartType: "bar"
         };
+
+        // Scorecard preview
         var previewUrl = N1.generateScorecardPreview(scorecardConfig);
         var previewImg = document.getElementById("scorecard-preview-img");
         if (previewImg && previewUrl) {
@@ -442,35 +1016,40 @@
           previewImg.style.display = "block";
         }
 
-        /* Scorecard download */
+        // Scorecard download
         var btnScorecard = document.getElementById("btn-scorecard");
         if (btnScorecard) {
-          btnScorecard.addEventListener("click", function () {
+          // Remove any prior listener by cloning
+          var newScorecard = btnScorecard.cloneNode(true);
+          btnScorecard.parentNode.replaceChild(newScorecard, btnScorecard);
+          newScorecard.addEventListener("click", function () {
             var dataUrl = N1.generateScorecard(scorecardConfig);
-            if (dataUrl) {
-              N1.downloadScorecard(dataUrl, "n1-compass-scorecard.png");
-            }
+            if (dataUrl) { N1.downloadScorecard(dataUrl, "n1-compass-scorecard.png"); }
           });
         }
 
-        /* Copy LinkedIn text */
+        // LinkedIn
         var btnLinkedin = document.getElementById("btn-linkedin");
         if (btnLinkedin) {
-          btnLinkedin.addEventListener("click", function () {
+          var newLinkedin = btnLinkedin.cloneNode(true);
+          btnLinkedin.parentNode.replaceChild(newLinkedin, btnLinkedin);
+          newLinkedin.addEventListener("click", function () {
             var top2 = getTop2(concern, control, curiosity, confidence);
-            var linkedInText = "Hice el CAAS-12 de adaptabilidad de carrera en N1. Mis dimensiones más fuertes: " + top2 + ". Herramienta gratuita: https://n1career.github.io/N1/compass/ #CareerAdaptability #N1";
+            var linkedInText = "Hice el CAAS-12 de adaptabilidad de carrera en N1. Mis dimensiones mas fuertes: " + top2 + ". Herramienta gratuita: https://n1career.github.io/N1/compass/ #CareerAdaptability #N1";
             N1.copyLinkedInText(linkedInText).then(function () {
-              N1.showToast("Texto copiado al portapapeles");
+              showToast("Texto copiado al portapapeles");
             }).catch(function () {
-              N1.showToast("No se pudo copiar — intentá manualmente");
+              showToast("No se pudo copiar — intenta manualmente");
             });
           });
         }
 
-        /* Export YAML */
+        // Export YAML
         var btnExport = document.getElementById("btn-export");
         if (btnExport) {
-          btnExport.addEventListener("click", function () {
+          var newExport = btnExport.cloneNode(true);
+          btnExport.parentNode.replaceChild(newExport, btnExport);
+          newExport.addEventListener("click", function () {
             N1.exportYAML("identity", {
               completed: true,
               mode: "quick",
@@ -481,7 +1060,7 @@
                 confidence: confidence
               }
             });
-            N1.showToast("Perfil YAML descargado");
+            showToast("Perfil YAML descargado");
           });
         }
       }
@@ -489,54 +1068,91 @@
       /* ── BOOT ────────────────────────────────────────────────── */
 
       document.addEventListener("DOMContentLoaded", function () {
-        /* localStorage safety check */
         N1.initLocalStorageSafe();
 
+        // Start button
         var startBtn = document.getElementById("start-btn");
         if (startBtn) {
           startBtn.addEventListener("click", function () {
-            var introEl     = document.getElementById("intro-screen");
-            var containerEl = document.getElementById("assessment-container");
-            if (introEl) { introEl.className = "hidden"; }
-            if (containerEl) { containerEl.className = ""; }
+            answers    = {};
+            currentIdx = 0;
+            showScreen("screen-questions");
+            renderQuestion(0);
+          });
+        }
 
-            N1.createAssessment({
-              containerId: "assessment-container",
-              questions: QUESTIONS,
-              onComplete: function (answers) {
-                renderResults(answers);
+        // Prev button
+        var prevBtn = document.getElementById("q-prev-btn");
+        if (prevBtn) {
+          prevBtn.addEventListener("click", function () {
+            if (currentIdx > 0) {
+              currentIdx--;
+              renderQuestion(currentIdx);
+            }
+          });
+        }
+
+        // Next / Finish button
+        var nextBtn = document.getElementById("q-next-btn");
+        if (nextBtn) {
+          nextBtn.addEventListener("click", function () {
+            if (answers[QUESTIONS[currentIdx].id] === undefined) return;
+            if (currentIdx < QUESTIONS.length - 1) {
+              currentIdx++;
+              renderQuestion(currentIdx);
+            } else {
+              renderResults();
+            }
+          });
+        }
+
+        // Header back button — smart navigation
+        var headerBack = document.getElementById("header-back-btn");
+        if (headerBack) {
+          headerBack.addEventListener("click", function (e) {
+            var qScreen = document.getElementById("screen-questions");
+            var rScreen = document.getElementById("screen-results");
+            if (qScreen && qScreen.classList.contains("active")) {
+              e.preventDefault();
+              if (currentIdx > 0) {
+                currentIdx--;
+                renderQuestion(currentIdx);
+              } else {
+                showScreen("screen-start");
               }
-            });
+            } else if (rScreen && rScreen.classList.contains("active")) {
+              e.preventDefault();
+              showScreen("screen-start");
+            }
+            // else: default anchor navigates to index.html
+          });
+        }
+
+        // Email capture
+        var emailForm  = document.getElementById("n1-tool-email-form");
+        var emailInput = document.getElementById("n1-tool-email");
+        var successMsg = document.getElementById("n1-tool-email-success");
+        if (emailForm && emailInput && successMsg) {
+          emailForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var email = emailInput.value.trim();
+            if (!email) return;
+            fetch(emailForm.action, {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: "email=" + encodeURIComponent(email) + "&tag=tool-completion"
+            })
+              .then(function () {
+                emailForm.style.display = "none";
+                successMsg.style.display = "block";
+              })
+              .catch(function () {
+                emailForm.submit();
+              });
           });
         }
       });
-
-      /* ── EMAIL CAPTURE WIRING (INTG-03) ── */
-      (function () {
-        var emailForm = document.getElementById("n1-tool-email-form");
-        var emailInput = document.getElementById("n1-tool-email");
-        var successMsg = document.getElementById("n1-tool-email-success");
-        if (!emailForm || !emailInput || !successMsg) return;
-
-        emailForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-          var email = emailInput.value.trim();
-          if (!email) return;
-          fetch(emailForm.action, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: "email=" + encodeURIComponent(email) + "&tag=tool-completion",
-          })
-            .then(function () {
-              emailForm.style.display = "none";
-              successMsg.style.display = "block";
-            })
-            .catch(function () {
-              emailForm.submit();
-            });
-        });
-      })();
 
     }());
   </script>
