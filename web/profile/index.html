@@ -300,6 +300,13 @@
         <div class="flex justify-between items-start flex-wrap gap-3 mb-2">
           <div>
             <h3 class="font-headline text-2xl font-bold text-tertiary tracking-tight whitespace-nowrap">Panel de Perfil Integrado N1</h3>
+            <div
+              id="progress-badge"
+              class="hidden inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm text-primary font-mono mb-4 mt-2"
+            >
+              <span class="material-symbols-outlined text-base">check_circle</span>
+              <span id="progress-badge-text">0/7 herramientas completadas</span>
+            </div>
             <p id="profile-updated" class="font-mono text-[10px] text-outline mt-1"></p>
           </div>
           <div class="flex gap-2 flex-wrap">
@@ -1325,6 +1332,17 @@
 
     /* == INIT == */
     document.addEventListener("DOMContentLoaded",function(){
+      /* Progress badge */
+      var badge=document.getElementById("progress-badge");
+      var badgeText=document.getElementById("progress-badge-text");
+      if(badge&&badgeText&&window.N1){
+        var count=N1.getCompletionCount();
+        if(count.completed>0){
+          badgeText.textContent=count.completed+"/"+count.total+" herramientas completadas";
+          badge.classList.remove("hidden");
+        }
+      }
+
       var existing=N1.loadProfile();
       if(existing&&(
         (existing.triage&&existing.triage.career_path)||
