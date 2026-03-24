@@ -382,6 +382,46 @@
       <!-- EXPANDABLE DIMENSION CARDS -->
       <div id="dimension-cards" class="flex flex-col gap-3 mb-6"></div>
 
+      <!-- CLARIDAD DE PERFIL N1 -->
+      <div
+        id="profile-clarity-section"
+        class="hidden w-full glass-panel rounded-xl p-6 border border-outline-variant/20 mb-6"
+      >
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p
+              class="font-mono text-[10px] uppercase tracking-widest text-tertiary mb-1"
+            >
+              Sistema N1
+            </p>
+            <h3 class="font-headline text-xl font-bold text-on-surface">
+              Claridad de perfil N1
+            </h3>
+            <p id="clarity-based-on" class="text-xs text-on-surface-variant mt-1">
+              Basado en 0/4 dimensiones completadas
+            </p>
+          </div>
+          <div class="text-right">
+            <span
+              id="clarity-score"
+              class="font-headline text-5xl font-black text-primary"
+              >—</span
+            >
+            <span class="font-mono text-lg text-on-surface-variant">%</span>
+          </div>
+        </div>
+        <div
+          id="clarity-tension"
+          class="hidden rounded-lg border border-warning/30 bg-warning/5 px-4 py-3 flex items-start gap-3"
+        >
+          <span
+            class="material-symbols-outlined text-warning text-base mt-0.5 flex-shrink-0"
+            >warning</span
+          >
+          <p id="clarity-tension-text" class="text-sm text-on-surface-variant"></p>
+        </div>
+      </div>
+
       <!-- KEY INSIGHTS -->
       <div class="glass-panel rounded-xl p-6 mb-6" id="insights-card">
         <div class="flex items-center gap-3 mb-5">
@@ -1302,6 +1342,35 @@
       renderRadarChart(profile);
       renderDimensionSummaryRow(profile);
       renderDimensionCards(profile);
+
+      // Claridad de perfil N1
+      var clarityData = N1.computeProfileClarity(profile);
+      var claritySection = document.getElementById("profile-clarity-section");
+      if (clarityData && claritySection) {
+        document.getElementById("clarity-score").textContent = clarityData.score;
+        document.getElementById("clarity-based-on").textContent =
+          "Basado en " + clarityData.basedOn + "/4 dimensiones completadas";
+        claritySection.classList.remove("hidden");
+
+        if (clarityData.tension) {
+          var tensionEl = document.getElementById("clarity-tension");
+          var tensionText = document.getElementById("clarity-tension-text");
+          tensionText.textContent =
+            "Tu " +
+            clarityData.tension.low +
+            " (" +
+            Math.round(100 - clarityData.tension.spread / 2) +
+            "%) " +
+            "y tu " +
+            clarityData.tension.high +
+            " (" +
+            Math.round(100 + clarityData.tension.spread / 2) +
+            "%) " +
+            "están desalineados. Eso puede generar fricción.";
+          tensionEl.classList.remove("hidden");
+        }
+      }
+
       renderKeyInsightsGrid(profile);
       renderInsights(profile);
       renderRecommendation(profile);
