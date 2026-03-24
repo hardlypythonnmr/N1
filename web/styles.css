@@ -1,30 +1,29 @@
 /* ════════════════════════════════════════
-   N1 — El Sistema Eres Tú
-   Shared Design System v1.0
-   Pure CSS, no framework, no build step.
-   Loaded by all static web tools.
+   N1 — El Sistema Eres Tu
+   Shared Design System v2.0 — Dark Glassmorphism
+   Minimal CSS: assessment-engine classes only.
+   Landing page and tool chrome uses Tailwind.
    ════════════════════════════════════════ */
 
-/* 1. GOOGLE FONTS ─────────────────────── */
-@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap");
-
-/* 2. CSS CUSTOM PROPERTIES ─────────────── */
+/* 1. DESIGN TOKENS (dark theme) ─────────── */
 :root {
-  /* Brand colors (per D-02) */
-  --n1-orange: #e85d26;
-  --n1-black: #1a1a1a;
-  --n1-white: #ffffff;
-  --n1-muted: #6b6b6b;
-  --n1-border: #e0e0e0;
-  --n1-surface: #f8f8f8;
-
-  /* Border radii */
-  --n1-radius: 12px;
-  --n1-radius-sm: 6px;
+  /* Brand colors — dark glassmorphism palette */
+  --n1-orange: #ff9068;
+  --n1-orange-deep: #ff7947;
+  --n1-bg: #0c0c1f;
+  --n1-surface: #17172f;
+  --n1-surface-high: #1d1d37;
+  --n1-surface-highest: #23233f;
+  --n1-white: #f9f9f9;
+  --n1-on-surface: #e5e3ff;
+  --n1-muted: #aaa8c3;
+  --n1-border: rgba(70, 70, 92, 0.4);
+  --n1-border-ghost: rgba(116, 115, 139, 0.2);
 
   /* Typography */
-  --font-heading: "Space Mono", monospace;
-  --font-body: "DM Sans", sans-serif;
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "Space Mono", monospace;
 
   /* Spacing scale */
   --space-xs: 4px;
@@ -34,12 +33,16 @@
   --space-xl: 32px;
   --space-2xl: 48px;
 
+  /* Border radii */
+  --n1-radius: 8px;
+  --n1-radius-sm: 4px;
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
 }
 
-/* 3. CSS RESET ──────────────────────────── */
+/* 2. CSS RESET ──────────────────────────── */
 *,
 *::before,
 *::after {
@@ -58,8 +61,8 @@ body {
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--n1-black);
-  background-color: var(--n1-white);
+  color: var(--n1-on-surface);
+  background-color: var(--n1-bg);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -87,7 +90,7 @@ a:hover {
   opacity: 0.8;
 }
 
-/* 4. BASE TYPOGRAPHY ────────────────────── */
+/* 3. BASE TYPOGRAPHY ────────────────────── */
 h1,
 h2,
 h3,
@@ -97,7 +100,7 @@ h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--n1-black);
+  color: var(--n1-white);
 }
 
 h1 {
@@ -116,7 +119,6 @@ h4 {
 p {
   margin-bottom: var(--space-md);
 }
-
 p:last-child {
   margin-bottom: 0;
 }
@@ -125,16 +127,14 @@ ul,
 ol {
   padding-left: var(--space-lg);
 }
-
 li {
   margin-bottom: var(--space-xs);
 }
-
 strong {
   font-weight: 600;
 }
 
-/* 5. LAYOUT CONTAINER ──────────────────── */
+/* 4. LAYOUT CONTAINER ──────────────────── */
 .container {
   width: 100%;
   max-width: 640px;
@@ -142,20 +142,23 @@ strong {
   padding: var(--space-lg) var(--space-md);
 }
 
-/* 6. CARD ──────────────────────────────── */
+/* 5. GLASS CARD ─────────────────────────── */
 .card {
-  background: var(--n1-white);
+  background: rgba(35, 35, 63, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--n1-border);
   border-radius: var(--n1-radius);
   padding: var(--space-xl);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 20px 80px -10px rgba(0, 0, 0, 0.5);
 }
 
-/* 7. PROGRESS BAR ──────────────────────── */
+/* 6. PROGRESS BAR ──────────────────────── */
+/* Used by assessment-engine.js */
 .progress-bar {
   width: 100%;
-  height: 4px;
-  background-color: var(--n1-border);
+  height: 3px;
+  background-color: rgba(70, 70, 92, 0.5);
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: var(--space-xl);
@@ -163,31 +166,35 @@ strong {
 
 .progress-fill {
   height: 100%;
-  background-color: var(--n1-orange);
+  background: linear-gradient(90deg, var(--n1-orange), var(--n1-orange-deep));
   border-radius: 999px;
   transition: width 0.4s ease;
   min-width: 4px;
+  box-shadow: 0 0 8px rgba(255, 144, 104, 0.4);
 }
 
-/* 8. BUTTONS ────────────────────────────── */
+/* 7. BUTTONS ────────────────────────────── */
+/* Used by assessment-engine.js rendered content */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
   padding: 12px var(--space-lg);
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
   line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   border-radius: var(--n1-radius-sm);
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
   transition:
-    opacity var(--transition-fast),
-    background-color var(--transition-fast),
-    border-color var(--transition-fast);
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
   white-space: nowrap;
 }
 
@@ -196,39 +203,41 @@ strong {
   cursor: not-allowed;
 }
 
-.btn-primary:disabled {
-  background-color: #b0b0b0;
-  border-color: #b0b0b0;
-  color: #fff;
-  opacity: 1;
-}
-
 .btn-primary {
-  background-color: var(--n1-orange);
-  color: var(--n1-white);
-  border-color: var(--n1-orange);
+  background: linear-gradient(135deg, var(--n1-orange), var(--n1-orange-deep));
+  color: #000;
+  border-color: transparent;
+  box-shadow: 0 8px 30px rgba(255, 144, 104, 0.2);
 }
 
 .btn-primary:hover:not(:disabled) {
-  opacity: 0.88;
-  color: var(--n1-white);
+  box-shadow: 0 0 25px rgba(255, 144, 104, 0.4);
+  opacity: 1;
+  color: #000;
   text-decoration: none;
 }
 
+.btn-primary:disabled {
+  background: rgba(70, 70, 92, 0.5);
+  border-color: transparent;
+  color: var(--n1-muted);
+  opacity: 1;
+}
+
 .btn-secondary {
-  background-color: var(--n1-white);
-  color: var(--n1-black);
-  border-color: var(--n1-black);
+  background: transparent;
+  color: var(--n1-muted);
+  border-color: var(--n1-border);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: var(--n1-surface);
-  color: var(--n1-black);
+  border-color: rgba(255, 144, 104, 0.5);
+  color: var(--n1-white);
   text-decoration: none;
 }
 
 .btn-ghost {
-  background-color: transparent;
+  background: transparent;
   color: var(--n1-muted);
   border-color: transparent;
   padding-left: 0;
@@ -236,7 +245,7 @@ strong {
 }
 
 .btn-ghost:hover:not(:disabled) {
-  color: var(--n1-black);
+  color: var(--n1-white);
   text-decoration: none;
 }
 
@@ -248,7 +257,8 @@ strong {
   flex-wrap: wrap;
 }
 
-/* 9. QUESTION SCREEN ────────────────────── */
+/* 8. QUESTION SCREEN ────────────────────── */
+/* Used by assessment-engine.js */
 .question-screen {
   display: flex;
   flex-direction: column;
@@ -256,11 +266,11 @@ strong {
 }
 
 .question-meta {
-  font-family: var(--font-heading);
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
   font-weight: 400;
   color: var(--n1-muted);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
@@ -269,7 +279,7 @@ strong {
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.35;
-  color: var(--n1-black);
+  color: var(--n1-white);
 }
 
 .question-nav {
@@ -294,7 +304,7 @@ strong {
 }
 
 .question-nav-back:hover {
-  color: var(--n1-black);
+  color: var(--n1-white);
 }
 
 .question-nav-back.hidden {
@@ -302,7 +312,8 @@ strong {
   pointer-events: none;
 }
 
-/* 10. LIKERT SCALE ──────────────────────── */
+/* 9. LIKERT SCALE ──────────────────────── */
+/* Used by assessment-engine.js */
 .likert {
   display: flex;
   gap: var(--space-sm);
@@ -339,13 +350,13 @@ strong {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--n1-border);
+  border: 1px solid var(--n1-border);
   border-radius: var(--n1-radius-sm);
-  font-family: var(--font-heading);
+  font-family: var(--font-mono);
   font-size: 1rem;
   font-weight: 700;
   color: var(--n1-muted);
-  background-color: var(--n1-white);
+  background: rgba(23, 23, 47, 0.6);
   transition:
     border-color var(--transition-fast),
     background-color var(--transition-fast),
@@ -356,12 +367,13 @@ strong {
 .likert-option input[type="radio"]:checked + label .likert-btn,
 .likert-option.selected .likert-btn {
   border-color: var(--n1-orange);
-  background-color: var(--n1-orange);
+  background: rgba(255, 144, 104, 0.15);
   color: var(--n1-white);
+  box-shadow: 0 0 12px rgba(255, 144, 104, 0.3);
 }
 
 .likert-option label:hover .likert-btn {
-  border-color: var(--n1-orange);
+  border-color: rgba(255, 144, 104, 0.5);
   color: var(--n1-orange);
 }
 
@@ -387,47 +399,14 @@ strong {
   padding: 0 2px;
 }
 
-/* Choice options (non-Likert) */
+/* Choice options (non-Likert, used by assessment-engine) */
 .choice-options {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
 }
 
-.choice-option {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md);
-  border: 2px solid var(--n1-border);
-  border-radius: var(--n1-radius-sm);
-  cursor: pointer;
-  transition:
-    border-color var(--transition-fast),
-    background-color var(--transition-fast);
-  font-size: 0.9375rem;
-  line-height: 1.4;
-}
-
-.choice-option:hover {
-  border-color: var(--n1-orange);
-  background-color: #fff8f5;
-}
-
-.choice-option.selected {
-  border-color: var(--n1-orange);
-  background-color: #fff8f5;
-  font-weight: 600;
-}
-
-.choice-option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* 11. RESULTS SCREEN ────────────────────── */
+/* 10. RESULTS SCREEN ────────────────────── */
 .results-screen {
   display: flex;
   flex-direction: column;
@@ -455,17 +434,18 @@ strong {
 }
 
 .interpretation {
-  background-color: var(--n1-surface);
+  background: rgba(17, 17, 39, 0.6);
   border-radius: var(--n1-radius-sm);
   padding: var(--space-lg);
+  border: 1px solid var(--n1-border-ghost);
 }
 
 .interpretation h3 {
-  font-size: 0.875rem;
-  font-family: var(--font-heading);
+  font-size: 0.6875rem;
+  font-family: var(--font-mono);
   color: var(--n1-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.15em;
   margin-bottom: var(--space-sm);
 }
 
@@ -486,7 +466,7 @@ strong {
   justify-content: center;
 }
 
-/* 12. SCORECARD PREVIEW ─────────────────── */
+/* 11. SCORECARD PREVIEW ─────────────────── */
 .scorecard-preview {
   display: none;
   flex-direction: column;
@@ -505,10 +485,10 @@ strong {
   border: 1px solid var(--n1-border);
 }
 
-/* 13. DISCLAIMER ────────────────────────── */
+/* 12. DISCLAIMER ────────────────────────── */
 .disclaimer {
-  border-left: 3px solid var(--n1-orange);
-  background-color: var(--n1-surface);
+  border-left: 2px solid var(--n1-orange);
+  background: rgba(255, 144, 104, 0.05);
   padding: var(--space-md);
   border-radius: 0 var(--n1-radius-sm) var(--n1-radius-sm) 0;
   font-size: 0.875rem;
@@ -525,54 +505,120 @@ strong {
   margin-bottom: 0;
 }
 
-/* 14. TAG / PILL ────────────────────────── */
+/* 13. TAG / PILL ────────────────────────── */
 .tag {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
   line-height: 1;
-  background-color: var(--n1-surface);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(70, 70, 92, 0.3);
   color: var(--n1-muted);
   border: 1px solid var(--n1-border);
   white-space: nowrap;
 }
 
 .tag-orange {
-  background-color: #fff0eb;
+  background: rgba(255, 144, 104, 0.1);
   color: var(--n1-orange);
-  border-color: #f9c4af;
+  border-color: rgba(255, 144, 104, 0.3);
 }
 
-.tag-black {
-  background-color: var(--n1-black);
+/* 14. SCORE DISPLAY ─────────────────────── */
+/* Used by assessment-engine.js results rendering */
+.score-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.score-label {
+  font-size: 0.875rem;
+  color: var(--n1-on-surface);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.score-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: rgba(70, 70, 92, 0.5);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--n1-orange), var(--n1-orange-deep));
+  border-radius: 999px;
+  transition: width 0.6s ease;
+  box-shadow: 0 0 8px rgba(255, 144, 104, 0.3);
+}
+
+.score-value {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
   color: var(--n1-white);
-  border-color: var(--n1-black);
+  min-width: 32px;
+  text-align: right;
 }
 
-/* 15. NAVIGATION ────────────────────────── */
+/* 15. TOAST / NOTIFICATION ──────────────── */
+.toast {
+  position: fixed;
+  bottom: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(35, 35, 63, 0.95);
+  backdrop-filter: blur(12px);
+  color: var(--n1-white);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--n1-radius-sm);
+  border: 1px solid var(--n1-border);
+  font-size: 0.875rem;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.toast.visible {
+  opacity: 1;
+}
+
+/* 16. NAVIGATION (tool pages) ───────────── */
+/* Used by individual tool pages that don't use Tailwind nav */
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md) var(--space-lg);
-  border-bottom: 1px solid var(--n1-border);
-  background-color: var(--n1-white);
+  background: rgba(12, 12, 31, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--n1-border-ghost);
 }
 
 .nav-logo {
   font-family: var(--font-heading);
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--n1-black);
+  color: var(--n1-orange);
   text-decoration: none;
   letter-spacing: -0.02em;
-}
-
-.nav-logo span {
-  color: var(--n1-orange);
+  text-transform: uppercase;
 }
 
 .nav-back {
@@ -586,7 +632,7 @@ strong {
 }
 
 .nav-back:hover {
-  color: var(--n1-black);
+  color: var(--n1-white);
   text-decoration: none;
 }
 
@@ -594,27 +640,103 @@ strong {
   content: "←";
 }
 
-/* 16. UTILITY CLASSES ──────────────────── */
-.text-muted {
+/* 17. EMAIL CAPTURE (inline tool section) ── */
+/* Used by individual tool pages after results */
+.n1-email-section {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  background: rgba(35, 35, 63, 0.5);
+  border-radius: var(--n1-radius-sm);
+  border-left: 2px solid var(--n1-orange);
+}
+
+.n1-email-section-label {
+  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  color: var(--n1-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--space-xs);
+}
+
+.n1-email-section-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--n1-white);
+  margin-bottom: var(--space-xs);
+}
+
+.n1-email-section-desc {
+  font-size: 0.875rem;
+  color: var(--n1-muted);
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.n1-email-section-form {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.n1-email-section-input {
+  flex: 1;
+  min-width: 200px;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--n1-border);
+  border-radius: var(--n1-radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  background: rgba(17, 17, 39, 0.6);
+  color: var(--n1-on-surface);
+  transition: border-color var(--transition-fast);
+}
+
+.n1-email-section-input::placeholder {
   color: var(--n1-muted);
 }
 
+.n1-email-section-input:focus {
+  outline: none;
+  border-color: var(--n1-orange);
+}
+
+.n1-email-section-success {
+  font-size: 0.875rem;
+  color: var(--n1-muted);
+  display: none;
+  margin-top: var(--space-sm);
+}
+
+/* 18. SCORECARD THUMBNAIL ───────────────── */
+.n1-scorecard-preview {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: var(--n1-radius-sm);
+  border: 1px solid var(--n1-border);
+  margin: var(--space-md) auto var(--space-sm);
+  cursor: pointer;
+}
+
+/* 19. UTILITY CLASSES ──────────────────── */
+.text-muted {
+  color: var(--n1-muted);
+}
 .text-orange {
   color: var(--n1-orange);
 }
-
 .text-sm {
   font-size: 0.875rem;
 }
-
 .text-xs {
   font-size: 0.75rem;
 }
-
 .text-center {
   text-align: center;
 }
-
 .font-heading {
   font-family: var(--font-heading);
 }
@@ -631,7 +753,6 @@ strong {
 .mt-xl {
   margin-top: var(--space-xl);
 }
-
 .mb-sm {
   margin-bottom: var(--space-sm);
 }
@@ -658,81 +779,8 @@ strong {
   white-space: nowrap;
 }
 
-/* Divider */
-.divider {
-  border: none;
-  border-top: 1px solid var(--n1-border);
-  margin: var(--space-lg) 0;
-}
-
-/* Score display */
-.score-display {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-
-.score-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-}
-
-.score-label {
-  font-size: 0.875rem;
-  color: var(--n1-black);
-  min-width: 120px;
-  flex-shrink: 0;
-}
-
-.score-bar-wrap {
-  flex: 1;
-  height: 8px;
-  background-color: var(--n1-border);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.score-bar-fill {
-  height: 100%;
-  background-color: var(--n1-orange);
-  border-radius: 999px;
-  transition: width 0.6s ease;
-}
-
-.score-value {
-  font-family: var(--font-heading);
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--n1-black);
-  min-width: 32px;
-  text-align: right;
-}
-
-/* Toast / notification */
-.toast {
-  position: fixed;
-  bottom: var(--space-lg);
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--n1-black);
-  color: var(--n1-white);
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: var(--n1-radius-sm);
-  font-size: 0.875rem;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.toast.visible {
-  opacity: 1;
-}
-
-/* 17. ACCESSIBLE FOCUS STYLES ──────────── */
-/* WCAG 2.1 AA — 2px solid --n1-orange outline on all interactive elements */
+/* 20. ACCESSIBLE FOCUS STYLES ──────────── */
+/* WCAG 2.1 AA */
 :focus-visible {
   outline: 2px solid var(--n1-orange);
   outline-offset: 2px;
@@ -748,13 +796,11 @@ textarea:focus-visible,
   outline-offset: 2px;
 }
 
-/* Remove default focus ring for mouse users */
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-/* 18. MEDIA QUERY — MOBILE ─────────────── */
-/* Breakpoint at 640px (per D-03, D-06) */
+/* 21. MEDIA QUERIES ─────────────────────── */
 @media (max-width: 640px) {
   :root {
     --space-xl: 24px;
@@ -770,11 +816,6 @@ textarea:focus-visible,
 
   .card {
     padding: 20px;
-    border-radius: var(--n1-radius-sm);
-  }
-
-  .nav {
-    padding: var(--space-sm) var(--space-md);
   }
 
   /* Likert wraps to vertical on small screens */
@@ -806,91 +847,11 @@ textarea:focus-visible,
   .question-text {
     font-size: 1.0625rem;
   }
-}
 
-/* 19. PRINT MEDIA QUERY ─────────────────── */
-/* ── TOOL EMAIL CAPTURE SECTION ── */
-/* Inline email capture below tool results (Phase 3 — INTG-03) */
-
-.n1-email-section {
-  margin-top: var(--space-xl);
-  padding: var(--space-lg) var(--space-lg);
-  background-color: var(--n1-surface);
-  border-radius: var(--n1-radius-sm);
-  border-left: 3px solid var(--n1-orange);
-}
-
-.n1-email-section-label {
-  font-size: 0.75rem;
-  font-family: var(--font-heading);
-  color: var(--n1-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-xs);
-}
-
-.n1-email-section-title {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--n1-black);
-  margin-bottom: var(--space-xs);
-}
-
-.n1-email-section-desc {
-  font-size: 0.875rem;
-  color: var(--n1-muted);
-  margin-bottom: var(--space-md);
-  line-height: 1.5;
-}
-
-.n1-email-section-form {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-}
-
-.n1-email-section-input {
-  flex: 1;
-  min-width: 200px;
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--n1-border);
-  border-radius: var(--n1-radius-sm);
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
-  background-color: var(--n1-white);
-  color: var(--n1-black);
-  transition: border-color var(--transition-fast);
-}
-
-.n1-email-section-input:focus {
-  outline: none;
-  border-color: var(--n1-orange);
-}
-
-.n1-email-section-success {
-  font-size: 0.875rem;
-  color: var(--n1-muted);
-  display: none;
-  margin-top: var(--space-sm);
-}
-
-/* Scorecard preview thumbnail */
-.n1-scorecard-preview {
-  display: block;
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  border-radius: var(--n1-radius-sm);
-  border: 1px solid var(--n1-border);
-  margin: var(--space-md) auto var(--space-sm);
-  cursor: pointer;
-}
-
-@media (max-width: 640px) {
   .n1-email-section-form {
     flex-direction: column;
   }
+
   .n1-email-section-input {
     min-width: 100%;
   }
@@ -915,6 +876,7 @@ textarea:focus-visible,
   .card {
     box-shadow: none;
     border: 1px solid #ccc;
+    background: white;
   }
 
   .scorecard-preview {
