@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="dark" lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,340 +10,426 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://n1career.github.io/N1/mlq/" />
   <meta property="og:image" content="https://n1career.github.io/N1/web/og-image.png" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23e85d26' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ff9068' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='white'>N1</text></svg>" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary-fixed": "#e2e0fc",
+            "on-tertiary-fixed": "#4f5051",
+            "tertiary-dim": "#ebebeb",
+            "on-primary-fixed": "#000000",
+            "surface-container-low": "#111127",
+            "tertiary-container": "#ebebeb",
+            "primary": "#ff9068",
+            "on-background": "#e5e3ff",
+            "surface-tint": "#ff9068",
+            "primary-dim": "#ff743f",
+            "surface": "#0c0c1f",
+            "surface-dim": "#0c0c1f",
+            "on-surface": "#e5e3ff",
+            "on-primary-container": "#451100",
+            "on-secondary-fixed-variant": "#5a5971",
+            "on-secondary": "#505066",
+            "tertiary": "#f9f9f9",
+            "on-primary": "#591800",
+            "inverse-surface": "#fcf8ff",
+            "surface-variant": "#23233f",
+            "surface-container-lowest": "#000000",
+            "secondary-dim": "#d4d2ed",
+            "on-secondary-fixed": "#3e3d53",
+            "primary-container": "#ff7947",
+            "on-tertiary-container": "#555757",
+            "primary-fixed": "#ff7947",
+            "secondary-container": "#45455b",
+            "surface-bright": "#292948",
+            "on-secondary-container": "#d0cee9",
+            "outline": "#74738b",
+            "tertiary-fixed-dim": "#f0f1f1",
+            "secondary-fixed-dim": "#d4d2ed",
+            "on-tertiary": "#5e5f5f",
+            "error-container": "#9f0519",
+            "secondary": "#e2e0fc",
+            "error": "#ff716c",
+            "surface-container-high": "#1d1d37",
+            "primary-fixed-dim": "#f5662f",
+            "tertiary-fixed": "#ffffff",
+            "on-tertiary-fixed-variant": "#6c6d6e",
+            "on-error": "#490006",
+            "surface-container": "#17172f",
+            "background": "#0c0c1f",
+            "surface-container-highest": "#23233f",
+            "inverse-primary": "#ab3700",
+            "on-surface-variant": "#aaa8c3",
+            "outline-variant": "#46465c",
+            "inverse-on-surface": "#53536a",
+            "on-primary-fixed-variant": "#551700",
+            "on-error-container": "#ffa8a3",
+            "error-dim": "#d7383b"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Space Grotesk"],
+            "mono": ["Space Mono"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* ── MLQ-SPECIFIC STYLES ────────────── */
-
-    .mlq-intro {
-      text-align: center;
-      padding: var(--space-xl) 0 var(--space-md);
+    body {
+      background-color: #0c0c1f;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255, 144, 104, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 144, 104, 0.08) 0%, transparent 40%);
     }
-
-    .mlq-intro h1 {
-      font-size: 1.5rem;
-      margin-bottom: var(--space-sm);
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
-
-    .mlq-intro .mlq-tag {
-      display: inline-block;
-      font-family: var(--font-heading);
-      font-size: 0.6875rem;
-      font-weight: 400;
-      color: var(--n1-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: var(--space-sm);
+    .glass-panel {
+      background: rgba(35, 35, 63, 0.7);
+      backdrop-filter: blur(20px);
     }
-
-    .mlq-intro p {
-      color: var(--n1-muted);
-      font-size: 0.9375rem;
-      max-width: 480px;
-      margin: 0 auto var(--space-md);
+    .score-bar-fill {
+      transition: width 0.6s ease-out;
     }
-
-    /* Results layout */
-    .results-screen {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xl);
-    }
-
-    .results-header {
-      text-align: center;
-    }
-
-    .quadrant-badge {
-      display: inline-block;
-      font-family: var(--font-heading);
-      font-size: 0.6875rem;
-      font-weight: 400;
-      color: var(--n1-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: var(--space-sm);
-    }
-
-    .quadrant-name {
-      font-family: var(--font-heading);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--n1-black);
-      margin-bottom: var(--space-sm);
-    }
-
-    .scores-summary {
-      font-size: 0.9375rem;
-      color: var(--n1-muted);
-      margin-bottom: 0;
-    }
-
-    /* 2x2 Quadrant canvas */
-    .quadrant-canvas-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-sm);
-    }
-
-    .quadrant-canvas-wrap canvas {
-      border: 1px solid var(--n1-border);
-      border-radius: var(--n1-radius-sm);
-      max-width: 100%;
-      height: auto;
-    }
-
-    .quadrant-legend {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-xs) var(--space-md);
-      width: 100%;
-      max-width: 320px;
-    }
-
-    .quadrant-legend-item {
-      font-size: 0.75rem;
-      color: var(--n1-muted);
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .quadrant-legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* Score bars */
-    .mlq-scores {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-
-    /* Interpretation */
-    .interpretation {
-      background-color: var(--n1-surface);
-      border-radius: var(--n1-radius-sm);
-      padding: var(--space-lg);
-    }
-
-    .interpretation .interpretation-label {
-      font-family: var(--font-heading);
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: var(--n1-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: var(--space-sm);
-    }
-
-    .interpretation p {
-      font-size: 0.9375rem;
-      line-height: 1.65;
-      margin-bottom: var(--space-sm);
-    }
-
-    .interpretation p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* Cultural note */
-    .cultural-note {
-      border-left: 3px solid var(--n1-border);
-      padding: var(--space-md);
-      border-radius: 0 var(--n1-radius-sm) var(--n1-radius-sm) 0;
-      background-color: var(--n1-surface);
-      font-size: 0.8125rem;
-      line-height: 1.55;
-      color: var(--n1-muted);
-    }
-
-    .cultural-note strong {
-      color: var(--n1-black);
-    }
-
-    /* Citation */
-    .mlq-citation {
-      font-size: 0.75rem;
-      color: var(--n1-muted);
-      font-style: italic;
-      text-align: center;
+    .option-selected {
+      border-color: #ff9068 !important;
+      background-color: rgba(255, 144, 104, 0.1) !important;
     }
   </style>
 </head>
-<body>
+<body class="font-body text-on-surface min-h-screen flex flex-col">
 
-  <!-- Navigation -->
-  <nav class="nav" aria-label="Navegacion principal">
-    <a href="../index.html" class="nav-logo">N<span>1</span></a>
-    <a href="../index.html" class="nav-back" aria-label="Volver al inicio">Inicio</a>
-  </nav>
-
-  <main class="container">
-
-    <!-- Disclaimer (Safety Protocol — per WEB-10) -->
-    <div class="disclaimer" role="note" aria-label="Aviso importante" id="disclaimer-block">
-      <!-- Populated by N1.getSafetyDisclaimer() via appendChild -->
+  <!-- Fixed Header -->
+  <header class="fixed top-0 w-full z-50 bg-[#0c0c1f]/60 backdrop-blur-xl border-b border-[#46465c]/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)]">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-[640px] mx-auto">
+      <button id="header-back-btn" class="text-[#ff9068] scale-95 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="font-headline uppercase tracking-widest text-sm text-[#ff9068] font-bold">N1 MLQ-10</h1>
+      <div class="text-[#46465c]">
+        <span class="material-symbols-outlined">psychology</span>
+      </div>
     </div>
+  </header>
 
-    <!-- MLQ intro (shown before assessment starts) -->
-    <div id="mlq-intro" class="mlq-intro">
-      <span class="mlq-tag">MLQ-10 &mdash; Steger, 2006</span>
-      <h1>Propósito en la Vida</h1>
-      <p>10 preguntas sobre el sentido de tu vida. Tarda menos de 3 minutos. Resultados inmediatos con tu posición en el mapa de propósito.</p>
-      <button id="start-btn" class="btn btn-primary" type="button">Empezar</button>
-    </div>
+  <!-- Main Content -->
+  <main class="flex-grow flex flex-col items-center px-6 pt-24 pb-32 max-w-[640px] mx-auto w-full">
 
-    <!-- Assessment container — N1.createAssessment renders here -->
-    <div id="assessment-container" style="display:none;"></div>
+    <!-- Disclaimer block (populated by assessment-engine.js) -->
+    <div id="disclaimer-block" class="w-full mb-6"></div>
 
-    <!-- Results screen — hidden until assessment completes -->
-    <section id="results-screen" class="results-screen" style="display:none;" aria-live="polite">
+    <!-- INTRO SCREEN -->
+    <div id="mlq-intro" class="w-full flex flex-col items-center">
+      <div class="absolute top-32 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
 
-      <!-- Header -->
-      <div class="results-header">
-        <span class="quadrant-badge">Tu cuadrante de propósito</span>
-        <h2 class="quadrant-name" id="quadrant-name"></h2>
-        <p class="scores-summary" id="scores-summary"></p>
+      <div class="inline-block mb-6 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+        <span class="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">MLQ-10 — Steger, 2006</span>
       </div>
 
-      <!-- Quadrant 2x2 diagram -->
-      <div class="quadrant-canvas-wrap">
+      <h2 class="font-headline text-4xl font-bold tracking-tight text-tertiary mb-4 text-center">
+        PROPÓSITO<br/>EN LA VIDA
+      </h2>
+
+      <div class="w-full glass-panel rounded-xl p-8 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] mb-8">
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+          10 preguntas sobre el sentido de tu vida. Tarda menos de 3 minutos. Resultados inmediatos con tu posición en el mapa de propósito.
+        </p>
+        <div class="space-y-3 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="p-1.5 rounded bg-primary/10 text-primary flex-shrink-0">
+              <span class="material-symbols-outlined text-sm">timer</span>
+            </div>
+            <span class="text-xs text-on-surface-variant">3 minutos · 10 preguntas · Escala de 7 puntos</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="p-1.5 rounded bg-primary/10 text-primary flex-shrink-0">
+              <span class="material-symbols-outlined text-sm">verified</span>
+            </div>
+            <span class="text-xs text-on-surface-variant">Instrumento validado — Steger et al. (2006)</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="p-1.5 rounded bg-primary/10 text-primary flex-shrink-0">
+              <span class="material-symbols-outlined text-sm">grid_view</span>
+            </div>
+            <span class="text-xs text-on-surface-variant">Dos dimensiones: Presencia y Búsqueda de sentido</span>
+          </div>
+        </div>
+        <button id="start-btn" type="button"
+          class="w-full py-4 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold uppercase tracking-widest text-xs text-on-primary-fixed shadow-[0_10px_20px_-5px_rgba(255,144,104,0.3)] hover:shadow-[0_0_20px_rgba(255,144,104,0.4)] transition-all duration-300 active:scale-95">
+          Empezar evaluacion
+        </button>
+      </div>
+
+      <div class="w-full p-4 rounded-xl bg-surface-container-low border border-outline-variant/10 flex items-start gap-4">
+        <div class="p-2 rounded bg-primary/10 text-primary flex-shrink-0">
+          <span class="material-symbols-outlined text-sm">info</span>
+        </div>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          Esta herramienta mide Presencia (sentís que tu vida tiene sentido) y Búsqueda (estás activamente buscando sentido). No hay respuestas correctas o incorrectas.
+        </p>
+      </div>
+    </div>
+
+    <!-- QUESTION FLOW -->
+    <div id="assessment-container" class="w-full" style="display:none;">
+      <!-- Progress -->
+      <div class="w-full mb-12">
+        <div class="flex justify-between items-end mb-3">
+          <span class="font-mono text-[10px] uppercase tracking-widest text-outline">MLQ-10</span>
+          <span class="font-mono text-xs font-bold text-primary" id="progress-counter">01 / 10</span>
+        </div>
+        <div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-primary to-primary-container shadow-[0_0_12px_rgba(255,144,104,0.4)] transition-all duration-500" style="width:10%;"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-8 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden mb-8">
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="font-mono text-[0.6875rem] text-primary mb-6 tracking-[0.2em] uppercase" id="dimension-label">Dimensión: Presencia</div>
+          <h2 class="font-headline text-xl md:text-2xl font-bold leading-tight text-tertiary mb-10" id="question-text">
+            Entiendo el sentido de mi vida
+          </h2>
+          <div class="space-y-3" id="options-container"></div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="w-full flex items-center justify-between gap-4 mb-8">
+        <button id="prev-btn" type="button"
+          class="flex-1 py-4 border border-outline-variant/40 rounded-lg font-headline font-bold uppercase tracking-widest text-xs text-outline hover:text-tertiary hover:border-tertiary transition-all duration-300 active:scale-95">
+          Anterior
+        </button>
+        <button id="next-btn" type="button" disabled
+          class="flex-[2] py-4 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold uppercase tracking-widest text-xs text-on-primary-fixed shadow-[0_10px_20px_-5px_rgba(255,144,104,0.3)] hover:shadow-[0_0_20px_rgba(255,144,104,0.4)] transition-all duration-300 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed">
+          Siguiente
+        </button>
+      </div>
+
+      <!-- Contextual Insight -->
+      <div class="w-full p-4 rounded-xl bg-surface-container-low border border-outline-variant/10 flex items-start gap-4">
+        <div class="p-2 rounded bg-primary/10 text-primary flex-shrink-0">
+          <span class="material-symbols-outlined text-sm">info</span>
+        </div>
+        <p class="text-xs text-on-surface-variant leading-relaxed" id="insight-text">
+          Respondé con la primera respuesta que te venga. No hay respuestas correctas.
+        </p>
+      </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <section id="results-screen" class="w-full" style="display:none;" aria-live="polite">
+
+      <!-- Header -->
+      <div class="text-center mb-10">
+        <div class="inline-block mb-4 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+          <span class="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">Tu cuadrante de propósito</span>
+        </div>
+        <h2 class="font-headline text-4xl font-bold tracking-tight text-tertiary mb-2" id="quadrant-name"></h2>
+        <p class="text-on-surface-variant text-sm font-medium" id="scores-summary"></p>
+      </div>
+
+      <!-- Quadrant Canvas -->
+      <div class="w-full glass-panel rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] mb-6 flex flex-col items-center">
         <canvas
           id="quadrant-canvas"
           width="300"
           height="300"
           aria-label="Diagrama de cuadrante: posición de presencia y búsqueda de sentido"
           role="img"
+          class="max-w-full"
         ></canvas>
-        <div class="quadrant-legend">
-          <div class="quadrant-legend-item">
-            <div class="quadrant-legend-dot" style="background:#e85d26;"></div>
-            <span>Pleno/a</span>
+        <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-4">
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-primary flex-shrink-0"></div>
+            <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider">Pleno/a</span>
           </div>
-          <div class="quadrant-legend-item">
-            <div class="quadrant-legend-dot" style="background:#2e7d32;"></div>
-            <span>Creciendo</span>
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#4ade80;"></div>
+            <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider">Creciendo</span>
           </div>
-          <div class="quadrant-legend-item">
-            <div class="quadrant-legend-dot" style="background:#1565c0;"></div>
-            <span>Buscando</span>
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#60a5fa;"></div>
+            <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider">Buscando</span>
           </div>
-          <div class="quadrant-legend-item">
-            <div class="quadrant-legend-dot" style="background:#6b6b6b;"></div>
-            <span>Desconectado/a</span>
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#74738b;"></div>
+            <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-wider">Desconectado/a</span>
           </div>
         </div>
       </div>
 
-      <!-- Score bars -->
-      <div class="mlq-scores">
-        <div class="score-row">
-          <span class="score-label">Presencia</span>
-          <div class="score-bar-wrap">
-            <div class="score-bar-fill" id="presence-bar" style="width:0%;"></div>
+      <!-- Score dimension cards -->
+      <div class="space-y-4 mb-6">
+        <div class="glass-panel rounded-xl p-6 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h3 class="font-headline text-lg font-bold text-tertiary uppercase tracking-tight">Presencia</h3>
+              <p class="text-xs text-on-surface-variant mt-1 font-mono">SENTIDO ACTUAL DE PROPÓSITO</p>
+            </div>
+            <div class="flex flex-col items-end">
+              <span class="text-2xl font-bold text-primary" id="presence-value">—</span>
+              <span class="text-[9px] text-primary/60 font-mono">/ 7</span>
+            </div>
           </div>
-          <span class="score-value" id="presence-value">-</span>
+          <div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+            <div id="presence-bar" class="score-bar-fill h-full bg-gradient-to-r from-primary to-primary-container shadow-[0_0_8px_rgba(255,144,104,0.4)]" style="width:0%;"></div>
+          </div>
         </div>
-        <div class="score-row">
-          <span class="score-label">Busqueda</span>
-          <div class="score-bar-wrap">
-            <div class="score-bar-fill" id="search-bar" style="width:0%;"></div>
+
+        <div class="glass-panel rounded-xl p-6 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h3 class="font-headline text-lg font-bold text-tertiary uppercase tracking-tight">Búsqueda</h3>
+              <p class="text-xs text-on-surface-variant mt-1 font-mono">ACTITUD HACIA EL SENTIDO</p>
+            </div>
+            <div class="flex flex-col items-end">
+              <span class="text-2xl font-bold text-on-surface" id="search-value">—</span>
+              <span class="text-[9px] text-on-surface-variant font-mono">/ 7</span>
+            </div>
           </div>
-          <span class="score-value" id="search-value">-</span>
+          <div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+            <div id="search-bar" class="score-bar-fill h-full bg-gradient-to-r from-outline to-on-surface-variant" style="width:0%;"></div>
+          </div>
         </div>
       </div>
 
       <!-- Interpretation -->
-      <div class="interpretation">
-        <p class="interpretation-label">Interpretación</p>
-        <p id="interpretation-text"></p>
+      <div class="glass-panel rounded-xl p-6 border border-outline-variant/10 mb-4">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-outlined text-primary text-sm">psychology</span>
+          <span class="font-mono text-[9px] text-on-surface-variant uppercase tracking-widest">Interpretación</span>
+        </div>
+        <p class="text-sm text-on-surface leading-relaxed" id="interpretation-text"></p>
       </div>
 
-      <!-- Cultural calibration note (per WEB-10 / LATAM) -->
-      <div class="cultural-note">
-        <strong>Nota de calibración:</strong>
-        puntajes altos en Búsqueda son normativos en contextos de alta incertidumbre económica como LATAM. No indican un problema &mdash; indican que sos una persona que piensa activamente sobre su vida.
+      <!-- Cultural calibration note -->
+      <div class="w-full p-4 rounded-xl bg-surface-container-low border border-primary/20 flex items-start gap-4 mb-6">
+        <div class="p-2 rounded bg-primary/10 text-primary flex-shrink-0">
+          <span class="material-symbols-outlined text-sm">public</span>
+        </div>
+        <div>
+          <p class="font-mono text-[9px] text-primary uppercase tracking-widest mb-1">Calibración cultural LATAM</p>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Puntajes altos en Búsqueda son normativos en contextos de alta incertidumbre económica como LATAM. No indican un problema — indican que sos una persona que piensa activamente sobre su vida.
+          </p>
+        </div>
       </div>
 
-      <!-- SCORECARD PREVIEW (generated by JS on results render) -->
+      <!-- Scorecard preview -->
       <img
         id="scorecard-preview-img"
-        class="n1-scorecard-preview"
+        class="w-full rounded-xl mb-6 border border-outline-variant/20"
         alt="Vista previa del scorecard"
         style="display:none;"
         aria-label="Vista previa del scorecard descargable"
       />
 
       <!-- Action buttons -->
-      <div class="results-actions">
-        <button id="btn-scorecard" class="btn btn-primary" type="button">Descargar scorecard</button>
-        <button id="btn-linkedin" class="btn btn-secondary" type="button">Copiar texto LinkedIn</button>
-        <button id="btn-yaml" class="btn btn-secondary" type="button">Exportar perfil YAML</button>
-        <a href="../index.html" class="btn btn-ghost">Volver al inicio</a>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <button id="btn-scorecard" type="button"
+          class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed flex items-center justify-center gap-2 py-4 rounded-lg font-headline font-bold text-xs tracking-tight shadow-[0_0_20px_rgba(255,144,104,0.3)] transition-transform active:scale-95">
+          <span class="material-symbols-outlined text-[18px]">download</span>
+          Scorecard
+        </button>
+        <button id="btn-linkedin" type="button"
+          class="border border-outline-variant text-on-surface flex items-center justify-center gap-2 py-4 rounded-lg font-headline font-bold text-xs tracking-tight hover:bg-white/5 transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[18px]">share</span>
+          LinkedIn
+        </button>
       </div>
+      <button id="btn-yaml" type="button"
+        class="w-full border border-outline-variant/40 text-on-surface-variant flex items-center justify-center gap-2 py-3 rounded-lg font-headline font-bold text-xs tracking-tight hover:bg-white/5 transition-all active:scale-95 mb-8">
+        <span class="material-symbols-outlined text-[18px]">code</span>
+        Exportar perfil YAML
+      </button>
 
-      <!-- EMAIL CAPTURE (INTG-03 — D-07, D-08) -->
-      <div
-        class="n1-email-section"
-        id="n1-email-section"
-        aria-label="Suscripción al newsletter"
-      >
-        <p class="n1-email-section-label">Newsletter</p>
-        <p class="n1-email-section-title">Recibí insights de carrera cada semana</p>
-        <p class="n1-email-section-desc">
-          Sin spam. Investigación aplicada — en español.
-        </p>
+      <!-- Email capture -->
+      <div class="glass-panel rounded-xl p-6 border border-outline-variant/10 mb-8" id="n1-email-section" aria-label="Suscripción al newsletter">
+        <div class="inline-block mb-3 px-2 py-0.5 bg-primary/10 border border-primary/20 rounded-full">
+          <span class="font-mono text-[9px] text-primary uppercase tracking-[0.2em]">Newsletter</span>
+        </div>
+        <p class="font-headline text-base font-bold text-tertiary mb-1">Recibí insights de carrera cada semana</p>
+        <p class="text-xs text-on-surface-variant mb-4">Sin spam. Investigación aplicada — en español.</p>
         <form
           id="n1-tool-email-form"
-          class="n1-email-section-form"
           action="https://buttondown.email/api/emails/embed-subscribe/n1-sistema"
           method="POST"
           target="popupwindow"
           novalidate
           aria-label="Formulario de suscripción"
+          class="flex gap-3"
         >
-          <label for="n1-tool-email" class="visually-hidden"
-            >Tu dirección de correo</label
-          >
+          <label for="n1-tool-email" class="sr-only">Tu dirección de correo</label>
           <input
             type="email"
             name="email"
             id="n1-tool-email"
-            class="n1-email-section-input"
             placeholder="tu@email.com"
             required
             autocomplete="email"
             aria-required="true"
+            class="flex-1 bg-surface-container border border-outline-variant/40 rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors"
           />
           <input type="hidden" name="tag" value="tool-completion" />
-          <button type="submit" class="btn btn-primary" style="flex-shrink:0;">
+          <button type="submit"
+            class="flex-shrink-0 px-4 py-3 bg-gradient-to-br from-primary to-primary-container rounded-lg font-headline font-bold text-xs text-on-primary-fixed uppercase tracking-wider active:scale-95 transition-transform">
             Suscribirme
           </button>
         </form>
-        <p
-          class="n1-email-section-success"
-          id="n1-tool-email-success"
-          role="status"
-          aria-live="polite"
-        >
+        <p class="text-xs text-primary mt-3" id="n1-tool-email-success" style="display:none;" role="status" aria-live="polite">
           Listo. Te llegará el primer correo pronto.
         </p>
       </div>
 
       <!-- Citation -->
-      <p class="mlq-citation">Steger, M.F., Frazier, P., Oishi, S., &amp; Kaler, M. (2006). The Meaning in Life Questionnaire. <em>Journal of Counseling Psychology, 53</em>(1), 80–93.</p>
+      <p class="text-xs text-outline italic text-center mb-4">Steger, M.F., Frazier, P., Oishi, S., &amp; Kaler, M. (2006). The Meaning in Life Questionnaire. <em>Journal of Counseling Psychology, 53</em>(1), 80–93.</p>
 
     </section>
 
-    <!-- Toast notification -->
-    <div id="n1-toast" class="toast" role="status" aria-live="polite"></div>
+    <!-- Toast -->
+    <div id="n1-toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-4 py-3 bg-surface-container-highest border border-outline-variant/40 rounded-xl text-sm text-on-surface shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] opacity-0 pointer-events-none transition-opacity duration-300" role="status" aria-live="polite"></div>
 
   </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 h-20 bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50">
+    <div class="flex justify-around items-center h-full px-4 max-w-[640px] mx-auto">
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../index.html">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Inicio</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#ff9068] bg-[#ff9068]/10 rounded-xl px-3 py-1 translate-y-[-2px] transition-all" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">psychology</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">MLQ-10</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../compass/index.html">
+        <span class="material-symbols-outlined">explore</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Compass</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#46465c] opacity-60 hover:opacity-100 transition-all" href="../index.html">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Herramientas</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Background atmospheric elements -->
+  <div class="fixed inset-0 pointer-events-none -z-10">
+    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary/10 blur-[150px] rounded-full"></div>
+  </div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -352,107 +438,172 @@
     (function () {
       'use strict';
 
-      /* ── SAFETY DISCLAIMER ────────────── */
+      /* SAFETY DISCLAIMER */
       var disclaimerBlock = document.getElementById('disclaimer-block');
       if (disclaimerBlock && typeof N1 !== 'undefined' && N1.getSafetyDisclaimer) {
         disclaimerBlock.appendChild(N1.getSafetyDisclaimer());
       }
 
-      /* ── INIT localStorage GUARD ──────── */
+      /* INIT localStorage GUARD */
       if (typeof N1 !== 'undefined' && N1.initLocalStorageSafe) {
         N1.initLocalStorageSafe();
       }
 
-      /* ── MLQ-10 QUESTIONS ─────────────── */
-      var LABELS = {
-        min: 'Absolutamente falso',
-        mid: 'Ni verdadero ni falso',
-        max: 'Absolutamente verdadero'
-      };
-
+      /* MLQ-10 QUESTIONS */
       var questions = [
-        // Presence subscale (P1-P5)
-        {
-          id: 'p1',
-          text: 'Entiendo el sentido de mi vida',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        {
-          id: 'p2',
-          text: 'Mi vida tiene un propósito claro',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        {
-          id: 'p3',
-          text: 'Tengo una buena comprension de lo que hace que mi vida sea significativa',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        {
-          id: 'p4',
-          text: 'He descubierto un propósito de vida satisfactorio',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        {
-          id: 'p5',
-          text: 'Mi vida tiene un significado claro',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        // Search subscale (S1-S5)
-        {
-          id: 's1',
-          text: 'Estoy buscando algo que haga que mi vida se sienta significativa',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        {
-          id: 's2',
-          text: 'Siempre estoy buscando el propósito de mi vida',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        {
-          id: 's3',
-          text: 'Estoy buscando actividades que le den propósito a mi vida',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        {
-          id: 's4',
-          text: 'Estoy buscando mi mision de vida',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        },
-        {
-          id: 's5',
-          text: 'Mi vida no tiene un propósito claro, y estoy buscando uno',
-          type: 'likert7',
-          labels: { 1: LABELS.min, 4: LABELS.mid, 7: LABELS.max }
-        }
+        { id: 'p1', text: 'Entiendo el sentido de mi vida' },
+        { id: 'p2', text: 'Mi vida tiene un propósito claro' },
+        { id: 'p3', text: 'Tengo una buena comprension de lo que hace que mi vida sea significativa' },
+        { id: 'p4', text: 'He descubierto un propósito de vida satisfactorio' },
+        { id: 'p5', text: 'Mi vida tiene un significado claro' },
+        { id: 's1', text: 'Estoy buscando algo que haga que mi vida se sienta significativa' },
+        { id: 's2', text: 'Siempre estoy buscando el propósito de mi vida' },
+        { id: 's3', text: 'Estoy buscando actividades que le den propósito a mi vida' },
+        { id: 's4', text: 'Estoy buscando mi mision de vida' },
+        { id: 's5', text: 'Mi vida no tiene un propósito claro, y estoy buscando uno' }
       ];
 
-      /* ── START BUTTON ─────────────────── */
+      /* 7-point Likert options */
+      var LIKERT_OPTIONS = [
+        { value: 1, label: 'Absolutamente falso' },
+        { value: 2, label: 'Bastante falso' },
+        { value: 3, label: 'Levemente falso' },
+        { value: 4, label: 'Ni verdadero ni falso' },
+        { value: 5, label: 'Levemente verdadero' },
+        { value: 6, label: 'Bastante verdadero' },
+        { value: 7, label: 'Absolutamente verdadero' }
+      ];
+
+      var DIMENSION_INSIGHTS = {
+        presence: 'Esta dimensión mide si sentís que tu vida ya tiene sentido. Respondé con la primera respuesta que te venga.',
+        search: 'Esta dimensión mide qué tan activamente buscás propósito en tu vida. No hay respuesta correcta.'
+      };
+
+      /* STATE */
+      var currentIndex = 0;
+      var answers = {};
+
+      function getDimension(q) {
+        return (q.id && q.id[0] === 'p') ? 'presence' : 'search';
+      }
+
+      function renderQuestion(index) {
+        var q = questions[index];
+        var dim = getDimension(q);
+        var total = questions.length;
+
+        /* Update progress */
+        var progressPct = Math.round(((index + 1) / total) * 100);
+        document.getElementById('progress-bar').style.width = progressPct + '%';
+        document.getElementById('progress-counter').textContent =
+          String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+
+        /* Dimension label */
+        var dimLabel = dim === 'presence' ? 'Presencia' : 'Búsqueda';
+        document.getElementById('dimension-label').textContent = 'Dimensión: ' + dimLabel;
+
+        /* Question text */
+        document.getElementById('question-text').textContent = q.text;
+
+        /* Insight */
+        document.getElementById('insight-text').textContent = DIMENSION_INSIGHTS[dim];
+
+        /* Render options */
+        var container = document.getElementById('options-container');
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        LIKERT_OPTIONS.forEach(function (opt) {
+          var isSelected = answers[q.id] === opt.value;
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.setAttribute('data-value', String(opt.value));
+
+          if (isSelected) {
+            btn.className = 'option-selected w-full flex items-center justify-between p-4 rounded-lg border border-primary bg-primary/10 ring-1 ring-primary/20 text-left transition-all duration-300';
+          } else {
+            btn.className = 'group w-full flex items-center justify-between p-4 rounded-lg border border-outline-variant/20 bg-surface-container/40 hover:bg-primary/5 hover:border-primary/40 transition-all duration-300 text-left';
+          }
+
+          /* Label */
+          var labelSpan = document.createElement('span');
+          labelSpan.className = isSelected
+            ? 'font-bold text-tertiary text-sm'
+            : 'font-medium text-on-surface-variant group-hover:text-tertiary transition-colors text-sm';
+          labelSpan.textContent = opt.label;
+
+          /* Number */
+          var numSpan = document.createElement('span');
+          numSpan.className = isSelected
+            ? 'font-mono text-xs text-primary font-bold ml-3 flex-shrink-0'
+            : 'font-mono text-xs text-outline group-hover:text-primary transition-colors ml-3 flex-shrink-0';
+          numSpan.textContent = String(opt.value);
+
+          btn.appendChild(labelSpan);
+          btn.appendChild(numSpan);
+
+          btn.addEventListener('click', function () {
+            answers[q.id] = parseInt(this.getAttribute('data-value'), 10);
+            updateNextButton();
+            renderQuestion(index);
+          });
+
+          container.appendChild(btn);
+        });
+
+        /* Nav visibility */
+        document.getElementById('prev-btn').style.visibility = index === 0 ? 'hidden' : 'visible';
+        updateNextButton();
+      }
+
+      function updateNextButton() {
+        var q = questions[currentIndex];
+        var hasAnswer = answers[q.id] !== undefined;
+        var nextBtn = document.getElementById('next-btn');
+        nextBtn.disabled = !hasAnswer;
+        nextBtn.textContent = (currentIndex === questions.length - 1) ? 'Ver resultados' : 'Siguiente';
+      }
+
+      /* START */
       document.getElementById('start-btn').addEventListener('click', function () {
         document.getElementById('mlq-intro').style.display = 'none';
         document.getElementById('assessment-container').style.display = 'block';
-
-        N1.createAssessment({
-          containerId: 'assessment-container',
-          questions: questions,
-          onComplete: function (answers) {
-            renderResults(answers);
-          }
-        });
+        currentIndex = 0;
+        answers = {};
+        renderQuestion(0);
       });
 
-      /* ── SCORING ──────────────────────── */
+      /* HEADER BACK */
+      document.getElementById('header-back-btn').addEventListener('click', function () {
+        if (document.getElementById('assessment-container').style.display !== 'none') {
+          document.getElementById('assessment-container').style.display = 'none';
+          document.getElementById('mlq-intro').style.display = 'flex';
+        } else {
+          window.location.href = '../index.html';
+        }
+      });
 
-      function calcMean(answers, ids) {
-        var vals = ids.map(function (id) { return parseFloat(answers[id]) || 0; });
+      /* NAVIGATION */
+      document.getElementById('prev-btn').addEventListener('click', function () {
+        if (currentIndex > 0) {
+          currentIndex--;
+          renderQuestion(currentIndex);
+        }
+      });
+
+      document.getElementById('next-btn').addEventListener('click', function () {
+        if (this.disabled) return;
+        if (currentIndex < questions.length - 1) {
+          currentIndex++;
+          renderQuestion(currentIndex);
+        } else {
+          document.getElementById('assessment-container').style.display = 'none';
+          renderResults(answers);
+        }
+      });
+
+      /* SCORING */
+      function calcMean(answersObj, ids) {
+        var vals = ids.map(function (id) { return parseFloat(answersObj[id]) || 0; });
         var sum = vals.reduce(function (a, b) { return a + b; }, 0);
         return Math.round((sum / vals.length) * 10) / 10;
       }
@@ -466,206 +617,146 @@
         return 'disengaged';
       }
 
-      /* ── QUADRANT METADATA ────────────── */
-
       var QUADRANT_META = {
         fulfilled: {
           label: 'Pleno/a',
-          color: '#e85d26',
           interpretation: 'Tenés un sentido claro de propósito y no sentís urgencia de buscarlo — simplemente lo vivís. Eso es un punto de fortaleza sólido. Usalo como ancla en momentos de decisión.'
         },
         growing: {
           label: 'Creciendo',
-          color: '#2e7d32',
           interpretation: 'Tenés propósito Y seguís construyendo — eso es la combinación óptima para el crecimiento. La búsqueda activa no es ansiedad, es expansión.'
         },
         seeking: {
           label: 'Buscando',
-          color: '#1565c0',
           interpretation: 'Estás en modo búsqueda activa, lo cual es energizante aunque puede sentirse incómodo. En LATAM, este cuadrante es común y adaptativo — refleja curiosidad sana, no carencia.'
         },
         disengaged: {
           label: 'Desconectado/a',
-          color: '#6b6b6b',
           interpretation: 'Hay una brecha entre vos y un sentido de propósito claro. Eso suele generar un cansancio diferente — no de trabajo sino de dirección. Este es un buen momento para explorar.'
         }
       };
 
-      /* ── QUADRANT CANVAS DIAGRAM ──────── */
-
+      /* QUADRANT CANVAS — DARK THEME */
       function drawQuadrant(canvas, presenceScore, searchScore) {
         var ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        var W = 300;
-        var H = 300;
-        var PAD = 40;
+        var W = 300, H = 300, PAD = 40;
         var INNER_W = W - PAD * 2;
         var INNER_H = H - PAD * 2;
         var MID_X = PAD + INNER_W / 2;
         var MID_Y = PAD + INNER_H / 2;
 
-        // Clear
-        ctx.clearRect(0, 0, W, H);
+        /* Dark navy background */
+        ctx.fillStyle = '#0c0c1f';
+        ctx.fillRect(0, 0, W, H);
 
-        // Quadrant background shading (subtle)
-        var quadrantColors = [
-          // top-left: disengaged (low presence, high search) — searching quadrant color
-          { x: PAD, y: PAD, w: INNER_W / 2, h: INNER_H / 2, label: 'Buscando', color: '#e8f0fe' },
-          // top-right: growing (high presence, high search)
-          { x: MID_X, y: PAD, w: INNER_W / 2, h: INNER_H / 2, label: 'Creciendo', color: '#e8f5e9' },
-          // bottom-left: disengaged (low presence, low search)
-          { x: PAD, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2, label: 'Desconectado', color: '#f5f5f5' },
-          // bottom-right: fulfilled (high presence, low search)
-          { x: MID_X, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2, label: 'Pleno', color: '#fff3ef' }
+        /* Quadrant tints */
+        var tints = [
+          { x: PAD, y: PAD, w: INNER_W / 2, h: INNER_H / 2, color: 'rgba(96,165,250,0.07)' },
+          { x: MID_X, y: PAD, w: INNER_W / 2, h: INNER_H / 2, color: 'rgba(74,222,128,0.07)' },
+          { x: PAD, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2, color: 'rgba(116,115,139,0.07)' },
+          { x: MID_X, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2, color: 'rgba(255,144,104,0.07)' }
         ];
-
-        quadrantColors.forEach(function (q) {
-          ctx.fillStyle = q.color;
-          ctx.fillRect(q.x, q.y, q.w, q.h);
+        tints.forEach(function (t) {
+          ctx.fillStyle = t.color;
+          ctx.fillRect(t.x, t.y, t.w, t.h);
         });
 
-        // Determine active quadrant and highlight it more
+        /* Active quadrant highlight */
         var quadrant = getQuadrant(presenceScore, searchScore);
-        var highlightRect = null;
-        if (quadrant === 'seeking') {
-          highlightRect = { x: PAD, y: PAD, w: INNER_W / 2, h: INNER_H / 2 };
-        } else if (quadrant === 'growing') {
-          highlightRect = { x: MID_X, y: PAD, w: INNER_W / 2, h: INNER_H / 2 };
-        } else if (quadrant === 'disengaged') {
-          highlightRect = { x: PAD, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2 };
-        } else if (quadrant === 'fulfilled') {
-          highlightRect = { x: MID_X, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2 };
-        }
-        if (highlightRect) {
-          ctx.fillStyle = 'rgba(232, 93, 38, 0.08)';
-          ctx.fillRect(highlightRect.x, highlightRect.y, highlightRect.w, highlightRect.h);
+        var highlights = {
+          seeking:    { x: PAD,  y: PAD,  w: INNER_W / 2, h: INNER_H / 2, color: 'rgba(96,165,250,0.12)' },
+          growing:    { x: MID_X, y: PAD,  w: INNER_W / 2, h: INNER_H / 2, color: 'rgba(74,222,128,0.12)' },
+          disengaged: { x: PAD,  y: MID_Y, w: INNER_W / 2, h: INNER_H / 2, color: 'rgba(116,115,139,0.12)' },
+          fulfilled:  { x: MID_X, y: MID_Y, w: INNER_W / 2, h: INNER_H / 2, color: 'rgba(255,144,104,0.15)' }
+        };
+        var hl = highlights[quadrant];
+        if (hl) {
+          ctx.fillStyle = hl.color;
+          ctx.fillRect(hl.x, hl.y, hl.w, hl.h);
         }
 
-        // Grid lines
-        ctx.strokeStyle = '#c0c0c0';
+        /* Grid lines — outline-variant (#46465c) */
+        ctx.strokeStyle = '#46465c';
         ctx.lineWidth = 1;
-        // Vertical divider (x = midpoint)
-        ctx.beginPath();
-        ctx.moveTo(MID_X, PAD);
-        ctx.lineTo(MID_X, PAD + INNER_H);
-        ctx.stroke();
-        // Horizontal divider (y = midpoint)
-        ctx.beginPath();
-        ctx.moveTo(PAD, MID_Y);
-        ctx.lineTo(PAD + INNER_W, MID_Y);
-        ctx.stroke();
-
-        // Border around inner area
-        ctx.strokeStyle = '#d0d0d0';
-        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(MID_X, PAD); ctx.lineTo(MID_X, PAD + INNER_H); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(PAD, MID_Y); ctx.lineTo(PAD + INNER_W, MID_Y); ctx.stroke();
         ctx.strokeRect(PAD, PAD, INNER_W, INNER_H);
 
-        // Quadrant labels
-        ctx.font = '10px "DM Sans", sans-serif';
+        /* Quadrant labels */
+        ctx.font = '9px "Space Mono", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#60a5fa'; ctx.fillText('BUSCANDO', PAD + INNER_W / 4, PAD + INNER_H / 4);
+        ctx.fillStyle = '#4ade80'; ctx.fillText('CRECIENDO', MID_X + INNER_W / 4, PAD + INNER_H / 4);
+        ctx.fillStyle = '#46465c'; ctx.fillText('DESCONECTADO', PAD + INNER_W / 4, MID_Y + INNER_H / 4);
+        ctx.fillStyle = '#ff9068'; ctx.fillText('PLENO', MID_X + INNER_W / 4, MID_Y + INNER_H / 4);
 
-        // Top-left: Buscando
-        ctx.fillStyle = '#1565c0';
-        ctx.fillText('Buscando', PAD + INNER_W / 4, PAD + INNER_H / 4);
-        // Top-right: Creciendo
-        ctx.fillStyle = '#2e7d32';
-        ctx.fillText('Creciendo', MID_X + INNER_W / 4, PAD + INNER_H / 4);
-        // Bottom-left: Desconectado
-        ctx.fillStyle = '#9e9e9e';
-        ctx.fillText('Desconectado', PAD + INNER_W / 4, MID_Y + INNER_H / 4);
-        // Bottom-right: Pleno
-        ctx.fillStyle = '#e85d26';
-        ctx.fillText('Pleno', MID_X + INNER_W / 4, MID_Y + INNER_H / 4);
-
-        // Axis labels
-        ctx.fillStyle = '#6b6b6b';
-        ctx.font = '10px "DM Sans", sans-serif';
-        // X-axis label: Presencia (bottom center)
+        /* Axis labels */
+        ctx.fillStyle = '#aaa8c3';
+        ctx.font = '9px "Space Mono", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
-        ctx.fillText('Presencia →', PAD + INNER_W / 2, H - 4);
-        // Y-axis label: Busqueda (left, rotated)
+        ctx.fillText('Presencia \u2192', PAD + INNER_W / 2, H - 4);
         ctx.save();
         ctx.translate(10, PAD + INNER_H / 2);
         ctx.rotate(-Math.PI / 2);
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
-        ctx.fillText('Busqueda →', 0, 0);
+        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        ctx.fillText('Busqueda \u2192', 0, 0);
         ctx.restore();
 
-        // Midpoint tick labels
-        ctx.fillStyle = '#9e9e9e';
-        ctx.font = '9px "DM Sans", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
+        /* Tick labels */
+        ctx.fillStyle = '#74738b';
+        ctx.font = '8px "Space Mono", monospace';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
         ctx.fillText('4.0', MID_X, PAD + INNER_H + 2);
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'middle';
+        ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
         ctx.fillText('4.0', PAD - 2, MID_Y);
 
-        // Plot user dot — map scores 1-7 to canvas coordinates
-        // Presence on X: 1 maps to PAD, 7 maps to PAD + INNER_W
-        // Search on Y: 1 maps to PAD + INNER_H (bottom), 7 maps to PAD (top)
+        /* Plot dot — orange (#ff9068) with glow */
         var dotX = PAD + ((presenceScore - 1) / 6) * INNER_W;
         var dotY = PAD + INNER_H - ((searchScore - 1) / 6) * INNER_H;
 
-        // Shadow
-        ctx.shadowColor = 'rgba(232,93,38,0.35)';
-        ctx.shadowBlur = 8;
-
-        // Outer ring
+        ctx.shadowColor = 'rgba(255,144,104,0.5)';
+        ctx.shadowBlur = 12;
         ctx.beginPath();
         ctx.arc(dotX, dotY, 10, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(232, 93, 38, 0.2)';
+        ctx.fillStyle = 'rgba(255,144,104,0.2)';
         ctx.fill();
 
-        // Inner dot
         ctx.shadowBlur = 0;
         ctx.beginPath();
         ctx.arc(dotX, dotY, 6, 0, Math.PI * 2);
-        ctx.fillStyle = '#e85d26';
+        ctx.fillStyle = '#ff9068';
         ctx.fill();
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#0c0c1f';
         ctx.lineWidth = 2;
         ctx.stroke();
       }
 
-      /* ── RENDER RESULTS ───────────────── */
-
-      function renderResults(answers) {
-        // Hide assessment container
-        document.getElementById('assessment-container').style.display = 'none';
-
-        // Calculate scores
-        var presence = calcMean(answers, ['p1', 'p2', 'p3', 'p4', 'p5']);
-        var search = calcMean(answers, ['s1', 's2', 's3', 's4', 's5']);
+      /* RENDER RESULTS */
+      function renderResults(answersObj) {
+        var presence = calcMean(answersObj, ['p1', 'p2', 'p3', 'p4', 'p5']);
+        var search = calcMean(answersObj, ['s1', 's2', 's3', 's4', 's5']);
         var quadrant = getQuadrant(presence, search);
         var meta = QUADRANT_META[quadrant];
 
-        // Show results screen
         var resultsScreen = document.getElementById('results-screen');
-        resultsScreen.style.display = 'flex';
+        resultsScreen.style.display = 'block';
 
-        // Set quadrant name and scores
         document.getElementById('quadrant-name').textContent = meta.label;
         document.getElementById('scores-summary').textContent =
           'Presencia: ' + presence + ' / 7\u2003\u2014\u2003Busqueda: ' + search + ' / 7';
 
-        // Draw quadrant canvas
-        var canvas = document.getElementById('quadrant-canvas');
-        drawQuadrant(canvas, presence, search);
+        drawQuadrant(document.getElementById('quadrant-canvas'), presence, search);
 
-        // Score bars (1-7 scale → percentage of 7)
         var presencePct = Math.round((presence / 7) * 100);
         var searchPct = Math.round((search / 7) * 100);
-
         var presenceBar = document.getElementById('presence-bar');
         var searchBar = document.getElementById('search-bar');
         presenceBar.style.width = '0%';
         searchBar.style.width = '0%';
-        // Animate after brief delay
         setTimeout(function () {
           presenceBar.style.width = presencePct + '%';
           searchBar.style.width = searchPct + '%';
@@ -673,32 +764,21 @@
 
         document.getElementById('presence-value').textContent = presence + '/7';
         document.getElementById('search-value').textContent = search + '/7';
-
-        // Interpretation text (safe textContent)
         document.getElementById('interpretation-text').textContent = meta.interpretation;
 
-        // Save to profile
         N1.saveToProfile('purpose', {
-          completed: true,
-          mode: 'quick',
-          mlq: {
-            presence: presence,
-            search: search,
-            quadrant: quadrant
-          }
+          completed: true, mode: 'quick',
+          mlq: { presence: presence, search: search, quadrant: quadrant }
         });
 
-        // Scroll to results
         resultsScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        /* ── BUTTON HANDLERS ──── */
-
-        // Generate scorecard preview
+        /* Scorecard */
         var scorecardConfig = {
           title: 'MLQ-10',
           subtitle: 'Cuestionario de Sentido — Steger (2006)',
           badge: meta.label,
-          accentColor: '#E85D26',
+          accentColor: '#ff9068',
           scores: [
             { label: 'Presencia de Sentido', value: presence, max: 7 },
             { label: 'Búsqueda de Sentido',  value: search,   max: 7 }
@@ -713,15 +793,11 @@
           previewImg.style.display = 'block';
         }
 
-        // Scorecard download
         document.getElementById('btn-scorecard').addEventListener('click', function () {
           var dataUrl = N1.generateScorecard(scorecardConfig);
-          if (dataUrl) {
-            N1.downloadScorecard(dataUrl, 'n1-mlq10-scorecard.png');
-          }
+          if (dataUrl) N1.downloadScorecard(dataUrl, 'n1-mlq10-scorecard.png');
         });
 
-        // LinkedIn text copy
         document.getElementById('btn-linkedin').addEventListener('click', function () {
           var linkedinText =
             'Hice el MLQ-10 de propósito en N1. ' +
@@ -729,28 +805,35 @@
             'Presencia: ' + presence + '/7 \u2014 Búsqueda: ' + search + '/7. ' +
             'Herramienta gratuita: https://n1.career/mlq/ #Propósito #N1';
           N1.copyLinkedInText(linkedinText).then(function () {
-            N1.showToast('\u00a1Texto copiado al portapapeles!');
+            showToast('\u00a1Texto copiado al portapapeles!');
           }).catch(function () {
-            N1.showToast('No se pudo copiar. Intent\u00e1 de nuevo.');
+            showToast('No se pudo copiar. Intent\u00e1 de nuevo.');
           });
         });
 
-        // YAML export
         document.getElementById('btn-yaml').addEventListener('click', function () {
           N1.exportYAML('purpose', {
-            completed: true,
-            mode: 'quick',
-            mlq: {
-              presence: presence,
-              search: search,
-              quadrant: quadrant
-            }
+            completed: true, mode: 'quick',
+            mlq: { presence: presence, search: search, quadrant: quadrant }
           });
-          N1.showToast('Perfil YAML descargado');
+          showToast('Perfil YAML descargado');
         });
       }
 
-      /* ── EMAIL CAPTURE WIRING (INTG-03) ── */
+      /* TOAST */
+      function showToast(msg) {
+        var el = document.getElementById('n1-toast');
+        if (!el) return;
+        el.textContent = msg;
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+        setTimeout(function () {
+          el.style.opacity = '0';
+          el.style.pointerEvents = 'none';
+        }, 2500);
+      }
+
+      /* EMAIL CAPTURE (INTG-03) */
       (function () {
         var emailForm = document.getElementById('n1-tool-email-form');
         var emailInput = document.getElementById('n1-tool-email');
