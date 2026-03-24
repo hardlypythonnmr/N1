@@ -137,9 +137,15 @@ strong {
 /* 4. LAYOUT CONTAINER ──────────────────── */
 .container {
   width: 100%;
-  max-width: 640px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: var(--space-lg) var(--space-md);
+}
+
+/* Narrow variant for single-focus assessment flows */
+.container-narrow {
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 /* 5. GLASS CARD ─────────────────────────── */
