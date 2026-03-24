@@ -321,6 +321,31 @@
         </div>
       </div>
 
+      <!-- EMPTY STATE -->
+      <div
+        id="profile-empty-state"
+        class="hidden w-full glass-panel rounded-xl p-8 border border-outline-variant/20 text-center mb-8"
+      >
+        <span
+          class="material-symbols-outlined text-4xl text-on-surface-variant mb-4 block"
+          >person_search</span
+        >
+        <h3 class="font-headline text-lg font-bold text-on-surface mb-2">
+          Tu perfil está vacío
+        </h3>
+        <p class="text-sm text-on-surface-variant mb-6 max-w-sm mx-auto">
+          Completá al menos una herramienta para ver tu perfil. Cada herramienta
+          agrega una dimensión nueva.
+        </p>
+        <a
+          href="../index.html#herramientas"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-bold text-sm uppercase tracking-widest rounded-lg no-underline hover:opacity-90 transition-opacity"
+        >
+          <span class="material-symbols-outlined text-sm">grid_view</span>
+          Ver herramientas
+        </a>
+      </div>
+
       <!-- TOP ROW: 3 CIRCULAR SCORE BADGES -->
       <div class="flex justify-around gap-3 mb-8" id="score-badges-row">
         <!-- populated by JS -->
@@ -1273,6 +1298,25 @@
       document.getElementById("import-screen").style.display="none";
       document.getElementById("synthesizer-screen").style.display="block";
       document.getElementById("profile-updated").textContent="Actualizado: "+(profile.updated||"—");
+      // Show empty state if no profile data is present
+      var emptyState = document.getElementById("profile-empty-state");
+      var hasData =
+        profile &&
+        ((profile.values &&
+          (profile.values.completed ||
+            (profile.values.bulls_eye && profile.values.bulls_eye.work !== null))) ||
+          (profile.identity && profile.identity.completed) ||
+          (profile.purpose &&
+            profile.purpose.mlq &&
+            profile.purpose.mlq.presence !== null) ||
+          (profile.strengths && profile.strengths.completed));
+      if (emptyState) {
+        if (hasData) {
+          emptyState.classList.add("hidden");
+        } else {
+          emptyState.classList.remove("hidden");
+        }
+      }
       renderScoreBadges(profile);
       renderRadarChart(profile);
       renderDimensionSummaryRow(profile);
