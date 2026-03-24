@@ -193,4 +193,4 @@ Built by Nicolás — sharing what took years to learn.
 
 ---
 
-_El sistema eres tu._
+_El sistema eres tú._

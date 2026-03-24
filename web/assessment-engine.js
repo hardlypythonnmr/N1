@@ -828,7 +828,7 @@
     ctx.fillRect(0, footerY, canvasWidth, footerHeight);
     ctx.fillStyle = COLOR_MUTED;
     ctx.font = '16px "Space Mono", monospace';
-    ctx.fillText("N1 — el sistema eres tu", 48, footerY + 38);
+    ctx.fillText("N1 — el sistema eres tú", 48, footerY + 38);
     ctx.fillStyle = COLOR_BORDER;
     ctx.fillRect(0, footerY, canvasWidth, 1);
 
