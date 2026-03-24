@@ -351,16 +351,28 @@
       />
 
       <!-- DOWNLOAD -->
-      <button
-        id="download-scorecard-btn"
-        class="w-full py-3 mb-6 border border-outline-variant/40 rounded-xl font-headline font-bold text-sm uppercase tracking-widest text-outline hover:text-tertiary hover:border-primary/40 transition-all duration-200 active:scale-95 flex items-center justify-center gap-2"
-        type="button"
-        onclick="downloadRunwayScorecard()"
-        aria-label="Descargar resumen como imagen"
-      >
-        <span class="material-symbols-outlined" style="font-size:18px">download</span>
-        Descargar resumen
-      </button>
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <button
+          id="download-scorecard-btn"
+          class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold text-sm uppercase tracking-widest text-outline hover:text-tertiary hover:border-primary/40 transition-all duration-200 active:scale-95 flex items-center justify-center gap-2"
+          type="button"
+          onclick="downloadRunwayScorecard()"
+          aria-label="Descargar resumen como imagen"
+        >
+          <span class="material-symbols-outlined" style="font-size:18px">download</span>
+          Resumen
+        </button>
+        <button
+          id="export-yaml-btn"
+          class="py-3 border border-outline-variant/40 rounded-xl font-headline font-bold text-sm uppercase tracking-widest text-outline hover:text-tertiary hover:border-primary/40 transition-all duration-200 active:scale-95 flex items-center justify-center gap-2"
+          type="button"
+          onclick="exportRunwayYAML()"
+          aria-label="Exportar datos como YAML"
+        >
+          <span class="material-symbols-outlined" style="font-size:18px">code</span>
+          YAML
+        </button>
+      </div>
 
       <!-- EMAIL CAPTURE -->
       <div class="glass-panel rounded-xl n1-email-section mb-6" id="n1-email-section" aria-label="Suscripción al newsletter">
@@ -484,6 +496,9 @@
     var currentCurrency = 'COP';
     var chartInstance = null;
     var lastResults = null;
+    var lastSavings = 0;
+    var lastExpenses = 0;
+    var lastCurrency = 'COP';
 
     /* ── PURE CALCULATION FUNCTIONS ──────────── */
 
@@ -776,6 +791,9 @@
 
       var results = calculateRunway(savings, monthlyExpenses, normalizedSources);
       lastResults = results;
+      lastSavings = savings;
+      lastExpenses = monthlyExpenses;
+      lastCurrency = currentCurrency;
 
       renderResults(results, savings, monthlyExpenses, currentCurrency);
       showResults();
@@ -1053,6 +1071,58 @@
         N1.downloadScorecard(scorecard, 'n1-runway-calculator.png');
         N1.showToast('Resumen descargado.');
       }
+    }
+
+    /* ── YAML EXPORT ─────────────────────────── */
+
+    /**
+     * Generate and download standalone YAML snapshot of runway calculation.
+     * Financial data is not part of the Profile Interchange Format by design.
+     */
+    function exportRunwayYAML() {
+      if (!lastResults) {
+        if (typeof N1 !== 'undefined' && N1.showToast) N1.showToast('Calculá primero para exportar el YAML.');
+        return;
+      }
+
+      var conserv = lastResults.find(function(r) { return r.key === 'conservative'; });
+      var likely  = lastResults.find(function(r) { return r.key === 'likely'; });
+      var optimist = lastResults.find(function(r) { return r.key === 'optimistic'; });
+
+      function scenarioMonths(r) {
+        if (!r) return 'null';
+        if (r.isIndefinite) return '"indefinido"';
+        return r.months !== null ? r.months.toFixed(1) : 'null';
+      }
+
+      var now = new Date().toISOString().slice(0, 10);
+      var yaml = [
+        '# N1 Runway Calculator — snapshot',
+        '# Generado: ' + now,
+        '# Este archivo NO es compatible con el Perfil N1 (datos financieros excluidos por diseño)',
+        '',
+        'runway:',
+        '  currency: ' + lastCurrency,
+        '  monthly_expenses: ' + Math.round(lastExpenses),
+        '  savings: ' + Math.round(lastSavings),
+        '  scenarios:',
+        '    conservador: ' + scenarioMonths(conserv),
+        '    probable: ' + scenarioMonths(likely),
+        '    optimista: ' + scenarioMonths(optimist),
+        '  date: ' + now
+      ].join('\n');
+
+      var blob = new Blob([yaml], { type: 'text/yaml;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'n1-runway.yaml';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      if (typeof N1 !== 'undefined' && N1.showToast) N1.showToast('YAML exportado.');
     }
 
     /* ── EMAIL CAPTURE WIRING (INTG-03) ── */

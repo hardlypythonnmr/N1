@@ -299,7 +299,7 @@
         </div>
         <div class="flex justify-between items-start flex-wrap gap-3 mb-2">
           <div>
-            <h2 class="font-headline text-2xl font-bold text-tertiary tracking-tight">N1 Integrated Profile<br/>Dashboard</h2>
+            <h2 class="font-headline text-2xl font-bold text-tertiary tracking-tight">Panel de Perfil Integrado<br/>N1</h2>
             <p id="profile-updated" class="font-mono text-[10px] text-outline mt-1"></p>
           </div>
           <div class="flex gap-2 flex-wrap">
@@ -559,6 +559,11 @@
         var sp=profile.values.schwartz_profile;
         var vals=Object.keys(sp).map(function(k){return sp[k];}).filter(function(v){return v!==null&&!isNaN(v);});
         if (vals.length>0) valuesScore=Math.round((vals.reduce(function(a,b){return a+b;},0)/vals.length/9)*100)/10;
+      }
+      if (valuesScore === 0 && profile.values && profile.values.bulls_eye) {
+        var be = profile.values.bulls_eye;
+        var beVals = [be.work, be.relationships, be.personal_growth, be.leisure].filter(function(v) { return v !== null && !isNaN(v); });
+        if (beVals.length > 0) valuesScore = Math.round((beVals.reduce(function(a,b){return a+b;},0) / beVals.length / 10) * 100) / 10;
       }
       var strengthsScore=0;
       if (profile.strengths) {
