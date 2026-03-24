@@ -1300,10 +1300,12 @@
       renderRecommendation(profile);
       wireExportButtons(profile);
 
-      // LinkedIn URL share with clarity score
+      // LinkedIn URL share with clarity score — clone to prevent listener accumulation on re-render
       var clarityShareBtn = document.getElementById("share-linkedin-clarity");
       if (clarityShareBtn) {
-        clarityShareBtn.addEventListener("click", function () {
+        var freshBtn = clarityShareBtn.cloneNode(true);
+        clarityShareBtn.parentNode.replaceChild(freshBtn, clarityShareBtn);
+        freshBtn.addEventListener("click", function () {
           var n1Url = "https://hardlypythonnmr.github.io/N1/";
           var clarity = N1.computeProfileClarity(N1.loadProfile());
           var text = clarity ? "Mi claridad de perfil N1 es del " + clarity.score + "%. " + n1Url : n1Url;

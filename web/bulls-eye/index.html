@@ -1039,14 +1039,17 @@
       });
 
       /* LinkedIn copy */
-      el("btn-linkedin").addEventListener("click", function () {
-        var scores = getScores();
-        N1.copyLinkedInText(buildLinkedInText(scores)).then(function () {
-          showToast("Texto copiado. Pegalo en LinkedIn.");
-        }).catch(function () {
-          showToast("No se pudo copiar. Copialo manualmente.");
+      var btnLinkedIn = el("btn-linkedin");
+      if (btnLinkedIn) {
+        btnLinkedIn.addEventListener("click", function () {
+          var scores = getScores();
+          N1.copyLinkedInText(buildLinkedInText(scores)).then(function () {
+            showToast("Texto copiado. Pegalo en LinkedIn.");
+          }).catch(function () {
+            showToast("No se pudo copiar. Copialo manualmente.");
+          });
         });
-      });
+      }
 
       /* LinkedIn URL share */
       var shareBtn = el("share-linkedin-url");
