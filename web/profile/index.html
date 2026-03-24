@@ -41,7 +41,7 @@
 </head>
 <body>
 
-  <nav class="nav" aria-label="Navegacion principal">
+  <nav class="nav" aria-label="Navegación principal">
     <a href="../index.html" class="nav-logo">N<span>1</span></a>
     <span style="font-family:var(--font-heading);font-size:0.875rem;color:var(--n1-muted);">Mi Perfil</span>
   </nav>
@@ -53,11 +53,39 @@
       <div class="card mt-lg">
         <h1>Tu Perfil N1</h1>
         <p class="text-muted mt-sm">No encontramos un perfil guardado en este navegador.</p>
-        <p class="text-sm mt-md">Si ya completaste alguna herramienta de N1 en otro dispositivo, pega tu perfil YAML aca para cargarlo.</p>
-        <textarea id="yaml-input" rows="12" placeholder="Pega tu perfil YAML aca..."></textarea>
+        <p class="text-sm mt-md">Completá alguna de estas herramientas para empezar a construir tu perfil. Cada una agrega una dimensión.</p>
+      </div>
+
+      <!-- Tool starter cards -->
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-md);margin-top:var(--space-md);">
+        <a href="../compass/index.html" class="card" style="text-decoration:none;color:var(--n1-black);display:block;">
+          <p style="font-family:var(--font-heading);font-size:0.75rem;color:var(--n1-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-xs);">Adaptabilidad</p>
+          <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:var(--space-xs);">Compass CAAS-12</p>
+          <p style="font-size:0.8125rem;color:var(--n1-muted);">12 preguntas sobre tu capacidad de adaptarte a cambios de carrera.</p>
+        </a>
+        <a href="../bulls-eye/index.html" class="card" style="text-decoration:none;color:var(--n1-black);display:block;">
+          <p style="font-family:var(--font-heading);font-size:0.75rem;color:var(--n1-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-xs);">Valores</p>
+          <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:var(--space-xs);">Bull's Eye</p>
+          <p style="font-size:0.8125rem;color:var(--n1-muted);">Mapeá la alineación entre tus valores y tu vida actual.</p>
+        </a>
+        <a href="../mlq/index.html" class="card" style="text-decoration:none;color:var(--n1-black);display:block;">
+          <p style="font-family:var(--font-heading);font-size:0.75rem;color:var(--n1-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-xs);">Propósito</p>
+          <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:var(--space-xs);">MLQ-10</p>
+          <p style="font-size:0.8125rem;color:var(--n1-muted);">10 preguntas sobre tu sentido de propósito y búsqueda de significado.</p>
+        </a>
+        <a href="../flow-logger/index.html" class="card" style="text-decoration:none;color:var(--n1-black);display:block;">
+          <p style="font-family:var(--font-heading);font-size:0.75rem;color:var(--n1-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-xs);">Fortalezas</p>
+          <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:var(--space-xs);">Flow Logger</p>
+          <p style="font-size:0.8125rem;color:var(--n1-muted);">Registrá actividades y encontrá tu zona de flow y fortalezas naturales.</p>
+        </a>
+      </div>
+
+      <div class="card mt-md">
+        <p class="text-sm" style="font-weight:600;margin-bottom:var(--space-sm);">¿Ya tenés un perfil de otro dispositivo?</p>
+        <p class="text-sm text-muted mt-sm">Pegá tu perfil YAML acá para cargarlo.</p>
+        <textarea id="yaml-input" rows="8" placeholder="Pegá tu perfil YAML acá..."></textarea>
         <div style="margin-top:var(--space-md);display:flex;gap:var(--space-sm);flex-wrap:wrap;align-items:center;">
           <button id="load-yaml-btn" class="btn btn-primary" disabled>Cargar perfil</button>
-          <a href="../index.html" class="btn btn-ghost">Explorar herramientas</a>
         </div>
         <p id="yaml-error" style="color:var(--n1-orange);display:none;margin-top:var(--space-sm);font-size:0.875rem;"></p>
       </div>

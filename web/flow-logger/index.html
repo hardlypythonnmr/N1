@@ -684,9 +684,24 @@
         }
 
         if (activities.length === 0) {
-          var emptyMsg = document.createElement("p");
+          var emptyMsg = document.createElement("div");
           emptyMsg.className = "activity-empty";
-          emptyMsg.textContent = "Todavia no hay actividades. Agrega la primera arriba.";
+          var emptyTitle = document.createElement("p");
+          emptyTitle.textContent = "Todavía no hay actividades. Agregá la primera arriba.";
+          emptyMsg.appendChild(emptyTitle);
+          var examplesLabel = document.createElement("p");
+          examplesLabel.style.cssText = "font-size:0.8125rem;color:var(--n1-muted);margin-top:8px;font-weight:600;";
+          examplesLabel.textContent = "Ejemplos para empezar:";
+          emptyMsg.appendChild(examplesLabel);
+          var examples = ["Dar una presentación al equipo", "Resolver un bug complejo", "Mentorear a alguien junior", "Escribir documentación técnica"];
+          var ul = document.createElement("ul");
+          ul.style.cssText = "font-size:0.8125rem;color:var(--n1-muted);padding-left:20px;margin:4px 0 0;";
+          examples.forEach(function(ex) {
+            var li = document.createElement("li");
+            li.textContent = ex;
+            ul.appendChild(li);
+          });
+          emptyMsg.appendChild(ul);
           activitiesContainer.appendChild(emptyMsg);
           return;
         }
