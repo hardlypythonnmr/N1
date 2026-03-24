@@ -605,6 +605,11 @@ strong {
   opacity: 1;
 }
 
+/* Prevent bottom nav from obscuring page content on mobile */
+.page-content {
+  padding-bottom: 6rem;
+}
+
 /* 16. NAVIGATION (tool pages) ───────────── */
 /* Used by individual tool pages that don't use Tailwind nav */
 .nav {
