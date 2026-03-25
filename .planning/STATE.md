@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: "Completed 05-02-PLAN.md (ghost-check test suite: 24 eval tests, 10 red team, 12 persona grades)"
-last_updated: "2026-03-25T00:35:58.170Z"
+stopped_at: "Completed 05-04-PLAN.md (busca-adentro stress testing: 22 eval tests, 10 red team, 12 persona grades)"
+last_updated: "2026-03-25T00:38:48.965Z"
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 36
-  completed_plans: 32
+  completed_plans: 33
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 05 (claude-skills-publishing) — EXECUTING
-Plan: 6 of 9
+Plan: 7 of 9
 
 ## Performance Metrics
 
@@ -77,6 +77,7 @@ _Updated after each plan completion_
 | Phase 05 P06 | 569s | 2 tasks | 3 files |
 | Phase 05-claude-skills-publishing P05 | 623s | 2 tasks | 3 files |
 | Phase 05-claude-skills-publishing P02 | 669s | 2 tasks | 3 files |
+| Phase 05-claude-skills-publishing P04 | 805s | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -159,6 +160,8 @@ Recent decisions affecting current work:
 - [Phase 05-claude-skills-publishing]: Red Team Gate PASS: 10/10 playbooks survived — YAML Smuggler, Therapist Trap, Score Manipulator all pass
 - [Phase 05-claude-skills-publishing]: Quality Gate PASS: 12/12 personas graded PASS (avg 4.4-5.0/5.0) — ghost-check excels at reverse recruiter use case
 - [Phase 05-claude-skills-publishing]: V-GC-02 fix queued for first patch: replace em-dashes in tier verdicts (lines 107-109, 114) with hyphens
+- [Phase 05-claude-skills-publishing]: CAAS-12 and MLQ-10 named in external tool CTAs in busca-adentro — deliberate design choice, Minor severity, does not block publishing
+- [Phase 05-claude-skills-publishing]: Busca-adentro publishing gate CLEARED: 20/22 PASS eval, 8/10 PASS red team, 10/12 PASS personas — no Critical or Major failures
 
 ### Pending Todos
 
@@ -177,6 +180,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T00:35:58.163Z
-Stopped at: Completed 05-02-PLAN.md (ghost-check test suite: 24 eval tests, 10 red team, 12 persona grades)
+Last session: 2026-03-25T00:38:48.955Z
+Stopped at: Completed 05-04-PLAN.md (busca-adentro stress testing: 22 eval tests, 10 red team, 12 persona grades)
 Resume file: None
