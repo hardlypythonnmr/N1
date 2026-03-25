@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N1 Skills — Herramientas de IA para tu Carrera</title>
+  <meta name="description" content="Skills de Claude gratuitos para estrategia de carrera. Autoconocimiento, CV, entrevistas, negociacion. Basados en 25+ frameworks de investigacion.">
+  <meta property="og:title" content="N1 Skills — Herramientas de IA para tu Carrera" />
+  <meta property="og:description" content="Skills de Claude gratuitos. Autoconocimiento profesional + estrategia de carrera basada en investigacion." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://n1career.github.io/N1/web/skills/" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ff9068' rx='4'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='16' fill='black'>N1</text></svg>" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#ff9068", "primary-dim": "#ff743f", "primary-container": "#ff7947",
+            "on-primary": "#591800", "on-primary-fixed": "#000000",
+            "surface": "#0c0c1f", "surface-dim": "#0c0c1f", "surface-bright": "#292948",
+            "surface-variant": "#23233f", "surface-container": "#17172f",
+            "surface-container-low": "#111127", "surface-container-high": "#1d1d37",
+            "surface-container-highest": "#23233f",
+            "on-surface": "#e5e3ff", "on-surface-variant": "#aaa8c3",
+            "on-background": "#e5e3ff", "background": "#0c0c1f",
+            "outline": "#74738b", "outline-variant": "#46465c",
+            "secondary": "#e2e0fc", "tertiary": "#f9f9f9", "error": "#ff716c",
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"], "body": ["Plus Jakarta Sans"],
+            "label": ["Space Grotesk"], "mono": ["Space Mono"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    .glass-panel { background: rgba(35, 35, 63, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .glow-accent { filter: blur(80px); opacity: 0.35; }
+    .step-number {
+      font-family: "Space Mono", monospace; font-size: 0.75rem; font-weight: 700; color: #000;
+      background: linear-gradient(135deg, #ff9068, #ff7947);
+      width: 28px; height: 28px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .tag {
+      font-family: "Space Mono", monospace; font-size: 0.625rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.25rem 0.5rem; border-radius: 4px; white-space: nowrap;
+    }
+    .download-btn {
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .download-btn:active { transform: scale(0.97); }
+    .skill-card {
+      cursor: pointer;
+      transition: border-color 0.25s ease, transform 0.15s ease;
+    }
+    .skill-card:hover {
+      border-color: rgba(255, 144, 104, 0.4);
+      transform: translateY(-1px);
+    }
+    /* Skill detail panel — hidden by default, shown when skill card is clicked */
+    .skill-detail { display: none; }
+    .skill-detail.open {
+      display: block;
+      animation: slideDown 0.2s ease-out;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen selection:bg-primary selection:text-on-primary-fixed overflow-x-hidden">
+
+  <!-- Background Accents -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
+    <div class="absolute -top-[15%] -left-[10%] w-[55%] h-[55%] bg-primary glow-accent rounded-full"></div>
+    <div class="absolute top-[50%] -right-[15%] w-[45%] h-[45%] bg-surface-bright glow-accent rounded-full"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full z-50 bg-[#0c0c1f]/70 backdrop-blur-xl border-b border-[#46465c]/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)]" role="banner">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-[1100px] mx-auto">
+      <a href="../index.html" class="flex items-center gap-3 no-underline" aria-label="N1 — Inicio">
+        <span class="text-xl font-bold tracking-tighter text-primary font-headline uppercase">N1</span>
+        <span class="hidden sm:block font-mono text-[10px] uppercase tracking-[0.15em] text-outline">El Sistema Eres T&uacute;</span>
+      </a>
+      <div class="flex items-center gap-4">
+        <a href="#proyecto" class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors no-underline">Proyecto</a>
+        <a href="#skills" class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors no-underline">Skills</a>
+        <a href="../index.html" class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors no-underline">Herramientas</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 pt-20 pb-36" role="main">
+
+    <!-- Hero -->
+    <section class="px-4 pt-12 pb-8">
+      <div class="w-full max-w-[1100px] mx-auto text-center">
+        <span class="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-primary mb-4 block">Para Claude</span>
+        <h1 class="font-headline text-3xl md:text-4xl font-bold tracking-tight text-tertiary mb-4">Herramientas de IA para tu carrera</h1>
+        <p class="text-on-surface-variant max-w-xl mx-auto text-sm leading-relaxed mb-6">
+          Autoconocimiento profesional, estrategia de carrera y herramientas concretas - basado en 25+ frameworks de investigacion. Gratis para siempre.
+        </p>
+        <p class="text-outline text-xs font-mono uppercase tracking-wider">Orientacion profesional, no terapia.</p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- PATH A: Full N1 Project                -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="px-4 pb-12" id="proyecto">
+      <div class="w-full max-w-[1100px] mx-auto">
+        <div class="glass-panel rounded-xl border border-primary/30 p-6 md:p-8">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="material-symbols-outlined text-primary text-3xl">hub</span>
+                <div>
+                  <h2 class="font-headline text-xl font-bold text-tertiary">Proyecto N1</h2>
+                  <span class="tag bg-primary/20 text-primary">Todo incluido</span>
+                </div>
+              </div>
+              <p class="text-sm text-on-surface-variant leading-relaxed mb-4">
+                Todo N1 en un solo proyecto de Claude: 5 skills, 17 archivos de conocimiento, orquestador inteligente.
+                Deci lo que necesitas y el sistema te guia. Importa tus evaluaciones de la web automaticamente.
+              </p>
+              <p class="text-xs text-outline mb-4">Recomendado: Claude Sonnet. Funciona con cualquier plan.</p>
+
+              <div class="flex flex-col gap-3 max-w-md">
+                <div class="flex items-start gap-3">
+                  <span class="step-number">1</span>
+                  <p class="text-sm text-on-surface-variant pt-1">Descarga el paquete completo</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="step-number">2</span>
+                  <p class="text-sm text-on-surface-variant pt-1">Segui las instrucciones para crear el proyecto</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="step-number">3</span>
+                  <p class="text-sm text-on-surface-variant pt-1">Empeza a hablar con tu guia de carrera</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3 md:min-w-[220px] md:pt-4">
+              <a href="downloads/n1-project.zip" download
+                 class="download-btn flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-on-primary-fixed font-label text-sm font-bold no-underline hover:bg-primary-dim"
+                 data-track="download-project" data-skill="n1-project">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Descargar N1 (120 KB)
+              </a>
+              <a href="#instrucciones-proyecto"
+                 class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-primary/40 text-primary font-label text-sm font-semibold no-underline hover:bg-primary/10"
+                 data-track="view-instructions" data-skill="n1-project">
+                <span class="material-symbols-outlined text-lg">menu_book</span>
+                Ver instrucciones
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Setup Instructions (hidden by default, toggled by "Ver instrucciones") -->
+    <section class="px-4 pb-12 hidden" id="instrucciones-proyecto">
+      <div class="w-full max-w-[1100px] mx-auto">
+        <div class="glass-panel rounded-xl border border-outline-variant/20 p-6 md:p-8">
+          <h3 class="font-headline text-lg font-semibold text-tertiary mb-6">Como crear tu proyecto N1 en Claude</h3>
+
+          <div class="space-y-6 max-w-2xl">
+            <div class="flex items-start gap-3">
+              <span class="step-number">1</span>
+              <div>
+                <p class="text-sm text-tertiary font-semibold mb-1">Crea un proyecto nuevo en claude.ai</p>
+                <p class="text-sm text-on-surface-variant">Nombre: <strong class="text-tertiary font-mono">N1</strong></p>
+                <p class="text-sm text-on-surface-variant">Descripcion: <em class="text-on-surface-variant">Estrategia de carrera basada en investigacion. Autoconocimiento + herramientas concretas.</em></p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="step-number">2</span>
+              <div>
+                <p class="text-sm text-tertiary font-semibold mb-1">Instrucciones personalizadas</p>
+                <p class="text-sm text-on-surface-variant">Abri el archivo <strong class="text-primary font-mono">N1-INSTRUCTIONS.md</strong> del zip. Copia todo el contenido y pegalo en el campo de "Custom Instructions".</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="step-number">3</span>
+              <div>
+                <p class="text-sm text-tertiary font-semibold mb-1">Archivos de conocimiento</p>
+                <p class="text-sm text-on-surface-variant">Subi <strong class="text-tertiary">todos los demas archivos .md</strong> del zip como archivos de conocimiento (Knowledge). Son 17 archivos.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="step-number">4</span>
+              <div>
+                <p class="text-sm text-tertiary font-semibold mb-1">Modelo recomendado</p>
+                <p class="text-sm text-on-surface-variant">Selecciona <strong class="text-primary">Claude Sonnet</strong> como modelo.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="step-number">5</span>
+              <div>
+                <p class="text-sm text-tertiary font-semibold mb-1">Listo</p>
+                <p class="text-sm text-on-surface-variant">Empeza un chat nuevo y deci lo que necesitas. Ejemplos:</p>
+                <ul class="text-sm text-on-surface-variant mt-2 space-y-1 list-none pl-0">
+                  <li class="font-mono text-xs text-primary/80">"Analiza esta oferta de trabajo"</li>
+                  <li class="font-mono text-xs text-primary/80">"Quiero explorar mis valores"</li>
+                  <li class="font-mono text-xs text-primary/80">"Auditame el CV"</li>
+                  <li class="font-mono text-xs text-primary/80">"No se que hacer con mi carrera"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 p-4 rounded-lg bg-surface-container border border-outline-variant/20">
+            <p class="text-xs text-on-surface-variant">
+              <strong class="text-tertiary">Evaluaciones web:</strong> Si completaste alguna evaluacion en la web de N1 (CAAS-12, MLQ-10, Bull's Eye, Ghost Check, Flow Logger), podes pegar o subir tus resultados y el sistema los incorpora automaticamente.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="px-4 pb-8">
+      <div class="w-full max-w-[1100px] mx-auto flex items-center gap-4">
+        <div class="flex-1 h-px bg-outline-variant/30"></div>
+        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-outline">O instala un skill individual</span>
+        <div class="flex-1 h-px bg-outline-variant/30"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- PATH B: Individual Skills              -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="px-4 pb-16" id="skills">
+      <div class="w-full max-w-[1100px] mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="font-headline text-xl font-semibold text-tertiary mb-2">Skills individuales</h2>
+          <p class="text-sm text-on-surface-variant">Descarga solo lo que necesitas. Cada .zip se arrastra directo a Claude.</p>
+        </div>
+
+        <div class="space-y-4" id="skills-list">
+
+          <!-- Ghost Check -->
+          <div class="skill-card glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6" data-skill="ghost-check">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-xl">search_check</span>
+                <h3 class="font-headline text-base font-bold text-tertiary">Ghost Check</h3>
+                <span class="tag bg-primary/15 text-primary">~5 min</span>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant text-xl chevron">expand_more</span>
+            </div>
+            <p class="text-sm text-on-surface-variant mt-2">Detecta ofertas fantasma. Score 0-100 con desglose de 6 categorias de senales.</p>
+          </div>
+          <div class="skill-detail px-4" data-for="ghost-check">
+            <div class="glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6 ml-4 md:ml-8 border-l-2 border-l-primary/40">
+              <div class="flex flex-wrap gap-2 mb-4 text-xs">
+                <span class="tag bg-surface-container-high text-on-surface-variant">Score 0-100</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">6 categorias</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Calibracion LATAM</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">4 archivos</span>
+              </div>
+              <p class="text-sm text-on-surface-variant mb-4">Pega una oferta de trabajo y recibe un analisis completo: senales rojas, amarillas y verdes, score de probabilidad de ghost job, y recomendacion concreta.</p>
+              <a href="downloads/ghost-check.zip" download
+                 class="download-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary-fixed font-label text-sm font-bold no-underline hover:bg-primary-dim"
+                 data-track="download-skill" data-skill="ghost-check">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Descargar Ghost Check (23 KB)
+              </a>
+            </div>
+          </div>
+
+          <!-- Compass -->
+          <div class="skill-card glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6" data-skill="compass">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-xl">explore</span>
+                <h3 class="font-headline text-base font-bold text-tertiary">Compass</h3>
+                <span class="tag bg-primary/15 text-primary">15-20 min</span>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant text-xl chevron">expand_more</span>
+            </div>
+            <p class="text-sm text-on-surface-variant mt-2">Revision rapida de adaptabilidad (CAAS-12), valores y autoeficacia. Snapshot de carrera.</p>
+          </div>
+          <div class="skill-detail px-4" data-for="compass">
+            <div class="glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6 ml-4 md:ml-8 border-l-2 border-l-primary/40">
+              <div class="flex flex-wrap gap-2 mb-4 text-xs">
+                <span class="tag bg-surface-container-high text-on-surface-variant">CAAS-12</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Valores</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Autoeficacia</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Perfil YAML</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">5 archivos</span>
+              </div>
+              <p class="text-sm text-on-surface-variant mb-4">Adaptabilidad profesional (Savickas CAAS-12 conversacional), valores principales y nivel de autoeficacia. Produce un perfil exportable que se usa en las demas herramientas.</p>
+              <a href="downloads/compass.zip" download
+                 class="download-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary-fixed font-label text-sm font-bold no-underline hover:bg-primary-dim"
+                 data-track="download-skill" data-skill="compass">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Descargar Compass (30 KB)
+              </a>
+            </div>
+          </div>
+
+          <!-- Busca Adentro -->
+          <div class="skill-card glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6" data-skill="busca-adentro">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-xl">self_improvement</span>
+                <h3 class="font-headline text-base font-bold text-tertiary">Busca Adentro</h3>
+                <span class="tag bg-primary/15 text-primary">20-60 min</span>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant text-xl chevron">expand_more</span>
+            </div>
+            <p class="text-sm text-on-surface-variant mt-2">Autoconocimiento profundo en 4 dimensiones: valores, fortalezas, identidad y proposito.</p>
+          </div>
+          <div class="skill-detail px-4" data-for="busca-adentro">
+            <div class="glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6 ml-4 md:ml-8 border-l-2 border-l-primary/40">
+              <div class="flex flex-wrap gap-2 mb-4 text-xs">
+                <span class="tag bg-surface-container-high text-on-surface-variant">Valores</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Fortalezas</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Identidad</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Proposito</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">10 archivos</span>
+              </div>
+              <p class="text-sm text-on-surface-variant mb-4">Exploracion guiada con tecnicas Socraticas. Modo rapido (~5 preguntas por dimension) o profundo (15-25 turnos). Produce perfil YAML portable.</p>
+              <a href="downloads/busca-adentro.zip" download
+                 class="download-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary-fixed font-label text-sm font-bold no-underline hover:bg-primary-dim"
+                 data-track="download-skill" data-skill="busca-adentro">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Descargar Busca Adentro (61 KB)
+              </a>
+            </div>
+          </div>
+
+          <!-- Construye Afuera -->
+          <div class="skill-card glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6" data-skill="construye-afuera">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-xl">rocket_launch</span>
+                <h3 class="font-headline text-base font-bold text-tertiary">Construye Afuera</h3>
+                <span class="tag bg-primary/15 text-primary">9 herramientas</span>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant text-xl chevron">expand_more</span>
+            </div>
+            <p class="text-sm text-on-surface-variant mt-2">CV, entrevistas, negociacion, STAR, LinkedIn, job hunt, layoff kit. Contexto LATAM.</p>
+          </div>
+          <div class="skill-detail px-4" data-for="construye-afuera">
+            <div class="glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6 ml-4 md:ml-8 border-l-2 border-l-primary/40">
+              <div class="flex flex-wrap gap-2 mb-4 text-xs">
+                <span class="tag bg-surface-container-high text-on-surface-variant">CV Audit</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Entrevistas</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Negociacion</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">STAR Builder</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">LinkedIn</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Job Hunt</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">9 archivos</span>
+              </div>
+              <p class="text-sm text-on-surface-variant mb-4">9 herramientas adaptadas a tu camino de carrera (quedarte, moverte, independizarte, pausar). Incluye plataformas LATAM (Getonboard, Torre, LinkedIn) y datos salariales Colombia.</p>
+              <a href="downloads/construye-afuera.zip" download
+                 class="download-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary-fixed font-label text-sm font-bold no-underline hover:bg-primary-dim"
+                 data-track="download-skill" data-skill="construye-afuera">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Descargar Construye Afuera (69 KB)
+              </a>
+            </div>
+          </div>
+
+          <!-- N1 System -->
+          <div class="skill-card glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6" data-skill="n1-system">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-xl">account_tree</span>
+                <h3 class="font-headline text-base font-bold text-tertiary">N1 System</h3>
+                <span class="tag bg-primary/15 text-primary">Completo</span>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant text-xl chevron">expand_more</span>
+            </div>
+            <p class="text-sm text-on-surface-variant mt-2">Triage + autoconocimiento + sintesis + estrategia. La experiencia guiada completa.</p>
+          </div>
+          <div class="skill-detail px-4" data-for="n1-system">
+            <div class="glass-panel rounded-xl border border-outline-variant/20 p-5 md:p-6 ml-4 md:ml-8 border-l-2 border-l-primary/40">
+              <div class="flex flex-wrap gap-2 mb-4 text-xs">
+                <span class="tag bg-surface-container-high text-on-surface-variant">Triage</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">4 dimensiones</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">Sintesis</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">9 herramientas</span>
+                <span class="tag bg-surface-container-high text-on-surface-variant">15 archivos</span>
+              </div>
+              <p class="text-sm text-on-surface-variant mb-4">Sesion guiada completa: triage (crisis/exploracion/crecimiento), autoconocimiento en 4 dimensiones, sintesis cruzada y puente a herramientas de carrera. El sistema completo en un skill.</p>
+              <a href="downloads/n1-system.zip" download
+                 class="download-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary-fixed font-label text-sm font-bold no-underline hover:bg-primary-dim"
+                 data-track="download-skill" data-skill="n1-system">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Descargar N1 System (105 KB)
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- How to install a skill -->
+        <div class="mt-8 p-5 rounded-xl bg-surface-container border border-outline-variant/20 max-w-lg">
+          <h3 class="font-label text-sm font-semibold text-tertiary mb-3">Como instalar un skill</h3>
+          <div class="space-y-2">
+            <div class="flex items-start gap-3">
+              <span class="step-number text-xs" style="width:22px;height:22px;">1</span>
+              <p class="text-xs text-on-surface-variant pt-0.5">Descarga el .zip del skill que quieras</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="step-number text-xs" style="width:22px;height:22px;">2</span>
+              <p class="text-xs text-on-surface-variant pt-0.5">En claude.ai, anda a "Upload a skill" y arrastra el .zip</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="step-number text-xs" style="width:22px;height:22px;">3</span>
+              <p class="text-xs text-on-surface-variant pt-0.5">Listo. El skill queda instalado.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="px-4 pb-8">
+      <div class="w-full max-w-[1100px] mx-auto">
+        <p class="text-xs text-outline text-center leading-relaxed">
+          N1 es orientacion profesional basada en investigacion. No es terapia, no es asesoria psicologica,
+          y no reemplaza a un profesional de salud mental o coach certificado.
+          Gratis para siempre. Basado en 25+ frameworks de investigacion validados.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-10 px-4 py-10 border-t border-outline-variant/20" role="contentinfo">
+    <div class="w-full max-w-[1100px] mx-auto text-center">
+      <p class="font-headline font-bold text-primary uppercase tracking-wider mb-2">N1 &mdash; El Sistema Eres T&uacute;</p>
+      <p class="text-xs text-on-surface-variant mb-4">Herramientas gratuitas de estrategia de carrera &bull; Basadas en 25+ frameworks de investigaci&oacute;n</p>
+      <div class="flex gap-6 justify-center flex-wrap">
+        <a href="https://github.com/nicodalessandro11/N1" target="_blank" rel="noopener" class="font-mono text-[0.6875rem] uppercase tracking-wider text-outline hover:text-primary transition-colors no-underline">GitHub</a>
+        <a href="../index.html#herramientas" class="font-mono text-[0.6875rem] uppercase tracking-wider text-outline hover:text-primary transition-colors no-underline">Herramientas</a>
+        <a href="../index.html#triage" class="font-mono text-[0.6875rem] uppercase tracking-wider text-outline hover:text-primary transition-colors no-underline">Triage</a>
+        <a href="../profile/index.html" class="font-mono text-[0.6875rem] uppercase tracking-wider text-outline hover:text-primary transition-colors no-underline">Mi Perfil</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fixed Bottom Nav (matches main page) -->
+  <nav class="fixed bottom-0 left-0 right-0 h-20 bg-[#0c0c1f]/80 backdrop-blur-2xl border-t border-[#46465c]/30 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] z-50" aria-label="Navegacion principal">
+    <div class="flex justify-around items-center h-full px-4 max-w-[1100px] mx-auto">
+      <a class="flex flex-col items-center justify-center text-outline opacity-60 hover:opacity-100 hover:text-tertiary transition-all" href="../index.html" aria-label="Inicio">
+        <span class="material-symbols-outlined" aria-hidden="true">home</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Inicio</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-outline opacity-60 hover:opacity-100 hover:text-tertiary transition-all" href="../index.html#herramientas" aria-label="Herramientas">
+        <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Herramientas</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-primary bg-primary/10 rounded-xl px-3 py-1 transition-all duration-300" href="../skills/index.html" aria-label="Skills IA">
+        <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
+        <span class="font-headline text-[10px] uppercase font-bold">Skills IA</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-outline opacity-60 hover:opacity-100 hover:text-tertiary transition-all" href="../profile/index.html" aria-label="Perfil">
+        <span class="material-symbols-outlined" aria-hidden="true">person</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Perfil</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-outline opacity-60 hover:opacity-100 hover:text-tertiary transition-all" href="../index.html#triage" aria-label="Triage">
+        <span class="material-symbols-outlined" aria-hidden="true">tune</span>
+        <span class="font-headline text-[10px] uppercase font-bold mt-1">Triage</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // ═══════════════════════════════════════════
+    // N1 Skills Page — Supabase Funnel Tracking
+    // ═══════════════════════════════════════════
+
+    var SUPABASE_URL = 'https://dswkqeqnhgyawzdempkm.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzd2txZXFuaGd5YXd6ZGVtcGttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NDA4OTgsImV4cCI6MjA4OTQxNjg5OH0.QCkKR5gMF5zP7qgBuaPclnJfv3B1yv7CMd4C_wJxSjo';
+
+    // Session ID for dedup
+    var SESSION_ID = sessionStorage.getItem('n1_sid') || (function() {
+      var sid = crypto.randomUUID();
+      sessionStorage.setItem('n1_sid', sid);
+      return sid;
+    })();
+
+    // Log event to Supabase (fire-and-forget)
+    function track(action, skill) {
+      fetch(SUPABASE_URL + '/rest/v1/skill_events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          skill: skill,
+          action: action,
+          referrer: document.referrer || null,
+          user_agent: navigator.userAgent || null,
+          country: (navigator.language || '').slice(0, 5),
+          session_id: SESSION_ID
+        })
+      }).catch(function() {});
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Track page view
+      track('page-view', 'skills-page');
+
+      // ── PATH A: Project download + instructions funnel ──
+
+      // Track all [data-track] elements
+      document.querySelectorAll('[data-track]').forEach(function(el) {
+        el.addEventListener('click', function() {
+          track(el.getAttribute('data-track'), el.getAttribute('data-skill'));
+        });
+      });
+
+      // Toggle instructions panel
+      var instrBtn = document.querySelector('[href="#instrucciones-proyecto"]');
+      var instrPanel = document.getElementById('instrucciones-proyecto');
+      if (instrBtn && instrPanel) {
+        instrBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          instrPanel.classList.toggle('hidden');
+          if (!instrPanel.classList.contains('hidden')) {
+            instrPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+
+      // ── PATH B: Skill card click → expand detail → download ──
+
+      document.querySelectorAll('.skill-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+          var skill = card.getAttribute('data-skill');
+          var detail = document.querySelector('.skill-detail[data-for="' + skill + '"]');
+          var chevron = card.querySelector('.chevron');
+
+          // Close others
+          document.querySelectorAll('.skill-detail.open').forEach(function(d) {
+            if (d !== detail) {
+              d.classList.remove('open');
+              var otherCard = document.querySelector('.skill-card[data-skill="' + d.getAttribute('data-for') + '"]');
+              if (otherCard) otherCard.querySelector('.chevron').textContent = 'expand_more';
+            }
+          });
+
+          // Toggle this one
+          var isOpening = !detail.classList.contains('open');
+          detail.classList.toggle('open');
+          chevron.textContent = isOpening ? 'expand_less' : 'expand_more';
+
+          // Track the card click (funnel step 1)
+          if (isOpening) {
+            track('view-skill', skill);
+            setTimeout(function() {
+              detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 50);
+          }
+        });
+      });
+
+      // Download buttons inside skill details are already tracked via [data-track]
+    });
+  </script>
+
+</body>
+</html>
