@@ -459,6 +459,21 @@
       <!-- Citation -->
       <p class="text-xs text-outline italic text-center mb-4">Steger, M.F., Frazier, P., Oishi, S., &amp; Kaler, M. (2006). The Meaning in Life Questionnaire. <em>Journal of Counseling Psychology, 53</em>(1), 80–93.</p>
 
+      <!-- Skills IA CTA — shown after tool completion -->
+      <div class="mt-8 p-5 rounded-xl border border-primary/30 bg-primary/5" id="skills-cta">
+        <div class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-primary text-xl flex-shrink-0 mt-0.5" aria-hidden="true">smart_toy</span>
+          <div>
+            <p class="font-headline text-sm font-bold text-tertiary mb-1">Continua con IA</p>
+            <p class="text-xs text-on-surface-variant leading-relaxed mb-3">Usa tus resultados en Claude para recibir orientacion personalizada de carrera. Descarga el proyecto N1 o un skill individual.</p>
+            <a href="../skills/index.html" class="inline-flex items-center gap-1.5 text-primary font-label text-xs font-semibold uppercase tracking-wider no-underline hover:underline" data-track-cta="true">
+              Ver skills de IA
+              <span class="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- Toast -->
@@ -945,6 +960,34 @@
       })();
 
     }());
+  </script>
+
+  <script>
+  /* Track Skills IA CTA click from tool completion */
+  var skillsCta = document.querySelector('[data-track-cta]');
+  if (skillsCta) {
+    skillsCta.addEventListener('click', function() {
+      var SUPABASE_URL = 'https://dswkqeqnhgyawzdempkm.supabase.co';
+      var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzd2txZXFuaGd5YXd6ZGVtcGttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NDA4OTgsImV4cCI6MjA4OTQxNjg5OH0.QCkKR5gMF5zP7qgBuaPclnJfv3B1yv7CMd4C_wJxSjo';
+      fetch(SUPABASE_URL + '/rest/v1/skill_events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          skill: 'cta-from-tool',
+          action: 'click-skills-cta',
+          referrer: window.location.pathname,
+          user_agent: navigator.userAgent,
+          country: (navigator.language || '').slice(0, 5),
+          session_id: sessionStorage.getItem('n1_sid') || 'unknown'
+        })
+      }).catch(function() {});
+    });
+  }
   </script>
 
 </body>
