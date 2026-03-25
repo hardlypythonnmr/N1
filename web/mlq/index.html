@@ -14,75 +14,7 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "secondary-fixed": "#e2e0fc",
-            "on-tertiary-fixed": "#4f5051",
-            "tertiary-dim": "#ebebeb",
-            "on-primary-fixed": "#000000",
-            "surface-container-low": "#111127",
-            "tertiary-container": "#ebebeb",
-            "primary": "#ff9068",
-            "on-background": "#e5e3ff",
-            "surface-tint": "#ff9068",
-            "primary-dim": "#ff743f",
-            "surface": "#0c0c1f",
-            "surface-dim": "#0c0c1f",
-            "on-surface": "#e5e3ff",
-            "on-primary-container": "#451100",
-            "on-secondary-fixed-variant": "#5a5971",
-            "on-secondary": "#505066",
-            "tertiary": "#f9f9f9",
-            "on-primary": "#591800",
-            "inverse-surface": "#fcf8ff",
-            "surface-variant": "#23233f",
-            "surface-container-lowest": "#000000",
-            "secondary-dim": "#d4d2ed",
-            "on-secondary-fixed": "#3e3d53",
-            "primary-container": "#ff7947",
-            "on-tertiary-container": "#555757",
-            "primary-fixed": "#ff7947",
-            "secondary-container": "#45455b",
-            "surface-bright": "#292948",
-            "on-secondary-container": "#d0cee9",
-            "outline": "#74738b",
-            "tertiary-fixed-dim": "#f0f1f1",
-            "secondary-fixed-dim": "#d4d2ed",
-            "on-tertiary": "#5e5f5f",
-            "error-container": "#9f0519",
-            "secondary": "#e2e0fc",
-            "error": "#ff716c",
-            "surface-container-high": "#1d1d37",
-            "primary-fixed-dim": "#f5662f",
-            "tertiary-fixed": "#ffffff",
-            "on-tertiary-fixed-variant": "#6c6d6e",
-            "on-error": "#490006",
-            "surface-container": "#17172f",
-            "background": "#0c0c1f",
-            "surface-container-highest": "#23233f",
-            "inverse-primary": "#ab3700",
-            "on-surface-variant": "#aaa8c3",
-            "outline-variant": "#46465c",
-            "inverse-on-surface": "#53536a",
-            "on-primary-fixed-variant": "#551700",
-            "on-error-container": "#ffa8a3",
-            "error-dim": "#d7383b"
-          },
-          fontFamily: {
-            "headline": ["Space Grotesk"],
-            "body": ["Plus Jakarta Sans"],
-            "label": ["Space Grotesk"],
-            "mono": ["Space Mono"]
-          },
-          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-        },
-      },
-    }
-  </script>
+  <script src="../tailwind-config.js"></script>
   <link rel="stylesheet" href="../styles.css" />
   <style>
     body {
@@ -185,29 +117,29 @@
         <div class="grid grid-cols-2 gap-3">
           <div class="p-3 rounded-lg bg-surface-container-high/60 border border-outline-variant/20">
             <div class="flex items-center gap-2 mb-1">
-              <div class="w-2 h-2 rounded-full bg-primary flex-shrink-0"></div>
-              <span class="font-mono text-[0.6rem] uppercase tracking-wider text-primary">Comprometido</span>
+              <div class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></div>
+              <span class="font-mono text-[0.6rem] uppercase tracking-wider text-green-400">Creciendo</span>
             </div>
             <p class="text-xs text-on-surface-variant leading-snug">Alta Presencia + Alta Búsqueda</p>
           </div>
           <div class="p-3 rounded-lg bg-surface-container-high/60 border border-outline-variant/20">
             <div class="flex items-center gap-2 mb-1">
-              <div class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></div>
-              <span class="font-mono text-[0.6rem] uppercase tracking-wider text-green-400">Satisfecho</span>
+              <div class="w-2 h-2 rounded-full bg-primary flex-shrink-0"></div>
+              <span class="font-mono text-[0.6rem] uppercase tracking-wider text-primary">Pleno/a</span>
             </div>
             <p class="text-xs text-on-surface-variant leading-snug">Alta Presencia + Baja Búsqueda</p>
           </div>
           <div class="p-3 rounded-lg bg-surface-container-high/60 border border-outline-variant/20">
             <div class="flex items-center gap-2 mb-1">
-              <div class="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0"></div>
-              <span class="font-mono text-[0.6rem] uppercase tracking-wider text-amber-400">Buscando</span>
+              <div class="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0"></div>
+              <span class="font-mono text-[0.6rem] uppercase tracking-wider text-blue-400">Buscando</span>
             </div>
             <p class="text-xs text-on-surface-variant leading-snug">Baja Presencia + Alta Búsqueda</p>
           </div>
           <div class="p-3 rounded-lg bg-surface-container-high/60 border border-outline-variant/20">
             <div class="flex items-center gap-2 mb-1">
               <div class="w-2 h-2 rounded-full bg-outline flex-shrink-0"></div>
-              <span class="font-mono text-[0.6rem] uppercase tracking-wider text-outline">Pasivo</span>
+              <span class="font-mono text-[0.6rem] uppercase tracking-wider text-outline">Desconectado/a</span>
             </div>
             <p class="text-xs text-on-surface-variant leading-snug">Baja Presencia + Baja Búsqueda</p>
           </div>
@@ -432,7 +364,7 @@
           target="popupwindow"
           novalidate
           aria-label="Formulario de suscripción"
-          class="flex gap-3"
+          class="flex flex-wrap gap-3"
         >
           <label for="n1-tool-email" class="sr-only">Tu dirección de correo</label>
           <input
@@ -443,7 +375,7 @@
             required
             autocomplete="email"
             aria-required="true"
-            class="flex-1 bg-surface-container border border-outline-variant/40 rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors"
+            class="flex-1 min-w-0 bg-surface-container border border-outline-variant/40 rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors"
           />
           <input type="hidden" name="tag" value="tool-completion" />
           <button type="submit"

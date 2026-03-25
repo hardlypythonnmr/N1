@@ -14,58 +14,7 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "surface-container-low": "#111127",
-            "primary": "#ff9068",
-            "on-background": "#e5e3ff",
-            "surface-tint": "#ff9068",
-            "primary-dim": "#ff743f",
-            "surface": "#0c0c1f",
-            "surface-dim": "#0c0c1f",
-            "on-surface": "#e5e3ff",
-            "on-primary-container": "#451100",
-            "on-secondary": "#505066",
-            "tertiary": "#f9f9f9",
-            "on-primary": "#591800",
-            "surface-variant": "#23233f",
-            "surface-container-lowest": "#000000",
-            "primary-container": "#ff7947",
-            "primary-fixed": "#ff7947",
-            "secondary-container": "#45455b",
-            "surface-bright": "#292948",
-            "on-secondary-container": "#d0cee9",
-            "outline": "#74738b",
-            "secondary": "#e2e0fc",
-            "error": "#ff716c",
-            "surface-container-high": "#1d1d37",
-            "primary-fixed-dim": "#f5662f",
-            "on-error": "#490006",
-            "surface-container": "#17172f",
-            "background": "#0c0c1f",
-            "surface-container-highest": "#23233f",
-            "inverse-primary": "#ab3700",
-            "on-surface-variant": "#aaa8c3",
-            "outline-variant": "#46465c",
-            "inverse-on-surface": "#53536a",
-            "on-error-container": "#ffa8a3",
-            "error-dim": "#d7383b"
-          },
-          fontFamily: {
-            "headline": ["Space Grotesk"],
-            "body": ["Plus Jakarta Sans"],
-            "label": ["Space Grotesk"],
-            "mono": ["Space Mono"]
-          },
-          borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
-        },
-      },
-    }
-  </script>
+  <script src="../tailwind-config.js"></script>
   <style>
     body {
       background-color: #0c0c1f;
@@ -202,7 +151,7 @@
           <span class="text-primary">Job Analyzer</span>
         </h2>
         <p class="text-on-surface-variant text-sm leading-relaxed max-w-sm mx-auto">
-          Analiza ofertas laborales en busca de senales de "ghost job" con patrones validados por investigacion.
+          Analiza ofertas laborales en busca de señales de "ghost job" con patrones validados por investigación.
         </p>
       </div>
 
@@ -344,8 +293,8 @@
       <div class="w-full bg-surface-container-highest/70 backdrop-blur-2xl rounded-xl p-6 border border-outline-variant/20 shadow-[0_20px_80px_-10px_rgba(0,0,0,0.5)] mb-6 relative overflow-hidden">
         <div class="absolute -top-16 -right-16 w-32 h-32 bg-primary/6 blur-[50px] rounded-full pointer-events-none"></div>
         <div class="relative z-10">
-          <p class="font-mono text-[0.6875rem] text-on-surface-variant tracking-[0.15em] uppercase mb-4">Senales detectadas</p>
-          <ul id="signals-list" class="space-y-2" aria-label="Lista de senales analizadas"></ul>
+          <p class="font-mono text-[0.6875rem] text-on-surface-variant tracking-[0.15em] uppercase mb-4">Señales detectadas</p>
+          <ul id="signals-list" class="space-y-2" aria-label="Lista de señales analizadas"></ul>
 
           <div class="mt-6 pt-5 border-t border-outline-variant/20">
             <p class="font-mono text-[0.6875rem] text-primary tracking-[0.15em] uppercase mb-2">Interpretacion</p>
@@ -515,6 +464,7 @@
       {
         id: "no_salary_range",
         label: "No indica rango salarial",
+        positiveLabel: "Indica rango salarial",
         weight: 15,
         severity: "yellow",
         detect: function (t) {
@@ -524,6 +474,7 @@
       {
         id: "no_company_name",
         label: "No menciona la empresa",
+        positiveLabel: "Menciona la empresa",
         weight: 20,
         severity: "red",
         detect: function (t) {
@@ -532,7 +483,8 @@
       },
       {
         id: "vague_role",
-        label: "Descripcion del rol vaga",
+        label: "Descripción del rol vaga",
+        positiveLabel: "Descripción del rol clara",
         weight: 15,
         severity: "red",
         detect: function (t) {
@@ -543,6 +495,7 @@
       {
         id: "unrealistic_requirements",
         label: "Requisitos irreales para el nivel",
+        positiveLabel: "Requisitos razonables",
         weight: 15,
         severity: "red",
         detect: function (t) {
@@ -555,7 +508,8 @@
       },
       {
         id: "urgent_language",
-        label: "Lenguaje de urgencia vacia",
+        label: "Lenguaje de urgencia vacía",
+        positiveLabel: "Sin lenguaje de urgencia",
         weight: 5,
         severity: "yellow",
         detect: function (t) {
@@ -564,7 +518,8 @@
       },
       {
         id: "generic_benefits",
-        label: "Beneficios genericos",
+        label: "Beneficios genéricos",
+        positiveLabel: "Beneficios específicos mencionados",
         weight: 10,
         severity: "yellow",
         detect: function (t) {
@@ -577,6 +532,7 @@
       {
         id: "no_team_context",
         label: "No describe equipo ni manager",
+        positiveLabel: "Describe equipo o manager",
         weight: 10,
         severity: "yellow",
         detect: function (t) {
@@ -586,6 +542,7 @@
       {
         id: "email_only",
         label: "Solo acepta CV por email",
+        positiveLabel: "Tiene portal de aplicación",
         weight: 15,
         severity: "red",
         detect: function (t) {
@@ -596,7 +553,8 @@
       },
       {
         id: "reposted",
-        label: "Indicios de reposteo multiple",
+        label: "Indicios de reposteo múltiple",
+        positiveLabel: "Sin indicios de reposteo",
         weight: 10,
         severity: "yellow",
         detect: function (t) {
@@ -609,6 +567,7 @@
       {
         id: "level_mismatch",
         label: "Nivel no coincide con requisitos",
+        positiveLabel: "Nivel alineado con requisitos",
         weight: 10,
         severity: "yellow",
         detect: function (t) {
@@ -642,15 +601,15 @@
 
     function getInterpretation(score) {
       if (score <= 25) {
-        return "Esta oferta muestra senales de ser legitima. Igual verifica la empresa en LinkedIn antes de aplicar.";
+        return "Esta oferta muestra señales de ser legítima. Igual verificá la empresa en LinkedIn antes de aplicar.";
       }
       if (score <= 50) {
-        return "Esta oferta tiene algunas senales de alerta. Busca la empresa en LinkedIn y verifica que el rol existe antes de invertir tiempo.";
+        return "Esta oferta tiene algunas señales de alerta. Buscá la empresa en LinkedIn y verificá que el rol existe antes de invertir tiempo.";
       }
       if (score <= 75) {
-        return "Esta oferta tiene muchas senales de ser un ghost job. Aplicar puede ser una perdida de tiempo y energia. Priorizá ofertas con menos senales de alerta.";
+        return "Esta oferta tiene muchas señales de ser un ghost job. Aplicar puede ser una pérdida de tiempo y energía. Priorizá ofertas con menos señales de alerta.";
       }
-      return "Esta oferta tiene todas las senales de un ghost job. Muy probablemente no hay una posicion real detras. Usa ese tiempo en ofertas verificables.";
+      return "Esta oferta tiene todas las señales de un ghost job. Muy probablemente no hay una posición real detrás. Usá ese tiempo en ofertas verificables.";
     }
 
     /* ── DOM HELPERS (XSS-safe: textContent only, no innerHTML) ──────── */
@@ -777,7 +736,7 @@
           dot3.setAttribute("aria-hidden", "true");
           var txt3 = document.createElement("span");
           txt3.className = "text-[0.65rem] text-green-300 leading-snug";
-          txt3.textContent = s.label;
+          txt3.textContent = s.positiveLabel || s.label;
           li3.appendChild(dot3);
           li3.appendChild(txt3);
           greenList.appendChild(li3);
