@@ -53,8 +53,6 @@ N1 is a research-backed career strategy methodology delivered through AI tools (
 - `skills/` — one subdirectory per Claude Skill
 - `gpts/` — one subdirectory per ChatGPT GPT
 - `web/` — static HTML/CSS/JS tools
-- `plans/` — master plan and architecture docs (not committed to skills)
-- `research/` — research base and references
 - `.planning/` — GSD planning artifacts
 
 ### Profile Interchange Format

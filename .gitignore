@@ -1,6 +1,13 @@
+# Tool/session artifacts
 .memsearch/
-screenshots/
 .playwright-mcp/
 .claude/
+.superpowers/
+
+# QA/design assets (not source)
+screenshots/
 stitch/
 n1-landing-page.png
+
+# Build artifacts
+.tmp-build-downloads/
