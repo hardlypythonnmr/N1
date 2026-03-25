@@ -104,6 +104,7 @@ Si el usuario pega un perfil YAML:
 2. Anunciá qué dimensiones ya están completas: "Ya tenés [dimensión X] completada — saltamos a [próxima sin completar]."
 3. Extraé los datos de triage previos: `triage.situation`, `triage.career_path`, `triage.urgency`.
 4. Cargá el archivo de la dimensión siguiente antes de empezar.
+5. **Detección de dimensiones parciales:** Si una dimensión tiene `completed: false` pero ya tiene datos en sus sub-campos (por ejemplo, `identity.adaptability.*` completado desde Compass), detectalo y ofrecé: "Tenés datos de [sub-dimensión] de una sesión anterior. ¿Querés profundizar en eso, o lo usamos como base y seguimos con el resto?" No saltés ni ignorés estos datos parciales.
 
 Si no hay perfil:
 
@@ -318,10 +319,10 @@ strengths:
       - "[feedback recibido]"
     physiological: "[estado emocional/físico actual]"
   flow_activities:
-    - activity: "[actividad]"
+    - name: "[actividad]"
       challenge: null # 1-10
       skill: null # 1-10
-      state: "[descripción del estado]"
+      zone: "[descripción del estado]"
   career_implications:
     - "[implicación 1]"
 ```
@@ -537,6 +538,8 @@ evolution:
 ```
 
 **Instrucción importante:** Llenás SOLO los campos de las dimensiones completadas. Las dimensiones no completadas quedan con `completed: false` y los campos como `null` o `[]`.
+
+**Preservación de enriquecimiento:** Si el usuario pegó un perfil importado que ya contiene datos en el bloque `enrichment:`, preservalos exactamente — no los reemplaces con `null`. Solo actualizá los campos que surgieron en esta sesión. El enriquecimiento se acumula, no se sobreescribe.
 
 </output>
 
