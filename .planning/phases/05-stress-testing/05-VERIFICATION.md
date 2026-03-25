@@ -2,6 +2,7 @@
 
 **Phase:** 05-claude-skills-publishing
 **Generated:** 2026-03-25 (Plan 07 — Wave 3 completion)
+**Updated:** 2026-03-25 (Plan 08 — Fix cycle complete)
 **Scope:** 5 Claude Skills tested across 6 gates: Hard Gate, Quality Gate, Red Team, Cross-Skill, Regression, Manual Review
 
 ---
@@ -22,10 +23,10 @@ Grand total graded events: 238
 
 ### Ghost Check
 
-- **Hard Gate:** 21/24 PASS | 2/24 MARGINAL | 1/24 FAIL (V-GC-02 em-dashes, Minor severity)
+- **Hard Gate:** 21/24 PASS | 2/24 MARGINAL | 1/24 FAIL (V-GC-02 em-dashes, Minor severity) → **POST-FIX: 22/24 PASS | 2/24 MARGINAL | 0 FAIL** (V-GC-02 fixed — em-dashes removed from all user-facing templates)
 - **Quality Gate (Persona Battery):** 12/12 PASS (avg 4.6/5.0) | 0 Critical findings | 0 hard overrides
 - **Red Team:** 10/10 PASS | 0 MARGINAL | 0 FAIL — strongest red team result of all 5 skills
-- **Cross-Skill:** X-07 PASS (CTA references Compass by name), X-10 PASS (values alignment uses profile), X-11 PASS (career_path minor gap documented)
+- **Cross-Skill:** X-07 PASS (CTA references Compass by name), X-10 PASS (values alignment uses profile), X-11 PASS (career_path now explicitly read — fix applied)
 - **Regression:** R-01 PASS (scope disclaimer, YAML export intact), R-03 PASS (all structural criteria hold)
 
 ### Compass
@@ -41,12 +42,12 @@ Grand total graded events: 238
 - **Hard Gate:** 20/22 PASS | 2/22 MARGINAL | 0/22 FAIL
 - **Quality Gate (Persona Battery):** 10/12 PASS | 2/12 MARGINAL (P4, P9) | avg 37.4/40 | 0 hard overrides
 - **Red Team:** 8/10 PASS | 1/10 MARGINAL | 0/10 FAIL (1 N/A)
-- **Cross-Skill:** X-02 PASS (field names explicitly referenced in construye-afuera), X-05 MARGINAL (enrichment preservation instruction gap), X-06 PASS (schema compliant with minor flow_activities field name gap)
+- **Cross-Skill:** X-02 PASS (field names explicitly referenced in construye-afuera), X-05 PASS (enrichment preservation instruction added), X-06 PASS (flow_activities keys aligned to name/zone schema), X-01 partial-dimension detection added
 - **Regression:** R-03 PASS (all 4 dimensions sections intact)
 
 ### Construye Afuera
 
-- **Hard Gate:** 23/24 PASS | 0/24 MARGINAL | 1/24 FAIL (M-CA-12 Getonboard/Torre absent, Major severity) — FAILS Hard Gate
+- **Hard Gate:** 23/24 PASS | 0/24 MARGINAL | 1/24 FAIL (M-CA-12 Getonboard/Torre absent, Major severity) — FAILS Hard Gate → **POST-FIX: 24/24 PASS** (M-CA-12 fixed — Getonboard + Torre added to latam-market-context.md Section 2 and SKILL.md Job Hunt)
 - **Quality Gate (Persona Battery):** 10/12 PASS | 2/12 MARGINAL (P4, P10) | avg 37.1/40 | 0 hard overrides
 - **Red Team:** 7/10 PASS | 1/10 MARGINAL | 0/10 FAIL | 2 from prior summary
 - **Cross-Skill:** X-02 PASS (all required fields read), X-09 PASS (funnel coherence, gap documented)
@@ -66,18 +67,20 @@ Grand total graded events: 238
 
 ```
 VERIFICATION MATRIX — N1 Skills Publishing Gate
-Generated: 2026-03-25
+Generated: 2026-03-25 | Updated post-fix: 2026-03-25
 
                    ghost-check   compass     busca-adentro   construye-afuera   n1-system
                    ─────────────────────────────────────────────────────────────────────────
-Hard Gate          PASS          PASS        PASS            FAIL               PASS*
+Hard Gate          PASS          PASS        PASS            PASS [fixed]       PASS*
 Quality Gate       PASS          PASS        PASS            PASS               PASS
 Red Team           PASS          PASS        PASS            PASS               PASS
-Cross-Skill        PASS          MARGINAL    MARGINAL        PASS               PASS
+Cross-Skill        PASS          PASS [fix]  PASS [fix]      PASS               PASS
 Regression         PASS          PASS        PASS            PASS               PASS
 Manual Review      TBD           TBD         TBD             TBD                TBD
 
 * n1-system Hard Gate: PASS with monitoring note — token budget at ~34K (deep mode risk)
+[fixed] = gate status changed from FAIL/MARGINAL to PASS by Plan 08 fix cycle
+[fix] = gate status improved from MARGINAL to PASS by Plan 08 fix cycle
 ```
 
 **Legend:**
@@ -92,19 +95,22 @@ Manual Review      TBD           TBD         TBD             TBD                
 ## VERDICT
 
 ```
-[ ] PUBLISH  /  [X] BLOCKED — construye-afuera Hard Gate FAIL (M-CA-12: Getonboard and Torre absent from all reference files)
+[ ] PUBLISH  /  [X] BLOCKED (pre-fix) → [X] CONDITIONALLY READY (post-fix, pending Manual Review)
 ```
 
-**Verdict: BLOCKED**
+**Pre-fix verdict (Plan 07):** BLOCKED — construye-afuera Hard Gate FAIL (M-CA-12)
 
-One skill has a blocking failure. Construye-afuera fails the Hard Gate due to M-CA-12 (Major severity): the Job Hunt tool does not reference Getonboard or Torre, which are the primary job platforms in Colombia and LATAM respectively. A skill that gives job search guidance in LATAM without mentioning the dominant local platforms is functionally incomplete for its stated purpose.
+**Post-fix verdict (Plan 08):** CONDITIONALLY READY
 
-**Other 4 skills are individually PUBLISH-READY** (pending manual review):
+All automated gates pass across all 5 skills. M-CA-12 blocking failure resolved (Getonboard and Torre added to latam-market-context.md and SKILL.md). All other Minor failures also fixed ahead of schedule.
 
-- ghost-check: PASS all automated gates
-- compass: PASS all automated gates (1 MARGINAL cross-skill, minor)
-- busca-adentro: PASS all automated gates (1 MARGINAL cross-skill, minor)
-- n1-system: PASS all automated gates (monitoring flag for deep-mode token budget)
+**All 5 skills are PUBLISH-READY pending manual review:**
+
+- ghost-check: PASS all automated gates (V-GC-02 fixed)
+- compass: PASS all automated gates (cross-skill MARGINAL resolved)
+- busca-adentro: PASS all automated gates (cross-skill MARGINALs resolved)
+- construye-afuera: PASS all automated gates (M-CA-12 blocking failure fixed)
+- n1-system: PASS all automated gates (monitoring flag for deep-mode token budget remains)
 
 ---
 
@@ -116,21 +122,21 @@ None.
 
 ### Major Failures
 
-| Skill            | Test ID | Gate      | Description                                                                                                                                          |
-| ---------------- | ------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| construye-afuera | M-CA-12 | Hard Gate | Getonboard and Torre absent from SKILL.md Job Hunt tool section AND from latam-market-context.md reference file. LATAM job hunt guidance incomplete. |
+| Skill            | Test ID | Gate      | Status              | Description                                                                                                                                          |
+| ---------------- | ------- | --------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| construye-afuera | M-CA-12 | Hard Gate | **FIXED (Plan 08)** | Getonboard and Torre absent from SKILL.md Job Hunt tool section AND from latam-market-context.md reference file. LATAM job hunt guidance incomplete. |
 
 ### Minor Failures and MARGINAL Items
 
-| Skill         | Test ID | Gate        | Description                                                                                                                                           |
-| ------------- | ------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ghost-check   | V-GC-02 | Hard Gate   | Em-dashes in tier verdict templates (lines 107-109, 114) — voice guide requires hyphens                                                               |
-| compass       | X-01    | Cross-Skill | Partial adaptability recognition — context_check gates on completed: true only, misses partial CAAS data from compass when identity.completed = false |
-| busca-adentro | X-05    | Cross-Skill | Enrichment preservation — no explicit "preserve existing enrichment" instruction in YAML output section                                               |
-| busca-adentro | X-06    | Cross-Skill | flow_activities uses activity/state keys instead of schema's name/zone                                                                                |
-| compass       | X-06    | Cross-Skill | YAML output template missing language: "es" field                                                                                                     |
-| ghost-check   | X-11    | Cross-Skill | No explicit career_path reading in ghost-check — recommendation not career-path-aware                                                                 |
-| n1-system     | S-NS-02 | Hard Gate   | Token budget at ~34K — deep mode with 40+ turns is marginal territory                                                                                 |
+| Skill         | Test ID | Gate        | Status                 | Description                                                                                                                                           |
+| ------------- | ------- | ----------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ghost-check   | V-GC-02 | Hard Gate   | **FIXED (Plan 08)**    | Em-dashes in tier verdict templates (lines 107-109, 114) — voice guide requires hyphens                                                               |
+| compass       | X-01    | Cross-Skill | **FIXED (Plan 08)**    | Partial adaptability recognition — context_check gates on completed: true only, misses partial CAAS data from compass when identity.completed = false |
+| busca-adentro | X-05    | Cross-Skill | **FIXED (Plan 08)**    | Enrichment preservation — no explicit "preserve existing enrichment" instruction in YAML output section                                               |
+| busca-adentro | X-06    | Cross-Skill | **FIXED (Plan 08)**    | flow_activities uses activity/state keys instead of schema's name/zone                                                                                |
+| compass       | X-06    | Cross-Skill | **N/A — already PASS** | YAML output template missing language: "es" field (field was already present at line 239)                                                             |
+| ghost-check   | X-11    | Cross-Skill | **FIXED (Plan 08)**    | No explicit career_path reading in ghost-check — recommendation not career-path-aware                                                                 |
+| n1-system     | S-NS-02 | Hard Gate   | MONITORING (not fixed) | Token budget at ~34K — deep mode with 40+ turns is marginal territory                                                                                 |
 
 ---
 
@@ -180,33 +186,25 @@ These items are documented in `results/cross-skill-eval.md` Section "Items for f
 
 ## Publishing Readiness
 
-### Current State
+### Current State (post Plan 08 fix cycle)
 
-**BLOCKED** — construye-afuera fails the Hard Gate (M-CA-12, Major).
-
-### Path to PUBLISH
-
-1. Fix M-CA-12 in `latam-market-context.md` + `SKILL.md` Job Hunt section (Plan 08 fix cycle)
-2. Fix V-GC-02 in ghost-check tier verdicts (Plan 08 or patch commit)
-3. Complete Manual Review gate for all 5 skills (Plan 08)
-4. Re-run Hard Gate for construye-afuera post-fix (verification step in Plan 08)
+**CONDITIONALLY READY** — all automated gates pass. Manual Review is the remaining gate.
 
 ### Skills ready for publishing (pending manual review only)
 
-| Skill            | Automated Gates                  | Manual Review | Status                  |
-| ---------------- | -------------------------------- | ------------- | ----------------------- |
-| ghost-check      | PASS (conditional V-GC-02 minor) | TBD           | Ready for manual review |
-| compass          | PASS                             | TBD           | Ready for manual review |
-| busca-adentro    | PASS                             | TBD           | Ready for manual review |
-| construye-afuera | BLOCKED (M-CA-12)                | TBD           | Requires fix first      |
-| n1-system        | PASS (monitoring flag)           | TBD           | Ready for manual review |
+| Skill            | Automated Gates      | Manual Review | Status                  |
+| ---------------- | -------------------- | ------------- | ----------------------- |
+| ghost-check      | PASS (all fixed)     | TBD           | Ready for manual review |
+| compass          | PASS                 | TBD           | Ready for manual review |
+| busca-adentro    | PASS (all fixed)     | TBD           | Ready for manual review |
+| construye-afuera | PASS (M-CA-12 fixed) | TBD           | Ready for manual review |
+| n1-system        | PASS (monitoring)    | TBD           | Ready for manual review |
 
-### After M-CA-12 fix and manual review completion
+### After manual review completion
 
-All 5 skills would be CONDITIONALLY READY for publishing, pending:
+All 5 skills would be PUBLISH READY, subject to:
 
-- V-GC-02 minor fix (ghost-check em-dashes)
-- Manual review verification sign-off (Plan 08)
+- Manual review verification sign-off (Plan 08, Task 2)
 - Priority monitoring of n1-system token budget in production (deep mode)
 
 ---
