@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 05-07-PLAN.md (cross-skill 11 tests, regression 5 tests, final 6x5 verification matrix — BLOCKED verdict)
-last_updated: "2026-03-25T00:50:47.893Z"
+stopped_at: "Completed 05-08 Task 1: applied all fixes (M-CA-12, V-GC-02, X-01, X-05, X-06, X-11), updated verification matrix to CONDITIONALLY READY — awaiting Task 2 manual review checkpoint"
+last_updated: "2026-03-25T01:02:42.749Z"
 progress:
   total_phases: 8
   completed_phases: 5
@@ -166,6 +166,9 @@ Recent decisions affecting current work:
 - [Phase 05-claude-skills-publishing]: Cross-skill gate PASS despite 2 MARGINAL (X-01, X-05): both Minor severity, YAML portability intact at field-name level
 - [Phase 05-claude-skills-publishing]: BLOCKED verdict issued: construye-afuera M-CA-12 (Getonboard/Torre absent from latam-market-context.md) is the single blocking failure before publish
 - [Phase 05-claude-skills-publishing]: 4 skills (ghost-check, compass, busca-adentro, n1-system) pass all automated gates — ready for manual review in Plan 08
+- [Phase 05-claude-skills-publishing]: M-CA-12 fix: L2 implementation — full LATAM platform profiles (Getonboard, Torre, LinkedIn, Computrabajo, Elempleo) added to latam-market-context.md Section 2 with recommended channel mix for senior SWEs; SKILL.md Job Hunt explicitly names platforms
+- [Phase 05-claude-skills-publishing]: V-GC-02 fix: L2 implementation — em-dash prohibition added to shared/voice-guide.md Section 4; all user-facing code-block templates in ghost-check cleared to 0 em-dashes; scope disclaimer source fixed in safety-protocol.md propagated to all 4 skills with verbatim copies
+- [Phase 05-claude-skills-publishing]: Plan 08 fix cycle advanced all Minor cross-skill fixes ahead of schedule (X-01, X-05, X-06, X-11 — were scoped to first-patch post-publish); CONDITIONALLY READY verdict issued, pending Manual Review gate (Task 2)
 
 ### Pending Todos
 
@@ -184,6 +187,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T00:50:47.885Z
-Stopped at: Completed 05-07-PLAN.md (cross-skill 11 tests, regression 5 tests, final 6x5 verification matrix — BLOCKED verdict)
+Last session: 2026-03-25T01:02:21.533Z
+Stopped at: Completed 05-08 Task 1: applied all fixes (M-CA-12, V-GC-02, X-01, X-05, X-06, X-11), updated verification matrix to CONDITIONALLY READY — awaiting Task 2 manual review checkpoint
 Resume file: None
