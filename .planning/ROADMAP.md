@@ -152,7 +152,7 @@ Plans:
 - [x] 05-04-PLAN.md — Busca-adentro test suite (eval + red team + persona grades) (Wave 2)
 - [x] 05-05-PLAN.md — Construye-afuera test suite (eval + red team + persona grades) (Wave 2)
 - [x] 05-06-PLAN.md — N1-system test suite (eval + red team + persona grades) (Wave 2)
-- [ ] 05-07-PLAN.md — Cross-skill portability + regression + final verification matrix (Wave 3)
+- [x] 05-07-PLAN.md — Cross-skill portability + regression + final verification matrix (Wave 3)
 - [ ] 05-08-PLAN.md — Fix cycle + manual review (Wave 4)
 - [ ] 05-09-PLAN.md — Marketplace README + publishing (Wave 5)
 

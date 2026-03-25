@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: "Completed 05-04-PLAN.md (busca-adentro stress testing: 22 eval tests, 10 red team, 12 persona grades)"
-last_updated: "2026-03-25T00:38:48.965Z"
+stopped_at: Completed 05-07-PLAN.md (cross-skill 11 tests, regression 5 tests, final 6x5 verification matrix — BLOCKED verdict)
+last_updated: "2026-03-25T00:50:47.893Z"
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 36
-  completed_plans: 33
+  completed_plans: 34
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 05 (claude-skills-publishing) — EXECUTING
-Plan: 7 of 9
+Plan: 8 of 9
 
 ## Performance Metrics
 
@@ -78,6 +78,7 @@ _Updated after each plan completion_
 | Phase 05-claude-skills-publishing P05 | 623s | 2 tasks | 3 files |
 | Phase 05-claude-skills-publishing P02 | 669s | 2 tasks | 3 files |
 | Phase 05-claude-skills-publishing P04 | 805s | 2 tasks | 3 files |
+| Phase 05-claude-skills-publishing P07 | 6m | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -162,6 +163,9 @@ Recent decisions affecting current work:
 - [Phase 05-claude-skills-publishing]: V-GC-02 fix queued for first patch: replace em-dashes in tier verdicts (lines 107-109, 114) with hyphens
 - [Phase 05-claude-skills-publishing]: CAAS-12 and MLQ-10 named in external tool CTAs in busca-adentro — deliberate design choice, Minor severity, does not block publishing
 - [Phase 05-claude-skills-publishing]: Busca-adentro publishing gate CLEARED: 20/22 PASS eval, 8/10 PASS red team, 10/12 PASS personas — no Critical or Major failures
+- [Phase 05-claude-skills-publishing]: Cross-skill gate PASS despite 2 MARGINAL (X-01, X-05): both Minor severity, YAML portability intact at field-name level
+- [Phase 05-claude-skills-publishing]: BLOCKED verdict issued: construye-afuera M-CA-12 (Getonboard/Torre absent from latam-market-context.md) is the single blocking failure before publish
+- [Phase 05-claude-skills-publishing]: 4 skills (ghost-check, compass, busca-adentro, n1-system) pass all automated gates — ready for manual review in Plan 08
 
 ### Pending Todos
 
@@ -180,6 +184,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T00:38:48.955Z
-Stopped at: Completed 05-04-PLAN.md (busca-adentro stress testing: 22 eval tests, 10 red team, 12 persona grades)
+Last session: 2026-03-25T00:50:47.885Z
+Stopped at: Completed 05-07-PLAN.md (cross-skill 11 tests, regression 5 tests, final 6x5 verification matrix — BLOCKED verdict)
 Resume file: None
