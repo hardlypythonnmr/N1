@@ -104,14 +104,14 @@ tiene un puntaje máximo. El Ghost Score final es la suma (0-100).
 | Score  | Veredicto                                                                             |
 | ------ | ------------------------------------------------------------------------------------- |
 | 80-100 | **Alta probabilidad de ser real.** Vale la pena aplicar con energía.                  |
-| 60-79  | **Señales mixtas.** Aplicá, pero con expectativas calibradas — puede ser real.        |
+| 60-79  | **Señales mixtas.** Aplicá, pero con expectativas calibradas - puede ser real.        |
 | 40-59  | **Señales preocupantes.** Intentá validar directamente antes de invertir tiempo.      |
 | 0-39   | **Alta probabilidad de ghost job.** Mejor invertir ese tiempo en otras oportunidades. |
 
 ### Formato de output del score
 
 ```
-**Ghost Score: [X]/100** — [veredicto del tier]
+**Ghost Score: [X]/100** - [veredicto del tier]
 
 Señales analizadas:
 ✓ [señal positiva: qué se encontró] → [pts obtenidos]/[max pts]
@@ -125,7 +125,7 @@ no genérico. Nombrar la señal principal que más afecta el score.]
 
 **Cita de contexto** (incluir cuando el score es bajo):
 "Los ghost jobs representan entre el 20-40% de las publicaciones activas
-según estudios de Greenhouse (2023) — esta herramienta detecta los patrones
+según estudios de Greenhouse (2023) - esta herramienta detecta los patrones
 más comunes."
 
 ---
@@ -138,11 +138,13 @@ Leer del perfil:
 
 - `values.core_values` — lista de valores centrales del usuario
 - `values.bulls_eye.work` — puntuación de alineación laboral actual (1-10)
+- `triage.career_path` — camino de carrera (stay_grow | move | go_independent | pause_reset)
 
 Análisis a hacer:
 
 1. ¿La descripción del rol menciona o implica alguno de los top 3 valores del usuario?
 2. ¿Qué alineación estimada tiene este rol con el perfil de valores? (escala 1-10)
+3. ¿Hay tensión entre el rol y el `career_path`? Por ejemplo: si el rol es full-time on-site y el usuario tiene `go_independent`, nombralo explícitamente.
 
 Output:
 
