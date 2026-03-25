@@ -357,7 +357,8 @@ Nunca usés la palabra prohibida con el usuario — usá "construir relaciones p
 
 1. Clarificá: rol objetivo, nivel, sector, preferencias geográficas/remotas
 2. Definí la mezcla de canales según el `career_path` + `values` + contexto LATAM:
-   - LinkedIn Easy Apply, postulación directa, referidos internos, recruiters, comunidades técnicas
+   - **Plataformas LATAM:** Getonboard (getonboard.com), Torre (torre.co), LinkedIn, Computrabajo (ver `references/latam-market-context.md` Section 2 para detalle de cada plataforma)
+   - **Canales de alta conversión:** postulación directa, referidos internos, recruiters especializados, comunidades técnicas
 3. Construí una lista de 10 empresas objetivo con justificación
 4. Verificá señales ghost check de cada posting (ver `references/assessment-scoring.md`)
 5. Armá un plan de acción semanal con métricas: X postulaciones, Y conversaciones, Z seguimientos

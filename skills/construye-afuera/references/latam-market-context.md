@@ -55,7 +55,32 @@ Reference source: LinkedIn Salary Colombia + recruiter data + verified community
 
 ---
 
-## Section 2: ATS Systems in LATAM
+## Section 2: LATAM Job Platforms
+
+### Primary job boards for LATAM candidates
+
+Use these platforms when advising on the Job Hunt tool. Platform selection depends on target market and role type.
+
+| Platform                         | Coverage                              | Best for                                                      | Notes                                                                    |
+| -------------------------------- | ------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **Getonboard** (getonboard.com)  | Colombia, Chile, Mexico — remote-ok   | Tech roles; strong startup and scaleup presence               | Tech-focused; high signal-to-noise ratio for SWE and product roles       |
+| **Torre** (torre.co)             | Colombia-born; growing LATAM presence | AI-matched roles; broad seniority range                       | Uses AI matching; Colombian founders; growing international presence     |
+| **LinkedIn**                     | Global; strong in senior LATAM roles  | Senior roles, international visibility, recruiter outreach    | Best for visibility; apply direct or Easy Apply depending on the company |
+| **Computrabajo**                 | All LATAM countries                   | High volume, all industries; lower quality signal for tech    | Use for broad coverage, not primary channel for senior tech roles        |
+| **Elempleo** (Colombia-specific) | Colombia                              | Traditional industries (banking, retail, government-adjacent) | More traditional employers; credential-heavy filtering common            |
+
+**Recommended channel mix for senior SWEs in Colombia:**
+
+1. Getonboard — primary for tech roles in startups and scaleups
+2. Torre — secondary; useful for AI-matched discovery
+3. LinkedIn — critical for recruiter visibility and direct applications at multinationals
+4. Direct application — highest conversion rate when company is known
+
+**Ghost job signal note:** Getonboard and Torre have lower ghost job rates than LinkedIn Easy Apply for LATAM tech roles — postings tend to be fresher and more specific.
+
+---
+
+## Section 3: ATS Systems in LATAM
 
 ### Common ATS in Colombian/LATAM market
 
@@ -101,7 +126,7 @@ Reference source: LinkedIn Salary Colombia + recruiter data + verified community
 
 ---
 
-## Section 3: English Proficiency and Job Search
+## Section 4: English Proficiency and Job Search
 
 ### Role-type English requirements (Colombia/LATAM context)
 
@@ -134,7 +159,7 @@ Reference source: LinkedIn Salary Colombia + recruiter data + verified community
 
 ---
 
-## Section 4: Employer Culture Notes
+## Section 5: Employer Culture Notes
 
 ### Globant
 
@@ -191,7 +216,7 @@ Reference source: LinkedIn Salary Colombia + recruiter data + verified community
 
 ---
 
-## Section 5: Credential Context
+## Section 6: Credential Context
 
 ### When Colombian employers over-require credentials
 
@@ -234,7 +259,7 @@ Some Colombian employers, especially traditional companies (banks, government-ad
 
 ---
 
-## Section 6: Remote Work Market
+## Section 7: Remote Work Market
 
 ### US/EU remote hiring for Colombian candidates (2024-2025)
 
@@ -270,7 +295,7 @@ Some Colombian employers, especially traditional companies (banks, government-ad
 
 ---
 
-## Section 7: Structural Barriers — Name and Validate
+## Section 8: Structural Barriers — Name and Validate
 
 These are real structural constraints in the LATAM context. Never dismiss, minimize, or frame as "limiting beliefs" without evidence. Acknowledge as real constraints while exploring the space of action within them.
 
@@ -299,7 +324,7 @@ These are real structural constraints in the LATAM context. Never dismiss, minim
 - Formal employment history gaps are common; references may not be available in standard format
 - Language: Frame work history documentation creatively — focus on demonstrable skills and outcomes
 
-### Credential inflation (repeat from Section 5)
+### Credential inflation (repeat from Section 6)
 
 - Real cost in time and money to get degrees/credentials required by traditional employers
 - Acknowledge the frustration; don't dismiss the real market reality
