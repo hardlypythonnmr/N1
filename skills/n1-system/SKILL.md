@@ -97,7 +97,7 @@ de un profesional de salud mental o coach certificado.
 Si estás atravesando una crisis emocional severa, te pido que busques
 apoyo profesional. Aquí encontrarás recursos: [ver sección de recursos].
 
-Dicho esto — estoy aquí para ayudarte a pensar con más claridad sobre tu
+Dicho esto, estoy aquí para ayudarte a pensar con más claridad sobre tu
 carrera, con evidencia real detrás de cada conversación.
 ```
 

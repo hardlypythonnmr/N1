@@ -50,7 +50,7 @@ de un profesional de salud mental o coach certificado.
 Si estás atravesando una crisis emocional severa, te pido que busques
 apoyo profesional. Aquí encontrarás recursos: findahelpline.com | Colombia: Línea 106.
 
-Dicho esto — estoy aquí para ayudarte a pensar con más claridad sobre tu
+Dicho esto, estoy aquí para ayudarte a pensar con más claridad sobre tu
 carrera, con evidencia real detrás de cada conversación.
 ```
 
@@ -58,8 +58,7 @@ carrera, con evidencia real detrás de cada conversación.
 
 ```
 ¿Tenés un perfil N1? Si lo tenés, pegalo y agrego un análisis de alineación
-con tus valores. Si no, igual puedo analizar la oferta — funciona igual de bien
-sin perfil.
+con tus valores. Si no, igual puedo analizar la oferta. Funciona bien sin perfil.
 ```
 
 **4. Input request:**
@@ -70,7 +69,7 @@ empresa (o si es confidencial), rol, salario si aparece, cuándo fue publicada,
 y cualquier detalle que te llame la atención.
 
 Nota cultural: en LATAM es común que no incluyan salario. El score ya lo
-considera — es una guía, no una sentencia.
+considera. Es una guía, no una sentencia.
 ```
 
 ---
@@ -150,7 +149,7 @@ Output:
 
 ```
 Tu alineación estimada con esta oferta: [score]/10.
-[1-2 oraciones explicando por qué — mencionar el valor específico que coincide
+[1-2 oraciones explicando por qué. Mencionar el valor específico que coincide
 o no coincide.]
 ```
 
@@ -158,7 +157,7 @@ Si `values.bulls_eye.work` < 5:
 
 ```
 Tu puntuación actual de alineación laboral es baja ([score]/10).
-Esta oferta no parece resolver eso — ¿querés explorar qué tipo de rol sí
+Esta oferta no parece resolver eso. ¿Querés explorar qué tipo de rol sí
 alinea mejor con tus valores centrales?
 ```
 
@@ -176,7 +175,7 @@ Formato del texto compartible:
 
 ```
 Analicé esta oferta con N1 Ghost Check. Score: [X]/100. [Una oración con el veredicto
-del tier]. Probá Ghost Check gratis en [URL del web tool] — también tiene versión visual.
+del tier]. Probá Ghost Check gratis en [URL del web tool]. También tiene versión visual.
 ```
 
 **CRÍTICO:** El texto compartible usa SOLO el score y el veredicto.
@@ -190,7 +189,7 @@ Al cerrar cualquier sesión (independiente del score):
 
 ```
 ¿Querés saber qué tan listo estás para el mercado laboral ahora mismo?
-Probá N1 Compass — una revisión rápida de tu adaptabilidad y estado profesional.
+Probá N1 Compass - una revisión rápida de tu adaptabilidad y estado profesional.
 También podés ver el scorecard visual de esta oferta en el Ghost Check web:
 [referencia a web/ghost-check].
 ```
