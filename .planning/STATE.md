@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: "Completed 05-03-PLAN.md (compass test suite: 20 eval tests, 10 red team, 12 personas — cleared for publishing)"
-last_updated: "2026-03-25T00:33:17.646Z"
+stopped_at: "Completed 05-06-PLAN.md (n1-system test suite: 22 eval tests, 10 red team, 12 persona grades)"
+last_updated: "2026-03-25T00:35:17.407Z"
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 36
-  completed_plans: 29
+  completed_plans: 32
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 05 (claude-skills-publishing) — EXECUTING
-Plan: 3 of 9
+Plan: 5 of 9
 
 ## Performance Metrics
 
@@ -74,6 +74,7 @@ _Updated after each plan completion_
 | Phase 04-chatgpt-gpts P02 | 8 | 2 tasks | 6 files |
 | Phase 05-claude-skills-publishing P01 | 180m | 2 tasks | 10 files |
 | Phase 05-claude-skills-publishing P03 | 500 | 2 tasks | 3 files |
+| Phase 05 P06 | 569s | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -146,6 +147,9 @@ Recent decisions affecting current work:
 - [Phase 05-claude-skills-publishing]: Cross-skill Chain A handoff tests (X-01..X-06) are publishing gate for the full system
 - [Phase 05-claude-skills-publishing]: Compass CAAS/Savickas citation in opening is intentional transparency — RT-04 appearance tension is a known design decision, not a violation
 - [Phase 05-claude-skills-publishing]: P2 Diego and P11 Patricia flagged as priority human verification sessions before compass publishing
+- [Phase 05-claude-skills-publishing]: S-NS-01: reads: list has 14 files (not 15+) — all required categories present; PASS justified
+- [Phase 05-claude-skills-publishing]: n1-system token budget MARGINAL at ~34K tokens — deep mode with 40+ turns is the risk scenario; monitor in live testing
+- [Phase 05-claude-skills-publishing]: n1-system red team CLEAR: 8 PASS 2 MARGINAL 0 FAIL — no blocking failures; proceed to publishing
 
 ### Pending Todos
 
@@ -164,6 +168,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T00:33:17.633Z
-Stopped at: Completed 05-03-PLAN.md (compass test suite: 20 eval tests, 10 red team, 12 personas — cleared for publishing)
+Last session: 2026-03-25T00:34:59.664Z
+Stopped at: Completed 05-06-PLAN.md (n1-system test suite: 22 eval tests, 10 red team, 12 persona grades)
 Resume file: None
