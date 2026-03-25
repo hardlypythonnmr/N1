@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: "Completed 05-06-PLAN.md (n1-system test suite: 22 eval tests, 10 red team, 12 persona grades)"
-last_updated: "2026-03-25T00:35:17.407Z"
+stopped_at: "Completed 05-02-PLAN.md (ghost-check test suite: 24 eval tests, 10 red team, 12 persona grades)"
+last_updated: "2026-03-25T00:35:58.170Z"
 progress:
   total_phases: 8
   completed_phases: 5
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 ## Current Position
 
 Phase: 05 (claude-skills-publishing) — EXECUTING
-Plan: 5 of 9
+Plan: 6 of 9
 
 ## Performance Metrics
 
@@ -75,6 +75,8 @@ _Updated after each plan completion_
 | Phase 05-claude-skills-publishing P01 | 180m | 2 tasks | 10 files |
 | Phase 05-claude-skills-publishing P03 | 500 | 2 tasks | 3 files |
 | Phase 05 P06 | 569s | 2 tasks | 3 files |
+| Phase 05-claude-skills-publishing P05 | 623s | 2 tasks | 3 files |
+| Phase 05-claude-skills-publishing P02 | 669s | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -150,6 +152,13 @@ Recent decisions affecting current work:
 - [Phase 05-claude-skills-publishing]: S-NS-01: reads: list has 14 files (not 15+) — all required categories present; PASS justified
 - [Phase 05-claude-skills-publishing]: n1-system token budget MARGINAL at ~34K tokens — deep mode with 40+ turns is the risk scenario; monitor in live testing
 - [Phase 05-claude-skills-publishing]: n1-system red team CLEAR: 8 PASS 2 MARGINAL 0 FAIL — no blocking failures; proceed to publishing
+- [Phase 05-claude-skills-publishing]: construye-afuera M-CA-12 FAIL: Getonboard and Torre absent from SKILL.md and all reference files — requires fix in latam-market-context.md + SKILL.md Job Hunt section before publishing
+- [Phase 05-claude-skills-publishing]: construye-afuera anti-networking prohibition confirmed: word 'networking' has 0 occurrences in SKILL.md
+- [Phase 05-claude-skills-publishing]: construye-afuera persona battery: 10/12 PASS, 2/12 MARGINAL (P4 Mateo minimal-input gap, P10 Fernando evaluator-mode gap) — publishing gate CLEAR
+- [Phase 05-claude-skills-publishing]: Ghost-check Hard Gate PASS (Conditional): 21/24 PASS, 2 MARGINAL, 1 FAIL — all failures Minor, no Critical/Major issues
+- [Phase 05-claude-skills-publishing]: Red Team Gate PASS: 10/10 playbooks survived — YAML Smuggler, Therapist Trap, Score Manipulator all pass
+- [Phase 05-claude-skills-publishing]: Quality Gate PASS: 12/12 personas graded PASS (avg 4.4-5.0/5.0) — ghost-check excels at reverse recruiter use case
+- [Phase 05-claude-skills-publishing]: V-GC-02 fix queued for first patch: replace em-dashes in tier verdicts (lines 107-109, 114) with hyphens
 
 ### Pending Todos
 
@@ -168,6 +177,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T00:34:59.664Z
-Stopped at: Completed 05-06-PLAN.md (n1-system test suite: 22 eval tests, 10 red team, 12 persona grades)
+Last session: 2026-03-25T00:35:58.163Z
+Stopped at: Completed 05-02-PLAN.md (ghost-check test suite: 24 eval tests, 10 red team, 12 persona grades)
 Resume file: None
