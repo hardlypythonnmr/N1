@@ -1399,6 +1399,13 @@
     });
   </script>
   <script>
+  /* Session ID for analytics dedup */
+  var SESSION_ID = sessionStorage.getItem('n1_sid') || (function() {
+    var sid = crypto.randomUUID();
+    sessionStorage.setItem('n1_sid', sid);
+    return sid;
+  })();
+
   /* Track Skills IA CTA click from tool completion */
   var skillsCta = document.querySelector('[data-track-cta]');
   if (skillsCta) {
@@ -1419,7 +1426,7 @@
           referrer: window.location.pathname,
           user_agent: navigator.userAgent,
           country: (navigator.language || '').slice(0, 5),
-          session_id: sessionStorage.getItem('n1_sid') || 'unknown'
+          session_id: SESSION_ID
         })
       }).catch(function() {});
     });

@@ -865,7 +865,11 @@
           submitBtn.textContent = "Enviando...";
         }
 
-        var sessionId = sessionStorage.getItem('n1_sid') || '';
+        var sessionId = sessionStorage.getItem('n1_sid') || (function() {
+          var sid = crypto.randomUUID();
+          sessionStorage.setItem('n1_sid', sid);
+          return sid;
+        })();
         var lang = (navigator.language || '').slice(0, 5);
 
         /* Send to Supabase (your database — you own this data) */
