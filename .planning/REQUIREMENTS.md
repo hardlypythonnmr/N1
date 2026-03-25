@@ -58,8 +58,8 @@
 
 ### Publishing
 
-- [ ] **PUB-01**: 5 Claude Skills published to SkillsMP / SkillHub marketplaces
-- [ ] **PUB-02**: Skills installable and functional end-to-end from marketplace
+- [x] **PUB-01**: 5 Claude Skills published to SkillsMP / SkillHub marketplaces
+- [x] **PUB-02**: Skills installable and functional end-to-end from marketplace
 
 ### Deployment
 
@@ -148,8 +148,8 @@
 | GPT-04      | Phase 4 | Complete |
 | GPT-05      | Phase 4 | Complete |
 | GPT-06      | Phase 4 | Complete |
-| PUB-01      | Phase 5 | Pending |
-| PUB-02      | Phase 5 | Pending |
+| PUB-01      | Phase 5 | Complete |
+| PUB-02      | Phase 5 | Complete |
 | DEPLOY-01   | Phase 6 | Pending |
 | DEPLOY-02   | Phase 6 | Pending |
 | DEPLOY-03   | Phase 6 | Pending |

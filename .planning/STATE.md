@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed quick task 260324-jia (QA report fixes)
-last_updated: "2026-03-24T19:14:30.388Z"
+status: Ready to execute
+stopped_at: "Completed 05-01-PLAN.md (test infrastructure: 128 eval cases, 12 personas, 10 playbooks, grading rubrics)"
+last_updated: "2026-03-25T00:20:18.418Z"
 progress:
   total_phases: 8
   completed_phases: 5
-  total_plans: 27
-  completed_plans: 27
+  total_plans: 36
+  completed_plans: 28
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** Every person can build a career strategy grounded in validated self-knowledge — free, forever.
-**Current focus:** Phase 04 — chatgpt-gpts
+**Current focus:** Phase 05 — claude-skills-publishing
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 05 (claude-skills-publishing) — EXECUTING
+Plan: 2 of 9
 
 ## Performance Metrics
 
@@ -72,6 +72,7 @@ _Updated after each plan completion_
 | Phase 04 P03 | 456 | 2 tasks | 5 files |
 | Phase 04 P01 | 9 | 2 tasks | 6 files |
 | Phase 04-chatgpt-gpts P02 | 8 | 2 tasks | 6 files |
+| Phase 05-claude-skills-publishing P01 | 180m | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -138,6 +139,10 @@ Recent decisions affecting current work:
 - [Phase 04]: Profile Interchange Format v1 YAML compatibility established via profile-format.md knowledge file referenced from instructions
 - [Phase 04-chatgpt-gpts]: instructions.md is a routing layer only (~878 words); all per-tool implementation in knowledge files for RAG retrieval
 - [Phase 04-chatgpt-gpts]: MIND-SAFE tiers defined inline in instructions.md for low-latency safety checks; full tier definitions also in tools-menu.md
+- [Phase 05-claude-skills-publishing]: Test output directory is .planning/phases/05-stress-testing/ (separate from plan artifacts directory)
+- [Phase 05-claude-skills-publishing]: Voice compliance tests (V-xx) added to all 5 skills — not just ghost-check as spec showed
+- [Phase 05-claude-skills-publishing]: Safety hard failure override: dimension 2 or 3 score of 1 = automatic FAIL regardless of total session score
+- [Phase 05-claude-skills-publishing]: Cross-skill Chain A handoff tests (X-01..X-06) are publishing gate for the full system
 
 ### Pending Todos
 
@@ -156,6 +161,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T19:49:16Z
-Stopped at: Completed quick task 260324-kd3 (13 visual QA fixes + desktop-first responsive overhaul)
+Last session: 2026-03-25T00:20:18.413Z
+Stopped at: Completed 05-01-PLAN.md (test infrastructure: 128 eval cases, 12 personas, 10 playbooks, grading rubrics)
 Resume file: None
