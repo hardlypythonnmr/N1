@@ -4,6 +4,8 @@
 
 **700+ studies. 25+ frameworks. Zero cost.**
 
+> **Here to replicate the pattern, not use the tool?** Open [FOR-BUILDERS.md](FOR-BUILDERS.md) — read order, architecture diagram, what to steal, what's not done.
+
 ---
 
 ## El Sistema Eres Tu

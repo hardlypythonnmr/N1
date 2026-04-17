@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 500" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <style>
+    .t { fill: #1a1a1a; }
+    .m { fill: #666; }
+    .s { stroke: #1a1a1a; }
+    .sm { stroke: #999; }
+    @media (prefers-color-scheme: dark) {
+      .t { fill: #e5e5e5; }
+      .m { fill: #999; }
+      .s { stroke: #e5e5e5; }
+      .sm { stroke: #666; }
+    }
+    .accent { stroke: #ff9068; stroke-width: 2; }
+    .accent-fill { fill: #ff9068; }
+    .box { fill: none; stroke-width: 1; }
+    .label { font-size: 11px; font-weight: 600; }
+    .small { font-size: 9px; }
+    .tiny { font-size: 8px; letter-spacing: 1.5px; font-weight: 600; }
+    .dashed { stroke-dasharray: 4 3; }
+  </style>
+
+  <!-- Title -->
+  <text x="280" y="26" text-anchor="middle" font-size="15" font-weight="700" class="t">N1 — System Architecture</text>
+  <text x="280" y="44" text-anchor="middle" font-size="10" class="m">el sistema eres vos</text>
+
+  <!-- Entry points label -->
+  <text x="280" y="74" text-anchor="middle" class="tiny m">ENTRY POINTS</text>
+
+  <!-- Three entry boxes -->
+  <rect x="20" y="86" width="166" height="64" rx="6" class="box accent"/>
+  <text x="103" y="110" text-anchor="middle" class="label t">Claude Skills</text>
+  <text x="103" y="126" text-anchor="middle" class="small m">5 SKILL.md files</text>
+  <text x="103" y="140" text-anchor="middle" class="small m">→ Claude Projects</text>
+
+  <rect x="197" y="86" width="166" height="64" rx="6" class="box accent"/>
+  <text x="280" y="110" text-anchor="middle" class="label t">ChatGPT GPTs</text>
+  <text x="280" y="126" text-anchor="middle" class="small m">4 GPT configs</text>
+  <text x="280" y="140" text-anchor="middle" class="small m">→ GPT Store</text>
+
+  <rect x="374" y="86" width="166" height="64" rx="6" class="box accent"/>
+  <text x="457" y="110" text-anchor="middle" class="label t">Static Web Tools</text>
+  <text x="457" y="126" text-anchor="middle" class="small m">7 HTML instruments</text>
+  <text x="457" y="140" text-anchor="middle" class="small m">→ GitHub Pages</text>
+
+  <!-- Connector lines down -->
+  <line x1="103" y1="150" x2="103" y2="186" class="box sm"/>
+  <line x1="280" y1="150" x2="280" y2="186" class="box sm"/>
+  <line x1="457" y1="150" x2="457" y2="186" class="box sm"/>
+
+  <!-- Shared foundation -->
+  <rect x="20" y="186" width="520" height="96" rx="6" class="box sm dashed"/>
+  <text x="280" y="204" text-anchor="middle" class="tiny m">SHARED FOUNDATION (DRY — loaded by all entry points)</text>
+
+  <text x="80" y="230" text-anchor="middle" class="small t" font-weight="600">safety-protocol</text>
+  <text x="80" y="244" text-anchor="middle" class="small m">MIND-SAFE</text>
+  <text x="80" y="256" text-anchor="middle" class="small m">3-tier crisis</text>
+
+  <text x="180" y="230" text-anchor="middle" class="small t" font-weight="600">voice-guide</text>
+  <text x="180" y="244" text-anchor="middle" class="small m">voseo colombiano</text>
+  <text x="180" y="256" text-anchor="middle" class="small m">anti-corporate</text>
+
+  <text x="280" y="230" text-anchor="middle" class="small t" font-weight="600">research-base</text>
+  <text x="280" y="244" text-anchor="middle" class="small m">25+ frameworks</text>
+  <text x="280" y="256" text-anchor="middle" class="small m">pre-formatted citations</text>
+
+  <text x="380" y="230" text-anchor="middle" class="small t" font-weight="600">prompting-stack</text>
+  <text x="380" y="244" text-anchor="middle" class="small m">ACT · MI · Socratic</text>
+  <text x="380" y="256" text-anchor="middle" class="small m">(internal only)</text>
+
+  <text x="480" y="230" text-anchor="middle" class="small t" font-weight="600">profile-format</text>
+  <text x="480" y="244" text-anchor="middle" class="small m">YAML v1.0</text>
+  <text x="480" y="256" text-anchor="middle" class="small m">schema</text>
+
+  <!-- Arrow down from foundation -->
+  <line x1="280" y1="282" x2="280" y2="314" class="box sm"/>
+  <polygon points="276,309 284,309 280,317" class="accent-fill"/>
+
+  <!-- User journey -->
+  <text x="280" y="332" text-anchor="middle" class="tiny m">USER SESSION</text>
+  <rect x="20" y="342" width="520" height="64" rx="6" class="box sm"/>
+  <text x="280" y="366" text-anchor="middle" class="label t">Triage → Busca Adentro → Construye Afuera</text>
+  <text x="280" y="383" text-anchor="middle" class="small m">values · strengths · identity · purpose  →  career strategy</text>
+  <text x="280" y="397" text-anchor="middle" class="small m">(Schlossberg 4S · SCCT · ACT · Protean Career Theory — never named)</text>
+
+  <!-- Arrow down to YAML -->
+  <line x1="280" y1="406" x2="280" y2="438" class="box sm"/>
+  <polygon points="276,433 284,433 280,441" class="accent-fill"/>
+
+  <!-- Profile YAML output -->
+  <rect x="150" y="444" width="260" height="44" rx="6" class="box accent"/>
+  <text x="280" y="465" text-anchor="middle" class="label accent-fill">YAML Profile (portable)</text>
+  <text x="280" y="481" text-anchor="middle" class="small m">copy-paste across Claude · ChatGPT · web</text>
+</svg>
