@@ -111,29 +111,34 @@ RIGHT: "Let's look at what matters most to you and what might be getting in the 
 
 ### Data flow
 
-User session → triage (crisis/exploration/growth + career path) → recommended tool sequence
-→ YAML profile produced → profile portable across tools (clipboard copy/paste)
-→ Construye Afuera reads profile → career action plan adapted per path
+User session → 1-question router ("What's blocking you now?") → 1 of 5 skills
+→ Skill produces tangible artifacts (CV/LinkedIn rewrite, interview drills, role-archetype, momentum plan, negotiation script)
+→ YAML profile updated and portable across skills (clipboard copy/paste)
+→ Next skill in sequence if applicable (Prepare → Get Interviews → Win Interviews → Negotiate)
 
 ### Shared foundation (loaded by all skills)
 
 shared/prompting-stack.md → shared/voice-guide.md → shared/safety-protocol.md → shared/research-base.md
 
-### Tool inventory
+### Tool inventory (v2.0 — 2026-04-21)
 
-**AI Skills (5 total):**
+**AI Skills (5 total — JTBD-aligned):**
 
-1. `n1-busca-adentro` — 4 self-knowledge dimensions (values, strengths, identity, purpose)
-2. `n1-construye-afuera` — career strategy tools (CV audit, interview prep, negotiate, STAR builder)
-3. `n1-system` — full integrated system (onboarding + triage + evolution tracking)
-4. `n1-ghost-check` — standalone viral tool (job posting red flags)
-5. `n1-compass` — standalone hook (CAAS-12 adaptability assessment)
+1. `n1-get-interviews` — dual optimization (ATS + recruiter scan) + skill-to-role translation + ghost-check. Replaces CV Audit + LinkedIn + Job Hunt + Network Map + Ghost Check (v1).
+2. `n1-win-interviews` — text + voice interview coaching with speech analysis. Replaces Interview Prep + STAR Builder (v1).
+3. `n1-prepare` — compressed self-knowledge (CAAS-short + MLQ-short + role-archetype) + skill-gap map 3/6/12. Consolidates busca-adentro + compass + bulls-eye + mlq (v1 skills).
+4. `n1-resilience` — SDT diagnostic + momentum tracking + implementation intentions. NEW in v2.0.
+5. `n1-negotiate` — LATAM comp benchmark + 3-script simulation + walk-away analysis. Replaces construye-afuera's negotiation (v1).
 
-**Static web tools (7 total):**
-Ghost Check, Compass/CAAS-12, Bull's Eye, MLQ-10, Flow Logger, Runway Calculator, Landing Page
+**Static web tools (7 total — preserved):**
+Ghost Check, Compass/CAAS-12, Bull's Eye, MLQ-10, Flow Logger, Runway Calculator, Mi Perfil N1.
+Landing page rewritten with 1-Q router + cockpit-hybrid design (see `design-system.md`).
 
-**ChatGPT GPTs (4 total):**
-Busca Adentro, Construye Afuera, Compass, Ghost Check
+**Archived skills (moved to `skills/_archive/`):**
+busca-adentro, construye-afuera, compass, ghost-check, n1-system, n1-post.
+
+**ChatGPT GPTs (4 total — unchanged for now):**
+Busca Adentro, Construye Afuera, Compass, Ghost Check. Will migrate to match v2.0 skill slate in a later phase.
 
 <!-- GSD:architecture-end -->
 

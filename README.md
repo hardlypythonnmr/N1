@@ -1,198 +1,207 @@
-# N1 — El Sistema Eres Tu
+# N1 — El Sistema Eres Tú
 
-> Career strategy grounded in validated self-knowledge. Free forever.
+> 5 AI-native skills para conseguir y ganar entrevistas. Spanish-primary. LATAM-focused. Gratis. Open source.
 
-**700+ studies. 25+ frameworks. Zero cost.**
+**Una pregunta te lleva a la skill que necesitás. Cinco skills cubren el ciclo completo: desde "no sé a qué apuntar" hasta "tengo oferta y necesito negociar."**
 
-> **Here to replicate the pattern, not use the tool?** Open [FOR-BUILDERS.md](FOR-BUILDERS.md) — read order, architecture diagram, what to steal, what's not done.
-
----
-
-## El Sistema Eres Tu
-
-N1 delivers research-backed career guidance through AI skills, static web instruments, and content — free forever. The methodology integrates 25+ validated psychological frameworks (CAAS, ACT, MLQ, VIA, SCCT, Big Five) to help people build self-knowledge and translate it into career action. The system is not a product you subscribe to — it's a methodology that becomes yours.
-
-Target audience: professionals in LATAM navigating career transitions. Beachhead: senior software engineers at outsourcing firms (Globant, EPAM, Perficient) in Colombia.
+> **¿Buscás el código para forkear / replicar?** Abrí [FOR-BUILDERS.md](FOR-BUILDERS.md) — orden de lectura, arquitectura, qué robar, qué está pendiente.
 
 ---
 
-## What Does Not Exist (Until Now)
+## El Diagnóstico
 
-A tool that:
+Una pregunta, cinco caminos:
 
-1. Measures using validated instruments (CAAS-12, MLQ-10, Big Five, VIA, AAQ-II)
-2. Intervenes using evidence-based exercises (ACT values, STAR builder, crafting experiments)
-3. Tracks longitudinal progress (re-measurement, alignment scores over time)
-4. Integrates frameworks into a coherent self-knowledge profile
-5. Cites every recommendation to a specific study
-6. Does all of the above at zero cost, in Spanish, for LATAM
+**¿Qué te tiene bloqueado ahora mismo?**
 
-Key finding: CAAS (career adaptability) has 149 studies and 82,519 participants. No consumer tool exists.
+| Bloqueo | Skill |
+|---------|-------|
+| Aplico y nadie me contesta | [Get Interviews](skills/get-interviews/SKILL.md) |
+| Llego a entrevistas pero no convierto | [Win Interviews](skills/win-interviews/SKILL.md) |
+| No sé a qué rol apuntar, o siento que no estoy listo | [Prepare](skills/prepare/SKILL.md) |
+| Me estoy quemando / perdí el momentum | [Resilience](skills/resilience/SKILL.md) |
+| Tengo oferta, no sé si aceptar o negociar | [Negotiate](skills/negotiate/SKILL.md) |
 
 ---
 
-## Architecture
+## Las 5 Skills
+
+### 1. Get Interviews · conseguir entrevistas
+
+El moat AI-native: optimización **dual** de CV + LinkedIn para pasar el filtro ATS y al mismo tiempo ganar atención en el escaneo de 6-8 segundos del reclutador humano. Incluye traducción skill-to-role (mapear tus skills reales a familias de roles más allá del título exacto), detección de ghost-jobs con score probabilístico, y reescritura concreta del material.
+
+Reemplaza: CV Audit + LinkedIn + Job Hunt + Network Map + Ghost Check (todas las skills v1).
+
+### 2. Win Interviews · ganar entrevistas
+
+Dos modos integrados: **texto** (análisis de hedging, wandering, verbos débiles, outcomes faltantes) y **voz** (transcripción + análisis de filler words, WPM, prosodia, hedging density). Extrae 5-6 historias STAR desde tu background y las indexa por competencia para que respondas cualquier pregunta por pattern-match. Calibración por rol (startup vs enterprise, técnico vs client-facing).
+
+Reemplaza: Interview Prep + STAR Builder (skills v1).
+
+### 3. Prepare · saber a qué apuntar
+
+El diferenciador proprietario de N1: la única skill que usa instrumentos psicológicos validados (CAAS, MLQ, ACT values, VIA, SCCT) en un paso compacto de 10-30 min. Produce un **role-archetype profile** (YAML portable), un snapshot de adaptabilidad de carrera (CAAS-short), y un mapa de skill-gap con plan 3/6/12 meses.
+
+Consolida la esencia de: busca-adentro + compass + bulls-eye + mlq (como skills Claude; las herramientas web siguen activas en `web/`).
+
+### 4. Resilience · quedarse en el proceso
+
+Resuelve el killer silencioso de toda búsqueda laboral: el abandono por agotamiento antes de llegar a una oferta. Diagnóstico SDT (autonomía / competencia / pertenencia) + tracking de momentum + implementation intentions (Gollwitzer) + micro-goals basados en activación conductual.
+
+Skill nueva en N1 v2.0.
+
+### 5. Negotiate · cerrar el deal
+
+Benchmark de compensación LATAM-aware + cálculo de leverage (competing offers, time pressure, BATNA, runway) + simulación de negociación en 3 estilos (conservadora, asertiva, firme) con scripts completos y respuestas a las 7 objeciones más comunes + análisis walk-away.
+
+Reemplaza: skill de negociación en construye-afuera.
+
+---
+
+## Arquitectura
 
 ```
 ENTRY POINTS
-├── Claude Skills (skills/) — installed in Claude Projects
-├── ChatGPT GPTs (gpts/) — GPT Store
-└── Static Web Tools (web/) — GitHub Pages, no login
+├── Claude Skills (skills/)         — instalación en Claude Projects
+├── ChatGPT GPTs (gpts/)            — GPT Store (versiones compactas)
+└── Static Web Tools (web/)         — GitHub Pages, sin login
 
-SHARED FOUNDATION (loaded by all tools)
-├── shared/profile-format.md — YAML schema (all tools interoperate)
-├── shared/prompting-stack.md — ACT + Socratic + MI + CBT + CoE
-├── shared/voice-guide.md — Colombian Spanish, anti-corporate, cited
-├── shared/safety-protocol.md — MIND-SAFE, scope disclaimer, crisis resources
-└── shared/research-base.md — 25+ frameworks condensed (~4K tokens)
+SHARED FOUNDATION (cargado por todas las skills)
+├── shared/profile-format.md        — schema YAML
+├── shared/voice-guide.md           — voseo, anti-corporate, sin em-dashes
+├── shared/safety-protocol.md       — MIND-SAFE, scope disclaimer, crisis
+├── shared/research-base.md         — 25+ frameworks condensados
+└── shared/prompting-stack.md       — ACT + Socratic + MI + CBT
 
 USER JOURNEY
-Triage (situation + career path)
-→ Busca Adentro (values → strengths → identity → purpose)
-→ Profile YAML (portable across all tools)
-→ Construye Afuera (CV, interview, negotiate, network, job hunt)
-→ Shareable visual scorecard
+Router question (1 Q)
+  → Skill (1 de 5)
+  → Outputs tangibles + perfil YAML actualizado
+  → Siguiente skill si corresponde
 ```
 
----
+### Design System
 
-## Tool Directory
-
-### Claude Skills
-
-| Skill               | Trigger                                        | What it does                    |
-| ------------------- | ---------------------------------------------- | ------------------------------- |
-| n1-busca-adentro    | "career direction", "self-knowledge", "values" | All 4 self-knowledge dimensions |
-| n1-construye-afuera | "CV", "interview", "negotiate", "job search"   | All career strategy tools       |
-| n1-system           | "career system", "N1", "el sistema"            | Full integrated experience      |
-| n1-ghost-check      | "ghost job", "is this real", "job posting"     | Ghost job detector              |
-| n1-compass          | "career readiness", "CAAS", "adaptability"     | Career readiness snapshot       |
-
-### Static Web Tools (GitHub Pages)
-
-| Tool              | What it does                                           | Output                              |
-| ----------------- | ------------------------------------------------------ | ----------------------------------- |
-| Ghost Check       | Paste job posting → get ghost score + signal breakdown | Score + profile export              |
-| Compass / CAAS-12 | 12-item career adaptability assessment                 | Radar chart + profile export        |
-| Bull's Eye        | ACT values alignment exercise                          | Visual + profile export             |
-| MLQ-10            | Meaning in life questionnaire                          | Quadrant placement + profile export |
-| Flow Logger       | Challenge-skill activity tracking                      | Flow zone chart + profile export    |
-| Runway Calculator | Financial runway (COP/USD)                             | 3 scenarios                         |
-
-### ChatGPT GPTs
-
-| GPT                 | Purpose                      |
-| ------------------- | ---------------------------- |
-| N1 Busca Adentro    | All 4 dimensions, compressed |
-| N1 Construye Afuera | Career tools, compressed     |
-| N1 Compass          | Quick career readiness       |
-| N1 Ghost Check      | Ghost job detection          |
+El sistema de diseño v2.0 se documenta en [design-system.md](design-system.md) (raíz del repo). Es copy-paste ready para Claude Design u otros generadores UI. Hibrida estructura editorial (tipografía Playfair / Cormorant / IBM Plex Mono) con el acento N1 orange. Dual-theme (dark / light).
 
 ---
 
-## Career Path Taxonomy
+## Static Web Tools (GitHub Pages)
 
-N1 adapts all tools to your specific move:
+Las herramientas web siguen activas, funcionan sin instalación, guardan perfil en localStorage:
 
-**Stay & Grow** — Promotion, lateral transfer, role expansion, environment optimization
-
-**Move** — Scale up/down, sector pivot, function pivot, complete career change, return to workforce
-
-**Go Independent** — Freelance, startup, portfolio career, creator business
-
-**Pause & Reset** — Strategic sabbatical, recovery, reskilling, exploration phase
-
-Every tool adapts: CV Audit, Interview Prep, Negotiate, Network Map, Job Hunt all change based on which path you're on.
+| Tool | Qué hace |
+|------|----------|
+| [Ghost Check](web/ghost-check/index.html) | Score de ghost-job con desglose de señales |
+| [Compass · CAAS-12](web/compass/index.html) | Adaptabilidad de carrera (12 ítems validados) |
+| [Bull's Eye](web/bulls-eye/index.html) | Alineación con valores (ACT) |
+| [MLQ-10](web/mlq/index.html) | Sentido / propósito en el trabajo |
+| [Flow Logger](web/flow-logger/index.html) | Tracking de actividades de flow |
+| [Runway Calculator](web/runway/index.html) | Runway financiero (COP / USD) |
+| [Mi Perfil N1](web/profile/index.html) | Sintetizar todos los resultados |
 
 ---
 
-## Evidence Base
+## Base de Investigación
 
-25+ validated frameworks. Every N1 recommendation cites a specific study.
+Cada recomendación cita un estudio específico. Ningún claim sin evidencia.
 
-**Meta-theory:** Protean Career Theory (Hall), Career Chaos Theory (Pryor & Bright), Planned Happenstance (Krumboltz), Self-Determination Theory (Deci & Ryan)
+**Meta-theory:** Protean Career Theory (Hall), Career Chaos Theory (Pryor & Bright), Planned Happenstance (Krumboltz), Self-Determination Theory (Deci & Ryan).
 
-**Integrative spine:** SCCT (Lent, Brown & Hackett), Schlossberg 4S
+**Integrative spine:** SCCT (Lent, Brown & Hackett), Schlossberg 4S.
 
-**Self-knowledge:** ACT Values Clarification (Hayes), Schwartz Basic Values, Bandura Self-Efficacy, VIA Character Strengths (Peterson & Seligman), Big Five (Costa & McCrae), Flow Theory (Csikszentmihalyi), Working Identity (Ibarra), Identity Status (Marcia), CAAS (Savickas), PsyCap HERO (Luthans), MLQ (Steger), Logotherapy (Frankl), Ryff PWB, Life Design (Burnett & Evans)
+**Self-knowledge:** ACT Values (Hayes), Schwartz Basic Values, Bandura Self-Efficacy, VIA Character Strengths, Big Five, Flow (Csikszentmihalyi), Working Identity (Ibarra), Identity Status (Marcia), CAAS (Savickas), PsyCap HERO (Luthans), MLQ (Steger), Logotherapy (Frankl), Ryff PWB, Life Design.
 
-**Career strategy:** Granovetter Weak Ties, AAQ-II (Hayes), CDMSE-SF (Betz & Taylor)
+**Career strategy:** Granovetter Weak Ties, AAQ-II (Hayes), CDMSE-SF (Betz), Gollwitzer Implementation Intentions.
 
-**Key statistics:**
+**Interview science:** Latham Structured Interview, Bucholtz & Hall (identity-in-interaction), Final Round AI / Yoodli aggregate data.
 
-- 91% of people experience purpose anxiety
-- Purpose in life reduces all-cause mortality by 17% (136,265 participants)
-- CAAS: 149 studies, 82,519 participants — no consumer tool existed
-- ACT effect size: g = 0.57–0.82 (large)
-- Only 3–5% of career changers access professional guidance
+**Stats clave:**
+- 91% de las personas experimentan ansiedad de propósito (McKinsey)
+- CAAS: 149 estudios, 82,519 participantes
+- ACT efecto grande (g = 0.57–0.82)
+- 58% de CVs filtrados por ATS (Jobscan 2026)
+- 67% éxito con drills estructurados vs 23% con preparación genérica (Final Round AI)
+- Gollwitzer implementation intentions: d = 0.65 en 94 estudios
 
 ---
 
 ## Profile Interchange Format
 
-All N1 tools produce and consume a standard YAML profile. Copy from one tool, paste into another.
-
-Schema: `shared/profile-format.md`
-Blank template: `shared/profile-template.yaml`
+Todas las skills producen y consumen YAML compatible con `shared/profile-format.md`:
 
 ```yaml
 version: "1.0"
 triage:
-  situation: null # crisis | exploration | growth
-  career_path: null # stay_grow | move | go_independent | pause_reset
+  situation: null
+  career_path: null
 values:
   completed: false
   core_values: []
-# ... (full schema in shared/profile-format.md)
+strengths:
+  completed: false
+identity:
+  completed: false
+purpose:
+  completed: false
+# ...
 ```
 
----
-
-## How to Use
-
-### Via Claude (recommended)
-
-1. Install the Claude Skill: copy `skills/[name]/SKILL.md` into a Claude Project
-2. Start a session with a trigger phrase (see Tool Directory)
-3. Complete an assessment → get YAML profile output
-4. Paste profile into another skill for richer results
-
-### Via ChatGPT
-
-1. Find "N1 [Busca Adentro / Construye Afuera / Ghost Check / Compass]" in the GPT Store
-2. Start a conversation in Spanish
-
-### Via Static Web
-
-1. Visit the GitHub Pages URL (coming soon)
-2. No login, no install, no cost
-
-### Profile Portability
-
-Static web tools export YAML. Claude Skills read YAML. GPTs output YAML.
-Copy-paste your profile between tools for continuity.
+Copiás de una skill, pegás en otra. Sin cuenta, sin API. Portable por clipboard.
 
 ---
 
-## Safety and Scope
+## Cómo Usar
 
-N1 is a career guidance tool, not therapy. See `shared/safety-protocol.md` for:
+### Opción A · Claude Skills
 
-- Scope disclaimer (required on every session)
-- MIND-SAFE crisis detection and response protocol
-- Crisis resources (Colombia: Línea 106, International: findahelpline.com)
-- Referral criteria for human professionals
+1. Cloná el repo
+2. Copiá `skills/[nombre]/` dentro de un Claude Project
+3. Arrancá sesión con una frase trigger (ver cada SKILL.md)
+4. La skill te guía
 
-Assessment pacing: validated instruments have minimum retake intervals (4–6 weeks for CAAS and MLQ).
+### Opción B · ChatGPT GPTs
+
+1. Buscá "N1" en el GPT Store
+2. Hay versiones compactas de las 4 skills principales
+
+### Opción C · Web
+
+1. `https://n1career.github.io/N1/web/` (o tu fork)
+2. Sin instalación, sin cuenta
+3. Guarda perfil en localStorage
+
+---
+
+## Safety & Scope
+
+N1 es orientación profesional basada en investigación. **No es terapia.** Ver `shared/safety-protocol.md` para:
+
+- Scope disclaimer (obligatorio en cada sesión)
+- MIND-SAFE: detección de crisis en 3 niveles
+- Crisis resources: findahelpline.com · Colombia: Línea 106
+- Referral criteria para profesionales humanos
+
+Pacing: instrumentos validados (CAAS, MLQ) tienen 4-6 semanas mínimo entre re-mediciones.
+
+---
+
+## Language Strategy
+
+- **Primary:** Spanish (Colombian voseo) — mínimo todas las SKILL.md, todos los refs, toda la web copy
+- **Mirror:** English como courtesy mirror
+- **No em-dashes** en user-facing text (ver voice-guide.md §4)
 
 ---
 
 ## License
 
-MIT License. Free to use, fork, and adapt.
+MIT License. Free to fork and adapt.
 
-Built by Nicolás — sharing what took years to learn.
+Construido por Nicolás — compartiendo lo que tomó años aprender.
 
 ---
 
 _El sistema eres tú._
+
+_v2.0 · 2026-04-21 · Redesign: 5 skills JTBD-aligned + 1-Q router + cockpit-hybrid design system._
