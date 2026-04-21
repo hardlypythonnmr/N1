@@ -1,0 +1,645 @@
+/* ════════════════════════════════════════
+   N1 Design System v3.0 — LATAM Solarpunk
+   "El sistema sos vos."
+   Dual theme: data-theme="luna" (night, default) | "sol" (day)
+   Palette: Andean + Mexican muralism + Colombian highlands
+   ════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,0..100;1,9..144,400..700,0..100&family=Lora:ital,wght@0,400..600;1,400&family=JetBrains+Mono:wght@300..500&display=swap");
+
+/* ── 1. COLOR TOKENS ───────────────────── */
+
+/* Luna mode — default. Deep forest / moonlit night */
+:root[data-theme="luna"], :root {
+  --bg:          #1A2420;  /* deep selva, moss under moon */
+  --bg-lift:     #232F2B;  /* slightly warmer elevated */
+  --bg-card:     #232F2B;
+  --ink:         #F3E9D7;  /* moon cream */
+  --ink-dim:     #A39A87;  /* muted warm */
+  --ink-hush:    #6B6154;  /* adobe shadow */
+  --accent:      #F5A64A;  /* saffron / azafrán — sun at dawn */
+  --accent-deep: #DA7B3A;  /* deeper sunset */
+  --earth:       #C9864A;  /* ochre clay */
+  --selva:       #7FB090;  /* sage green in moonlight */
+  --cobalto:     #7FA7C4;  /* moonlit muralist blue */
+  --cacao:       #3C2A1F;  /* deep warm */
+  --danger:      #D47768;  /* muted red */
+  --positive:    #7FB090;
+  --negative:    #D47768;
+  --line:        #2E3A35;
+  --rule:        #3E4A44;
+  --gradient-dawn: linear-gradient(135deg, #1A2420 0%, #232F2B 45%, #3C2A1F 100%);
+}
+
+/* Sol mode — day. Cream paper, warm earth */
+:root[data-theme="sol"] {
+  --bg:          #F7F1E5;  /* cream paper, handmade */
+  --bg-lift:     #FDF8EC;  /* lightest cream */
+  --bg-card:     #FDF8EC;
+  --ink:         #2A1F1A;  /* deep cacao */
+  --ink-dim:     #6B5B4F;  /* warm brown */
+  --ink-hush:    #9A8A7E;  /* adobe */
+  --accent:      #DA7B3A;  /* terracotta / quindío sunset */
+  --accent-deep: #B8631F;  /* deeper terracotta */
+  --earth:       #8B5A2B;  /* rich earth */
+  --selva:       #4A8B6F;  /* jungle green, daylight */
+  --cobalto:     #3E6F8E;  /* mexican muralist cobalt */
+  --cacao:       #2A1F1A;
+  --danger:      #A63D2E;  /* pre-columbian red */
+  --positive:    #4A8B6F;
+  --negative:    #A63D2E;
+  --line:        #E5DCCF;  /* bone */
+  --rule:        #C9B9A3;  /* tan */
+  --gradient-dawn: linear-gradient(135deg, #F7F1E5 0%, #FDF8EC 55%, #F5DDB4 100%);
+}
+
+/* ── 2. RESET + BASE ───────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: "Lora", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--bg);
+  background-image: var(--gradient-dawn);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga" 1, "kern" 1, "onum" 1;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s ease, color 0.2s ease; }
+a:hover { color: var(--accent-deep); border-bottom-color: var(--accent); }
+
+/* ── 3. LAYOUT ─────────────────────────── */
+.body-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 40px;
+}
+.main-grid {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 56px;
+  margin-top: 40px;
+}
+@media (max-width: 820px) {
+  .body-wrap { padding: 36px 22px; }
+  .main-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── 4. MASTHEAD ───────────────────────── */
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.masthead::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--selva) 35%, var(--cobalto) 70%, var(--earth) 100%);
+  opacity: 0.55;
+}
+.logo {
+  font-family: "Fraunces", "Playfair Display", serif;
+  font-size: 19px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 100, "opsz" 14;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-transform: none;
+}
+.logo strong {
+  font-weight: 700;
+  font-style: italic;
+  color: var(--accent);
+  font-variation-settings: "SOFT" 50, "opsz" 18;
+}
+.logo em {
+  font-family: "JetBrains Mono", monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+  margin-left: 14px;
+  vertical-align: 2px;
+}
+.mast-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.date-mono {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: var(--ink-hush);
+}
+.theme-toggle {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: var(--ink-dim);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in oklab, var(--bg-card), var(--accent) 6%);
+}
+
+/* ── 5. HEADLINE BAND ──────────────────── */
+.headline-band {
+  padding: 56px 0 36px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.headline-band::after {
+  /* botanical SVG accent — top-right sun/leaf motif */
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: 0;
+  width: 140px;
+  height: 140px;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140' fill='none' stroke='%23F5A64A' stroke-width='1.2'%3E%3Ccircle cx='70' cy='70' r='28'/%3E%3Cpath d='M70 20 Q 72 36 70 44 Q 68 36 70 20Z' fill='%23F5A64A' opacity='0.7'/%3E%3Cpath d='M70 96 Q 72 112 70 120 Q 68 112 70 96Z' fill='%23F5A64A' opacity='0.7'/%3E%3Cpath d='M20 70 Q 36 72 44 70 Q 36 68 20 70Z' fill='%23F5A64A' opacity='0.7'/%3E%3Cpath d='M96 70 Q 112 72 120 70 Q 112 68 96 70Z' fill='%23F5A64A' opacity='0.7'/%3E%3Cpath d='M35 35 Q 48 42 54 54 Q 48 42 35 35Z' fill='%23F5A64A' opacity='0.45'/%3E%3Cpath d='M105 35 Q 92 42 86 54 Q 92 42 105 35Z' fill='%23F5A64A' opacity='0.45'/%3E%3Cpath d='M35 105 Q 48 98 54 86 Q 48 98 35 105Z' fill='%23F5A64A' opacity='0.45'/%3E%3Cpath d='M105 105 Q 92 98 86 86 Q 92 98 105 105Z' fill='%23F5A64A' opacity='0.45'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.regime-pre {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+  margin-bottom: 14px;
+}
+.regime-head {
+  font-family: "Fraunces", serif;
+  font-size: 52px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 80, "opsz" 144;
+  line-height: 1.05;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  max-width: 540px;
+}
+.regime-head em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--accent);
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+}
+.regime-mech {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 300;
+  color: var(--ink-dim);
+  margin-top: 22px;
+  letter-spacing: 0.05em;
+}
+@media (max-width: 820px) {
+  .regime-head { font-size: 38px; }
+  .headline-band::after { width: 90px; height: 90px; top: 14px; opacity: 0.3; }
+}
+
+/* ── 6. STORY ──────────────────────────── */
+.story { margin-bottom: 44px; }
+.story h2 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+  padding-bottom: 12px;
+  margin-bottom: 22px;
+  position: relative;
+}
+.story h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 44px;
+  height: 1px;
+  background: var(--accent);
+}
+.story .lede {
+  font-family: "Fraunces", serif;
+  font-size: 22px;
+  font-weight: 400;
+  font-variation-settings: "SOFT" 60, "opsz" 72;
+  line-height: 1.45;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.story .dek {
+  font-family: "Lora", serif;
+  font-size: 16px;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.story .dek strong { color: var(--ink); font-weight: 600; }
+.story .dek em { font-style: italic; color: var(--selva); font-family: "Fraunces", serif; }
+
+/* ── 7. ROUTER (1-Q diagnostic) ───────── */
+.router-section {
+  margin: 48px 0 40px;
+}
+.router-q {
+  font-family: "Fraunces", serif;
+  font-size: 32px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 70, "opsz" 72;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 32px;
+  letter-spacing: -0.015em;
+}
+.router-q em {
+  color: var(--accent);
+  font-style: italic;
+  font-variation-settings: "SOFT" 40, "opsz" 72;
+}
+.router-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 820px) {
+  .router-options { grid-template-columns: 1fr; }
+}
+
+/* ── 8. SKILL TILE ─────────────────────── */
+.skill-tile {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 26px 24px;
+  text-decoration: none;
+  transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.skill-tile::before {
+  /* top-left leaf corner accent */
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 28px;
+  height: 28px;
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+  border-radius: 12px 0 0 0;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.skill-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px -12px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.skill-tile:hover::before { opacity: 1; }
+
+.skill-tile[data-locked="true"] {
+  opacity: 0.88;
+  cursor: default;
+}
+.skill-tile[data-locked="true"]:hover {
+  transform: translateY(-1px);
+  border-color: var(--earth);
+  box-shadow: 0 6px 20px -10px color-mix(in oklab, var(--earth) 50%, transparent);
+}
+.skill-tile[data-locked="true"]:hover::before {
+  opacity: 1;
+  border-color: var(--earth);
+}
+
+.st-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.st-lock {
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--earth);
+}
+.st-name {
+  font-family: "Fraunces", serif;
+  font-size: 26px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 50, "opsz" 48;
+  line-height: 1.18;
+  color: var(--ink);
+  margin: 14px 0 10px;
+  letter-spacing: -0.01em;
+}
+.st-tagline {
+  font-family: "Lora", serif;
+  font-style: italic;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+.st-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dotted var(--line);
+  padding-top: 14px;
+}
+.st-verb {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-size: 15.5px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 40, "opsz" 18;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.st-verb[data-verb="preparar"] { color: var(--selva); }
+.st-verb[data-verb="resistir"] { color: var(--cobalto); }
+.st-verb[data-verb="negociar"] { color: var(--earth); }
+.st-verb[data-verb="entrenar"] { color: var(--accent-deep); }
+
+.st-arrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 16px;
+  color: var(--ink-hush);
+  transition: color 0.2s, transform 0.2s;
+}
+.skill-tile:hover .st-arrow {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+.skill-tile[data-locked="true"]:hover .st-arrow {
+  color: var(--earth);
+  transform: none;
+}
+
+/* ── 9. SIDEBAR PANELS ─────────────────── */
+.panel {
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 22px 20px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.panel h3 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  position: relative;
+}
+.panel h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+.panel p {
+  font-family: "Lora", serif;
+  font-size: 14.5px;
+  color: var(--ink-dim);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.panel p:last-child { margin-bottom: 0; }
+.panel p strong { color: var(--ink); font-weight: 600; }
+
+/* ── 10. STAT STRIP ────────────────────── */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 40px;
+}
+.stat {
+  padding-left: 18px;
+  border-left: 3px solid var(--accent);
+  position: relative;
+}
+.stat:nth-child(2) { border-left-color: var(--selva); }
+.stat-value {
+  font-family: "Fraunces", serif;
+  font-size: 36px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 30, "opsz" 72;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-family: "Lora", serif;
+  font-size: 14.5px;
+  color: var(--ink-dim);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+.stat-source {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+}
+
+/* ── 11. TOOL LIST (3 valorable tools) ── */
+.tool-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+.tool-item {
+  display: block;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  border-left: 3px solid var(--selva);
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.tool-item:nth-child(2) { border-left-color: var(--accent); }
+.tool-item:nth-child(3) { border-left-color: var(--cobalto); }
+.tool-item:hover {
+  background: color-mix(in oklab, var(--bg-card), var(--accent) 6%);
+  transform: translateX(2px);
+  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  border-left-width: 3px;
+}
+.tool-name {
+  font-family: "Fraunces", serif;
+  font-size: 19px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 60, "opsz" 32;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.tool-sub {
+  font-family: "Lora", serif;
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--ink-dim);
+  line-height: 1.4;
+}
+
+/* ── 12. NOTE / DISCLAIMER ─────────────── */
+.note {
+  border-left: 3px solid var(--accent);
+  background: color-mix(in oklab, var(--bg-card), var(--accent) 5%);
+  padding: 18px 20px;
+  border-radius: 0 10px 10px 0;
+  font-family: "Lora", serif;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+  margin: 28px 0;
+}
+.note strong { color: var(--ink); font-weight: 600; }
+.note a { color: var(--accent); border-bottom: 1px dotted var(--accent); }
+
+/* ── 13. FOOTER ────────────────────────── */
+.footer {
+  margin-top: 72px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 36px;
+  position: relative;
+}
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--earth) 0%, var(--accent) 35%, var(--selva) 70%, var(--cobalto) 100%);
+  opacity: 0.6;
+}
+@media (max-width: 820px) {
+  .footer { grid-template-columns: 1fr; gap: 22px; }
+}
+.epigraph {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 80, "opsz" 24;
+  color: var(--ink);
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+.epigraph span {
+  display: block;
+  font-size: 14px;
+  color: var(--ink-dim);
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 10px;
+  letter-spacing: 0;
+}
+.counter {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: var(--ink-hush);
+  text-align: right;
+}
+.counter-row { display: flex; gap: 18px; justify-content: flex-end; flex-wrap: wrap; margin-bottom: 10px; }
+.counter a { color: var(--ink-hush); border-bottom: 1px dotted transparent; }
+.counter a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── 14. A11Y FOCUS ────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ── 15. REDUCED MOTION ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── 16. UTILS ─────────────────────────── */
+.hidden { display: none !important; }
+.mono {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+}
+
+/* ── 17. PRE-COLUMBIAN DIVIDER ─────────── */
+.divider-pattern {
+  text-align: center;
+  margin: 40px 0;
+  color: var(--ink-hush);
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 1.2em;
+  font-size: 10px;
+  opacity: 0.55;
+}
