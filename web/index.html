@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="luna">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>N1 — El Sistema Eres Tú</title>
-  <meta name="description" content="Herramientas AI-native para conseguir y ganar entrevistas. Spanish-primary. LATAM-focused. Basado en investigación validada. Gratis." />
+  <title>N1 — El sistema sos vos</title>
+  <meta name="description" content="Dos skills gratis para conseguir y ganar entrevistas. Tres skills más en la biblioteca de práctica. Spanish-primary. LATAM." />
 
-  <meta property="og:title" content="N1 — El Sistema Eres Tú" />
-  <meta property="og:description" content="5 skills para encontrar trabajo. Una pregunta te lleva a la que necesitás. Spanish-primary. LATAM. Gratis." />
+  <meta property="og:title" content="N1 — El sistema sos vos" />
+  <meta property="og:description" content="Dos skills gratis para conseguir y ganar entrevistas. Basado en investigación validada. LATAM-rooted." />
   <meta property="og:type" content="website" />
 
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23FF9068'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Playfair Display, Georgia, serif' font-weight='700' font-style='italic' font-size='18' fill='%231B1820'>N1</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23F5A64A'/><text x='50%25' y='52%25' dominant-baseline='central' text-anchor='middle' font-family='Fraunces, Georgia, serif' font-weight='700' font-style='italic' font-size='17' fill='%231A2420'>N1</text></svg>" />
 
-  <link rel="stylesheet" href="styles-v2.css" />
+  <link rel="stylesheet" href="styles-v3.css" />
 </head>
 <body>
 
@@ -21,11 +21,12 @@
     <!-- MASTHEAD -->
     <header class="masthead" role="banner">
       <div class="logo">
-        N1 <em>El Sistema Eres Tú</em>
+        N1 <strong>·</strong> el sistema <strong>sos vos</strong>
+        <em>latam · 2026</em>
       </div>
       <div class="mast-right">
         <span class="date-mono" id="date-label">abril 2026</span>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">◐ claro</button>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">sol</button>
       </div>
     </header>
 
@@ -33,10 +34,10 @@
     <section class="headline-band" aria-labelledby="hero-head">
       <p class="regime-pre">Estrategia de carrera · LATAM · 2026</p>
       <h1 class="regime-head" id="hero-head">
-        El sistema <em>eres vos.</em>
+        El sistema <em>sos vos.</em>
       </h1>
       <p class="regime-mech">
-        5 skills AI-native para conseguir y ganar entrevistas · gratis · código abierto · basado en 700+ estudios
+        2 skills gratis · 3 más en la biblioteca de práctica · basado en 700+ estudios · Colombian voseo
       </p>
     </section>
 
@@ -44,7 +45,7 @@
     <div class="stats-strip" role="list" aria-label="Estadísticas de carrera">
       <div class="stat" role="listitem">
         <div class="stat-value">58%</div>
-        <p class="stat-label">de los CVs son filtrados por ATS antes de llegar a un ser humano.</p>
+        <p class="stat-label">de los CV son filtrados por ATS antes de llegar a un ser humano.</p>
         <p class="stat-source">Jobscan 2026</p>
       </div>
       <div class="stat" role="listitem">
@@ -57,17 +58,18 @@
     <!-- MAIN GRID -->
     <div class="main-grid">
 
-      <!-- LEFT COLUMN — Router + story -->
+      <!-- LEFT — Router + story -->
       <main role="main">
 
         <section class="router-section" id="router" aria-label="Router diagnóstico">
-          <p class="mono" style="margin-bottom: 14px;">El Diagnóstico · 1 pregunta</p>
-          <h2 class="router-q" id="router-question">¿Qué te tiene bloqueado ahora mismo?</h2>
+          <p class="mono" style="margin-bottom: 16px;">El Diagnóstico · 1 pregunta</p>
+          <h2 class="router-q" id="router-question">¿Qué te tiene <em>bloqueado</em> ahora mismo?</h2>
 
           <div class="router-options" role="list">
 
-            <a class="skill-tile" href="#skill-get-interviews" data-skill="get-interviews" role="listitem">
-              <span class="st-label">Skill 01</span>
+            <!-- FREE SKILLS -->
+            <a class="skill-tile" href="https://github.com/hardlypythonnmr/N1/tree/main/skills/get-interviews" data-skill="get-interviews" role="listitem" target="_blank" rel="noopener">
+              <span class="st-label">Skill 01 · gratis</span>
               <h3 class="st-name">Conseguir Entrevistas</h3>
               <p class="st-tagline">Aplicás y nadie te contesta. Auditoría dual (ATS + humano), skill-to-role, ghost-check.</p>
               <div class="st-footer">
@@ -76,28 +78,29 @@
               </div>
             </a>
 
-            <a class="skill-tile" href="#skill-win-interviews" data-skill="win-interviews" role="listitem">
-              <span class="st-label">Skill 02</span>
+            <a class="skill-tile" href="https://github.com/hardlypythonnmr/N1/tree/main/skills/win-interviews" data-skill="win-interviews" role="listitem" target="_blank" rel="noopener">
+              <span class="st-label">Skill 02 · gratis</span>
               <h3 class="st-name">Ganar Entrevistas</h3>
               <p class="st-tagline">Llegás y no convertís. Drills STAR, análisis de voz y texto, matriz 60-seg por rol.</p>
               <div class="st-footer">
-                <span class="st-verb" data-verb="aplicar">ENTRENAR</span>
+                <span class="st-verb" data-verb="entrenar">ENTRENAR</span>
                 <span class="st-arrow">→</span>
               </div>
             </a>
 
-            <a class="skill-tile" href="#skill-prepare" data-skill="prepare" role="listitem">
-              <span class="st-label">Skill 03</span>
+            <!-- PAYWALLED SKILLS — visible, not downloadable -->
+            <a class="skill-tile" href="#unlock" data-skill="prepare" role="listitem" data-locked="true">
+              <span class="st-label">Skill 03 · práctica <span class="st-lock">◐</span></span>
               <h3 class="st-name">Prepararse</h3>
-              <p class="st-tagline">No sabés a qué apuntar. Role-archetype + CAAS + MLQ + skill-gap map, en 15-30 min.</p>
+              <p class="st-tagline">No sabés a qué apuntar. Role-archetype + CAAS + MLQ + skill-gap 3/6/12 meses.</p>
               <div class="st-footer">
                 <span class="st-verb" data-verb="preparar">PREPARAR</span>
                 <span class="st-arrow">→</span>
               </div>
             </a>
 
-            <a class="skill-tile" href="#skill-resilience" data-skill="resilience" role="listitem">
-              <span class="st-label">Skill 04</span>
+            <a class="skill-tile" href="#unlock" data-skill="resilience" role="listitem" data-locked="true">
+              <span class="st-label">Skill 04 · práctica <span class="st-lock">◐</span></span>
               <h3 class="st-name">Resistir</h3>
               <p class="st-tagline">Perdiste el momentum. Diagnóstico SDT, tracking, implementation intentions, micro-goals.</p>
               <div class="st-footer">
@@ -106,8 +109,8 @@
               </div>
             </a>
 
-            <a class="skill-tile" href="#skill-negotiate" data-skill="negotiate" role="listitem" style="grid-column: 1 / -1;">
-              <span class="st-label">Skill 05</span>
+            <a class="skill-tile" href="#unlock" data-skill="negotiate" role="listitem" data-locked="true" style="grid-column: 1 / -1;">
+              <span class="st-label">Skill 05 · práctica <span class="st-lock">◐</span></span>
               <h3 class="st-name">Negociar</h3>
               <p class="st-tagline">Tenés oferta. Benchmark LATAM, leverage calculator, 3 scripts, análisis walk-away.</p>
               <div class="st-footer">
@@ -118,12 +121,65 @@
 
           </div>
 
-          <div class="disclaimer" role="note">
-            <strong>Nota.</strong> Cada skill es para usar dentro de Claude. Las herramientas web complementarias están en el panel derecho — te piden datos, te devuelven visualizaciones y perfil portable.
+          <div class="note" role="note" id="unlock">
+            <strong>Dos skills gratis, tres en la biblioteca de práctica.</strong> Conseguir Entrevistas y Ganar Entrevistas son libres — clonás, copiás en tu Claude Project, funcionan. Prepararse, Resistir y Negociar son parte de la biblioteca guiada: las podés ver acá, la forma de acceso se define pronto. Mientras tanto, las herramientas web del panel derecho cubren lo esencial.
             <br><br>
-            <strong>Nunca sustituyen</strong> a un profesional de salud mental o coach certificado. Si atravesás una crisis, <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a> · Colombia: Línea 106.
+            <strong>N1 no es terapia.</strong> Si atravesás una crisis, <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a> · Colombia: Línea 106.
           </div>
         </section>
+
+        <div class="divider-pattern" aria-hidden="true">· · · · ·</div>
+
+        <!-- CONÓCETE MÁS — self-knowledge tools -->
+        <section class="story" id="conocete-mas" aria-label="Conócete más">
+          <h2>Conócete más</h2>
+          <p class="lede">
+            Herramientas de autoconocimiento validadas — psicometría real, sin cuenta, sin costo.
+          </p>
+          <p class="dek">
+            Cuando las skills no son suficientes y querés medir con instrumentos específicos (CAAS, MLQ, ACT values, flow), acá están. Cada una guarda tu perfil en localStorage y lo exporta en YAML portable a Claude o ChatGPT.
+          </p>
+
+          <div class="conocete-grid" role="list">
+            <a class="conocete-card" href="compass/index.html" role="listitem">
+              <span class="cm-label">01 · CAAS-12</span>
+              <h3 class="cm-name">Compass</h3>
+              <p class="cm-sub">Adaptabilidad de carrera en 4 dimensiones (concern, control, curiosity, confidence). 149 estudios, 82,519 participantes — Savickas.</p>
+            </a>
+            <a class="conocete-card" href="bulls-eye/index.html" role="listitem">
+              <span class="cm-label">02 · ACT</span>
+              <h3 class="cm-name">Bull's Eye</h3>
+              <p class="cm-sub">Alineación entre valores y vida en 4 áreas. Ejercicio clásico de ACT (Hayes). 5-10 minutos, output visual.</p>
+            </a>
+            <a class="conocete-card" href="mlq/index.html" role="listitem">
+              <span class="cm-label">03 · MLQ-10</span>
+              <h3 class="cm-name">MLQ-10</h3>
+              <p class="cm-sub">Sentido y propósito en dos dimensiones independientes (presence + search). Cuadrante con interpretación cultural LATAM.</p>
+            </a>
+            <a class="conocete-card" href="flow-logger/index.html" role="listitem">
+              <span class="cm-label">04 · Flow</span>
+              <h3 class="cm-name">Flow Logger</h3>
+              <p class="cm-sub">Tracking de actividades en zona de flow (Csikszentmihalyi). Challenge × skill → identifica tus fortalezas en uso real.</p>
+            </a>
+            <a class="conocete-card" href="ghost-check/index.html" role="listitem">
+              <span class="cm-label">05 · Ghost</span>
+              <h3 class="cm-name">Ghost Check</h3>
+              <p class="cm-sub">Score probabilístico de ghost-job de una oferta específica. Evita quemar esfuerzo en postings sin intención de contratar.</p>
+            </a>
+            <a class="conocete-card" href="runway/index.html" role="listitem">
+              <span class="cm-label">06 · Runway</span>
+              <h3 class="cm-name">Runway</h3>
+              <p class="cm-sub">Runway financiero (COP/USD). 3 escenarios. Saber cuánto tiempo podés aguantar sin salario es pre-requisito de negociar bien.</p>
+            </a>
+            <a class="conocete-card" href="profile/index.html" role="listitem" style="grid-column: 1 / -1;">
+              <span class="cm-label">07 · Síntesis</span>
+              <h3 class="cm-name">Mi Perfil N1</h3>
+              <p class="cm-sub">Importá resultados de todas las herramientas y obtené un perfil YAML integrado, con insights transversales + recomendación de camino. Portable a cualquier skill.</p>
+            </a>
+          </div>
+        </section>
+
+        <div class="divider-pattern" aria-hidden="true">· · · · ·</div>
 
         <!-- STORY -->
         <section class="story">
@@ -132,83 +188,63 @@
             La pregunta vieja era "¿Por dónde empezás?" con 3 preguntas de triage. Producía autoconocimiento, no entrevistas.
           </p>
           <p class="dek">
-            La nueva versión arranca donde la persona está bloqueada. Una sola pregunta. Cinco caminos. Cada uno es una skill AI-native específica, no orientación genérica. La investigación validada (CAAS, MLQ, ACT, VIA) vive dentro de <em>Prepararse</em> — no es el gate de entrada, es una palanca cuando la necesitás.
+            La nueva versión arranca donde estás bloqueado. Una sola pregunta. Cinco caminos. Cada uno es una skill AI-native específica, no orientación genérica. La investigación validada (CAAS, MLQ, ACT, VIA) vive dentro de <em>Prepararse</em> — no es el gate de entrada, es una palanca cuando la necesitás.
           </p>
           <p class="dek">
-            Spanish-primary, LATAM-focused. Gratis. Open source. <a href="https://github.com/hardlypythonnmr/N1" target="_blank" rel="noopener">Código en GitHub</a>. Instalás las skills en tu Claude Project, o usás las herramientas web acá debajo sin cuenta.
+            Spanish-primary, LATAM-rooted. Dos skills gratis para siempre (Conseguir y Ganar Entrevistas) en <a href="https://github.com/hardlypythonnmr/N1" target="_blank" rel="noopener">GitHub</a>. Tres skills en la biblioteca de práctica — visibles acá, acceso por definirse.
           </p>
         </section>
 
-        <!-- HOW TO USE -->
         <section class="story">
-          <h2>Cómo usar las skills</h2>
+          <h2>Cómo empezar</h2>
           <p class="dek">
-            <strong style="color: var(--ink);">Opción A · Claude.</strong> Clonás este repo, copiás la carpeta <code class="mono" style="font-size:13px;">skills/[nombre]/</code> dentro de un Claude Project. El skill se activa al usar las frases trigger. Todas las skills son gratuitas.
+            <strong>Opción A · Claude skills gratis.</strong> Clonás el repo, copiás <code class="mono" style="font-size:13px;">skills/get-interviews/</code> o <code class="mono" style="font-size:13px;">skills/win-interviews/</code> en un Claude Project. Frase trigger del SKILL.md, listo.
           </p>
           <p class="dek">
-            <strong style="color: var(--ink);">Opción B · ChatGPT.</strong> Hay GPTs con versiones compactas en el GPT Store (busca "N1"). Funcionalidad reducida por budget de tokens, pero entrada libre.
+            <strong>Opción B · herramientas web.</strong> El panel derecho tiene 3 mini-versiones web de las skills. Sin cuenta, sin instalación, sin costo. Guardan tu perfil en localStorage.
           </p>
           <p class="dek">
-            <strong style="color: var(--ink);">Opción C · Web.</strong> Las herramientas del panel derecho funcionan acá mismo, sin instalación. Te piden datos con preguntas validadas y te devuelven un perfil YAML que podés pegar en Claude o ChatGPT para continuar.
+            <strong>Opción C · ChatGPT GPTs.</strong> <em>Próximamente</em> en la tienda de GPTs de OpenAI.
           </p>
         </section>
 
       </main>
 
-      <!-- RIGHT COLUMN — Sidebar -->
+      <!-- RIGHT — Sidebar -->
       <aside role="complementary">
 
         <section class="panel">
           <h3>Herramientas Web</h3>
-          <p style="font-size:13px; color: var(--ink-hush); margin-bottom: 14px;">
-            Sin cuenta, sin costo. Guardan tu perfil en localStorage. Salen del dominio de las skills Claude.
+          <p style="font-size:13.5px; color: var(--ink-hush); margin-bottom: 16px; line-height: 1.55;">
+            Tres mini-versiones web — sin cuenta, sin costo. Guardan tu perfil localmente.
           </p>
 
           <div class="tool-list">
-            <a class="tool-item" href="ghost-check/index.html">
-              <span class="tool-name">Ghost Check</span>
-              <span class="tool-tag">Exploración</span>
+            <a class="tool-item" href="visibilidad/index.html">
+              <div class="tool-name">Visibilidad</div>
+              <div class="tool-sub">mini-auditoría de tu CV y LinkedIn — qué ve un reclutador en 6 segundos</div>
             </a>
-            <a class="tool-item" href="compass/index.html">
-              <span class="tool-name">Compass · CAAS-12</span>
-              <span class="tool-tag">Autoconocimiento</span>
+            <a class="tool-item" href="presencia/index.html">
+              <div class="tool-name">Presencia</div>
+              <div class="tool-sub">práctica de respuesta en 60 segundos — pulgada por pulgada en voz y texto</div>
             </a>
-            <a class="tool-item" href="bulls-eye/index.html">
-              <span class="tool-name">Bull's Eye · valores</span>
-              <span class="tool-tag">ACT</span>
-            </a>
-            <a class="tool-item" href="mlq/index.html">
-              <span class="tool-name">MLQ-10 · propósito</span>
-              <span class="tool-tag">Meaning</span>
-            </a>
-            <a class="tool-item" href="flow-logger/index.html">
-              <span class="tool-name">Flow Logger</span>
-              <span class="tool-tag">Fortalezas</span>
-            </a>
-            <a class="tool-item" href="runway/index.html">
-              <span class="tool-name">Runway Calculator</span>
-              <span class="tool-tag">Finanzas</span>
-            </a>
-            <a class="tool-item" href="profile/index.html">
-              <span class="tool-name">Mi Perfil N1</span>
-              <span class="tool-tag">Síntesis</span>
+            <a class="tool-item" href="raiz/index.html">
+              <div class="tool-name">Raíz</div>
+              <div class="tool-sub">arquetipo de rol en 10 min — de qué está hecho tu trabajo cuando sale bien</div>
             </a>
           </div>
         </section>
 
         <section class="panel">
-          <h3>Diseño &amp; Código</h3>
+          <h3>Lo que sí es abierto</h3>
           <p>
-            <strong style="color: var(--ink);">Design system:</strong> <a href="../design-system.md">/design-system.md</a>
+            <strong>Skills gratis:</strong> <a href="https://github.com/hardlypythonnmr/N1/tree/main/skills/get-interviews" target="_blank" rel="noopener">Conseguir</a> · <a href="https://github.com/hardlypythonnmr/N1/tree/main/skills/win-interviews" target="_blank" rel="noopener">Ganar</a>
           </p>
           <p>
-            <strong style="color: var(--ink);">Investigación:</strong> <a href="https://github.com/hardlypythonnmr/N1/blob/main/shared/research-base.md" target="_blank" rel="noopener">shared/research-base.md</a>
+            <strong>Investigación:</strong> <a href="investigacion/index.html">la evidencia</a> — 30 frameworks, 8 espina + 22 adicionales, con tiers y effect sizes · <a href="https://github.com/hardlypythonnmr/N1/blob/main/shared/research-base.md" target="_blank" rel="noopener" style="color: var(--ink-hush); font-size: 12px;">fuente .md</a>
           </p>
           <p>
-            <strong style="color: var(--ink);">Voz y tono:</strong> <a href="https://github.com/hardlypythonnmr/N1/blob/main/shared/voice-guide.md" target="_blank" rel="noopener">shared/voice-guide.md</a>
-          </p>
-          <p>
-            <strong style="color: var(--ink);">Seguridad:</strong> <a href="https://github.com/hardlypythonnmr/N1/blob/main/shared/safety-protocol.md" target="_blank" rel="noopener">shared/safety-protocol.md</a>
+            <strong>Seguridad:</strong> <a href="https://github.com/hardlypythonnmr/N1/blob/main/shared/safety-protocol.md" target="_blank" rel="noopener">shared/safety-protocol.md</a> — MIND-SAFE, crisis resources
           </p>
         </section>
 
@@ -218,7 +254,7 @@
             Profesionales en transición de carrera en LATAM. Beachhead: senior SWEs en outsourcing (Globant, Perficient, EPAM) considerando moverse.
           </p>
           <p>
-            Si sos recruiter, <a href="https://github.com/hardlypythonnmr/N1/blob/main/FOR-BUILDERS.md" target="_blank" rel="noopener">FOR-BUILDERS.md</a> te lleva al otro lado del espejo.
+            Si estás en crisis aguda, N1 no sustituye un profesional de salud mental. Buscá apoyo humano primero.
           </p>
         </section>
 
@@ -229,16 +265,17 @@
     <!-- FOOTER -->
     <footer class="footer" role="contentinfo">
       <div class="epigraph">
-        "El sistema eres tú." <br><em style="color: var(--ink-hush); font-size: 14px;">Busca adentro, construye afuera.</em>
+        "El sistema sos vos."
+        <span>Busca adentro, construye afuera.</span>
       </div>
       <div class="counter">
         <div class="counter-row">
-          <a href="https://github.com/hardlypythonnmr/N1" target="_blank" rel="noopener">GitHub</a>
-          <a href="#router">Diagnóstico</a>
-          <a href="profile/index.html">Mi Perfil</a>
+          <a href="https://github.com/hardlypythonnmr/N1" target="_blank" rel="noopener">github</a>
+          <a href="#router">diagnóstico</a>
+          <a href="#unlock">acceso</a>
         </div>
         <div class="counter-row">
-          <span>v2.0 · 2026-04-21 · MIT License</span>
+          <span>v2.1 · 2026-04-21 · MIT para lo abierto</span>
         </div>
       </div>
     </footer>
@@ -246,30 +283,30 @@
   </div>
 
   <script>
-    /* Theme toggle with localStorage persistence */
+    /* Theme toggle — sol/luna with localStorage */
     (function() {
       "use strict";
       var root = document.documentElement;
       var toggle = document.getElementById("theme-toggle");
       var saved = localStorage.getItem("n1-theme");
-      if (saved === "light" || saved === "dark") {
+      if (saved === "sol" || saved === "luna") {
         root.setAttribute("data-theme", saved);
       }
       function updateLabel() {
-        var current = root.getAttribute("data-theme") || "dark";
-        toggle.textContent = current === "dark" ? "◐ claro" : "◐ oscuro";
+        var current = root.getAttribute("data-theme") || "luna";
+        toggle.textContent = current === "luna" ? "sol" : "luna";
       }
       updateLabel();
       toggle.addEventListener("click", function() {
-        var current = root.getAttribute("data-theme") || "dark";
-        var next = current === "dark" ? "light" : "dark";
+        var current = root.getAttribute("data-theme") || "luna";
+        var next = current === "luna" ? "sol" : "luna";
         root.setAttribute("data-theme", next);
         localStorage.setItem("n1-theme", next);
         updateLabel();
       });
     })();
 
-    /* Date label */
+    /* Date label — mes año */
     (function() {
       var d = new Date();
       var months = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
@@ -277,20 +314,20 @@
       if (label) label.textContent = months[d.getMonth()] + " " + d.getFullYear();
     })();
 
-    /* Skill tile click — for now, show anchor-style deep-link to README */
+    /* Locked skill tiles — show unlock note instead of navigating */
     (function() {
       "use strict";
-      document.querySelectorAll(".skill-tile").forEach(function(tile) {
+      document.querySelectorAll('.skill-tile[data-locked="true"]').forEach(function(tile) {
         tile.addEventListener("click", function(e) {
-          var skill = tile.getAttribute("data-skill");
-          if (!skill) return;
           e.preventDefault();
-          /* For now: link to GitHub skill folder — later this can open a guide modal */
-          window.open(
-            "https://github.com/hardlypythonnmr/N1/tree/main/skills/" + skill,
-            "_blank",
-            "noopener"
-          );
+          var unlock = document.getElementById("unlock");
+          if (unlock) {
+            unlock.scrollIntoView({ behavior: "smooth", block: "center" });
+            unlock.style.transition = "background-color 0.6s ease";
+            var originalBg = unlock.style.backgroundColor;
+            unlock.style.backgroundColor = "color-mix(in oklab, var(--bg-card), var(--accent) 15%)";
+            setTimeout(function() { unlock.style.backgroundColor = originalBg; }, 1200);
+          }
         });
       });
     })();
