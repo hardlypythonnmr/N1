@@ -721,9 +721,339 @@ a:hover { color: var(--accent-deep); border-bottom-color: var(--accent); }
   opacity: 0.55;
 }
 
+/* ── 18. RESEARCH PAGE (La Evidencia) ─── */
+/* Cherry-pickable for any page that needs citation-style typography.   */
+/* Skeptic-cold masthead + warm wall-label entries. Review-paper form.  */
+
+.research-hero {
+  padding: 24px 0 48px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 56px;
+}
+@media (max-width: 820px) {
+  .research-hero { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+.metric-big {
+  padding-left: 16px;
+  border-left: 3px solid var(--accent);
+}
+.metric-big:nth-child(2) { border-left-color: var(--selva); }
+.metric-big:nth-child(3) { border-left-color: var(--cobalto); }
+.metric-big:nth-child(4) { border-left-color: var(--earth); }
+.metric-big .num {
+  font-family: "Fraunces", serif;
+  font-size: 44px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 40, "opsz" 72;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  display: block;
+  margin-bottom: 8px;
+}
+.metric-big .num small {
+  font-size: 22px;
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+.metric-big .lab {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+  line-height: 1.5;
+}
+
+/* Spine entries — the 8 load-bearing frameworks */
+.spine-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  margin: 40px 0 56px;
+}
+.spine-entry {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 32px;
+  padding: 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--accent);
+  border-radius: 10px;
+  position: relative;
+}
+.spine-entry[data-tier="1"] { border-top-color: var(--selva); }
+.spine-entry[data-tier="2"] { border-top-color: var(--accent); }
+.spine-entry[data-tier="3"] { border-top-color: var(--earth); }
+
+@media (max-width: 820px) {
+  .spine-entry { grid-template-columns: 1fr; padding: 24px; gap: 18px; }
+}
+.spine-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+}
+.spine-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.spine-metric .big {
+  font-family: "Fraunces", serif;
+  font-size: 36px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 50, "opsz" 60;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.spine-metric .sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+  line-height: 1.55;
+}
+.spine-title {
+  font-family: "Fraunces", serif;
+  font-size: 28px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 40, "opsz" 48;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 6px;
+}
+.spine-citation {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--ink-hush);
+  margin-bottom: 18px;
+  font-feature-settings: "onum" 1, "smcp" 1;
+  letter-spacing: 0.02em;
+}
+.spine-citation em {
+  font-style: italic;
+  color: var(--ink-dim);
+}
+.spine-finding {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.62;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.spine-why {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-size: 16px;
+  font-variation-settings: "SOFT" 70, "opsz" 24;
+  line-height: 1.55;
+  color: var(--selva);
+  padding: 14px 18px;
+  background: color-mix(in oklab, var(--bg-card), var(--selva) 6%);
+  border-left: 2px solid var(--selva);
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 18px;
+}
+.spine-use {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+  border-top: 1px dotted var(--line);
+  padding-top: 14px;
+}
+.spine-use strong {
+  color: var(--accent);
+  font-weight: 500;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Tier badge — inline */
+.tier-badge {
+  display: inline-block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--ink-hush);
+  vertical-align: 2px;
+  margin-left: 10px;
+}
+.tier-badge[data-tier="1"] { color: var(--selva); border-color: var(--selva); }
+.tier-badge[data-tier="2"] { color: var(--accent); border-color: var(--accent); }
+.tier-badge[data-tier="3"] { color: var(--earth); border-color: var(--earth); }
+
+/* Appendix — compact list of 22 additional frameworks */
+.appendix-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 32px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 820px) {
+  .appendix-list { grid-template-columns: 1fr; }
+}
+.appendix-entry {
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+.appendix-entry:nth-child(2n) { border-right: none; }
+@media (max-width: 820px) {
+  .appendix-entry { border-right: none; }
+}
+.appendix-entry:last-child { border-bottom: none; }
+.appendix-entry:nth-last-child(2):nth-child(2n+1) { border-bottom: none; }
+.appendix-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+}
+.appendix-title {
+  font-family: "Fraunces", serif;
+  font-size: 19px;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 40, "opsz" 32;
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 8px 0 4px;
+}
+.appendix-citation {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--ink-hush);
+  margin-bottom: 10px;
+  font-feature-settings: "onum" 1;
+}
+.appendix-citation em { font-style: italic; color: var(--ink-dim); }
+.appendix-finding {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-dim);
+  margin-bottom: 10px;
+}
+.appendix-use {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--selva);
+}
+:root[data-theme="sol"] .appendix-use { color: var(--selva); }
+
+/* Section headers for research page */
+.research-section-head {
+  margin: 72px 0 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.research-section-head h2 {
+  font-family: "Fraunces", serif;
+  font-size: 34px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 60, "opsz" 72;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.research-section-head h2 em {
+  font-style: italic;
+  color: var(--accent);
+  font-variation-settings: "SOFT" 40, "opsz" 72;
+}
+.research-section-head .sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+}
+
+/* Tier explainer strip */
+.tier-explainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 28px 0 44px;
+}
+@media (max-width: 820px) {
+  .tier-explainer { grid-template-columns: 1fr; }
+}
+.tier-card {
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--selva);
+  border-radius: 8px;
+}
+.tier-card[data-tier="2"] { border-top-color: var(--accent); }
+.tier-card[data-tier="3"] { border-top-color: var(--earth); opacity: 0.75; }
+.tier-card .lab {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-hush);
+  margin-bottom: 8px;
+}
+.tier-card .name {
+  font-family: "Fraunces", serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.tier-card .desc {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.5;
+}
+
 /* ════════════════════════════════════════
    VERSION HISTORY
    ════════════════════════════════════════
+
+   v3.2 (2026-04-21) — Research page components
+   - Added section 18: RESEARCH PAGE (.research-hero, .spine-entry,
+     .appendix-list, .tier-badge, .tier-explainer)
+   - Cherry-pickable for any page that needs citation-style typography
+   - Uses existing v3 tokens (no new palette or fonts)
 
    v3.1 (2026-04-21) — 60/40 LATAM-tech weighting
    - Swapped body font Lora → Inter (12% faster skim, Larson 2004)
